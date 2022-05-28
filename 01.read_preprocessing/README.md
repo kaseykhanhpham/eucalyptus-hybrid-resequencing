@@ -1,7 +1,6 @@
 # Read Pre-Processing
 Housekeeping and quality checks before actually starting any data manipulation
 
-
 ### Read storage and organization
 Reads were downloaded from RAPiD and stored in UFRC's `/orange` drive, the longer-term storage drive for data. Most work was done on UFRC's `/blue` drive, for active analysis. A lot of housekeeping throughout will be organizing between the two locations.
 
@@ -14,7 +13,6 @@ SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
 # File addresses are hardcoded into the script
 python "$SCRIPT_DIR"/reorg_raw_reads.py
 ```
-
 
 ### Quality check of raw reads
 
@@ -40,7 +38,6 @@ FASTQC_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/reads/fastqc_raw"
 
 multiqc "$FASTQC_DIR"
 ```
-
 
 ### Read trimming and filtering
 
@@ -80,7 +77,6 @@ do
 done < "$LIST_DIR"/seq_ids.txt
 ```
 
-
 ### Quality check of trimmed reads
 
 **Run FastQC for all files:**
@@ -106,10 +102,10 @@ FASTQC_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/reads/fastqc_trimmed"
 multiqc "$FASTQC_DIR"
 ```
 
-
 ### Check k-mer distributes of samples
 
 **Run k-mer counting program [Jellyfish](https://genome.umd.edu/jellyfish.html) and visualize in [R](https://www.r-project.org/):**
+
 Followed protocol of [this tutorial](https://koke.asrc.kanazawa-u.ac.jp/HOWTO/kmer-genomesize.html) from the Nishiyama lab.
 ```bash
 # Run via job on UFRC, see jellyfish.job for details
