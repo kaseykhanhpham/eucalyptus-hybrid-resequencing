@@ -1,12 +1,14 @@
 # Metadata
 This directory contains all files with sample information produced from sampling, sequencing, and analysis, as well as sample lists for ease of coding. Files are organized into subdirectories based on the step of the project they came from.
 
+
 ## Field Sampling
 
 | Filename                                | Data Source               | Description                                  |
 | --------------------------------------- | ------------------------- | -------------------------------------------- |
 | 40samples_KaseyUF_updateDec2020.txt.kmz | Rebecca Jones, U Tasmania | Google Earth file with provenance of samples |
 | 40samples_KaseyUF_updateDec2020.xlsx    | Rebecca Jones, U Tasmania | Spreadsheet of provenance and genotype data for samples |
+
 
 ## RAPiD Sequencing
 
@@ -15,6 +17,7 @@ This directory contains all files with sample information produced from sampling
 | UFL_014801_Normal_Plate_Layout_22-02-21_GOOD.xlsx | Ariane Gélinas Marion, U Tasmania | Plate layout of samples sent to RAPiD Genomics for sequencing |
 | UFL_014801_SampleSheet_june08.csv  | RAPiD Genomics | Table with sample codes and barcodes for run 2 of sequencing |
 | UFL_014801_SampleSheet_may04.csv   | RAPiD Genomics | Table with sample codes and barcodes for run 1 of sequencing |
+
 
 ## Sequence Analysis
 
