@@ -1,0 +1,27 @@
+#!/bin/bash
+#SBATCH --job-name=jelly
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --ntasks=1	
+#SBATCH --cpus-per-task=10
+#SBATCH --mem=100G
+#SBATCH --time=24:00:00
+#SBATCH --output=jelly_%j.out
+#SBATCH --error=jelly_%j.err
+
+date;hostname;pwd
+
+module purge
+module load jellyfish/2.3.0
+module load R/4.1
+
+while read NAME
+do
+jellyfish count -o "$NAME"_24mer -m 24 -s 5G -t 10 -C /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/"$NAME"*trimmed.fq
+jellyfish histo -o "$NAME"_24mer.histo "$NAME"_24mer
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$NAME"_24mer.histo "$NAME"_24mer.png 3
+rm "$NAME"_24mer
+done < /blue/soltis/kasey.pham/euc_hyb_reseq/seq_ids.txt
+

@@ -1,4 +1,4 @@
-# Eucalyptus Hybrid Resequencing
+# _Eucalyptus_ Hybrid Resequencing
 Pipeline for analysis of project resequencing introgressant _Eucalyptus globulus_ and _Eucalyptus cordata_ in Tasmania.
 
 Directories are labeled in the order steps were performed. Computation performed on UF's HiperGator supercomputing cluster (UFRC), so job files are included where relevant.

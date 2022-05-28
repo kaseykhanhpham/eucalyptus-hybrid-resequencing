@@ -1,0 +1,17 @@
+#!/bin/bash
+#SBATCH --job-name=multiqc
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --ntasks=1
+#SBATCH --mem=5gb
+#SBATCH --time=1:00:00
+#SBATCH --output=multiqc_%j.out
+#SBATCH --error=multiqc_%j.err
+
+pwd; hostname; date
+
+module load multiqc
+
+multiqc /blue/soltis/kasey.pham/euc_hyb_reseq/reads/fastqc_raw

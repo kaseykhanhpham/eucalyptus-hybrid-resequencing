@@ -1,0 +1,22 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=trimmo
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=4gb
+#SBATCH --time=2-00:00:00
+#SBATCH --cpus-per-task=12
+#SBATCH --nodes=1
+#SBATCH --output=trimmomatic_%j.out
+#SBATCH --error=trimmomatic_%j.err
+
+pwd; hostname; date
+echo Working directory is $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR
+
+module purge
+module load trimmomatic/0.39
+
+while read NAME; do trimmomatic PE -threads 11 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/raw_reads/"$NAME"_R1_raw.fastq.gz /blue/soltis/kasey.pham/euc_hyb_reseq/reads/raw_reads/"$NAME"_R2_raw.fastq.gz /orange/soltis/kasey.pham/eucalyptus_hyb_reseq/trimmed_reads/"$NAME"_R1_paired.fq /orange/soltis/kasey.pham/eucalyptus_hyb_reseq/trimmed_reads/"$NAME"_R1_unpaired.fq /orange/soltis/kasey.pham/eucalyptus_hyb_reseq/trimmed_reads/"$NAME"_R2_paired.fq /orange/soltis/kasey.pham/eucalyptus_hyb_reseq/trimmed_reads/"$NAME"_R2_unpaired.fq ILLUMINACLIP:/blue/soltis/kasey.pham/euc_hyb_reseq/reads/euc_adapters.fasta:2:30:10 LEADING:20 TRAILING:20 SLIDINGWINDOW:4:20 MINLEN:36; done < /blue/soltis/kasey.pham/euc_hyb_reseq/seq_ids.txt
+
