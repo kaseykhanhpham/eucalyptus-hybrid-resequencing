@@ -1,6 +1,10 @@
-Finances
-Meetings
+finances
+meetings
 *.fastq
 *.fq
 *.fasta
 *.fa
+*.kml
+introgressednucmarkers.kmz
+Meehan_cordata_SSRs.xlsx
+UFL_014801 agarose gel.docx
