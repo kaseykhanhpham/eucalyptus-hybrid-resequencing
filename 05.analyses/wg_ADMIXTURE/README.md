@@ -5,7 +5,7 @@ Uses the maximum-likelihood population structure program [`ADMIXTURE`](http://da
 ## `ADMIXTURE` on all samples
 
 ### Create `BIM` file with variants for `ADMIXTURE`
-This analysis needs a set of unlinked SNPs as input. I already generated a set of variants pruned for linkage for the PCA analysis, see [that section](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/pca) for more details.
+This analysis needs a set of unlinked SNPs as input. I already generated a set of variants pruned for linkage for the PCA analysis, see [that section](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/tree/main/05.analyses/PCA#prune-linked-snps) for more details.
 
 ```bash
 module load plink/1.90b3.39
@@ -60,7 +60,8 @@ pong -m all_to_ASM1654582_fil_maf0.05_filemap.txt -i all_to_ASM1654582_fil_maf0.
 conda deactivate
 ```
 
-See [`all_to_ASM1654582_fil_maf0.05_ADMIXTURE_pong`](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/all_to_ASM1654582_fil_maf0.05_ADMIXTURE_pong) for results of visualization.
+Results of visualization:
+!(https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/all_to_ASM1654582_fil_maf0.05_ADMIXTURE_pong.png "ADMIXTURE K=2 through K=6")
 
 ## `ADMIXTURE` excluding sample WF03/1051
 The individual WF03/1051 was distant from all other points in the PCA plots, so I ran ADMIXTURE without it to see whether that would change the results. I started by excluding this sample when generating the `BIM` file:
@@ -80,3 +81,5 @@ mv all_to_ASM1654582_fil_maf0.05.bim.tmp all_to_ASM1654582_fil_maf0.05.bim
 ```
 
 All other steps were the same as listed above. You can find the files used in the subdirectory [without_wf03](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/without_wf03). There looked to be no difference between the run with and without WF03.
+
+!(https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/without_wf03/all_to_ASM1654582_fil_maf0.05_ADMIXTURE_pong_withoutWF03.png "ADMIXTURE K=2 through K=6 without WF03")
