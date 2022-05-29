@@ -61,7 +61,7 @@ conda deactivate
 ```
 
 Results of visualization:
-!(https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/all_to_ASM1654582_fil_maf0.05_ADMIXTURE_pong.png "ADMIXTURE K=2 through K=6")
+![ADMIXTURE K=2 through K=6 summarized over 10 individual runs in pong. In K=2, introgressed _E. globulus_ has an estimated 1% admixture rate with _E. cordata_ while "pure" _E. globulus_ has an estimated 2% admixture rate with _E. cordata_.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/all_to_ASM1654582_fil_maf0.05_ADMIXTURE_pong.png "ADMIXTURE K=2 through K=6")
 
 ## `ADMIXTURE` excluding sample WF03/1051
 The individual WF03/1051 was distant from all other points in the PCA plots, so I ran ADMIXTURE without it to see whether that would change the results. I started by excluding this sample when generating the `BIM` file:
@@ -82,4 +82,4 @@ mv all_to_ASM1654582_fil_maf0.05.bim.tmp all_to_ASM1654582_fil_maf0.05.bim
 
 All other steps were the same as listed above. You can find the files used in the subdirectory [without_wf03](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/without_wf03). There looked to be no difference between the run with and without WF03.
 
-!(https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/without_wf03/all_to_ASM1654582_fil_maf0.05_ADMIXTURE_pong_withoutWF03.png "ADMIXTURE K=2 through K=6 without WF03")
+![ADMIXTURE K=2 through K=6 excluding sample WF03, summarized over 10 individual runs in pong. In K=2, introgressed _E. globulus_ still has an estimated 1% admixture rate with _E. cordata_ while "pure" _E. globulus_ still has an estimated 2% admixture rate with _E. cordata_.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/without_wf03/all_to_ASM1654582_fil_maf0.05_ADMIXTURE_pong_withoutWF03.png "ADMIXTURE K=2 through K=6 without WF03")
