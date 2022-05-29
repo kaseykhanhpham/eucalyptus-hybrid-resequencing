@@ -1,5 +1,6 @@
 finances
 meetings
+methods
 jellyfish_plots
 coverage_plots
 SNP_chr_vis
@@ -8,3 +9,6 @@ introgressednucmarkers.kmz
 Meehan_cordata_SSRs.xlsx
 UFL_014801 agarose gel.docx
 K2_results.xlsx
+vcf_info.txt
+kasey_gatk_pipeline_notes.sh
+reseq_pipeline.sh
