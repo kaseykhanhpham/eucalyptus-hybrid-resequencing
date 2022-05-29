@@ -1,10 +1,7 @@
 finances
 meetings
+jellyfish_plots
 coverage_plots
-*.fastq
-*.fq
-*.fasta
-*.fa
 *.kml
 introgressednucmarkers.kmz
 Meehan_cordata_SSRs.xlsx
