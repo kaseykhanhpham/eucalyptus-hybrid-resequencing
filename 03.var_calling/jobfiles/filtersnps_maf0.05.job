@@ -1,0 +1,31 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=filtersnps
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=2gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=filtersnps_%j.out
+#SBATCH --error=filtersnps_%j.err
+
+module load vcflib/1.0.1
+module load vcftools/0.1.16
+module load bcftools/1.15
+
+export INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/freebayes/max_dp_3000"
+declare -a VCFLIST=(NC_052612 NC_052613 NC_052614 NC_052615 NC_052616 NC_052617 NC_052618 NC_052619 NC_052620 NC_052621 NC_052622 unanchored_contigs)
+
+export MAF=0.05
+export MISS=0.9
+export QUAL=50
+export MIN_DP=10
+export MAX_DP=40
+
+for NAME in "${VCFLIST[@]}"
+do
+    echo doing "$NAME"
+    cat "$INDIR"/"$NAME".vcf | vcfallelicprimitives -kg | vcffilter -f "SAF > 1 & SAR > 1 & RPR > 1 & RPL > 1" | vcftools --vcf - --maf $MAF --max-missing $MISS --minQ $QUAL --min-meanDP $MIN_DP --max-meanDP $MAX_DP --minDP $MIN_DP --maxDP $MAX_DP --recode --stdout | bcftools view -e 'QUAL/FMT/DP<20 & FMT/QA/FMT/AO<30' -O v - | bcftools sort -O v - > "$NAME"_fil.vcf
+done

@@ -1,0 +1,56 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=vischr
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=1gb
+#SBATCH --time=5:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=vischr_%j.out
+#SBATCH --error=vischr_%j.err
+
+pwd; hostname; date
+echo Working directory is $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR
+
+module purge
+module load R/4.1
+
+/blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_01.sh /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.10/NC_052612_fil.vcf chr1
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_02.r chr1
+
+/blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_01.sh /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.10/NC_052613_fil.vcf chr2
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_02.r chr2
+
+/blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_01.sh /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.10/NC_052614_fil.vcf chr3
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_02.r chr3
+
+/blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_01.sh /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.10/NC_052615_fil.vcf chr4
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_02.r chr4
+
+/blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_01.sh /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.10/NC_052616_fil.vcf chr5
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_02.r chr5
+
+/blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_01.sh /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.10/NC_052617_fil.vcf chr6
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_02.r chr6
+
+/blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_01.sh /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.10/NC_052618_fil.vcf chr7
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_02.r chr7
+
+/blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_01.sh /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.10/NC_052619_fil.vcf chr8
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_02.r chr8
+
+/blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_01.sh /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.10/NC_052620_fil.vcf chr9
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_02.r chr9
+
+/blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_01.sh /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.10/NC_052621_fil.vcf chr10
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_02.r chr10
+
+/blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_01.sh /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.10/NC_052622_fil.vcf chr11
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_02.r chr11
+
+/blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_01.sh /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.10/unanchored_contigs_fil.vcf contigs
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/visualize_chr_02.r contigs
+
