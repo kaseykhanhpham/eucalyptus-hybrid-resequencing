@@ -25,7 +25,7 @@ We now aim to characterize the regions of nuclear introgression in these previou
 
 
 ## Python Environment
-Started using conda environments at the beginning of data analysis. 
+Started using `conda` environments at the beginning of data analysis. 
 
 On UFRC:
 ```bash
