@@ -13,7 +13,7 @@ cd "$REF_DIR"
 bowtie2-build GCF_016545825.1_ASM1654582v1_genomic.fna ASM1654582v1
 ```
 
-**Map reads in bowtie2:**
+**Map reads in `bowtie2`:**
 ```bash
 # Run via job on UFRC, see map_reads.job for details
 # Resources used: 953 Mb, 40 hrs
@@ -32,7 +32,7 @@ do
 done < "$LIST_DIR"/seq_ids.txt
 ```
 
-**Convert files to BAM format using [samtools](https://github.com/samtools/samtools):**
+**Convert files to `BAM` format using [`samtools`](https://github.com/samtools/samtools):**
 ```bash
 # Run via job on UFRC, see sam2bam.job for details
 # Resources used: 27 Mb, 2 hrs
@@ -47,9 +47,9 @@ done < "$LIST_DIR"/seq_ids.txt
 ```
 
 ### Add readgroups
-Assigning readgroups is necessary because variant callers use information from what lane and run a sample was on to correct for calling bias. I based the information included on the [GATK recommendations](https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups) and [Sentieon recommendations](https://support.sentieon.com/appnotes/read_groups/).
+Assigning readgroups is necessary because variant callers use information from what lane and run a sample was on to correct for calling bias. I based the information included on the [`GATK` recommendations](https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups) and [Sentieon recommendations](https://support.sentieon.com/appnotes/read_groups/).
 
-**Make job to assign the right readgroups to each BAM file**
+**Make job to assign the right readgroups to each `BAM` file**
 
 I manually made a table (readgroup_table.txt) with the information for readgroup assignment from my [sample sequencing metadata](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/00.metadata/03.seq_analysis/sample_sequencing_metadata_all.xlsx). The python script I wrote to make the job has a specific file format hard-coded in, but it can be tweaked to fit other formats.
 
@@ -66,7 +66,7 @@ UFRC_EMAIL="kasey.pham@ufl.edu"
 python "$SCRIPT_DIR"/make_rg_job.py readgroup_table.txt "$INDIR" "$IN_SUFFIX" "$OUTDIR" "$OUT_SUFFIX" "$UFRC_ACCT" "$UFRC_EMAIL"
 ```
 
-**Add readgroups using [Picard](https://gatk.broadinstitute.org/hc/en-us/articles/360037226472-AddOrReplaceReadGroups-Picard-):**
+**Add readgroups using [`Picard`](https://gatk.broadinstitute.org/hc/en-us/articles/360037226472-AddOrReplaceReadGroups-Picard-):**
 
 ```bash
 # Run via job on UFRC, see add_readgroups.job for details
@@ -80,7 +80,7 @@ OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/01.readgro
 picard AddOrReplaceReadGroups -I "$INDIR"/S320_mapped.bam -O "$OUTDIR"/S320_wRG.bam -LB WA01.leaf -PL ILLUMINA -PU H3K2CDSX2.4.97 -SM WA01 -ID H3K2CDSX2.4.97
 ```
 
-### Fix mate pairs using samtools
+### Fix mate pairs using `samtools`
 
 ```bash
 # Run via job on UFRC, see fixmate.job for details
@@ -98,7 +98,7 @@ do
 done < "$LIST_DIR"/seq_ids.txt
 ```
 
-### Sort reads using samtools
+### Sort reads using `samtools`
 
 ```bash
 # Run via job on UFRC, see sortbam.job for details
@@ -118,7 +118,7 @@ done < "$LIST_DIR"/seq_ids.txt
 
 ### Mark duplicates
 
-**Mark duplicate reads in samtools:**
+**Mark duplicate reads in `samtools`:**
 
 ```bash
 # Run via job on UFRC, see markdupes.job for details
@@ -136,7 +136,7 @@ do
 done < "$LIST_DIR"/seq_ids.txt
 ```
 
-**Index BAM files:**
+**Index `BAM` files:**
 
 ```bash
 # Run via job on UFRC, see index.job for details
@@ -163,7 +163,7 @@ module load R
 Rscript make_depth_job.r
 ```
 
-**Calculate depth distribution for each sample using samtools:**
+**Calculate depth distribution for each sample using `samtools`:**
 ```bash
 # Run via job on UFRC, see index.job for details
 # Resources used: 8 Mb, 5 hrs

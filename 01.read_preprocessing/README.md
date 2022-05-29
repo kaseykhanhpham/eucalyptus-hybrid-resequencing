@@ -16,7 +16,7 @@ python "$SCRIPT_DIR"/reorg_raw_reads.py
 
 ### Quality check of raw reads
 
-**Run [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) for all files:**
+**Run [`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) for all files:**
 ```bash
 # Run via job on UFRC, see fastqc_raw.job for details
 # Resources used: 357 Mb, 19 hrs
@@ -41,7 +41,7 @@ multiqc "$FASTQC_DIR"
 
 ### Read trimming and filtering
 
-**Trim sequences with [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic):**
+**Trim sequences with [`Trimmomatic`](http://www.usadellab.org/cms/?page=trimmomatic):**
 ```bash
 # Run via job on UFRC, see trimmomatic.job for more details
 # Resources: 1 Gb, 4 hrs
@@ -79,7 +79,7 @@ done < "$LIST_DIR"/seq_ids.txt
 
 ### Quality check of trimmed reads
 
-**Run FastQC for all files:**
+**Run `FastQC` for all files:**
 ```bash
 # Run via job on UFRC, see fastqc_trimmed.job for more details
 # Resources: 365 Mb, 16 hrs
@@ -91,7 +91,7 @@ FASTQC_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/reads/fastqc_trimmed"
 ls "$READ_DIR"/*.fq | while read NAME; do fastqc -o "$FASTQC_DIR" "$READ_DIR"/$NAME; done
 ```
 
-**Summarize FastQC results with MultiQC:**
+**Summarize `FastQC` results with `MultiQC`:**
 ```bash
 # Run via job on UFRC, see multiqc_trimmed.job for details
 # Resources used: 5 Gb, 1 min
@@ -104,7 +104,7 @@ multiqc "$FASTQC_DIR"
 
 ### Check k-mer distributes of samples
 
-**Run k-mer counting program [Jellyfish](https://genome.umd.edu/jellyfish.html) and visualize in [R](https://www.r-project.org/):**
+**Run k-mer counting program [`Jellyfish`](https://genome.umd.edu/jellyfish.html) and visualize in [R](https://www.r-project.org/):**
 
 Followed protocol of [this tutorial](https://koke.asrc.kanazawa-u.ac.jp/HOWTO/kmer-genomesize.html) from the Nishiyama lab.
 ```bash

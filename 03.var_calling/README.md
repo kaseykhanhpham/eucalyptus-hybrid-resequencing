@@ -14,9 +14,9 @@ ls -d "$READ_OUTDIR"/* > "$VC_DIR"/bam_inputs.txt
 ```
 
 ### Run Variant Caller
-I am using the variant caller [FreeBayes](https://github.com/freebayes/freebayes), which estimates internal population parameters for the individuals it is provided with using Bayesian inference. This is probably a good choice for my dataset given that I don't have a set of validated SNPs for training a variant caller like GATK. I followed recommendations on FreeBayes' Github page for parameter selection.
+I am using the variant caller [`FreeBayes`](https://github.com/freebayes/freebayes), which estimates internal population parameters for the individuals it is provided with using Bayesian inference. This is probably a good choice for my dataset given that I don't have a set of validated SNPs for training a variant caller like `GATK`. I followed recommendations on `FreeBayes`' Github page for parameter selection.
 
-I ran FreeBayes on each chromosome separately, with the same parameters each time. See the job files named `fb_NC0526--.job` for each set of individual parameters.
+I ran `FreeBayes` on each chromosome separately, with the same parameters each time. See the job files named `fb_NC0526--.job` for each set of individual parameters.
 
 **Command for chromosome 1:**
 
@@ -36,7 +36,7 @@ freebayes -L "$LIST_DIR"/bam_inputs.txt -f "$REF_DIR"/GCF_016545825.1_ASM1654582
 
 **Command for unanchored contigs:**
 
-All unanchored contigs in reference genome were called together. I manually made a BED file of the names of each contig as input for FreeBayes.
+All unanchored contigs in reference genome were called together. I manually made a `BED` file of the names of each contig as input for `FreeBayes`.
 
 ```bash
 # Run via job on UFRC, see fb_contigs.job for details
@@ -113,9 +113,9 @@ SNP filtering parameters and code were based on several sources, including perso
 
 **Programs used:**
 
-* [vcflib](https://github.com/vcflib/vcflib)
-* [vcftools](https://vcftools.github.io)
-* [bcftools](https://samtools.github.io/bcftools/bcftools.html)
+* [`vcflib`](https://github.com/vcflib/vcflib)
+* [`vcftools`](https://vcftools.github.io)
+* [`bcftools`](https://samtools.github.io/bcftools/bcftools.html)
 
 
 Four filtering sets were generated in total, only varying in minimum threshold for minor allele frequencing (MAF): {MAF > 0.00, 0.05, 0.10, 0.30}. Command for `MAF > 0.05` dataset shown below, but see job files `filtersnps_maf---.job` and `merge_vcfs_maf---.job` for more detail.
