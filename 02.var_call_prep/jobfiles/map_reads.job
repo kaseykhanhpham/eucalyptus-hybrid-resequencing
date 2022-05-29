@@ -1,0 +1,27 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=bowtie
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=6gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=16
+#SBATCH --nodes=1
+#SBATCH --output=map_reads_%j.out
+#SBATCH --error=map_reads_%j.err
+
+pwd; hostname; date
+echo Working directory is $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR
+
+module purge
+module load bowtie2/2.4.2
+
+export BOWTIE2_INDEXES="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/ASM1654582v1"
+
+while read NAME
+do 
+    bowtie2 -p 16 -q --end-to-end -x ASM1654582v1 -1 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/"$NAME"_R1_paired_trimmed.fq -2 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/"$NAME"_R2_paired_trimmed.fq -S /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/map_reads/"$NAME"_mapped.sam --no-unal
+done < /blue/soltis/kasey.pham/euc_hyb_reseq/seq_ids.txt
+

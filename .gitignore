@@ -1,5 +1,6 @@
 finances
 meetings
+coverage_plots
 *.fastq
 *.fq
 *.fasta

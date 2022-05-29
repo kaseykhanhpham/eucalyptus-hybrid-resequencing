@@ -4,6 +4,7 @@ Pipeline for analysis of project resequencing introgressant _Eucalyptus globulus
 Directories are labeled in the order steps were performed. Computation performed on UF's HiperGator supercomputing cluster (UFRC), so job files are included where relevant.
 
 **Collaborators**: Rebecca Jones, Ariane Gélinas Marion, Brad Potts, René Vaillancourt, Pam Soltis, Doug Soltis
+
 **With helpful input from**: Zhe Cai, Matias Kirst, Brad Barbazuk
 
 

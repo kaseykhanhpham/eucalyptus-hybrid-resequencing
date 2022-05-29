@@ -1,0 +1,95 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=add_rg
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=11gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=depth_%j.out
+#SBATCH --error=depth_%j.err
+
+module load samtools/1.12
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WA01_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S320_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S1_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WA02_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S328_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S9_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WA03_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S336_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S17_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WA04_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S344_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S25_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WA05_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S352_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S33_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WB01_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S321_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S2_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WB02_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S329_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S10_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WB03_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S337_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S18_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WB04_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S345_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S26_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WB05_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S353_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S34_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WC01_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S322_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S3_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WC02_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S330_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S11_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WC03_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S338_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S19_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WC04_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S346_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S27_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WC05_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S354_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S35_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WD01_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S323_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S4_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WD02_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S331_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S12_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WD03_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S339_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S20_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WD04_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S347_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S28_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WD05_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S355_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S36_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WE01_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S324_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S5_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WE02_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S332_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S13_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WE03_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S340_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S21_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WE04_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S348_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S29_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WE05_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S356_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S37_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WF01_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S325_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S6_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WF02_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S333_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S14_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WF03_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S341_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S22_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WF04_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S349_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S30_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WF05_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S357_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S38_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WG01_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S326_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S7_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WG02_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S334_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S15_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WG03_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S342_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S23_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WG04_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S350_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S31_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WG05_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S358_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S39_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WH01_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S327_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S8_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WH02_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S335_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S16_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WH03_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S343_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S24_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WH04_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S351_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S32_marked.bam
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/WH05_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S359_marked.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup/S40_marked.bam
+

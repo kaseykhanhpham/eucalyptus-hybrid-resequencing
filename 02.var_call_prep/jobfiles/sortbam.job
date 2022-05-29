@@ -1,0 +1,24 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=sortbam
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=11gb
+#SBATCH --time=24:00:00
+#SBATCH --cpus-per-task=8
+#SBATCH --nodes=1
+#SBATCH --output=sortbam_%j.out
+#SBATCH --error=sortbam_%j.err
+
+pwd; hostname; date
+echo Working directory is $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR
+
+module purge
+module load samtools/1.12
+
+while read NAME
+do 
+    samtools sort -m 1G -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/03.sort/"$NAME"_sorted.bam -O bam -@ 7 /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/02.fixmate/"$NAME"_fixed.bam
+done < /blue/soltis/kasey.pham/euc_hyb_reseq/seq_ids.txt
