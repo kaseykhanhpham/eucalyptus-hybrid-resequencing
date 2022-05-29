@@ -1,5 +1,5 @@
 # Preparation for Variant Calling
-Steps taken here based loosely on protocol taught in Shin-Han Shiu's Fall 2018 Bioinformatics class at Michigan State University.
+Steps taken here based loosely on protocol taught in Shin-Han Shiu's Spring 2018 Bioinformatics class at Michigan State University.
 
 ### Map to _E. grandis_ reference genome
 
