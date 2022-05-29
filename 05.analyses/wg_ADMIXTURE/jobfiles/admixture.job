@@ -1,0 +1,27 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=wg_admix
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=1gb
+#SBATCH --time=1-00:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=wg_admixture_%j.out
+#SBATCH --error=wg_admixture_%j.err
+
+module load admixture/1.23
+
+export NAME="all_to_ASM1654582_fil_maf0.05"
+for K in {1..6}
+do
+    for r in {1..10}
+    do
+        echo doing K="$K",run="$r"
+        admixture -s ${RANDOM} --cv=10 "$NAME".bed "$K" > log.K"$K".r"$r".out
+        mv "$NAME"."$K".Q "$NAME".K"$K".r"$r".Q
+        mv "$NAME"."$K".P "$NAME".K"$K".r"$r".P
+    done
+done
+
