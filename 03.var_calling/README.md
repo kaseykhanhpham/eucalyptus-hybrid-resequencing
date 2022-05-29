@@ -16,7 +16,7 @@ ls -d "$READ_OUTDIR"/* > "$VC_DIR"/bam_inputs.txt
 ### Run Variant Caller
 I am using the variant caller [FreeBayes](https://github.com/freebayes/freebayes), which estimates internal population parameters for the individuals it is provided with using Bayesian inference. This is probably a good choice for my dataset given that I don't have a set of validated SNPs for training a variant caller like GATK. I followed recommendations on FreeBayes' Github page for parameter selection.
 
-I ran FreeBayes on each chromosome separately, with the same parameters each time. See the job files named `fb_NC0526**.job` for each set of individual parameters.
+I ran FreeBayes on each chromosome separately, with the same parameters each time. See the job files named `fb_NC0526--.job` for each set of individual parameters.
 
 **Command for chromosome 1:**
 
@@ -118,9 +118,9 @@ SNP filtering parameters and code were based on several sources, including perso
 * [bcftools](https://samtools.github.io/bcftools/bcftools.html)
 
 
-Four filtering sets were generated in total, only varying in minimum threshold for minor allele frequencing (MAF): {MAF > 0.00, 0.05, 0.10, 0.30}. Command for MAF > 0.05 dataset shown below, but see job files filtersnps_maf---.job and merge_vcfs_maf---.job for more detail.
+Four filtering sets were generated in total, only varying in minimum threshold for minor allele frequencing (MAF): {MAF > 0.00, 0.05, 0.10, 0.30}. Command for `MAF > 0.05` dataset shown below, but see job files `filtersnps_maf---.job` and `merge_vcfs_maf---.job` for more detail.
 
-**Command for MAF > 0.05 and merging of filtered chromosome VCFs:**
+**Command for `MAF > 0.05` and merging of filtered chromosome VCFs:**
 
 ```bash
 # Filter SNPs:
@@ -160,7 +160,7 @@ picard MergeVcfs -I "$LIST_DIR"/vcfs_fil.list -O all_to_ASM1654582_fil.vcf
 ```
 ### Get summary statistics for filtered variant sets
 
-Summary statistics and visualizations were generated for filtered sets in the [same way they were calculated for the raw variant set](#calculate-and-visualize-raw-variant-statistics). See vis_chr_maf---.job files for more detail. 
+Summary statistics and visualizations were generated for filtered sets in the [same way they were calculated for the raw variant set](#calculate-and-visualize-raw-variant-statistics). See `vis_chr_maf---.job` files for more detail. 
 
 **Calculate genome-wide statistics:**
 ```bash
@@ -176,4 +176,4 @@ bcftools stats "$MAF10DIR"/all_to_ASM1654582_fil_maf0.10.vcf > "$MAF00DIR"/all_f
 bcftools stats "$MAF30DIR"/all_to_ASM1654582_fil_maf0.30.vcf > "$MAF00DIR"/all_fil_maf0.30_stats.txt
 ```
 
-Chromosome and genome-wide statistics for raw and filtered variant sets can be found in the subdirectory variant_statistics and have been compiled in the file mdp3000.xlsx.
+Chromosome and genome-wide statistics for raw and filtered variant sets can be found in the subdirectory [variant_statistics](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/tree/main/03.var_calling/variant_statistics) and have been compiled in the file [mdp3000.xlsx](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/03.var_calling/variant_statistics/mdp3000.xlsx).
