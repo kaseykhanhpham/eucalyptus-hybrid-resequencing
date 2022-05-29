@@ -2,6 +2,7 @@ finances
 meetings
 jellyfish_plots
 coverage_plots
+SNP_chr_vis
 *.kml
 introgressednucmarkers.kmz
 Meehan_cordata_SSRs.xlsx
