@@ -43,7 +43,7 @@ module load fastplast/1.2.8
 
 # Iterate through dictionary and write values to job body
 for sample in sample_dic:
-    fp_line = "perl $HPC_FASTPLAST_DIR/Fast-Plast/fast-plast.pl -1 {READS_DIR}/{RUNSAMPLE1}_R1_paired.fq,{READS_DIR}/{RUNSAMPLE2}_R1_paired.fq -2 {READS_DIR}/{RUNSAMPLE1}_R2_paired.fq,{READS_DIR}/{RUNSAMPLE2}_R2_paired.fq -n {SAMPLE} --subsample 30000000 --threads 7 --user_bowtie {REF_LOC} --clean light --skip trim --coverage_analysis\n\n".format(READS_DIR = reads_dir, RUNSAMPLE1 = sample_dic[sample][0], RUNSAMPLE2 = sample_dic[sample][1], SAMPLE = sample, REF_LOC = ref_loc)
+    fp_line = "perl $HPC_FASTPLAST_DIR/Fast-Plast/fast-plast.pl -1 {READS_DIR}/{RUNSAMPLE1}_R1_paired.fq,{READS_DIR}/{RUNSAMPLE2}_R1_paired.fq -2 {READS_DIR}/{RUNSAMPLE1}_R2_paired.fq,{READS_DIR}/{RUNSAMPLE2}_R2_paired.fq -n {SAMPLE} --subsample 30000000 --threads 7 --user_bowtie {REF_LOC} --clean deep --skip trim --coverage_analysis --min_coverage 10 \n\n".format(READS_DIR = reads_dir, RUNSAMPLE1 = sample_dic[sample][0], RUNSAMPLE2 = sample_dic[sample][1], SAMPLE = sample, REF_LOC = ref_loc)
     job_text = job_text + fp_line
 
 # Write job
