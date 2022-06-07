@@ -3,9 +3,10 @@
 # python script to create symlinks of all raw reads in new directory
 # Kasey Pham, Jan 11 2022, Eucalyptus globulus x cordata resequencing project
 
+
 import os
 
-indir = "/orange/soltis/kasey.pham/eucalyptus_hyb_reseq/RAPiD_raw_reads"
+indir = "/orange/soltis/kasey.pham/eucalyptus_hyb_reseq/01.RAPiD_raw_reads"
 outdir = "/blue/soltis/kasey.pham/euc_hyb_reseq/reads/raw_reads"
 meta_tbl_name = "/blue/soltis/kasey.pham/euc_hyb_reseq/sample_sequencing_metadata.csv"
 inname_col = 0
