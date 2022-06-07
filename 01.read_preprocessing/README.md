@@ -56,9 +56,9 @@ while read NAME; do trimmomatic PE -threads 11 "$RAW_DIR"/"$NAME"_R1_raw.fastq.g
 
 **Reorganize trimmed reads:**
 ```bash
-INDIR="/orange/soltis/kasey.pham/eucalyptus_hyb_reseq/trimmed_reads"
-OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/"
-LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/"
+INDIR="/orange/soltis/kasey.pham/eucalyptus_hyb_reseq/02.trimmed_reads"
+OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
 
 # Merge unpaired reads
 while read NAME;
