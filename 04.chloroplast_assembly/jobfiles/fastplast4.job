@@ -1,0 +1,38 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=fastplast4
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=10gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=10
+#SBATCH --nodes=1
+
+pwd; hostname; date
+echo Working directory is $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR
+
+module purge
+module load fastplast/1.2.8
+
+perl $HPC_FASTPLAST_DIR/Fast-Plast/fast-plast.pl -1 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S326_R1_paired.fq,/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S7_R1_paired.fq -2 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S326_R2_paired.fq,/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S7_R2_paired.fq -n WG01 --subsample 30000000 --threads 7 --user_bowtie /blue/soltis/kasey.pham/euc_hyb_reseq/refs/organelle/AY780259.1 --clean deep --skip trim --coverage_analysis --min_coverage 10 
+
+perl $HPC_FASTPLAST_DIR/Fast-Plast/fast-plast.pl -1 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S334_R1_paired.fq,/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S15_R1_paired.fq -2 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S334_R2_paired.fq,/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S15_R2_paired.fq -n WG02 --subsample 30000000 --threads 7 --user_bowtie /blue/soltis/kasey.pham/euc_hyb_reseq/refs/organelle/AY780259.1 --clean deep --skip trim --coverage_analysis --min_coverage 10 
+
+perl $HPC_FASTPLAST_DIR/Fast-Plast/fast-plast.pl -1 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S342_R1_paired.fq,/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S23_R1_paired.fq -2 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S342_R2_paired.fq,/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S23_R2_paired.fq -n WG03 --subsample 30000000 --threads 7 --user_bowtie /blue/soltis/kasey.pham/euc_hyb_reseq/refs/organelle/AY780259.1 --clean deep --skip trim --coverage_analysis --min_coverage 10 
+
+perl $HPC_FASTPLAST_DIR/Fast-Plast/fast-plast.pl -1 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S350_R1_paired.fq,/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S31_R1_paired.fq -2 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S350_R2_paired.fq,/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S31_R2_paired.fq -n WG04 --subsample 30000000 --threads 7 --user_bowtie /blue/soltis/kasey.pham/euc_hyb_reseq/refs/organelle/AY780259.1 --clean deep --skip trim --coverage_analysis --min_coverage 10 
+
+perl $HPC_FASTPLAST_DIR/Fast-Plast/fast-plast.pl -1 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S358_R1_paired.fq,/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S39_R1_paired.fq -2 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S358_R2_paired.fq,/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S39_R2_paired.fq -n WG05 --subsample 30000000 --threads 7 --user_bowtie /blue/soltis/kasey.pham/euc_hyb_reseq/refs/organelle/AY780259.1 --clean deep --skip trim --coverage_analysis --min_coverage 10 
+
+perl $HPC_FASTPLAST_DIR/Fast-Plast/fast-plast.pl -1 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S327_R1_paired.fq,/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S8_R1_paired.fq -2 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S327_R2_paired.fq,/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S8_R2_paired.fq -n WH01 --subsample 30000000 --threads 7 --user_bowtie /blue/soltis/kasey.pham/euc_hyb_reseq/refs/organelle/AY780259.1 --clean deep --skip trim --coverage_analysis --min_coverage 10 
+
+perl $HPC_FASTPLAST_DIR/Fast-Plast/fast-plast.pl -1 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S335_R1_paired.fq,/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S16_R1_paired.fq -2 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S335_R2_paired.fq,/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S16_R2_paired.fq -n WH02 --subsample 30000000 --threads 7 --user_bowtie /blue/soltis/kasey.pham/euc_hyb_reseq/refs/organelle/AY780259.1 --clean deep --skip trim --coverage_analysis --min_coverage 10 
+
+perl $HPC_FASTPLAST_DIR/Fast-Plast/fast-plast.pl -1 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S343_R1_paired.fq,/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S24_R1_paired.fq -2 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S343_R2_paired.fq,/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S24_R2_paired.fq -n WH03 --subsample 30000000 --threads 7 --user_bowtie /blue/soltis/kasey.pham/euc_hyb_reseq/refs/organelle/AY780259.1 --clean deep --skip trim --coverage_analysis --min_coverage 10 
+
+perl $HPC_FASTPLAST_DIR/Fast-Plast/fast-plast.pl -1 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S351_R1_paired.fq,/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S32_R1_paired.fq -2 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S351_R2_paired.fq,/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S32_R2_paired.fq -n WH04 --subsample 30000000 --threads 7 --user_bowtie /blue/soltis/kasey.pham/euc_hyb_reseq/refs/organelle/AY780259.1 --clean deep --skip trim --coverage_analysis --min_coverage 10 
+
+perl $HPC_FASTPLAST_DIR/Fast-Plast/fast-plast.pl -1 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S359_R1_paired.fq,/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S40_R1_paired.fq -2 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S359_R2_paired.fq,/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S40_R2_paired.fq -n WH05 --subsample 30000000 --threads 7 --user_bowtie /blue/soltis/kasey.pham/euc_hyb_reseq/refs/organelle/AY780259.1 --clean deep --skip trim --coverage_analysis --min_coverage 10 
+
