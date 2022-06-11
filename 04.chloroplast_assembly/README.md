@@ -70,7 +70,6 @@ WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/cp_assembly"
 perl $HPC_FASTPLAST_DIR/Fast-Plast/fast-plast.pl -1 "$READS_DIR"/S324_R1_paired.fq,"$READS_DIR"/S5_R1_paired.fq -2 "$READS_DIR"/S324_R2_paired.fq,"$READS_DIR"/S5_R2_paired.fq -n WE01 --subsample 30000000 --threads 7 --only_coverage "$WDIR"/WE01/Final_Assembly/WE01_FULLCP.fsa --skip trim --min_coverage 10
 ```
 
-
 **Housekeeping:**
 ```bash
 SCRIPTS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
