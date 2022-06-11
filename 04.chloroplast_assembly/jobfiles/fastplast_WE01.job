@@ -1,0 +1,20 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=fastplast3
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=10gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=10
+#SBATCH --nodes=1
+
+pwd; hostname; date
+echo Working directory is $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR
+
+module purge
+module load fastplast/1.2.8
+
+perl $HPC_FASTPLAST_DIR/Fast-Plast/fast-plast.pl -1 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S324_R1_paired.fq,/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S5_R1_paired.fq -2 /blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S324_R2_paired.fq,/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads/S5_R2_paired.fq -n WE01 --subsample 30000000 --threads 7 --user_bowtie /blue/soltis/kasey.pham/euc_hyb_reseq/refs/organelle/AY780259.1 --clean deep --skip trim --coverage_analysis --min_coverage 10
+ 

@@ -1,0 +1,24 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=fastplast1
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=2gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=8
+#SBATCH --nodes=1
+
+pwd; hostname; date
+echo Working directory is $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR
+
+module purge
+module load mafft/7.490
+# WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/cp_assembly/WE01_debugging"
+
+mafft --auto --thread 8 afin_iter2_WB01WE01.fa > afin_iter2_WB01WE01_aligned.fa
+mafft --auto --thread 8 final_lsc_WB01WE01.fa > final_lsc_WB01WE01_aligned.fa
+mafft --auto --thread 8 final_irb_WB01WE01.fa > final_irb_WB01WE01_aligned.fa
+mafft --auto --thread 8 final_ssc_WB01WE01.fa > final_ssc_WB01WE01_aligned.fa
+
