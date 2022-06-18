@@ -1,0 +1,22 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=mafft
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=10gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=17
+#SBATCH --nodes=1
+#SBATCH --output=mafft_irb_%j.out
+#SBATCH --error=mafft_irb_%j.err
+
+pwd; hostname; date
+echo Working directory is $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR
+
+module purge
+module load mafft/7.490
+
+mafft --auto --thread 16 irb_assemblies.fas > irb_assemblies_aligned.fas
+
