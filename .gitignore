@@ -5,6 +5,8 @@ jellyfish_plots
 coverage_plots
 SNP_chr_vis
 *.kml
+.Rdata
+.Rhistory
 introgressednucmarkers.kmz
 Meehan_cordata_SSRs.xlsx
 UFL_014801 agarose gel.docx
