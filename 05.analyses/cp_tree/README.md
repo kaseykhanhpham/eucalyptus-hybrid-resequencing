@@ -38,4 +38,41 @@ SCRIPTS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
 python "$SCRIPTS_DIR"/concatenate_fasta.py irb_assemblies_aligned.fas,lsc_assemblies_aligned.fas,ssc_assemblies_aligned.fas concatenated_cp_aligned.fas
 ```
 
-## Infer chloroplast tree
+## Chloroplast tree
+
+**Phylogenetic analysis in [`IQTree`](http://www.iqtree.org/):**
+```bash
+# Run via job queueing in UFRC; see iqtree.job for more details
+# Resources: 2 Mb, 15 sec
+
+module load iq-tree/2.1.3
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/cp_tree"
+
+iqtree -s "$WDIR"/concatenated_cp_aligned.fas -st DNA -B 1000 -m MFP -nt 12 -pre concatenated_cp_aligned
+```
+
+**Plot phylogeny in `R`:**
+
+```R
+# Done on local computer
+library(ape)
+# init file names
+meta_name <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/00.metadata/03.seq_analysis/sample_spp_table.csv"
+intree_name <- "concatenated_cp_aligned.treefile"
+
+# read in files
+meta_table <- read.csv(paste(meta_name, sep = ""), header = TRUE, as.is = TRUE)
+intree <- read.tree(intree_name)
+
+# replace tip names
+label_order <- match(intree$tip.label, meta_table$RAPiD_ID)
+replacemt_labels <- paste(meta_table[label_order, "Accession"], meta_table[label_order, "Taxon"], sep = "_")
+intree$tip.label <- replacemt_labels
+
+# plot tree
+tip_colors <- sapply(meta_table[label_order, "Taxon"], function(x) ifelse(x == "cord_MR", "goldenrod1", ifelse(x == "glob_MR", "black", "deepskyblue4")))
+
+plot(intree, tip.color = tip_colors, type = "unrooted", lab4ut = "axial", cex = 1)
+```
+
+![chloroplast phylogeny results, tips labeled by accession and sample species](cp_tree_rough.png "Chloroplast Phylogeny")
