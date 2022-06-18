@@ -70,6 +70,23 @@ WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/cp_assembly"
 perl $HPC_FASTPLAST_DIR/Fast-Plast/fast-plast.pl -1 "$READS_DIR"/S324_R1_paired.fq,"$READS_DIR"/S5_R1_paired.fq -2 "$READS_DIR"/S324_R2_paired.fq,"$READS_DIR"/S5_R2_paired.fq -n WE01 --subsample 30000000 --threads 7 --only_coverage "$WDIR"/WE01/Final_Assembly/WE01_FULLCP.fsa --skip trim --min_coverage 10
 ```
 
+I noticed during alignment that the SSC and LSC regions for WE01 needed to be reverse-complemented. (Referenced [this](https://www.biostars.org/p/14614/) Biostars answer)
+
+```bash
+# working directory: /blue/soltis/kasey.pham/euc_hyb_reseq/cp_assembly/WE01/Final_Assembly
+module load biopieces/2.0
+mkdir $BP_DATA $BP_TMP $BP_LOG
+
+mv WE01_CP_pieces.fsa WE01_CP_pieces_raw.fsa
+# reverse complement just the LSC and SSC regions
+read_fasta -i WE01_CP_pieces_raw.fsa | grab -p lsc,ssc | reverse_seq | complement_seq | write_fasta -x -o WE01_CP_pieces.fsa
+# extract the IRB region as-is
+read_fasta -i WE01_CP_pieces_raw.fsa | grab -p irb | write_fasta -x -o irb_temp.fsa
+# merge IRB sequence with the reverse-complemented sequences
+cat irb_temp.fsa >> WE01_CP_pieces.fsa
+rm irb_temp.fsa
+```
+
 **Housekeeping:**
 ```bash
 SCRIPTS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
