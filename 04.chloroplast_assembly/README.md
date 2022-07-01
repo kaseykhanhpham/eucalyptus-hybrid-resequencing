@@ -113,3 +113,70 @@ do
     "$SCRIPTS_DIR"/clean_fastplast_dir.sh $NAME
 done
 ```
+
+### Format outgroups
+
+Used whole chloroplast assemblies of _E. viminalis_ ([CM024559.1](https://www.ncbi.nlm.nih.gov/nuccore/CM024559.1)) and _E. smithii_ ([MN736961.1](https://www.ncbi.nlm.nih.gov/nuccore/MN736961.1)) as outgroups.
+
+**_E. viminalis_:**
+
+```bash
+module load fastplast/1.2.8
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/cp_assembly/CM024559.1"
+REFS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/organelle"
+
+ln -s "$REFS_DIR"/CM024559.1.fasta "$WDIR"/CM024559.1.fasta
+
+perl $HPC_FASTPLAST_DIR/Fast-Plast/bin/sequence_based_ir_id.pl CM024559.1.fasta CM024559.1 3
+
+$HPC_FASTPLAST_DIR/Fast-Plast/bin/ncbi-blast-2.6.0+/bin/blastn -query CM024559.1_regions_split3.fsa -db  $HPC_FASTPLAST_DIR/Fast-Plast/bin/Angiosperm_Chloroplast_Genes.fsa -evalue 1e-10 -outfmt 6 > CM024559.1.split3.blastn
+
+perl $HPC_FASTPLAST_DIR/Fast-Plast/bin/orientate_plastome_v.2.0.pl CM024559.1_regions_split3.fsa CM024559.1.split3.blastn CM024559.1
+```
+
+**_E. smithii_:**
+
+```bash
+module load fastplast/1.2.8
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/cp_assembly/MN736961.1"
+REFS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/organelle"
+
+ln -s "$REFS_DIR"/MN736961.1.fasta "$WDIR"/MN736961.1.fasta
+
+perl $HPC_FASTPLAST_DIR/Fast-Plast/bin/sequence_based_ir_id.pl MN736961.1.fasta MN736961.1 3
+
+$HPC_FASTPLAST_DIR/Fast-Plast/bin/ncbi-blast-2.6.0+/bin/blastn -query MN736961.1_regions_split3.fsa -db  $HPC_FASTPLAST_DIR/Fast-Plast/bin/Angiosperm_Chloroplast_Genes.fsa -evalue 1e-10 -outfmt 6 > MN736961.1.split3.blastn
+
+perl $HPC_FASTPLAST_DIR/Fast-Plast/bin/orientate_plastome_v.2.0.pl MN736961.1_regions_split3.fsa MN736961.1.split3.blastn MN736961.1
+```
+
+**Reverse-complemented IRB for both outgroups:**
+```bash
+module load biopieces/2.0
+
+# E. viminalis
+cd /blue/soltis/kasey.pham/euc_hyb_reseq/cp_assembly/CM024559.1
+mkdir $BP_DATA $BP_TMP $BP_LOG
+
+mv CM024559.1_CP_pieces.fsa CM024559.1_CP_pieces_raw.fsa
+# reverse complement just the IRB regions
+read_fasta -i CM024559.1_CP_pieces_raw.fsa | grab -p irb | reverse_seq | complement_seq | write_fasta -x -o CM024559.1_CP_pieces.fsa
+# extract the LSC and SSC regions as-is
+read_fasta -i CM024559.1_CP_pieces_raw.fsa | grab -p lsc,ssc | write_fasta -x -o singlecopy_temp.fsa
+# merge IRB sequence with the reverse-complemented sequences
+cat singlecopy_temp.fsa >> CM024559.1_CP_pieces.fsa
+rm singlecopy_temp.fsa
+
+# E. smithii
+cd /blue/soltis/kasey.pham/euc_hyb_reseq/cp_assembly/MN736961.1
+mkdir $BP_DATA $BP_TMP $BP_LOG
+
+mv MN736961.1_CP_pieces.fsa MN736961.1_CP_pieces_raw.fsa
+# reverse complement just the IRB regions
+read_fasta -i MN736961.1_CP_pieces_raw.fsa | grab -p irb | reverse_seq | complement_seq | write_fasta -x -o MN736961.1_CP_pieces.fsa
+# extract the LSC and SSC regions as-is
+read_fasta -i MN736961.1_CP_pieces_raw.fsa | grab -p lsc,ssc | write_fasta -x -o singlecopy_temp.fsa
+# merge IRB sequence with the reverse-complemented sequences
+cat singlecopy_temp.fsa >> MN736961.1_CP_pieces.fsa
+rm singlecopy_temp.fsa
+```
