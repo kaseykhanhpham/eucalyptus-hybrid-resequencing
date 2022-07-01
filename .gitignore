@@ -4,6 +4,7 @@ methods
 jellyfish_plots
 coverage_plots
 SNP_chr_vis
+outgroup_seqs
 *.kml
 .Rdata
 .Rhistory
