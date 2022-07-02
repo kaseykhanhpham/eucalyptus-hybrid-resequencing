@@ -4,8 +4,8 @@
 #SBATCH --job-name=mafft
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=kasey.pham@ufl.edu
-#SBATCH --mem=10gb
-#SBATCH --time=4-00:00:00
+#SBATCH --mem=1gb
+#SBATCH --time=1:00:00
 #SBATCH --cpus-per-task=17
 #SBATCH --nodes=1
 #SBATCH --output=mafft_lsc_%j.out
