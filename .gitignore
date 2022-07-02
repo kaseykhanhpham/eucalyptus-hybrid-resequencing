@@ -16,3 +16,4 @@ K2_results.xlsx
 vcf_info.txt
 kasey_gatk_pipeline_notes.sh
 reseq_pipeline.sh
+concatenated_cp_aligned.treefile
