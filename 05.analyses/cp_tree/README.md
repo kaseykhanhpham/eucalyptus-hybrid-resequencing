@@ -28,14 +28,17 @@ module load mafft/7.490
 mafft --auto --thread 16 lsc_assemblies.fas > lsc_assemblies_aligned.fas
 ```
 
-Sequences looked good on manual inspection, decided not to mess with them and move on to phylogenetic inference.
+**Manual editing of alignments:**
+* Manually adjusted a few bases among several samples in lsc alignment in `BioEdit`. Saved as `lsc_assemblies_adjusted.fas`
+* Manually adjusted a few bases among several samples in ssc alignment in `BioEdit`. Saved as `ssc_assemblies_adjusted.fas`
+
 
 **Concatenate regions:**
 ```bash
 module load python/3.8
 SCRIPTS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
 
-python "$SCRIPTS_DIR"/concatenate_fasta.py irb_assemblies_aligned.fas,lsc_assemblies_aligned.fas,ssc_assemblies_aligned.fas concatenated_cp_aligned.fas
+python "$SCRIPTS_DIR"/concatenate_fasta.py irb_assemblies_aligned.fas,lsc_assemblies_adjusted.fas,ssc_assemblies_adjusted.fas concatenated_cp_aligned.fas
 ```
 
 ## Chloroplast tree
@@ -64,15 +67,22 @@ intree_name <- "concatenated_cp_aligned.treefile"
 meta_table <- read.csv(paste(meta_name, sep = ""), header = TRUE, as.is = TRUE)
 intree <- read.tree(intree_name)
 
+# add outgroup labels
+meta_table <- rbind(meta_table, c("HM347959.1", "", "E. grandis"))
+meta_table <- rbind(meta_table, c("KC180790.1", "", "E. saligna"))
+
 # replace tip names
 label_order <- match(intree$tip.label, meta_table$RAPiD_ID)
 replacemt_labels <- paste(meta_table[label_order, "Accession"], meta_table[label_order, "Taxon"], sep = "_")
 intree$tip.label <- replacemt_labels
 
+# root tree
+intree <- root(intree, c("E. grandis_"), resolve.root = TRUE)
+
 # plot tree
 tip_colors <- sapply(meta_table[label_order, "Taxon"], function(x) ifelse(x == "cord_MR", "goldenrod1", ifelse(x == "glob_MR", "black", "deepskyblue4")))
 
-plot(intree, tip.color = tip_colors, type = "unrooted", lab4ut = "axial", cex = 1)
+plot(intree, tip.color = tip_colors, cex = 1, show.node.label = TRUE, adj = 1, label.offset = 0.5)
 ```
 
 ![chloroplast phylogeny results, tips labeled by accession and sample species](cp_tree_rough.png "Chloroplast Phylogeny")

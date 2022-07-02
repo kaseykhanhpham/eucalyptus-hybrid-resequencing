@@ -3,6 +3,7 @@
 import os
 sample_list_file = "/blue/soltis/kasey.pham/euc_hyb_reseq/sample_ids.txt"
 cp_dir = "/blue/soltis/kasey.pham/euc_hyb_reseq/cp_assembly"
+outgroups = ["HM347959.1", "KC180790.1"]
 
 # Read in sample list
 sample_list_conn = open(sample_list_file, "r")
@@ -30,5 +31,26 @@ for sample in sample_list:
             out_conn.write(line)
     in_conn.close()
 out_conn.close()
+
+# Add outgroups
+for outgroup in outgroups:
+    in_file = "{CP_DIR}/{OUTGROUP}/{OUTGROUP}_CP_pieces.fsa".format(CP_DIR = cp_dir, OUTGROUP = outgroup)
+    in_conn = open(in_file, "r")
+    out_conn = open("dummy_file", "w")
+    for line in in_conn:
+        if line.startswith(">"):
+            # close previously open file
+            out_conn.close()
+            # read current chloroplast region
+            region = line.strip(">").strip()
+            # open relevant region file and write outgroup ID as header
+            out_conn = open("{REGION}_temp.fas".format(REGION = region), "a")
+            out_conn.write(">{OUTGROUP}\n".format(OUTGROUP = outgroup))
+        else:
+            # just write line to currently open file if part of sequence body
+            out_conn.write(line)
+    in_conn.close()
+out_conn.close()
+
 
 os.system("rm dummy_file")
