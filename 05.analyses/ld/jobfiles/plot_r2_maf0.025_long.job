@@ -1,0 +1,22 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=plotr2
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=10gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=plot_r2_%j.out
+#SBATCH --error=plot_r2_%j.err
+
+module load R/4.1 
+
+SCRIPTS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+CHROMOSOMES=(NC_052612.1 NC_052613.1 NC_052614.1 NC_052615.1 NC_052616.1 NC_052617.1 NC_052618.1 NC_052619.1 NC_052620.1 NC_052621.1 NC_052622.1)
+
+for NAME in "${CHROMOSOMES[@]}"
+do
+	Rscript "$SCRIPTS_DIR"/plot_r2.r "$NAME"_r2.csv r2_plots/"$NAME"_r2.png "$NAME" 500
+done
