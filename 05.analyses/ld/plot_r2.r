@@ -6,23 +6,16 @@
 library(ggplot2)
 
 # initialize location variables
-infile_dir <- commandArgs(trailingOnly = TRUE)[1]
-outfile_dir <- commandArgs(trailingOnly = TRUE)[2]
+infile <- commandArgs(trailingOnly = TRUE)[1]
+outfile <- commandArgs(trailingOnly = TRUE)[2]
 chr_name <- commandArgs(trailingOnly = TRUE)[3]
-dist_int <- commandArgs(trailingOnly = TRUE)[4]
-
-setwd(working_dir)
 
 # read input
-r2_tab <- read.csv(infile_dir, header = TRUE)
-
-avg_r2 <- sapply(seq(from = 1, to = nrow(r2_tab), by = dist_int), function(x) mean(r2_tab[seq(from = x, to = (x + (dist_int - 1))), "r2"]))
-
-avg_windows <- as.data.frame(cbind(dist = seq(from = dist_int, to = nrow(r2_tab), by = dist_int), avg_r2))
+r2_tab <- read.csv(infile, header = TRUE)
 
 # plot
-r2_plot <- ggplot(dat = avg_windows, aes(x = dist, y = avg_r2)) + geom_line() + ggtitle(label = paste("Linkage Disequilibrium of ", chr_name, sep = ""), subtitle = "R2 vs distance (bp)") + xlab("distance (bp)") + ylab("R2")
+r2_plot <- ggplot(dat = r2_tab, aes(x = dist, y = r2)) + geom_line() + ggtitle(label = paste("Linkage Disequilibrium of ", chr_name, sep = ""), subtitle = "R2 vs distance (bp)") + xlab("distance (bp)") + ylab("R2")
 
-png(width = 1600, height = 1000)
+png(filename = outfile, width = 1600, height = 1000, units = "px")
 r2_plot
 dev.off()
