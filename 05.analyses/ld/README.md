@@ -66,13 +66,27 @@ done
 **Results:**
 
 ### Short Range
+**Run plink to get pairwise r2 values:**
+```bash
+# Run on UFRC's queue system, see plink_maf0.025_short.job for more information.
+# Resources: 3.95 Gb, 13 min
 
+module load plink/1.90b3.39
+
+INFILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.00/all_to_ASM1654582_fil_maf0.00.vcf"
+CHROMOSOMES=(NC_052612.1 NC_052613.1 NC_052614.1 NC_052615.1 NC_052616.1 NC_052617.1 NC_052618.1 NC_052619.1 NC_052620.1 NC_052621.1 NC_052622.1)
+
+for CHR in "${CHROMOSOMES[@]}"
+do
+    plink --vcf "$INFILE" --double-id --allow-extra-chr --set-missing-var-ids @:# --maf 0.025 --mind 0.5 --chr "$CHR" --r2 gz --ld-window 1000 --ld-window-kb 100 -ld-window-r2 0 --make-bed  --vcf-half-call m --out "$CHR" --threads 12
+done
+```
 
 ## MAF = 0.05
 
 **Run plink to get pairwise r2 values:**
 ```bash
-# Run on UFRC's queue system, see plink_maf0.025_long.job for more information.
+# Run on UFRC's queue system, see plink_maf0.05_long.job for more information.
 # Resources: 6.65 Gb, 20 min
 
 module load plink/1.90b3.39
