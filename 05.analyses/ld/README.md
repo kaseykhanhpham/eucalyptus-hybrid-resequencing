@@ -63,8 +63,6 @@ do
 done
 ```
 
-**Results:**
-
 ### Short Range
 **Run plink to get pairwise r2 values:**
 ```bash
@@ -81,6 +79,24 @@ do
     plink --vcf "$INFILE" --double-id --allow-extra-chr --set-missing-var-ids @:# --maf 0.025 --mind 0.5 --chr "$CHR" --r2 gz --ld-window 1000 --ld-window-kb 100 -ld-window-r2 0 --make-bed  --vcf-half-call m --out "$CHR" --threads 12
 done
 ```
+
+Commands for averaging R2 values and plotting were the same as for long range.
+
+### Results
+
+| Chromosome | R2 = 0.20 Distance (bp) |
+| ---------- | ----------------------- |
+| 1          | 265 - 399               |
+| 2          | 138 - 170               |
+| 3          | 72 - 89                 |
+| 4          | 313 - 603               |
+| 5          | 40 - 48                 |
+| 6          | 307 - 474               |
+| 7          | 95 - 126                |
+| 8          |  105 - 122              |
+| 9          |  162 - 273              |
+| 10         |  318 - 776              |
+| 11         |  175 - 315              |
 
 ## MAF = 0.05
 
@@ -102,6 +118,8 @@ do
 done
 ```
 
+Commands for averaging R2 values and plotting were the same as for MAF = 0.025 long range analysis.
+
 ### Short Range
 **Run plink to get pairwise r2 values:**
 ```bash
@@ -118,3 +136,20 @@ do
     plink --vcf "$INFILE" --double-id --allow-extra-chr --set-missing-var-ids @:# --maf 0.05 --mind 0.5 --chr "$CHR" --r2 gz --ld-window 1000 --ld-window-kb 100 -ld-window-r2 0 --make-bed  --vcf-half-call m --out "$CHR" --threads 12
 done
 ```
+
+Commands for averaging R2 values and plotting were the same as for MAF = 0.025 long range analysis.
+
+### Results
+| Chromosome | R2 = 0.20 Distance (bp) |
+| ---------- | ----------------------- |
+| 1          | 1642 - 3969             |
+| 2          | 1069 - 2603             |
+| 3          | 489 - 835               |
+| 4          | 2304 - 5850             |
+| 5          | 317 - 567               |
+| 6          | 2263 - 99723            |
+| 7          | 695 - 1577              |
+| 8          | 867 - 1688              |
+| 9          | 1448 - 3645             |
+| 10         | 2890 - 7771             |
+| 11         | 1305 - 2772             |
