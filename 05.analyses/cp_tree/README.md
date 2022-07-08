@@ -61,10 +61,12 @@ iqtree -s "$WDIR"/concatenated_cp_aligned.fas -st DNA -B 1000 -m MFP -nt 12 -pre
 library(ape)
 # init file names
 meta_name <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/00.metadata/03.seq_analysis/sample_spp_table.csv"
+cp_hap_meta_name <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/00.metadata/01.field_sampling/40samples_KaseyUF_updateDec2020.csv"
 intree_name <- "concatenated_cp_aligned.treefile"
 
 # read in files
-meta_table <- read.csv(paste(meta_name, sep = ""), header = TRUE, as.is = TRUE)
+meta_table <- read.csv(meta_name, header = TRUE, as.is = TRUE)
+cp_table <- read.csv(cp_hap_meta_name, header = TRUE, as.is = TRUE)
 intree <- read.tree(intree_name)
 
 # add outgroup labels
@@ -73,16 +75,17 @@ meta_table <- rbind(meta_table, c("KC180790.1", "", "E. saligna"))
 
 # replace tip names
 label_order <- match(intree$tip.label, meta_table$RAPiD_ID)
-replacemt_labels <- paste(meta_table[label_order, "Accession"], meta_table[label_order, "Taxon"], sep = "_")
+cp_order <- match(meta_table[label_order, "Accession"], cp_table$RJgeno)
+replacemt_labels <- paste(meta_table[label_order, "Accession"], meta_table[label_order, "Taxon"], cp_table[cp_order, "JLA."], sep = "_")
 intree$tip.label <- replacemt_labels
 
 # root tree
-intree <- root(intree, c("E. grandis_"), resolve.root = TRUE)
+intree <- root(intree, c("E. grandis__NA"), resolve.root = TRUE)
 
 # plot tree
 tip_colors <- sapply(meta_table[label_order, "Taxon"], function(x) ifelse(x == "cord_MR", "goldenrod1", ifelse(x == "glob_MR", "black", "deepskyblue4")))
 
-plot(intree, tip.color = tip_colors, cex = 1, show.node.label = TRUE, adj = 1, label.offset = 0.5)
+plot(intree, tip.color = tip_colors, cex = 1, show.node.label = TRUE, adj = 1, align.tip.label = TRUE)
 ```
 
 ![chloroplast phylogeny results, tips labeled by accession and sample species](cp_tree_rough.png "Chloroplast Phylogeny")
