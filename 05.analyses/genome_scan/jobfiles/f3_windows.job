@@ -1,0 +1,19 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=f3_win
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=1gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=f3_windows_%j.out
+#SBATCH --error=f3_windows_%j.err
+
+module load R/4.1
+
+export R_LIBS="/home/kasey.pham/R/x86_64-pc-linux-gnu-library/4.1"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/introgression"
+
+Rscript "$WDIR"/f3_admixtools.r

@@ -1,0 +1,20 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=pi
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=1gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=pi_%j.out
+#SBATCH --error=pi_%j.err
+
+module load vcftools/0.1.16 
+
+INFILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.00/all_to_ASM1654582_fil_maf0.00.vcf"
+POPLIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan"
+
+vcftools --vcf "$INFILE" --out all_maf0.05 --window-pi 20000 --window-pi-step 2000 --keep "$POPLIST_DIR"/Eglobulus_MR.txt
+
