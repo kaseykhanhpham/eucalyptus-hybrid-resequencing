@@ -31,6 +31,7 @@ On UFRC:
 ```bash
 ENV_DIR="/blue/soltis/kasey.pham/conda/envs"
 conda create -yp "$ENV_DIR"/euc_hyb_reseq python=3.10 pip numpy scipy pandas plotnine
+pip install egglib
 ```
 
 On local computer:

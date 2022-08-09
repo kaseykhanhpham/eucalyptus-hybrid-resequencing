@@ -7,6 +7,7 @@ SNP_chr_vis
 outgroup_seqs
 no_outgroup
 r2_csv
+alignments
 *.kml
 .Rdata
 .Rhistory
@@ -18,3 +19,6 @@ vcf_info.txt
 kasey_gatk_pipeline_notes.sh
 reseq_pipeline.sh
 concatenated_cp_aligned.treefile
+all_maf0.05.windowed.weir.fst
+all_maf0.05.Tajima.D
+all_maf0.05.windowed.pi
