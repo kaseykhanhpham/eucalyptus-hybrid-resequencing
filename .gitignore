@@ -9,6 +9,7 @@ no_outgroup
 r2_csv
 alignments
 *.kml
+*.vcf
 .Rdata
 .Rhistory
 introgressednucmarkers.kmz
