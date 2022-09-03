@@ -21,5 +21,4 @@ kasey_gatk_pipeline_notes.sh
 reseq_pipeline.sh
 concatenated_cp_aligned.treefile
 all_maf0.05.windowed.weir.fst
-all_maf0.05.Tajima.D
-all_maf0.05.windowed.pi
+all_to_ASM1654582_fil_maf0.00_biallelic_noPL.vcf_scan_stats.tab

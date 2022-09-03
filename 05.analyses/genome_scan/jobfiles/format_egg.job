@@ -1,0 +1,19 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=formategg
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=1gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=format_egg_%j.out
+#SBATCH --error=format_egg_%j.err
+
+module load bcftools/1.15
+
+export VCFDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.00"
+
+bcftools annotate -x FORMAT/PL,FORMAT/AD,FORMAT/AO,FORMAT/QA -O v -o all_to_ASM1654582_fil_maf0.00_biallelic_noPL.vcf "$VCFDIR"/all_to_ASM1654582_fil_maf0.00_biallelic.vcf
+

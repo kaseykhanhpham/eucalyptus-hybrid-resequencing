@@ -49,16 +49,36 @@ POPLIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan"
 vcftools --vcf "$INFILE" --out all_maf0.05 --weir-fst-pop "$POPLIST_DIR"/Eglobulus_MR.txt --weir-fst-pop "$POPLIST_DIR"/Eglobulus_ref.txt --fst-window-size 20000 --fst-window-step 2000
 ```
 
-# Dxy Calculations
+# Sliding Window Pi, Tajima's D, Dxy Calculations
 
-**Filter _E. cordata_ samples from MAF0.00 VCF**
+**Split multi-allelic SNPs into biallelic SNPs**:
 ```bash
+# Performed in UFRC queue system. See format_egg.job for more details.
+# Resources: 8 Mb, 2 min
+module load bcftools/1.15
+
+export VCFDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.00"
+
+bcftools annotate -x FORMAT/PL,FORMAT/AD,FORMAT/AO,FORMAT/QA -O v -o all_to_ASM1654582_fil_maf0.00_biallelic_noPL.vcf "$VCFDIR"/all_to_ASM1654582_fil_maf0.00_biallelic.vcf
 
 ```
 
-Run python script to calculate Dxy in sliding windows across genome
-```bash
+**Created list of chromosomes to iterate through**
+Had to remove contigs which didn't have variants on them by hand before using this chromosome list file in the following script.
 
+**Run python script to calculate Dxy in sliding windows across genome**
+```bash
+# Performed in UFRC queue system. See window_stats.job for more details.
+# Resources: 
+module load conda
+
+ENV_DIR="/blue/soltis/kasey.pham/conda/envs"
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan"
+
+conda activate "$ENV_DIR"/euc_hyb_reseq
+
+python "$SCRIPT_DIR"/stats_windows.py "$WDIR"/all_to_ASM1654582_fil_maf0.00_biallelic_noPL.vcf 100000 20000 "$WDIR"/pop_structure.json "$WDIR"/outgroup_structure.json "$WDIR"/chr_list.txt
 ```
 
 # Introgression Statistics

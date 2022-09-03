@@ -1,0 +1,23 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=windows
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=1gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=stats_window_%j.out
+#SBATCH --error=stats_window_%j.err
+
+module load conda 
+
+ENV_DIR="/blue/soltis/kasey.pham/conda/envs"
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan"
+
+conda activate "$ENV_DIR"/euc_hyb_reseq
+
+python "$SCRIPT_DIR"/stats_windows.py "$WDIR"/all_to_ASM1654582_fil_maf0.00_biallelic_noPL.vcf 100000 20000 "$WDIR"/pop_structure.json "$WDIR"/outgroup_structure.json "$WDIR"/chr_list.txt
+
