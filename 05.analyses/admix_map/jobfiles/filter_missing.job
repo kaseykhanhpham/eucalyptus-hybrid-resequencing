@@ -1,0 +1,22 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=filtermiss
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=2gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=filtermissing_%j.out
+#SBATCH --error=filtermissing_%j.err
+
+module load vcftools/0.1.16
+module load bcftools/1.15
+
+INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.05"
+NAME="all_to_ASM1654582_fil_maf0.05"
+
+export MISS=1.0
+
+cat "$INDIR"/"$NAME".vcf | vcftools --vcf - --max-missing $MISS --recode --stdout | bcftools sort -O v - > "$NAME"_nomiss.vcf
