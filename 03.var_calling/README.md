@@ -157,6 +157,16 @@ LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps"
 ls *.vcf > "$LIST_DIR"/vcfs_fil.list
 # Merge VCFs
 picard MergeVcfs -I "$LIST_DIR"/vcfs_fil.list -O all_to_ASM1654582_fil.vcf
+
+# Separate SNPs and indels:
+# Run via job on UFRC, see split_indels_maf0.05.job for details
+# Resources used: 
+
+module load vcftools/0.1.16
+NAME="all_to_ASM1654582_fil_maf0.05"
+
+cat "$NAME".vcf | vcftools --vcf - --remove-indels --recode --stdout > "$NAME"_snps.vcf
+cat "$NAME".vcf | vcftools --vcf - --keep-only-indels --recode --stdout > "$NAME"_indels.vcf
 ```
 ### Get summary statistics for filtered variant sets
 
@@ -170,10 +180,15 @@ MAF05DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.05"
 MAF10DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.10"
 MAF30DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.30"
 
-bcftools stats "$MAF00DIR"/all_to_ASM1654582_fil_maf0.00.vcf > "$MAF00DIR"/all_fil_maf0.00_stats.txt
-bcftools stats "$MAF05DIR"/all_to_ASM1654582_fil_maf0.05.vcf > "$MAF00DIR"/all_fil_maf0.05_stats.txt
-bcftools stats "$MAF10DIR"/all_to_ASM1654582_fil_maf0.10.vcf > "$MAF00DIR"/all_fil_maf0.10_stats.txt
-bcftools stats "$MAF30DIR"/all_to_ASM1654582_fil_maf0.30.vcf > "$MAF00DIR"/all_fil_maf0.30_stats.txt
+bcftools stats "$MAF00DIR"/all_to_ASM1654582_fil_maf0.00_snps.vcf > "$MAF00DIR"/all_fil_maf0.00_snp_stats.txt
+bcftools stats "$MAF05DIR"/all_to_ASM1654582_fil_maf0.05_snps.vcf > "$MAF05DIR"/all_fil_maf0.05_snp_stats.txt
+bcftools stats "$MAF10DIR"/all_to_ASM1654582_fil_maf0.10_snps.vcf > "$MAF10DIR"/all_fil_maf0.10_snp_stats.txt
+bcftools stats "$MAF30DIR"/all_to_ASM1654582_fil_maf0.30_snps.vcf > "$MAF30DIR"/all_fil_maf0.30_snp_stats.txt
+
+bcftools stats "$MAF00DIR"/all_to_ASM1654582_fil_maf0.00_indels.vcf > "$MAF00DIR"/all_fil_maf0.00_indel_stats.txt
+bcftools stats "$MAF05DIR"/all_to_ASM1654582_fil_maf0.05_indels.vcf > "$MAF05DIR"/all_fil_maf0.05_indel_stats.txt
+bcftools stats "$MAF10DIR"/all_to_ASM1654582_fil_maf0.10_indels.vcf > "$MAF10DIR"/all_fil_maf0.10_indel_stats.txt
+bcftools stats "$MAF30DIR"/all_to_ASM1654582_fil_maf0.30_indels.vcf > "$MAF30DIR"/all_fil_maf0.30_indel_stats.txt
 ```
 
 Chromosome and genome-wide statistics for raw and filtered variant sets can be found in the subdirectory [variant_statistics](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/tree/main/03.var_calling/variant_statistics) and have been compiled in the file [mdp3000.xlsx](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/03.var_calling/variant_statistics/mdp3000.xlsx).
