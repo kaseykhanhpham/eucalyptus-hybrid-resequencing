@@ -2,16 +2,20 @@
 Procedure based heavily on protocol in [Ravinet and Meier's tutorial](https://speciationgenomics.github.io/pca/).
 
 ### Prune linked SNPs
-Note: this step will not work as given in my job files if using `plink v2` or higher.
+Done for both the maf=0.00 and maf=0.05 SNP sets since I use both extensively in other analyses. Note: this step will not work as given in my job files if using `plink v2` or higher.
 
 ```bash
 # Run via job on UFRC, see link_prune.job for details
-# Resources used: 2 Mb, 13 sec
+# Resources used: 1 Gb, 30 sec
 
 module load plink/1.90b3.39 
-export INFILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.05/all_to_ASM1654582_fil_maf0.05.vcf"
 
-plink --vcf "$INFILE" --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --vcf-half-call m --out all_maf0.05
+export INFILE00="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.00/all_to_ASM1654582_fil_maf0.00_snps.vcf"
+export INFILE05="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.05/all_to_ASM1654582_fil_maf0.05_snps.vcf"
+
+plink --vcf "$INFILE00" --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --vcf-half-call m --out all_maf0.00
+plink --vcf "$INFILE05" --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --vcf-half-call m --out all_maf0.05
+
 ```
 
 ### Calculate principal components
@@ -23,7 +27,7 @@ Note: this step also will not work as given in my job files if using `plink v2` 
 
 module load plink/1.90b3.39 
 
-export INFILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.05/all_to_ASM1654582_fil_maf0.05.vcf"
+export INFILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.05/all_to_ASM1654582_fil_maf0.05_snps.vcf"
 
 plink --vcf "$INFILE" --double-id --allow-extra-chr --set-missing-var-ids @:# --extract all_maf0.05.prune.in --vcf-half-call m --make-bed --pca --out all_maf0.05
 ```
@@ -33,10 +37,10 @@ Performed locally in [`R programming language`](https://www.r-project.org/).
 
 ```R
 library(ggplot2)
-working_dir <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/euc_hyb_reseq/Analyses/PCA/"
-table_address <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/euc_hyb_reseq/sample_spp_table.csv"
-pca_address <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/euc_hyb_reseq/Analyses/PCA/all_maf0.05.eigenvec"
-eigenval_address <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/euc_hyb_reseq/Analyses/PCA/all_maf0.05.eigenval"
+working_dir <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/euc_hyb_reseq/05.analyses/PCA/"
+table_address <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/euc_hyb_reseq/00.metadata/03.seq_analysis/sample_spp_table.csv"
+pca_address <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/euc_hyb_reseq/05.analyses/PCA/all_maf0.05.eigenvec"
+eigenval_address <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/euc_hyb_reseq/05.analyses/PCA/all_maf0.05.eigenval"
 
 # Read input files
 setwd(working_dir)

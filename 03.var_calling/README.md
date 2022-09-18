@@ -160,7 +160,7 @@ picard MergeVcfs -I "$LIST_DIR"/vcfs_fil.list -O all_to_ASM1654582_fil.vcf
 
 # Separate SNPs and indels:
 # Run via job on UFRC, see split_indels_maf0.05.job for details
-# Resources used: 
+# Resources used: 8.5 Mb, 25 min
 
 module load vcftools/0.1.16
 NAME="all_to_ASM1654582_fil_maf0.05"

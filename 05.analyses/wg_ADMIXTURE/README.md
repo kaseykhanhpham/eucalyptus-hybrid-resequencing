@@ -4,24 +4,41 @@ Uses the maximum-likelihood population structure program [`ADMIXTURE`](http://da
 
 ## `ADMIXTURE` on all samples
 
+Done for both MAF=0.00 and MAF=0.05 variant sets.
+
 ### Create `BIM` file with variants for `ADMIXTURE`
 This analysis needs a set of unlinked SNPs as input. I already generated a set of variants pruned for linkage for the PCA analysis, see [that section](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/tree/main/05.analyses/PCA#prune-linked-snps) for more details.
 
 ```bash
 module load plink/1.90b3.39
-VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.05"
-PRUNED_VARS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca"
+# maf=0.00
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/maf0.00"
+VCF_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.00/all_to_ASM1654582_fil_maf0.00_snps.vcf"
+PRUNED_VARS="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.00/all_maf0.00.prune.in"
+OUTNAME="all_to_ASM1654582_fil_maf0.00"
 
-plink --vcf "$VCF_DIR"/all_to_ASM1654582_fil_maf0.05.vcf --extract "$PRUNED_VARS_DIR"/all_maf0.05.prune.in --set-missing-var-ids @:# --allow-extra-chr --vcf-half-call m --make-bed --out all_to_ASM1654582_fil_maf0.05
-awk '{$1="0";print $0}' all_to_ASM1654582_fil_maf0.05.bim > all_to_ASM1654582_fil_maf0.05.bim.tmp
-mv all_to_ASM1654582_fil_maf0.05.bim.tmp all_to_ASM1654582_fil_maf0.05.bim
+cd "$WDIR"
+plink --vcf "$VCF_FILE" --extract "$PRUNED_VARS" --set-missing-var-ids @:# --allow-extra-chr --vcf-half-call m --make-bed --out "$OUTNAME"
+awk '{$1="0";print $0}' "$OUTNAME".bim > "$OUTNAME".bim.tmp
+mv "$OUTNAME".bim.tmp "$OUTNAME".bim
+
+# maf=0.05
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/maf0.05"
+VCF_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.05/all_to_ASM1654582_fil_maf0.05_snps.vcf"
+PRUNED_VARS="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.05/all_maf0.05.prune.in"
+OUTNAME="all_to_ASM1654582_fil_maf0.05"
+
+cd "$WDIR"
+plink --vcf "$VCF_FILE" --extract "$PRUNED_VARS" --set-missing-var-ids @:# --allow-extra-chr --vcf-half-call m --make-bed --out "$OUTNAME"
+awk '{$1="0";print $0}' "$OUTNAME".bim > "$OUTNAME".bim.tmp
+mv "$OUTNAME".bim.tmp "$OUTNAME".bim
 ```
 
 ### Run `ADMIXTURE`
-`ADMIXTURE` requires that you specify a `K` value (the number of bins). I ran `K = 1` to `K = 6` with 10 replicate runs per K and 10 cross-validation splits per run (a total of 60 runs with 10-fold CV for each).
+`ADMIXTURE` requires that you specify a `K` value (the number of bins). I ran `K = 1` to `K = 6` with 10 replicate runs per K and 10 cross-validation splits per run (a total of 60 runs with 10-fold CV for each). Showing the command for only MAF=0.05 below, for commands for each MAF, see `admixture_maf0.0X.job`.
 
 ```bash
-# Run via job on UFRC, see admixture.job for details
+# Run via job on UFRC, see admixture_maf0.05.job for details
 # Resources used: 163 Mb, 10 min
 
 module load admixture/1.23
@@ -34,9 +51,9 @@ do
     for r in {1..10}
     do
         echo doing K="$K",run="$r"
-        admixture -s ${RANDOM} --cv=10 "$NAME".bed "$K" > log.K"$K".r"$r".out
-        mv "$NAME"."$K".Q "$NAME".K"$K".r"$r".Q
-        mv "$NAME"."$K".P "$NAME".K"$K".r"$r".P
+        admixture -s ${RANDOM} --cv=10 "$NAME".bed "$K" > admixture_output/log.K"$K".r"$r".out
+        mv "$NAME"."$K".Q admixture_output/"$NAME".K"$K".r"$r".Q
+        mv "$NAME"."$K".P admixture_output/"$NAME".K"$K".r"$r".P
     done
 done
 ```
