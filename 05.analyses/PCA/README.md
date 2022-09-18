@@ -33,9 +33,9 @@ plink --vcf "$INFILE" --double-id --allow-extra-chr --set-missing-var-ids @:# --
 ```
 
 ### Plot principal components
-Performed locally in [`R programming language`](https://www.r-project.org/). Used metadata to color samples by type: reference _E. cordata_ ("cord", yellow), reference _E. globulus_ ("glob_ref", blue), or introgressed _E. globulus_ ("glob_MR", black).
+Performed locally in [`R programming language`](https://www.r-project.org/). Used metadata to color samples by type: reference _E. cordata_ ("cord_MR", yellow), reference _E. globulus_ ("glob_ref", blue), or introgressed _E. globulus_ ("glob_MR", black).
 
-**MAF=0.00**
+**MAF=0.00:**
 
 ```R
 library(ggplot2)
@@ -86,7 +86,7 @@ d <- d + xlab(paste("PC2 (", signif(pve$pve[2], 3), ")", sep = "")) + ylab(paste
 d
 ```
 
-**MAF=0.05**
+**MAF=0.05:**
 
 ```R
 library(ggplot2)
@@ -136,6 +136,11 @@ d <- d + coord_equal() + theme_light()
 d <- d + xlab(paste("PC2 (", signif(pve$pve[2], 3), ")", sep = "")) + ylab(paste("PC3 (", signif(pve$pve[3], 3), ")", sep = "")) + ggtitle("maf=0.05, PC2 vs. PC3")
 d
 ```
+
+**Results:**
+
+Two samples, WF03 and WG04, were very different from the rest of their groups (reference _E. globulus_ and introgressed _E. globulus_ respectively) for MAF=0.00 plots. WG04 fell back within range of the rest of introgressed _E. globulus_ variation in MAF=0.05 plots. Below, MAF=0.05 plots are shown.
+
 
 ![Plot of PC1 vs PC2; PC1 differentiates strongly between _E. cordata_ and _E. globulus_ (both introgressant and pure), while PC2 differentiates between introgressant and pure _E. globulus_, with _E. cordata_ clustering with introgressant _E. globulus_.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/PCA/maf0.05/maf05_pc12_labeled.png "PC1 vs. PC2")
 
