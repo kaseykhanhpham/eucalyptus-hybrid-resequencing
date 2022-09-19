@@ -1,7 +1,7 @@
 # Whole-genome PCA
 Procedure based heavily on protocol in [Ravinet and Meier's tutorial](https://speciationgenomics.github.io/pca/).
 
-### Prune linked SNPs
+## Prune linked SNPs
 Done for both the maf=0.00 and maf=0.05 SNP sets since I use both extensively in other analyses. Note: this step will not work as given in my job files if using `plink v2` or higher.
 
 ```bash
@@ -18,7 +18,7 @@ plink --vcf "$INFILE05" --double-id --allow-extra-chr --set-missing-var-ids @:# 
 
 ```
 
-### Calculate principal components
+## Calculate principal components
 Note: this step also will not work as given in my job files if using `plink v2` or higher.
 
 ```bash
@@ -32,7 +32,7 @@ export INFILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.
 plink --vcf "$INFILE" --double-id --allow-extra-chr --set-missing-var-ids @:# --extract all_maf0.05.prune.in --vcf-half-call m --make-bed --pca --out all_maf0.05
 ```
 
-### Plot principal components
+## Plot principal components
 Performed locally in [`R programming language`](https://www.r-project.org/). Used metadata to color samples by type: reference _E. cordata_ ("cord_MR", yellow), reference _E. globulus_ ("glob_ref", blue), or introgressed _E. globulus_ ("glob_MR", black).
 
 **MAF=0.00:**
@@ -149,3 +149,84 @@ Two samples, WF03 and WG04, were very different from the rest of their groups (r
 ![Plot of PC2 vs PC3; pure _E. globulus_ seems to cluster slightly away from the other individuals, while _E. cordata_ clusters tightly in the center of a cloud of introgressant _E. globulus_.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/PCA/maf0.05/maf05_pc23_labeled.png "PC2 vs. PC3")
 
 ![Barplot of percentage genetic variation explained by each principal component; PC1 explains about 30% of variation, while all other PCs pictured explain about 5%](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/PCA/maf0.05/maf05_pc_var_explained.png "Percent Variance Explained by each PC")
+
+## Investigate Odd Samples
+WF03 and WG04 were very distant in PC plots from the rest of their sample groups. Calculated Fsts from odd samples to the rest of the groups to decide how big of an issue this would be.
+
+```bash
+module load vcftools/0.1.16
+
+INFILE00="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.00/all_to_ASM1654582_fil_maf0.00_snps.vcf"
+INFILE05="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.05/all_to_ASM1654582_fil_maf0.05_snps.vcf"
+
+# WF03, MAF=0.00
+
+vcftools --vcf "$INFILE00" --weir-fst-pop WF03.txt --weir-fst-pop Eglobulus_ref_withoutWF03.txt --out maf0.00_wf03_globref
+
+vcftools --vcf "$INFILE00" --weir-fst-pop WF03.txt --weir-fst-pop Eglobulus_MR.txt --out maf0.00_wf03_globmr
+
+vcftools --vcf "$INFILE00" --weir-fst-pop WF03.txt --weir-fst-pop Ecordata.txt --out maf0.00_wf03_cord
+
+# WG04, MAF=0.00
+
+vcftools --vcf "$INFILE00" --weir-fst-pop WG04.txt --weir-fst-pop Eglobulus_ref.txt --out maf0.00_wg04_globref
+
+vcftools --vcf "$INFILE00" --weir-fst-pop WG04.txt --weir-fst-pop Eglobulus_MR_withoutWG04.txt --out maf0.00_wg04_globmr
+
+vcftools --vcf "$INFILE00" --weir-fst-pop WG04.txt --weir-fst-pop Ecordata.txt --out maf0.00_wg04_cord
+
+# WF03, MAF=0.05
+
+vcftools --vcf "$INFILE05" --weir-fst-pop WF03.txt --weir-fst-pop Eglobulus_ref_withoutWF03.txt --out maf0.05_wf03_globref
+
+vcftools --vcf "$INFILE05" --weir-fst-pop WF03.txt --weir-fst-pop Eglobulus_MR.txt --out maf0.05_wf03_globmr
+
+vcftools --vcf "$INFILE05" --weir-fst-pop WF03.txt --weir-fst-pop Ecordata.txt --out maf0.05_wf03_cord
+```
+
+Get genome-wide average in `R`:
+
+```R
+maf00_wf03_globref_tab <- read.table("maf0.00_wf03_globref.weir.fst", header = TRUE, na.strings = "-nan")
+summary(na.omit(maf00_wf03_globref_tab$WEIR_AND_COCKERHAM_FST))
+
+maf00_wf03_globmr_tab <- read.table("maf0.00_wf03_globmr.weir.fst", header = TRUE, na.strings = "-nan")
+summary(na.omit(maf00_wf03_globmr_tab$WEIR_AND_COCKERHAM_FST))
+
+maf00_wf03_cord_tab <- read.table("maf0.00_wf03_cord.weir.fst", header = TRUE, na.strings = "-nan")
+summary(na.omit(maf00_wf03_cord_tab$WEIR_AND_COCKERHAM_FST))
+
+maf00_wg04_globref_tab <- read.table("maf0.00_wg04_globref.weir.fst", header = TRUE, na.strings = "-nan")
+summary(na.omit(maf00_wg04_globref_tab$WEIR_AND_COCKERHAM_FST))
+
+maf00_wg04_globmr_tab <- read.table("maf0.00_wg04_globmr.weir.fst", header = TRUE, na.strings = "-nan")
+summary(na.omit(maf00_wg04_globref_tab$WEIR_AND_COCKERHAM_FST))
+
+maf00_wg04_cord_tab <- read.table("maf0.00_wg04_cord.weir.fst", header = TRUE, na.strings = "-nan")
+summary(na.omit(maf00_wg04_cord_tab$WEIR_AND_COCKERHAM_FST))
+
+maf05_wf03_globref_tab <- read.table("maf0.05_wf03_globref.weir.fst", header = TRUE, na.strings = "-nan")
+summary(na.omit(maf05_wf03_globref_tab$WEIR_AND_COCKERHAM_FST))
+
+maf05_wf03_globmr_tab <- read.table("maf0.05_wf03_globmr.weir.fst", header = TRUE, na.strings = "-nan")
+summary(na.omit(maf05_wf03_globmr_tab$WEIR_AND_COCKERHAM_FST))
+
+maf05_wf03_cord_tab <- read.table("maf0.05_wf03_cord.weir.fst", header = TRUE, na.strings = "-nan")
+summary(na.omit(maf05_wf03_cord_tab$WEIR_AND_COCKERHAM_FST))
+```
+
+Results:
+
+| MAF  | Group 1 | Group 2      | Min   | 1st Quart | Median | Mean  | 3rd Quart | Max  |
+|------|---------|--------------|-------|-----------|--------|------ |-----------|------|
+| 0.00 | WF03    | E. glob ref  | -1.09 | -0.36     | -0.26  | -0.17 | 0.05      | 1.00 |
+| 0.00 | WF03    | E. glob intr | -1.01 | -0.34     | -0.25  | -0.16 | 0.00      | 1.00 |
+| 0.00 | WF03    | E. cordata   | -1.09 | -0.24     | 0.11   | 0.21  | 0.83      | 1.00 |
+| 0.00 | WG04    | E. glob ref  | -1.09 | -0.36     | -0.27  | -0.16 | 0.00      | 1.00 |
+| 0.00 | WG04    | E. glob intr | -1.01 | -0.34     | -0.24  | -0.16 | -0.03     | 1.00 |
+| 0.00 | WG04    | E. cordata   | -1.09 | -0.24     | 0.096  | 0.21  | 0.82      | 1.00 |
+| 0.05 | WF03    | E. glob ref  | -1.09 | -0.36     | -0.24  | -0.15 | 0.06      | 1.00 |
+| 0.05 | WF03    | E. glob intr | -1.01 | -0.34     | -0.22  | -0.14 | 0.04      | 1.00 |
+| 0.05 | WF03    | E. cordata   | -1.09 | -0.12     | 0.23   | 0.29  | 0.83      | 1.00 |
+
+**Conclusion:** Divergence is pretty consistent between problem samples, their own group, and the other _E. globulus_ group but is much less than for problem samples with _E. cordata_. I can't see a reason to exclude them since they're exhibiting the pattern of divergence I'd expect of any other sample (can't speak to the degree of divergence though). HOWEVER: Since most of Fst values are negative (indicating larger variation within than between populations), it might not be the best metric to use for evaluating these samples. Will need to test whether results are robust to excluding WF03 at the very least.
