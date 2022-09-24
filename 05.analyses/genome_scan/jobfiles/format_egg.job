@@ -13,7 +13,7 @@
 
 module load bcftools/1.15
 
-export VCFDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.00"
+VCFDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.00"
 
-bcftools annotate -x FORMAT/PL,FORMAT/AD,FORMAT/AO,FORMAT/QA -O v -o all_to_ASM1654582_fil_maf0.00_biallelic_noPL.vcf "$VCFDIR"/all_to_ASM1654582_fil_maf0.00_biallelic.vcf
+bcftools annotate -x FORMAT/PL,FORMAT/AD,FORMAT/AO,FORMAT/QA -O v -o - "$VCFDIR"/all_to_ASM1654582_fil_maf0.00_snps.vcf | bcftools norm -m -any -O v -o - > all_to_ASM1654582_fil_maf0.00_snps_biallelic_formatted.vcf
 
