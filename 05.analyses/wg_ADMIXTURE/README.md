@@ -39,7 +39,7 @@ mv "$OUTNAME".bim.tmp "$OUTNAME".bim
 
 ```bash
 # Run via job on UFRC, see admixture_maf0.05.job for details
-# Resources used: 163 Mb, 10 min
+# Resources used: 150 Mb, 1 hr (420 Mb, 3 hr for MAF=0.00)
 
 module load admixture/1.23
 
@@ -105,7 +105,7 @@ The individual WF03/1051 was distant from all other points in the PCA plots, so 
 
 ```bash
 module load plink/1.90b3.39
-VCF_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.05/all_to_ASM1654582_fil_maf0.05.vcf"
+VCF_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.05/all_to_ASM1654582_fil_maf0.05_snps.vcf"
 PRUNED_VARS_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.05/all_maf0.05.prune.in"
 
 # Create file with samples to exclude
@@ -121,7 +121,7 @@ mv all_to_ASM1654582_fil_maf0.05_noWF03.bim.tmp all_to_ASM1654582_fil_maf0.05_no
 
 ```bash
 # Run via job on UFRC, see admixture_maf0.05_noWF03.job for details
-# Resources used: 163 Mb, 10 min
+# Resources used: 150 Mb, 1 hr
 
 module load admixture/1.23
 
@@ -165,4 +165,4 @@ pong -m all_to_ASM1654582_fil_maf0.05_noWF03_filemap.txt -i all_to_ASM1654582_fi
 conda deactivate
 ```
 
-![ADMIXTURE K=2 through K=6 excluding sample WF03, summarized over 10 individual runs in pong. In K=2, introgressed _E. globulus_ still has an estimated 1% admixture rate with _E. cordata_ while "pure" _E. globulus_ still has an estimated 2% admixture rate with _E. cordata_.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/without_wf03/all_to_ASM1654582_fil_maf0.05_ADMIXTURE_pong_withoutWF03.png "ADMIXTURE K=2 through K=6 without WF03")
+![ADMIXTURE K=2 through K=6 excluding sample WF03, summarized over 10 individual runs in pong. In K=2, introgressed _E. globulus_ still has an estimated 1% admixture rate with _E. cordata_ while "pure" _E. globulus_ still has an estimated 2% admixture rate with _E. cordata_.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/without_wf03/all_to_ASM1654582_fil_maf0.05_noWF03_pong.png "ADMIXTURE K=2 through K=6 without WF03")
