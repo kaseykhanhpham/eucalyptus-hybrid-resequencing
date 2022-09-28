@@ -1,0 +1,44 @@
+doing NC_052612.1
+min LD at 0.2: 268
+max LD at 0.2: 670
+midpoint LD at 0.2: 469.0
+doing NC_052613.1
+min LD at 0.2: 162
+max LD at 0.2: 236
+midpoint LD at 0.2: 199.0
+doing NC_052614.1
+min LD at 0.2: 81
+max LD at 0.2: 107
+midpoint LD at 0.2: 94.0
+doing NC_052615.1
+min LD at 0.2: 384
+max LD at 0.2: 831
+midpoint LD at 0.2: 607.5
+doing NC_052616.1
+min LD at 0.2: 44
+max LD at 0.2: 61
+midpoint LD at 0.2: 52.5
+doing NC_052617.1
+min LD at 0.2: 362
+max LD at 0.2: 733
+midpoint LD at 0.2: 547.5
+doing NC_052618.1
+min LD at 0.2: 105
+max LD at 0.2: 149
+midpoint LD at 0.2: 127.0
+doing NC_052619.1
+min LD at 0.2: 120
+max LD at 0.2: 136
+midpoint LD at 0.2: 128.0
+doing NC_052620.1
+min LD at 0.2: 194
+max LD at 0.2: 360
+midpoint LD at 0.2: 277.0
+doing NC_052621.1
+min LD at 0.2: 405
+max LD at 0.2: 1369
+midpoint LD at 0.2: 887.0
+doing NC_052622.1
+min LD at 0.2: 228
+max LD at 0.2: 433
+midpoint LD at 0.2: 330.5
