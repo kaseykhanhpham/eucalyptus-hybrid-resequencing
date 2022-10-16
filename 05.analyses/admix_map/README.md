@@ -9,7 +9,7 @@ Overview of the method: [Winkler et al. 2010](https://doi.org/10.1146/annurev-ge
 ### Remove variants with missing genotypes
 ```bash
 # Performed in UFRC queue system. See filter_missing.job for more details.
-# Resources: 80 Mb, 2 min
+# Resources: 75 Mb, 1 min
 
 module load vcftools/0.1.16
 module load bcftools/1.15
@@ -39,16 +39,29 @@ python "$SCRIPTDIR"/checkVCF.py -r "$GENOMEDIR"/GCF_016545825.1_ASM1654582v1_gen
 
 ### Filter all variants with samples with haploid GT calls
 ```bash
-module load vcflib/1.0.1
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
 module load bcftools/1.15
 
-bcftools filter -e FMT/GT="hap" -O v -o all_to_ASM1654582_fil_maf0.05_snps_nohap all_to_ASM1654582_fil_maf0.05_snps_nomiss.vcf
+bcftools filter -e 'FORMAT/GT="hap"' -O v -o all_to_ASM1654582_fil_maf0.05_snps_nohap.vcf all_to_ASM1654582_fil_maf0.05_snps_nomiss.vcf
 ```
 
 ### Phase alleles with [`Beagle`](https://faculty.washington.edu/browning/beagle/beagle.html)
 
 ```bash
 # Performed in UFRC queue system. See filter_missing.job for more details.
-# Resources: 75 Mb, 1 min
+# Resources: 1.52 Mb, 30s
+module load beagle/5.2
+
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/05.analyses/admix_map"
+NAME="all_to_ASM1654582_fil_maf0.05_snps_nohap"
+
+"$HPC_BEAGLE_BIN"/beagle gt="$NAME".vcf out="$NAME"_phased impute=false burnin=5 iterations=20 phase-states=280 nthreads=11
+```
+
+### Run admixture mapping software [`flare`](https://github.com/browning-lab/flare)
+
+Install `flare` and download genetic map for _E. grandis_:
+
+```bash
 
 ```
