@@ -19,8 +19,8 @@ We now aim to characterize the regions of nuclear introgression in these previou
 
 
 ## References
-* The whole-genome long read assembly of _Eucalyptus grandis_: [ASM165458v1](https://www.ncbi.nlm.nih.gov/assembly/GCF_016545825.1/)
-* The [annotation of ASM165458v1](https://www.ncbi.nlm.nih.gov/genome/annotation_euk/Eucalyptus_grandis/102/)
+* The whole-genome long read assembly of _Eucalyptus globulus_ (in prep): EGLOB-X46
+* The annotation of the EGLOB-X46 (in prep)
 * The chloroplast assembly of _Eucalyptus globulus_: [AY780259.1](https://www.ncbi.nlm.nih.gov/nuccore/AY780259.1/)
 
 

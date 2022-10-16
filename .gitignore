@@ -1,6 +1,7 @@
 finances
 meetings
 methods
+references
 jellyfish_plots
 coverage_plots
 SNP_chr_vis
@@ -22,3 +23,4 @@ reseq_pipeline.sh
 concatenated_cp_aligned.treefile
 all_maf0.05.windowed.weir.fst
 all_to_ASM1654582_fil_maf0.00_biallelic_noPL.vcf_scan_stats.tab
+12864_2012_4136_MOESM1_ESM.xlsx
