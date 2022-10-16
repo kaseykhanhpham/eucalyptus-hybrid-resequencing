@@ -1,0 +1,19 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=prunevcf
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=100mb
+#SBATCH --time=10:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=prune_vcf_%j.out
+#SBATCH --error=prune_vcf_%j.err
+
+module load plink/1.90b3.39 
+
+INFILE00="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.00/all_to_ASM1654582_fil_maf0.00_snps.vcf"
+PRUNEDDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.00"
+
+plink --vcf "$INFILE00" --double-id --allow-extra-chr --set-missing-var-ids @:# --extract "$PRUNEDDIR"/all_maf0.00.prune.in --vcf-half-call m --recode vcf --out all_maf0.00_prune

@@ -1,0 +1,16 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=vcf2sfs
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=5gb
+#SBATCH --time=1:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=vcf2sfs_%j.out
+#SBATCH --error=vcf2sfs_%j.err
+
+module load R/4.2
+
+Rscript run_vcf2sfs.r
