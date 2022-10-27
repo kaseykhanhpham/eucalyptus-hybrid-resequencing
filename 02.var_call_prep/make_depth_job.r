@@ -4,8 +4,8 @@
 # Currently hardcoded with specific files, not generalizeable!
 # Usage: Rscript make_depth_job.r
 
-sample_table_name <- "/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/01.readgroups/readgroup_table.txt"
-input_dir <- "/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup"
+sample_table_name <- "/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/02.process_reads/01.readgroups/readgroup_table.txt"
+input_dir <- "/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/02.process_reads/04.markdup"
 infile_suffix <- "_marked.bam"
 sample_col <- 1
 in_id_col <- 3
@@ -38,10 +38,10 @@ job_text <- gsub("EMAIL", email, job_text)
 
 for(out_sample in out_sample_list){
     sample_ids <- sample_table[which(sample_table[,sample_col] == out_sample), in_id_col]
-    command_text <- "samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth/NAMEHERE_cover.txt FILESHERE\n"
+    command_text <- "samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/02.process_reads/05.depth/NAMEHERE_cover.txt FILESHERE\n"
     command_text <- gsub("NAMEHERE", out_sample, command_text)
     command_text <- gsub("FILESHERE", paste(paste(input_dir, "/", sample_ids, infile_suffix, sep = ""), collapse = " "), command_text)
     job_text <- paste(job_text, command_text, "\n", sep = "")
 }
 
-write.table(job_text, "depth.job")
+write.table(job_text, "depth.job", quote = FALSE)

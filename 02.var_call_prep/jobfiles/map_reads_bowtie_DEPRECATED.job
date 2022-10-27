@@ -1,10 +1,10 @@
 #!/bin/bash
 #SBATCH --account=soltis
 #SBATCH --qos=soltis-b
-#SBATCH --job-name=bwa
+#SBATCH --job-name=bowtie
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=kasey.pham@ufl.edu
-#SBATCH --mem=10gb
+#SBATCH --mem=6gb
 #SBATCH --time=4-00:00:00
 #SBATCH --cpus-per-task=16
 #SBATCH --nodes=1
@@ -16,15 +16,15 @@ echo Working directory is $SLURM_SUBMIT_DIR
 cd $SLURM_SUBMIT_DIR
 
 module purge
-module load bwa-mem2/2.2.1
+module load bowtie2/2.4.2
 READS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/reads/trimmed_reads"
 OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/01.map_reads"
 LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
-INDEX_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/Eglobulus_genome_X46"
+
+export BOWTIE2_INDEXES="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/Eglobulus_genome_X46"
 
 while read NAME
-do
-    echo doing "$NAME"
-    bwa-mem2 mem -t 16 -o "$OUTDIR"/"$NAME"_mapped.sam "$INDEX_DIR"/EGLOB-X46.v1 "$READS_DIR"/"$NAME"_R1_paired.fq "$READS_DIR"/"$NAME"_R2_paired.fq
+do 
+    bowtie2 -p 16 -q --end-to-end -x EGLOB-X46.v1 -1 "$READS_DIR"/"$NAME"_R1_paired.fq -2 "$READS_DIR"/"$NAME"_R2_paired.fq -S "$OUTDIR"/"$NAME"_mapped.sam --no-unal
 done < "$LIST_DIR"/seq_ids.txt
 

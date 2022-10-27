@@ -17,9 +17,9 @@ cd $SLURM_SUBMIT_DIR
 
 module purge
 module load samtools/1.12
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
 
 while read NAME
 do 
     samtools view -b -@ 8 -o "$NAME"_mapped.bam "$NAME"_mapped.sam
-done < /blue/soltis/kasey.pham/euc_hyb_reseq/seq_ids.txt
-
+done < "$LIST_DIR"/seq_ids.txt

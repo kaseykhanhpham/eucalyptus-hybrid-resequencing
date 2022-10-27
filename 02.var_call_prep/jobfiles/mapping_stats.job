@@ -1,15 +1,15 @@
 #!/bin/bash
 #SBATCH --account=soltis
 #SBATCH --qos=soltis-b
-#SBATCH --job-name=index
+#SBATCH --job-name=mapstats
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=kasey.pham@ufl.edu
-#SBATCH --mem=1gb
-#SBATCH --time=5:00:00
+#SBATCH --mem=2gb
+#SBATCH --time=1-00:00:00
 #SBATCH --cpus-per-task=8
 #SBATCH --nodes=1
-#SBATCH --output=index_%j.out
-#SBATCH --error=index_%j.err
+#SBATCH --output=mapstats_%j.out
+#SBATCH --error=mapstats_%j.err
 
 pwd; hostname; date
 echo Working directory is $SLURM_SUBMIT_DIR
@@ -17,10 +17,10 @@ cd $SLURM_SUBMIT_DIR
 
 module purge
 module load samtools/1.12
-
-LISTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
 
 while read NAME
 do 
-    samtools index -b -@ 7 "$NAME"_marked.bam "$NAME"_marked.bai
-done < "$LISTDIR"/seq_ids.txt
+    echo doing "$NAME"
+    samtools flagstats -@ 8 "$NAME"_mapped.sam
+done < "$LIST_DIR"/seq_ids.txt

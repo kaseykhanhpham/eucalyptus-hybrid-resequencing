@@ -21,5 +21,5 @@ module load samtools/1.12
 while read NAME
 do
     echo doing "$NAME" 1>&2 
-    samtools fixmate -m -O bam -@ 7 /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/01.readgroups/"$NAME"_wRG.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/02.fixmate/"$NAME"_fixed.bam
+    samtools fixmate -m -O bam -@ 7 /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/02.process_reads/01.readgroups/"$NAME"_wRG.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/02.process_reads/02.fixmate/"$NAME"_fixed.bam
 done < /blue/soltis/kasey.pham/euc_hyb_reseq/seq_ids.txt

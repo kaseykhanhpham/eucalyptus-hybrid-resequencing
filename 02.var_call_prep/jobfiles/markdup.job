@@ -18,7 +18,11 @@ cd $SLURM_SUBMIT_DIR
 module purge
 module load samtools/1.12
 
+INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/02.process_reads/03.sort"
+OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/02.process_reads/04.markdup"
+LISTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
+
 while read NAME
 do 
-    samtools markdup -d 2500 -@ 7 /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/03.sort/"$NAME"_sorted.bam "$NAME"_marked.bam
-done < /blue/soltis/kasey.pham/euc_hyb_reseq/seq_ids.txt
+    samtools markdup -d 2500 -@ 7 "$INDIR"/"$NAME"_sorted.bam "$OUTDIR"/"$NAME"_marked.bam
+done < "$LISTDIR"/seq_ids.txt
