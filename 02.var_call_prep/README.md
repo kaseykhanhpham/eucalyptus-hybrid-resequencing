@@ -320,3 +320,20 @@ mv "$READ_INDIR"/*.bam "$READ_OUTDIR"
 # Create symlinks to working directory
 while read NAME; do ln -s "$READ_OUTDIR"/"$NAME"_marked.bam "$READ_INDIR"/"$NAME"_marked.bam; done < "$LIST_DIR"/seq_id.txt
 ```
+
+**Get stats for processed samples:**
+```bash
+module load samtools/1.12
+
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
+
+mkdir stats
+
+while read NAME
+do
+    samtools stats "$NAME"_marked.bam > stats/"$NAME"_stats.txt
+    grep ^SN "$NAME"_stats.txt | cut -f 2- > "$NAME"_stats_cut.txt
+done < "$LIST_DIR"/seq_ids.txt
+
+rm *_stats.txt
+```

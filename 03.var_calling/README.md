@@ -1,19 +1,20 @@
 # Variant Calling
 
-### Housekeeping:
+## Housekeeping:
 ```bash
-READ_INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/04.markdup"
-READ_OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/freebayes/reads"
+READ_INDIR="/orange/soltis/kasey.pham/eucalyptus_hyb_reseq/04.processed_reads"
+INDEX_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/02.process_reads/04.markdup"
+READ_OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes/reads"
 LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
-VC_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/freebayes"
+VC_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes"
 
 # create symlinks to processed reads in variant calling directory
-while read NAME; do ln -s "$READ_INDIR"/"$NAME"_marked.bam "$READ_OUTDIR"/"$NAME"_marked.bam; done < "$LIST_DIR"/sample_ids.txt
+while read NAME; do ln -s "$READ_INDIR"/"$NAME"_marked.bam "$READ_OUTDIR"/"$NAME"_marked.bam; ln -s "$INDEX_DIR"/"$NAME"_marked.bai "$READ_OUTDIR"/"$NAME"_marked.bai; done < "$LIST_DIR"/seq_ids.txt
 # create list of BAM inputs for variant caller
 ls -d "$READ_OUTDIR"/* > "$VC_DIR"/bam_inputs.txt
 ```
 
-### Run Variant Caller
+## Run Variant Caller
 I am using the variant caller [`FreeBayes`](https://github.com/freebayes/freebayes), which estimates internal population parameters for the individuals it is provided with using Bayesian inference. This is probably a good choice for my dataset given that I don't have a set of validated SNPs for training a variant caller like `GATK`. I followed recommendations on `FreeBayes`' Github page for parameter selection.
 
 I ran `FreeBayes` on each chromosome separately, with the same parameters each time. See the job files named `fb_NC0526--.job` for each set of individual parameters.
@@ -22,33 +23,16 @@ I ran `FreeBayes` on each chromosome separately, with the same parameters each t
 
 ```bash
 # Run via job on UFRC, see fb_NC052612.job for details
-# Resources used: 3 Gb, 7 days 
+# Resources used: 
 # (range: 2.5 Gb - 4.5 Gb, 2 days - 11 days)
 
 module load freebayes/1.3.2
-LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/freebayes"
-REF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/ASM1654582v1"
-OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/freebayes/max_dp_3000"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes"
+REF_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/Eglobulus_genome_X46/EGLOB-X46.v1.0.fa"
+OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes/"
 
 # Run FreeBayes on all samples at once against E. grandis reference genome, call sites with a maximum depth of 3000
-freebayes -L "$LIST_DIR"/bam_inputs.txt -f "$REF_DIR"/GCF_016545825.1_ASM1654582v1_genomic.fna -r NC_052612.1 -v "$OUTDIR"/NC_052612.vcf -g 3000
-```
-
-**Command for unanchored contigs:**
-
-All unanchored contigs in reference genome were called together. I manually made a `BED` file of the names of each contig as input for `FreeBayes`.
-
-```bash
-# Run via job on UFRC, see fb_contigs.job for details
-# Resources used: 4.1 Gb, 2 days 
-
-module load freebayes/1.3.2
-LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/freebayes"
-REF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/ASM1654582v1"
-OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/freebayes/max_dp_3000"
-
-
-freebayes -L "$LISTDIR"/bam_inputs.txt -f "$REF_DIR"/GCF_016545825.1_ASM1654582v1_genomic.fna -t "$LIST_DIR"/ASM1654582_unanchored_contigs.bed  -v "$OUTDIR"/unanchored_contigs.vcf
+freebayes -L "$LIST_DIR"/bam_inputs.txt -f "$REF_FILE" -r Chr01 -v "$OUTDIR"/Chr01.vcf -g 4000
 ```
 
 **Merge VCF files for each chromosome using [picard](https://gatk.broadinstitute.org/hc/en-us/articles/360036713331-MergeVcfs-Picard):**
@@ -65,7 +49,7 @@ ls "$VCF_DIR"/*.vcf > "$LIST_DIR"/vcfs.list
 picard MergeVcfs -I "$LIST_DIR"/vcfs.list -O all_to_ASM1654582v1.vcf
 ```
 
-### Calculate and visualize raw variant statistics
+## Calculate and visualize raw variant statistics
 Statistics and visualization code based on Ravinet and Meier's [Speciation and Population Genomics](https://speciationgenomics.github.io/) tutorial.
 
 ```bash
@@ -89,7 +73,7 @@ Rscript "$SCRIPT_DIR"/chr_stats.r contigs
 bcftools stats "$VCF_DIR"/all_to_ASM1654582.vcf > "$VCF_DIR"/all_stats.txt
 ```
 
-### Filter SNPs
+## Filter SNPs
 SNP filtering parameters and code were based on several sources, including personal consultation with Zhe Cai (University of British Columbia), Robin Buell's Fall 2018 Plant Genomics course at Michigan State University, [Hübner et al. 2019](https://doi.org/10.1038/s41477-018-0329-0), and Ravinet and Meier's [Speciation and Population Genomics](https://speciationgenomics.github.io/) tutorial.
 
 **Filtering Parameters used:**
@@ -168,7 +152,7 @@ NAME="all_to_ASM1654582_fil_maf0.05"
 cat "$NAME".vcf | vcftools --vcf - --remove-indels --recode --stdout > "$NAME"_snps.vcf
 cat "$NAME".vcf | vcftools --vcf - --keep-only-indels --recode --stdout > "$NAME"_indels.vcf
 ```
-### Get summary statistics for filtered variant sets
+## Get summary statistics for filtered variant sets
 
 Summary statistics and visualizations were generated for filtered sets in the [same way they were calculated for the raw variant set](#calculate-and-visualize-raw-variant-statistics). See `vis_chr_maf---.job` files for more detail. 
 
