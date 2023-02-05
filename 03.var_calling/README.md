@@ -96,7 +96,7 @@ Four filtering sets were generated in total, only varying in minimum threshold f
 ```bash
 # Filter SNPs:
 # Run via job on UFRC, see filtersnps_maf0.05.job for details
-# Resources used: 900 Mb, 2 days (range: 400 Mb - 1 Gb, 35 hrs - 48 hrs)
+# Resources used: ~900 Mb, ~2 days
 
 module load vcflib/1.0.1
 module load vcftools/0.1.16
@@ -128,7 +128,7 @@ picard MergeVcfs -I "$LIST_DIR"/vcfs_fil_to_merge.txt -O meehan_all_fil_maf0.05.
 
 # Separate SNPs and indels:
 # Run via job on UFRC, see split_indels_maf0.05.job for details
-# Resources used: 8.5 Mb, 25 min
+# Resources used: ~10 Gb, ~20 min
 
 module load vcftools/0.1.16
 NAME="meehan_all_fil_maf0.05"
@@ -143,20 +143,14 @@ Summary statistics were generated for filtered sets in the [same way they were c
 **Calculate genome-wide statistics:**
 ```bash
 module load bcftools
-MAF00DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.00"
-MAF05DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.05"
-MAF10DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.10"
-MAF30DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.30"
+MAF00DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.00"
+MAF05DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.05"
 
-bcftools stats "$MAF00DIR"/all_to_ASM1654582_fil_maf0.00_snps.vcf > "$MAF00DIR"/all_fil_maf0.00_snp_stats.txt
-bcftools stats "$MAF05DIR"/all_to_ASM1654582_fil_maf0.05_snps.vcf > "$MAF05DIR"/all_fil_maf0.05_snp_stats.txt
-bcftools stats "$MAF10DIR"/all_to_ASM1654582_fil_maf0.10_snps.vcf > "$MAF10DIR"/all_fil_maf0.10_snp_stats.txt
-bcftools stats "$MAF30DIR"/all_to_ASM1654582_fil_maf0.30_snps.vcf > "$MAF30DIR"/all_fil_maf0.30_snp_stats.txt
+bcftools stats "$MAF00DIR"/meehan_all_fil_maf0.00_snps.vcf > "$MAF00DIR"/all_fil_maf0.00_snp_stats.txt
+bcftools stats "$MAF05DIR"/meehan_all_fil_maf0.05_snps.vcf > "$MAF05DIR"/all_fil_maf0.05_snp_stats.txt
 
-bcftools stats "$MAF00DIR"/all_to_ASM1654582_fil_maf0.00_indels.vcf > "$MAF00DIR"/all_fil_maf0.00_indel_stats.txt
-bcftools stats "$MAF05DIR"/all_to_ASM1654582_fil_maf0.05_indels.vcf > "$MAF05DIR"/all_fil_maf0.05_indel_stats.txt
-bcftools stats "$MAF10DIR"/all_to_ASM1654582_fil_maf0.10_indels.vcf > "$MAF10DIR"/all_fil_maf0.10_indel_stats.txt
-bcftools stats "$MAF30DIR"/all_to_ASM1654582_fil_maf0.30_indels.vcf > "$MAF30DIR"/all_fil_maf0.30_indel_stats.txt
+bcftools stats "$MAF00DIR"/meehan_all_fil_maf0.00_indels.vcf > "$MAF00DIR"/all_fil_maf0.00_indel_stats.txt
+bcftools stats "$MAF05DIR"/meehan_all_fil_maf0.05_indels.vcf > "$MAF05DIR"/all_fil_maf0.05_indel_stats.txt
 ```
 
 Chromosome and genome-wide statistics for raw and filtered variant sets can be found in the subdirectory [variant_statistics](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/tree/main/03.var_calling/variant_statistics) and have been compiled in the file [mdp3000.xlsx](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/03.var_calling/variant_statistics/mdp3000.xlsx).

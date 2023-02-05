@@ -12,7 +12,7 @@
 #SBATCH --error=splitindels_%j.err
 
 module load vcftools/0.1.16
-NAME="meehan_all_fil_maf0.05.vcf"
+NAME="meehan_all_fil_maf0.05"
 
 cat "$NAME".vcf | vcftools --vcf - --remove-indels --recode --stdout > "$NAME"_snps.vcf
 
