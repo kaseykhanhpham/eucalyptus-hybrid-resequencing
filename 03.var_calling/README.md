@@ -17,21 +17,22 @@ ls -d "$READ_OUTDIR"/* > "$VC_DIR"/bam_inputs.txt
 ## Run Variant Caller
 I am using the variant caller [`FreeBayes`](https://github.com/freebayes/freebayes), which estimates internal population parameters for the individuals it is provided with using Bayesian inference. This is probably a good choice for my dataset given that I don't have a set of validated SNPs for training a variant caller like `GATK`. I followed recommendations on `FreeBayes`' Github page for parameter selection.
 
-I ran `FreeBayes` on each chromosome separately, with the same parameters each time. See the job files named `fb_NC0526--.job` for each set of individual parameters.
+I ran `FreeBayes` on each chromosome separately, with the same parameters each time. See the job files named `fb_chr--.job` for each set of individual parameters.
 
 **Command for chromosome 1:**
 
 ```bash
-# Run via job on UFRC, see fb_NC052612.job for details
-# Resources used: 
-# (range: 2.5 Gb - 4.5 Gb, 2 days - 11 days)
+# Run via job on UFRC, see fb_chr1.job for details
+# Resources used: 14 days, 5.35 Gb
+# (range: 4 Gb - 8 Gb, 11 days - 27 days)
+# Some chromosomes did not run until I gave them 20 Gb of RAM
 
 module load freebayes/1.3.2
 LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes"
 REF_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/Eglobulus_genome_X46/EGLOB-X46.v1.0.fa"
 OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes/"
 
-# Run FreeBayes on all samples at once against E. grandis reference genome, call sites with a maximum depth of 3000
+# Run FreeBayes on all samples at once against E. globulus reference genome, call sites with a maximum depth of 4000
 freebayes -L "$LIST_DIR"/bam_inputs.txt -f "$REF_FILE" -r Chr01 -v "$OUTDIR"/Chr01.vcf -g 4000
 ```
 
@@ -39,38 +40,24 @@ freebayes -L "$LIST_DIR"/bam_inputs.txt -f "$REF_FILE" -r Chr01 -v "$OUTDIR"/Chr
 
 ```bash
 # Run via job on UFRC, see merge_vcfs_raw.job for details
-# Resources used: 10.8 Gb, 2 hrs 
+# Resources used: 10.2 Gb, 2 hrs 
 
 module load picard/2.25.5
-VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/freebayes/max_dp_3000"
-LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/freebayes"
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes"
 
-ls "$VCF_DIR"/*.vcf > "$LIST_DIR"/vcfs.list
-picard MergeVcfs -I "$LIST_DIR"/vcfs.list -O all_to_ASM1654582v1.vcf
+ls "$VCF_DIR"/*.vcf > "$VCF_DIR"/vcfs_list.txt
+picard MergeVcfs -I "$VCF_DIR"/vcfs_list.txt -O meehan_all_raw.vcf
 ```
 
-## Calculate and visualize raw variant statistics
-Statistics and visualization code based on Ravinet and Meier's [Speciation and Population Genomics](https://speciationgenomics.github.io/) tutorial.
+Then calculateed raw variant statistics for the merged file:
 
 ```bash
 module load bcftools
 SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
-VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/freebayes/max_dp_3000"
-
-# Visualize stats by chromosome
-for i in {1..11}
-do
-    "$SCRIPT_DIR"/visualize_chr_01.sh "$VCF_DIR"/NC_052612.vcf chr1
-    Rscript "$SCRIPT_DIR"/visualize_chr_02.r chr1
-    Rscript "$SCRIPT_DIR"/chr_stats.r chr1
-done
-
-"$SCRIPT_DIR"/visualize_chr_01.sh "$VCF_DIR"/unanchored_contigs.vcf contigs
-Rscript "$SCRIPT_DIR"/visualize_chr_02.r contigs
-Rscript "$SCRIPT_DIR"/chr_stats.r contigs
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes"
 
 # Get statistics for entire variant set
-bcftools stats "$VCF_DIR"/all_to_ASM1654582.vcf > "$VCF_DIR"/all_stats.txt
+bcftools stats "$VCF_DIR"/meehan_all_raw.vcf > "$VCF_DIR"/all_raw_stats.txt
 ```
 
 ## Filter SNPs

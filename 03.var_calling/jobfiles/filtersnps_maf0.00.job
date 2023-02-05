@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --account=soltis
 #SBATCH --qos=soltis-b
-#SBATCH --job-name=filtersnps
+#SBATCH --job-name=filtersnps0
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=kasey.pham@ufl.edu
 #SBATCH --mem=5gb
@@ -15,10 +15,10 @@ module load vcflib/1.0.1
 module load vcftools/0.1.16
 module load bcftools/1.15
 
-export INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/freebayes/max_dp_3000"
-declare -a VCFLIST=(NC_052612 NC_052613 NC_052614 NC_052615 NC_052616 NC_052617 NC_052618 NC_052619 NC_052620 NC_052621 NC_052622 unanchored_contigs)
+export INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes"
+declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
 
-export MAF=0.05
+export MAF=0.00
 export MISS=0.9
 export QUAL=50
 export MIN_DP=10

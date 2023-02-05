@@ -1,0 +1,22 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=mergevcf0
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=15gb
+#SBATCH --time=4:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=merge_vcfs_%j.out
+#SBATCH --error=merge_vcfs_%j.err
+
+pwd; hostname; date
+echo Working directory is $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR
+
+module purge
+module load picard/2.25.5
+
+picard MergeVcfs -I ../vcfs_fil.list -O meehan_all_fil_maf0.00.vcf
+
