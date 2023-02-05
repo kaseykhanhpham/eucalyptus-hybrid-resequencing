@@ -4,8 +4,8 @@
 #SBATCH --job-name=mergevcf0
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=kasey.pham@ufl.edu
-#SBATCH --mem=15gb
-#SBATCH --time=4:00:00
+#SBATCH --mem=20gb
+#SBATCH --time=5:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --nodes=1
 #SBATCH --output=merge_vcfs_%j.out
@@ -17,6 +17,7 @@ cd $SLURM_SUBMIT_DIR
 
 module purge
 module load picard/2.25.5
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
 
-picard MergeVcfs -I ../vcfs_fil.list -O meehan_all_fil_maf0.00.vcf
+picard MergeVcfs -I "$LIST_DIR"/vcfs_fil_to_merge.txt -O meehan_all_fil_maf0.00.vcf
 

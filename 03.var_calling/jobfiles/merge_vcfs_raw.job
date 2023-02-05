@@ -19,7 +19,7 @@ module purge
 module load picard/2.25.5
 VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes"
 
-ls "$VCF_DIR"/*.vcf > "$VCF_DIR"/vcfs_list.txt
-picard MergeVcfs -I "$VCF_DIR"/vcfs_list.txt -O meehan_all_raw.vcf
+ls "$VCF_DIR"/*.vcf > "$VCF_DIR"/vcfs_to_merge.txt
+picard MergeVcfs -I "$VCF_DIR"/vcfs_to_merge.txt -O meehan_all_raw.vcf
 
 

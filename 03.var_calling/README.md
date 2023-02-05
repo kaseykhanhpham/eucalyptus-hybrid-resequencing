@@ -102,8 +102,8 @@ module load vcflib/1.0.1
 module load vcftools/0.1.16
 module load bcftools/1.15
 
-export INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/freebayes/max_dp_3000"
-declare -a VCFLIST=(NC_052612 NC_052613 NC_052614 NC_052615 NC_052616 NC_052617 NC_052618 NC_052619 NC_052620 NC_052621 NC_052622 unanchored_contigs)
+export INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes"
+declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
 
 export MAF=0.05
 export MISS=0.9
@@ -119,29 +119,26 @@ done
 
 # Merge VCFs:
 # Run via job on UFRC, see merge_vcfs_maf0.05.job for details
-# Resources used: 10.2 Gb, 10 min (range: 10.2 Gb, 2 - 10 min)
+# Resources used: 
 
 module load picard/2.25.5
-LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
 
-# Create list of VCF files to merge
-ls *.vcf > "$LIST_DIR"/vcfs_fil.list
-# Merge VCFs
-picard MergeVcfs -I "$LIST_DIR"/vcfs_fil.list -O all_to_ASM1654582_fil.vcf
+picard MergeVcfs -I "$LIST_DIR"/vcfs_fil_to_merge.txt -O meehan_all_fil_maf0.05.vcf
 
 # Separate SNPs and indels:
 # Run via job on UFRC, see split_indels_maf0.05.job for details
 # Resources used: 8.5 Mb, 25 min
 
 module load vcftools/0.1.16
-NAME="all_to_ASM1654582_fil_maf0.05"
+NAME="meehan_all_fil_maf0.05"
 
 cat "$NAME".vcf | vcftools --vcf - --remove-indels --recode --stdout > "$NAME"_snps.vcf
 cat "$NAME".vcf | vcftools --vcf - --keep-only-indels --recode --stdout > "$NAME"_indels.vcf
 ```
 ## Get summary statistics for filtered variant sets
 
-Summary statistics and visualizations were generated for filtered sets in the [same way they were calculated for the raw variant set](#calculate-and-visualize-raw-variant-statistics). See `vis_chr_maf---.job` files for more detail. 
+Summary statistics were generated for filtered sets in the [same way they were calculated for the raw variant set](#calculate-raw-variant-statistics). 
 
 **Calculate genome-wide statistics:**
 ```bash
