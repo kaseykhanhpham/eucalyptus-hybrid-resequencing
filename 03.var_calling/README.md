@@ -119,7 +119,7 @@ done
 
 # Merge VCFs:
 # Run via job on UFRC, see merge_vcfs_maf0.05.job for details
-# Resources used: 
+# Resources used: ~10 Mb, ~25 min
 
 module load picard/2.25.5
 LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
@@ -153,4 +153,9 @@ bcftools stats "$MAF00DIR"/meehan_all_fil_maf0.00_indels.vcf > "$MAF00DIR"/all_f
 bcftools stats "$MAF05DIR"/meehan_all_fil_maf0.05_indels.vcf > "$MAF05DIR"/all_fil_maf0.05_indel_stats.txt
 ```
 
-Chromosome and genome-wide statistics for raw and filtered variant sets can be found in the subdirectory [variant_statistics](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/tree/main/03.var_calling/variant_statistics) and have been compiled in the file [mdp3000.xlsx](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/03.var_calling/variant_statistics/mdp3000.xlsx).
+Variant counts after filtering:
+| MAF  | SNP count | Indel count |
+| ---- | --------- | ----------- |
+| 0.00 | 5708280   |  1355166    |
+| 0.05 | 3802753   | 818756      |
+
