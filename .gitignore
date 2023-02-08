@@ -9,6 +9,7 @@ outgroup_seqs
 no_outgroup
 r2_csv
 alignments
+admixture_output
 *.kml
 *.vcf
 .Rdata
