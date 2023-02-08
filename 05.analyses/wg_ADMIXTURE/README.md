@@ -132,7 +132,7 @@ The following was done for both MAF=0.00 and MAF=0.05. Jobs below are examples. 
 
 ```bash
 # Run via job on UFRC, see admixture_maf0.05_noWeird.job for details
-# Resources used: 
+# Resources used: 200 Mb, 2 hrs
 
 module load admixture/1.23
 
@@ -155,25 +155,37 @@ done
 
 **Get cross-validation error values for each K:**
 ```bash
-WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/maf0.05/without_WF03"
+MAF00_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/weird_sample_check/maf0.00"
+MAF05_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/weird_sample_check/maf0.05"
 
-cd "$WDIR" 
-grep "CV" admixture_output/*.out | awk '{print $3,$4}' | sed -e 's/(//;s/)//;s/://;s/K=//' > all_to_ASM1654582_fil_maf0.05_noWF03.cv.error
+cd "$MAF00_DIR" 
+grep "CV" admixture_output/*.out | awk '{print $3,$4}' | sed -e 's/(//;s/)//;s/://;s/K=//' > meehan_all_fil_maf0.00_noWeird.cv.error
+
+cd "$MAF05_DIR" 
+grep "CV" admixture_output/*.out | awk '{print $3,$4}' | sed -e 's/(//;s/)//;s/://;s/K=//' > meehan_all_fil_maf0.05_noWeird.cv.error
 ```
 
 **Visualize `ADMIXTURE` results:**
 
-Done locally on personal computer. See `vis_admixture_maf0.05_noWF03.py` for processing steps to generate pong formatting files.
+Done locally on personal computer. See `vis_admixture_maf0.0X_noWeird.py` for processing steps to generate pong formatting files.
 
 ```bash
 conda activate euc_hyb_reseq
-$WDIR = "C:\Users\Kasey\OneDrive - University of Florida\Grad School Documents\Projects\eucalyptus-hybrid-resequencing\05.analyses\wg_ADMIXTURE\without_wf03"
+$MAF00_DIR = "C:\Users\Kasey\OneDrive - University of Florida\Grad School Documents\Projects\eucalyptus-hybrid-resequencing\05.analyses\wg_ADMIXTURE\weird_sample_check\maf0.00"
+$MAF05_DIR = "C:\Users\Kasey\OneDrive - University of Florida\Grad School Documents\Projects\eucalyptus-hybrid-resequencing\05.analyses\wg_ADMIXTURE\weird_sample_check\maf0.05"
 
-cd $WDIR
-python vis_admixture_maf0.05_noWF03.py
-pong -m all_to_ASM1654582_fil_maf0.05_noWF03_filemap.txt -i all_to_ASM1654582_fil_maf0.05_noWF03_ind2pop.txt -n all_to_ASM1654582_fil_maf0.05_noWF03_poporder.txt -l all_to_ASM1654582_fil_maf0.05_noWF03_colors.txt
+cd $MAF00_DIR
+python vis_admixture_maf0.00_noWeird.py
+pong -m meehan_all_fil_maf0.00_noWeird_filemap.txt -i meehan_all_fil_maf0.00_noWeird_ind2pop.txt -n meehan_all_fil_maf0.00_noWeird_poporder.txt -l meehan_all_fil_maf0.00_noWeird_colors.txt
+
+cd $MAF05_DIR
+python vis_admixture_maf0.05_noWeird.py
+pong -m meehan_all_fil_maf0.05_noWeird_filemap.txt -i meehan_all_fil_maf0.05_noWeird_ind2pop.txt -n meehan_all_fil_maf0.05_noWeird_poporder.txt -l meehan_all_fil_maf0.05_noWeird_colors.txt
 
 conda deactivate
 ```
+![ADMIXTURE K=2 through K=6 excluding samples WF03/1051 and WG04/2025 for MAF=0.00, summarized over 10 individual runs in pong. Without highly divergent samples. MAF=0.00 plot looks similar to MAF=0.05 plot, indicating that singletons in weird samples may have been driving high diversity and "homogenization" between introgressants and reference _E. globulus_?](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/weird_sample_check/maf0.00/meehan_all_fil_maf0.00_noWeird.png "ADMIXTURE K=2 through K=6 MAF=0.00 without weird samples")
 
-![ADMIXTURE K=2 through K=6 excluding sample WF03, summarized over 10 individual runs in pong. In K=2, introgressed _E. globulus_ still has an estimated 1% admixture rate with _E. cordata_ while "pure" _E. globulus_ still has an estimated 2% admixture rate with _E. cordata_.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/without_wf03/all_to_ASM1654582_fil_maf0.05_noWF03_pong.png "ADMIXTURE K=2 through K=6 without WF03")
+![ADMIXTURE K=3 excluding samples WF03/1051 and WG04/2025 for MAF=0.00, summarized over 10 individual runs in pong. Some of these alternate results are interesting.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/weird_sample_check/maf0.00/meehan_all_fil_maf0.00_noWeird_K3.png "ADMIXTURE K=3 MAF=0.00 without weird samples")
+
+![ADMIXTURE K=2 through K=6 excluding samples WF03/1051 and WG04/2025 for MAF=0.05, summarized over 10 individual runs in pong. Results for K=2 and K=3 are fairly consistent with runs including WF03 and WG04](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/weird_sample_check/maf0.05/meehan_all_fil_maf0.05_noWeird.png "ADMIXTURE K=2 through K=6 MAF=0.05 without weird samples")
