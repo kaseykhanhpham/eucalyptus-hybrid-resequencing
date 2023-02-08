@@ -13,9 +13,9 @@ This analysis needs a set of unlinked SNPs as input. I already generated a set o
 module load plink/1.90b3.39
 # maf=0.00
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/maf0.00"
-VCF_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.00/all_to_ASM1654582_fil_maf0.00_snps.vcf"
+VCF_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.00/meehan_all_fil_maf0.00_snps.vcf"
 PRUNED_VARS="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.00/all_maf0.00.prune.in"
-OUTNAME="all_to_ASM1654582_fil_maf0.00"
+OUTNAME="meehan_all_fil_maf0.00"
 
 cd "$WDIR"
 plink --vcf "$VCF_FILE" --extract "$PRUNED_VARS" --set-missing-var-ids @:# --allow-extra-chr --vcf-half-call m --make-bed --out "$OUTNAME"
@@ -24,9 +24,9 @@ mv "$OUTNAME".bim.tmp "$OUTNAME".bim
 
 # maf=0.05
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/maf0.05"
-VCF_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.05/all_to_ASM1654582_fil_maf0.05_snps.vcf"
+VCF_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.05/meehan_all_fil_maf0.05_snps.vcf"
 PRUNED_VARS="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.05/all_maf0.05.prune.in"
-OUTNAME="all_to_ASM1654582_fil_maf0.05"
+OUTNAME="meehan_all_fil_maf0.05"
 
 cd "$WDIR"
 plink --vcf "$VCF_FILE" --extract "$PRUNED_VARS" --set-missing-var-ids @:# --allow-extra-chr --vcf-half-call m --make-bed --out "$OUTNAME"
@@ -43,7 +43,7 @@ mv "$OUTNAME".bim.tmp "$OUTNAME".bim
 
 module load admixture/1.23
 
-export NAME="all_to_ASM1654582_fil_maf0.05"
+export NAME="meehan_all_fil_maf0.05"
 # K = 1 through K = 6
 for K in {1..6}
 do
@@ -69,10 +69,10 @@ MAF00_WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/maf0.00"
 MAF05_WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/maf0.05"
 
 cd "$MAF00_WDIR" 
-grep "CV" admixture_output/*.out | awk '{print $3,$4}' | sed -e 's/(//;s/)//;s/://;s/K=//' > all_to_ASM1654582_fil_maf0.00.cv.error
+grep "CV" admixture_output/*.out | awk '{print $3,$4}' | sed -e 's/(//;s/)//;s/://;s/K=//' >  meehan_all_fil_maf0.00.cv.error
 
 cd "$MAF05_WDIR" 
-grep "CV" admixture_output/*.out | awk '{print $3,$4}' | sed -e 's/(//;s/)//;s/://;s/K=//' > all_to_ASM1654582_fil_maf0.05.cv.error
+grep "CV" admixture_output/*.out | awk '{print $3,$4}' | sed -e 's/(//;s/)//;s/://;s/K=//' >  meehan_all_fil_maf0.05.cv.error
 ```
 
 **Visualize `ADMIXTURE` results:**
@@ -86,19 +86,19 @@ $MAF05_DIR = "C:\Users\Kasey\OneDrive - University of Florida\Grad School Docume
 
 cd $MAF00_DIR
 python vis_admixture_maf0.00.py
-pong -m all_to_ASM1654582_fil_maf0.00_filemap.txt -i all_to_ASM1654582_fil_maf0.00_ind2pop.txt -n all_to_ASM1654582_fil_maf0.00_poporder.txt -l all_to_ASM1654582_fil_maf0.00_colors.txt
+pong -m meehan_all_fil_maf0.00_filemap.txt -i meehan_all_fil_maf0.00_ind2pop.txt -n meehan_all_fil_maf0.00_poporder.txt -l meehan_all_fil_maf0.00_colors.txt
 
 cd $MAF05_DIR
 python vis_admixture_maf0.05.py
-pong -m all_to_ASM1654582_fil_maf0.05_filemap.txt -i all_to_ASM1654582_fil_maf0.05_ind2pop.txt -n all_to_ASM1654582_fil_maf0.05_poporder.txt -l all_to_ASM1654582_fil_maf0.05_colors.txt
+pong -m meehan_all_fil_maf0.05_filemap.txt -i meehan_all_fil_maf0.05_ind2pop.txt -n meehan_all_fil_maf0.05_poporder.txt -l meehan_all_fil_maf0.05_colors.txt
 
 conda deactivate
 ```
 
 Results of visualization:
-![MAF=0.05 ADMIXTURE K=2 through K=6 summarized over 10 individual runs in pong. In K=2 (lowest CV error), introgressed _E. globulus_ has an estimated 1% admixture rate with _E. cordata_ while "pure" _E. globulus_ has an estimated 2% admixture rate with _E. cordata_. In K=3 (second-lowest CV error), Meehan Range _E. globulus_ has a portion of its genetic diversity attributed to a third bin.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/maf0.05/all_to_ASM1654582_fil_maf0.05_pong.png "ADMIXTURE K=2 through K=6")
+![MAF=0.05 ADMIXTURE K=2 through K=6 summarized over 10 individual runs in pong. In K=2 (lowest CV error), introgressed _E. globulus_ has an estimated 1% admixture rate with _E. cordata_ while "pure" _E. globulus_ has an estimated 2% admixture rate with _E. cordata_. In K=3 (second-lowest CV error), Meehan Range _E. globulus_ has a portion of its genetic diversity attributed to a third bin.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/maf0.05/meehan_all_fil_maf0.05_ADMIXTURE.png "ADMIXTURE K=2 through K=6")
 
-![MAF=0.00 ADMIXTURE K=3 for 10 individual runs in pong. Unlike in MAF = 0.05, variation is evenly attributed to two source bins across both reference and Meehan Range _E. globulus_.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/maf0.05/all_to_ASM1654582_fil_maf0.05_pong.png "ADMIXTURE K=2 through K=6")
+![MAF=0.00 ADMIXTURE K=3 for 10 individual runs in pong. Unlike in MAF = 0.05, variation is evenly attributed to two source bins across both reference and Meehan Range _E. globulus_.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/maf0.05/meehan_all_fil_maf0.00_ADMIXTURE.png "ADMIXTURE K=2 through K=6")
 
 ## `ADMIXTURE` excluding sample WF03/1051
 The individual WF03/1051 was distant from all other points in the PCA plots, so I ran ADMIXTURE without it to see whether that would change the results. I started by excluding this sample when generating the `BIM` file:
