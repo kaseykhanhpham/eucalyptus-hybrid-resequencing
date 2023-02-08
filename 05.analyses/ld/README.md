@@ -8,7 +8,7 @@
 **Run plink to get pairwise r2 values:**
 ```bash
 # Run on UFRC's queue system, see plink_maf0.025_long.job for more information.
-# Resources: 6.7 Gb, 30 min
+# Resources: 13 Gb, 40 min
 
 module load plink/1.90b3.39
 
@@ -64,7 +64,7 @@ done
 **Run plink to get pairwise r2 values:**
 ```bash
 # Run on UFRC's queue system, see plink_maf0.025_short.job for more information.
-# Resources: 3.95 Gb, 15 min
+# Resources: 5 Gb, 18 min
 
 module load plink/1.90b3.39
 
