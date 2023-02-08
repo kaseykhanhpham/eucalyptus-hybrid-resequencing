@@ -100,32 +100,43 @@ Results of visualization:
 
 ![MAF=0.00 ADMIXTURE K=3 for 10 individual runs in pong. Unlike in MAF = 0.05, variation is evenly attributed to two source bins across both reference and Meehan Range _E. globulus_.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/maf0.05/meehan_all_fil_maf0.00_ADMIXTURE.png "ADMIXTURE K=2 through K=6")
 
-## `ADMIXTURE` excluding sample WF03/1051
-The individual WF03/1051 was distant from all other points in the PCA plots, so I ran ADMIXTURE without it to see whether that would change the results. I started by excluding this sample when generating the `BIM` file:
+## `ADMIXTURE` excluding sample WF03/1051 and WG04/2025
+The samples WF03/1051 and WG04/2025 were distant from all other points in the PCA plots, so I ran ADMIXTURE without them to see whether that would change the results. I started by excluding this sample when generating the `BIM` file:
 
 ```bash
 module load plink/1.90b3.39
-VCF_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.05/all_to_ASM1654582_fil_maf0.05_snps.vcf"
+VCF_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.05/meehan_all_fil_maf0.05_snps.vcf"
 PRUNED_VARS_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.05/all_maf0.05.prune.in"
+MAF00_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/weird_sample_check/maf0.00"
+MAF05_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/weird_sample_check/maf0.05"
 
 # Create file with samples to exclude
 echo "WF03 WF03" > ids_to_exclude.txt
+echo "WG04 WG04" >> ids_to_exclude.txt
 
 # Make BED and BIM files
-plink --vcf "$VCF_FILE" --remove ids_to_exclude.txt --extract "$PRUNED_VARS_FILE" --set-missing-var-ids @:# --allow-extra-chr --vcf-half-call m --make-bed --out all_to_ASM1654582_fil_maf0.05_noWF03
-awk '{$1="0";print $0}' all_to_ASM1654582_fil_maf0.05_noWF03.bim > all_to_ASM1654582_fil_maf0.05_noWF03.bim.tmp
-mv all_to_ASM1654582_fil_maf0.05_noWF03.bim.tmp all_to_ASM1654582_fil_maf0.05_noWF03.bim
+# MAF = 0.00
+plink --vcf "$VCF_FILE" --remove ids_to_exclude.txt --extract "$PRUNED_VARS_FILE" --set-missing-var-ids @:# --allow-extra-chr --vcf-half-call m --make-bed --out "$MAF00_DIR"/meehan_all_fil_maf0.00_noWeird
+awk '{$1="0";print $0}' "$MAF00_DIR"/meehan_all_fil_maf0.00_noWeird.bim > "$MAF00_DIR"/meehan_all_fil_maf0.00_noWeird.bim.tmp
+mv "$MAF00_DIR"/meehan_all_fil_maf0.00_noWeird.bim.tmp "$MAF00_DIR"/meehan_all_fil_maf0.00_noWeird.bim
+
+# MAF = 0.05
+plink --vcf "$VCF_FILE" --remove ids_to_exclude.txt --extract "$PRUNED_VARS_FILE" --set-missing-var-ids @:# --allow-extra-chr --vcf-half-call m --make-bed --out "$MAF05_DIR"/meehan_all_fil_maf0.05_noWeird
+awk '{$1="0";print $0}' "$MAF05_DIR"/meehan_all_fil_maf0.05_noWeird.bim > "$MAF05_DIR"/meehan_all_fil_maf0.05_noWeird.bim.tmp
+mv "$MAF05_DIR"/meehan_all_fil_maf0.05_noWeird.bim.tmp "$MAF05_DIR"/meehan_all_fil_maf0.05_noWeird.bim
 ```
 
 ### Run `ADMIXTURE`
 
+The following was done for both MAF=0.00 and MAF=0.05. Jobs below are examples. See respective job files for more details.
+
 ```bash
-# Run via job on UFRC, see admixture_maf0.05_noWF03.job for details
-# Resources used: 150 Mb, 1 hr
+# Run via job on UFRC, see admixture_maf0.05_noWeird.job for details
+# Resources used: 
 
 module load admixture/1.23
 
-export NAME="all_to_ASM1654582_fil_maf0.05_noWF03"
+export NAME="meehan_all_fil_maf0.05_noWeird"
 # K = 1 through K = 6
 for K in {1..6}
 do

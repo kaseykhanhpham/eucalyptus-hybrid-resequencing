@@ -141,7 +141,7 @@ d
 
 **Results:**
 
-Two samples, WF03 and WG04, were very different from the rest of their groups (reference _E. globulus_ and introgressed _E. globulus_ respectively) for MAF=0.00 plots. WG04 fell back within range of the rest of introgressed _E. globulus_ variation in MAF=0.05 plots. Below, MAF=0.05 plots are shown.
+Two samples, WF03/1051 and WG04/2025, were very different from the rest of their groups (reference _E. globulus_ and introgressed _E. globulus_ respectively) for MAF=0.00 plots. WG04/2025 fell back within range of the rest of introgressed _E. globulus_ variation in MAF=0.05 plots. Below, MAF=0.05 plots are shown.
 
 
 ![Plot of PC1 vs PC2; PC1 differentiates strongly between _E. cordata_ and _E. globulus_ (both introgressant and pure), while PC2 differentiates between introgressant and pure _E. globulus_, with _E. cordata_ clustering with introgressant _E. globulus_.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/PCA/maf0.05/maf05_pc12.png "PC1 vs. PC2")
@@ -153,7 +153,7 @@ Two samples, WF03 and WG04, were very different from the rest of their groups (r
 ![Barplot of percentage genetic variation explained by each principal component; PC1 explains about 30% of variation, while all other PCs pictured explain about 5%](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/PCA/maf0.05/maf05_pc_var_explained.png "Percent Variance Explained by each PC")
 
 ## Investigate Odd Samples
-WF03 and WG04 were distant in 2nd and 3rd PC plots from the rest of their sample groups. Calculated Fsts from odd samples to the rest of the groups to decide how big of an issue this would be.
+WF03/1051 and WG04/2025 were distant in 2nd and 3rd PC plots from the rest of their sample groups. Calculated Fsts from odd samples to the rest of the groups to decide how big of an issue this would be.
 
 ```bash
 module load vcftools/0.1.16
@@ -215,16 +215,16 @@ summary(na.omit(maf05_wf03_cord_tab$WEIR_AND_COCKERHAM_FST))
 
 Results:
 
-| MAF  | Group 1 | Group 2      | Min   | 1st Quart | Median | Mean  | 3rd Quart | Max  |
-|------|---------|--------------|-------|-----------|--------|------ |-----------|------|
-| 0.00 | WF03    | E. glob ref  | -1.09 | -0.36     | -0.22  | -0.11 | 0.056     | 1.00 |
-| 0.00 | WF03    | E. glob intr | -1.00 | -0.31     | -0.22  | -0.11 | 0.018     | 1.00 |
-| 0.00 | WF03    | E. cordata   | -1.09 | -0.20     | 0.051  | 0.19  | 0.72      | 1.00 |
-| 0.00 | WG04    | E. glob ref  | -1.09 | -0.36     | -0.26  | -0.13 | 0.00      | 1.00 |
-| 0.00 | WG04    | E. glob intr | -1.00 | -0.34     | -0.23  | -0.13 | -0.03     | 1.00 |
-| 0.00 | WG04    | E. cordata   | -1.19 | -0.22     | 0.052  | 0.19  | 0.76      | 1.00 |
-| 0.05 | WF03    | E. glob ref  | -1.09 | -0.36     | -0.18  | -0.094| 0.074     | 1.00 |
-| 0.05 | WF03    | E. glob intr | -1.00 | -0.28     | -0.16  | -0.077| 0.062     | 1.00 |
-| 0.05 | WF03    | E. cordata   | -1.09 | -0.099    | 0.17   | 0.27  | 0.82      | 1.00 |
+| MAF  | Group 1   | Group 2      | Min   | 1st Quart | Median | Mean  | 3rd Quart | Max  |
+|------|-----------|--------------|-------|-----------|--------|------ |-----------|------|
+| 0.00 | WF03/1051 | E. glob ref  | -1.09 | -0.36     | -0.22  | -0.11 | 0.056     | 1.00 |
+| 0.00 | WF03/1051 | E. glob intr | -1.00 | -0.31     | -0.22  | -0.11 | 0.018     | 1.00 |
+| 0.00 | WF03/1051 | E. cordata   | -1.09 | -0.20     | 0.051  | 0.19  | 0.72      | 1.00 |
+| 0.00 | WG04/2025 | E. glob ref  | -1.09 | -0.36     | -0.26  | -0.13 | 0.00      | 1.00 |
+| 0.00 | WG04/2025 | E. glob intr | -1.00 | -0.34     | -0.23  | -0.13 | -0.03     | 1.00 |
+| 0.00 | WG04/2025 | E. cordata   | -1.19 | -0.22     | 0.052  | 0.19  | 0.76      | 1.00 |
+| 0.05 | WF03/1051 | E. glob ref  | -1.09 | -0.36     | -0.18  | -0.094| 0.074     | 1.00 |
+| 0.05 | WF03/1051 | E. glob intr | -1.00 | -0.28     | -0.16  | -0.077| 0.062     | 1.00 |
+| 0.05 | WF03/1051 | E. cordata   | -1.09 | -0.099    | 0.17   | 0.27  | 0.82      | 1.00 |
 
-**Conclusion:** Divergence is pretty consistent between problem samples, their own group, and the other _E. globulus_ group but is much less than for problem samples with _E. cordata_. I can't see a reason to exclude them since they're exhibiting the pattern of divergence I'd expect of any other sample (can't speak to the degree of divergence though). HOWEVER: Since most of Fst values are negative (indicating larger variation within than between populations), it might not be the best metric to use for evaluating these samples. Will need to test whether results are robust to excluding WF03 at the very least.
+**Conclusion:** Divergence is pretty consistent between problem samples, their own group, and the other _E. globulus_ group but is much less than for problem samples with _E. cordata_. I can't see a reason to exclude them since they're exhibiting the pattern of divergence I'd expect of any other sample (can't speak to the degree of divergence though). HOWEVER: Since most of Fst values are negative (indicating larger variation within than between populations), it might not be the best metric to use for evaluating these samples. Will need to test whether results are robust to excluding WF03/1051 at the very least.
