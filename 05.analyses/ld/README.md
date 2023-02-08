@@ -3,7 +3,6 @@
 [Meier and Ravinet's 2019 Speciation Genomics tutorial](https://speciationgenomics.github.io/ld_decay/) referenced extensively. LD only calculated on main chromosomes because smaller contigs did not contain enough SNPs to be informative.
 
 ## MAF = 0.025
-
 ### Long Range
 
 **Run plink to get pairwise r2 values:**
@@ -13,8 +12,8 @@
 
 module load plink/1.90b3.39
 
-INFILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.00/all_to_ASM1654582_fil_maf0.00_snps.vcf"
-CHROMOSOMES=(NC_052612.1 NC_052613.1 NC_052614.1 NC_052615.1 NC_052616.1 NC_052617.1 NC_052618.1 NC_052619.1 NC_052620.1 NC_052621.1 NC_052622.1)
+INFILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.00/meehan_all_fil_maf0.00_snps.vcf"
+CHROMOSOMES=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
 
 for CHR in "${CHROMOSOMES[@]}"
 do
@@ -33,7 +32,7 @@ module load python/3.8
 
 SCRIPTS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/maf0.025/long_range"
-CHROMOSOMES=(NC_052612.1 NC_052613.1 NC_052614.1 NC_052615.1 NC_052616.1 NC_052617.1 NC_052618.1 NC_052619.1 NC_052620.1 NC_052621.1 NC_052622.1)
+CHROMOSOMES=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
 
 for NAME in "${CHROMOSOMES[@]}"
 do
@@ -69,8 +68,8 @@ done
 
 module load plink/1.90b3.39
 
-INFILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.00/all_to_ASM1654582_fil_maf0.00_snps.vcf"
-CHROMOSOMES=(NC_052612.1 NC_052613.1 NC_052614.1 NC_052615.1 NC_052616.1 NC_052617.1 NC_052618.1 NC_052619.1 NC_052620.1 NC_052621.1 NC_052622.1)
+INFILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.00/meehan_all_fil_maf0.00_snps.vcf"
+CHROMOSOMES=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
 
 for CHR in "${CHROMOSOMES[@]}"
 do
@@ -84,7 +83,7 @@ Commands for averaging R2 values and plotting were the same as for long range.
 ```bash
 module load python/3.8
 SCRIPTS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
-CHROMOSOMES=(NC_052612.1 NC_052613.1 NC_052614.1 NC_052615.1 NC_052616.1 NC_052617.1 NC_052618.1 NC_052619.1 NC_052620.1 NC_052621.1 NC_052622.1)
+CHROMOSOMES=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
 
 for CHR in "${CHROMOSOMES[@]}"
 do
@@ -111,45 +110,7 @@ done
 | Average    |  -           |    -         | 338.1         |
 
 ## MAF = 0.05
-
-### Long Range
-
-**Run plink to get pairwise r2 values:**
-```bash
-# Run on UFRC's queue system, see plink_maf0.05_long.job for more information.
-# Resources: 5 Gb, 20 min
-
-module load plink/1.90b3.39
-
-INFILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.00/all_to_ASM1654582_fil_maf0.00_snps.vcf"
-CHROMOSOMES=(NC_052612.1 NC_052613.1 NC_052614.1 NC_052615.1 NC_052616.1 NC_052617.1 NC_052618.1 NC_052619.1 NC_052620.1 NC_052621.1 NC_052622.1)
-
-for CHR in "${CHROMOSOMES[@]}"
-do
-    plink --vcf "$INFILE" --double-id --allow-extra-chr --set-missing-var-ids @:# --maf 0.05 --mind 0.5 --chr "$CHR" --r2 gz --ld-window 100000 --ld-window-kb 1000 -ld-window-r2 0 --make-bed  --vcf-half-call m --thin 0.5 --out "$CHR" --threads 12
-done
-```
-
-Commands for averaging R2 values and plotting were the same as for MAF = 0.025 long range analysis.
-
-### Short Range
-**Run plink to get pairwise r2 values:**
-```bash
-# Run on UFRC's queue system, see plink_maf0.05_short.job for more information.
-# Resources: 2.7 Gb, 10 min
-
-module load plink/1.90b3.39
-
-INFILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.00/all_to_ASM1654582_fil_maf0.00.vcf"
-CHROMOSOMES=(NC_052612.1 NC_052613.1 NC_052614.1 NC_052615.1 NC_052616.1 NC_052617.1 NC_052618.1 NC_052619.1 NC_052620.1 NC_052621.1 NC_052622.1)
-
-for CHR in "${CHROMOSOMES[@]}"
-do
-    plink --vcf "$INFILE" --double-id --allow-extra-chr --set-missing-var-ids @:# --maf 0.05 --mind 0.5 --chr "$CHR" --r2 gz --ld-window 1000 --ld-window-kb 100 -ld-window-r2 0 --make-bed  --vcf-half-call m --out "$CHR" --threads 12
-done
-```
-
-Commands for averaging R2 values and plotting were the same as for MAF = 0.025 long range analysis.
+Repeated the above pipeline for a cutoff of MAF=0.05 for long and short range windows. Commands for calculating pairwise LD, averaging over SNP distance, and summarizing were the same as described above. See individual job files for details.
 
 ### Results
 | Chromosome | Minimum (bp) | Maximum (bp) | Midpoint (bp) |

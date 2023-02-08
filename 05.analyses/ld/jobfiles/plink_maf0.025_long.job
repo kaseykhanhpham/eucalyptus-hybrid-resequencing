@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --account=soltis
 #SBATCH --qos=soltis-b
-#SBATCH --job-name=plink
+#SBATCH --job-name=plink025l
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=kasey.pham@ufl.edu
 #SBATCH --mem=20gb
@@ -13,9 +13,10 @@
 
 module load plink/1.90b3.39 
 
-export INFILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.00/all_to_ASM1654582_fil_maf0.00_snps.vcf"
+export INFILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.00/meehan_all_fil_maf0.00_snps.vcf"
+CHROMOSOMES=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
 
-while read CHR
+for CHR in "${CHROMOSOMES[@]}"
 do
     plink --vcf "$INFILE" --double-id --allow-extra-chr --set-missing-var-ids @:# --maf 0.025 --mind 0.5 --chr "$CHR" --r2 gz --ld-window 100000 --ld-window-kb 1000 -ld-window-r2 0 --make-bed  --vcf-half-call m --thin 0.5 --out "$CHR" --threads 12
-done < /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/chromosome_list.txt 
+done
