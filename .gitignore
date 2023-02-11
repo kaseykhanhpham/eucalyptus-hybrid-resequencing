@@ -11,6 +11,7 @@ r2_csv
 alignments
 *.kml
 *.vcf
+*.html
 .Rdata
 .Rhistory
 introgressednucmarkers.kmz

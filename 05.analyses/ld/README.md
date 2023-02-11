@@ -1,5 +1,6 @@
 # Linkage Disequilibrium Calculation
 
+DON'T DO THIS IMMEDIATELY... REVISE TO FIT DECAY CURVE FOR MORE FORMALIZED ESTIMATE.
 [Meier and Ravinet's 2019 Speciation Genomics tutorial](https://speciationgenomics.github.io/ld_decay/) referenced extensively. LD only calculated on main chromosomes because smaller contigs did not contain enough SNPs to be informative.
 
 ## MAF = 0.025
@@ -8,7 +9,7 @@
 **Run plink to get pairwise r2 values:**
 ```bash
 # Run on UFRC's queue system, see plink_maf0.025_long.job for more information.
-# Resources: 13 Gb, 40 min
+# Resources: 4 to 13 Gb, 10 to 40 min
 
 module load plink/1.90b3.39
 
@@ -26,7 +27,7 @@ done
 Wrote python script to average pairwise R2 values for each distance between SNPs and ran for each chromosome.
 ```bash
 # Run via UFRC queue, see avg_r2_maf0.025_long.job for more details.
-# Resources: 32 Gb, 5 hrs
+# Resources: 21 Gb to 65 Gb, 3 to 10 hrs
 
 module load python/3.8
 
@@ -46,7 +47,7 @@ Wrote a script in R to plot averaged results per pairwise site distance.
 
 ```bash
 # Run via UFRC queue, see plot_r2_maf0.025_long.job for more details.
-# Resources: 1.54 Gb, 24 min
+# Resources: 300 Mb to 1.5 Gb, 2 to 20 min
 
 module load R/4.1
 
@@ -60,11 +61,12 @@ do
 done
 ```
 
+The same was done to calculate short-range LD using a window of 1000bp and a maximum distance of 100kb. 
+
 ### Short Range
 **Run plink to get pairwise r2 values:**
 ```bash
 # Run on UFRC's queue system, see plink_maf0.025_short.job for more information.
-# Resources: 5 Gb, 18 min
 
 module load plink/1.90b3.39
 
@@ -92,11 +94,12 @@ do
 done
 ```
 
-### Results for MAF = 0.025 at a cutoff of r2 = 0.02
+### Results for MAF = 0.025 at a cutoff of r2 = 0.2
 
+**Long Range:**
 | Chromosome | Minimum (bp) | Maximum (bp) | Midpoint (bp) |
 | ---------- | ------------ | ------------ | ------------- |
-| 1          | 268          | 670          |   469         |
+| 1          | 268          | 670          | 469           |
 | 2          | 162          | 236          | 199           |
 | 3          | 81           | 107          | 94            |
 | 4          | 384          | 831          | 607.5         |
