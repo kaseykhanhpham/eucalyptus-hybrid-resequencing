@@ -17,6 +17,8 @@ This project was conceived based off of previous work documenting _Eucalyptus gl
 
 We now aim to characterize the regions of nuclear introgression in these previously-identified _E. globulus_ individuals with whole-genome resequencing. This project samples 10 individuals of _E. cordata_, 20 individuals of introgressant _E. globulus_ (either containing introgressed AFLP + chloroplast or just chloroplast markers), and 10 individuals of "pure" _E. globulus_ from outside Meehan Range. My UTas collaborators identified individuals, collected samples, and extracted DNA.
 
+I also included whole genome short reads for _E. grandis_ SRA Accession [SRR10339635](https://www.ncbi.nlm.nih.gov/sra/SRX7049889[accn]) to serve as an outgroup for introgression tests.
+
 
 ## References
 * The whole-genome long read assembly of _Eucalyptus globulus_ (in prep): EGLOB-X46

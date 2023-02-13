@@ -78,3 +78,4 @@
 /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes/reads/S7_marked.bam
 /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes/reads/S8_marked.bam
 /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes/reads/S9_marked.bam
+/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes/reads/SRR10339635_marked.bam
