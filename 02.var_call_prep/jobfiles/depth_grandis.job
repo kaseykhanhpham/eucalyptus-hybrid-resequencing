@@ -1,0 +1,16 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=depth
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=11gb
+#SBATCH --time=10:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=depth_%j.out
+#SBATCH --error=depth_%j.err
+
+module load samtools/1.12
+
+samtools depth -o /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/02.process_reads/05.depth/SRR10339635_cover.txt /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/02.process_reads/04.markdup/SRR10339635_marked.bam

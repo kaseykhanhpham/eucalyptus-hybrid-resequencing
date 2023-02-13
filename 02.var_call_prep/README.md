@@ -142,6 +142,8 @@ done < "$LIST_DIR"/seq_ids.txt
 ### Add readgroups
 Assigning readgroups is necessary because variant callers use information from what lane and run a sample was on to correct for calling bias. I based the information included on the [`GATK` recommendations](https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups) and [Sentieon recommendations](https://support.sentieon.com/appnotes/read_groups/).
 
+Since SRA doesn't store original read name information, added arbitrary flowcell and lane IDs for SRR10339635 to differentiate it from the rest of the samples.
+
 **Make job to assign the right readgroups to each `BAM` file**
 
 I manually made a table (readgroup_table.txt) with the information for readgroup assignment from my [sample sequencing metadata](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/00.metadata/03.seq_analysis/sample_sequencing_metadata_all.xlsx). The python script I wrote to make the job has a specific file format hard-coded in, but it can be tweaked to fit other formats.

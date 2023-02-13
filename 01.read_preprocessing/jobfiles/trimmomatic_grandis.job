@@ -21,5 +21,5 @@ RAW_READS="/blue/soltis/kasey.pham/euc_hyb_reseq/reads/raw_reads"
 OUT_DIR="/orange/soltis/kasey.pham/eucalyptus_hyb_reseq/02.trimmed_reads"
 ADAPTERS="/blue/soltis/kasey.pham/euc_hyb_reseq/reads/TruSeq3-PE-2.fas"
 
-trimmomatic PE -threads 11 "$RAW_READS"/SRR10339635_1.fastq.gz "$RAW_READS"/SRR10339635_R2_raw.fastq.gz "$OUT_DIR"/SRR10339635_R1_paired.fq "$OUT_DIR"/SRR10339635_R1_unpaired.fq "$OUT_DIR"/SRR10339635_R2_paired.fq "$OUT_DIR"/SRR10339635_R2_unpaired.fq ILLUMINACLIP:"$ADAPTERS":2:30:10 LEADING:20 TRAILING:20 SLIDINGWINDOW:4:20 MINLEN:36
+trimmomatic PE -threads 11 "$RAW_READS"/SRR10339635_1.fastq.gz "$RAW_READS"/SRR10339635_2.fastq.gz "$OUT_DIR"/SRR10339635_R1_paired.fq "$OUT_DIR"/SRR10339635_R1_unpaired.fq "$OUT_DIR"/SRR10339635_R2_paired.fq "$OUT_DIR"/SRR10339635_R2_unpaired.fq ILLUMINACLIP:"$ADAPTERS":2:30:10 LEADING:20 TRAILING:20 SLIDINGWINDOW:4:20 MINLEN:36
 

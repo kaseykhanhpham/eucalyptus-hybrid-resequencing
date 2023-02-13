@@ -1,0 +1,16 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=add_rg
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=15gb
+#SBATCH --time=2:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=add_rg_%j.out
+#SBATCH --error=add_rg_%j.err
+
+module load picard/2.25.5
+
+picard AddOrReplaceReadGroups -I /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/01.map_reads/SRR10339635_mapped.bam -O /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/02.process_reads/01.readgroups/SRR10339635_wRG.bam -LB SRR10339635.leaf -PL ILLUMINA -PU SRR10339635FC.100.1000 -SM SRR10339635 -ID SRR10339635FC.100.1000

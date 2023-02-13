@@ -1,0 +1,25 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=markdup
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=2gb
+#SBATCH --time=10:00:00
+#SBATCH --cpus-per-task=8
+#SBATCH --nodes=1
+#SBATCH --output=markdup_%j.out
+#SBATCH --error=markdup_%j.err
+
+pwd; hostname; date
+echo Working directory is $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR
+
+module purge
+module load samtools/1.12
+
+INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/02.process_reads/03.sort"
+OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/02.process_reads/04.markdup"
+LISTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
+
+samtools markdup -d 2500 -@ 7 "$INDIR"/SRR10339635_sorted.bam "$OUTDIR"/SRR10339635_marked.bam

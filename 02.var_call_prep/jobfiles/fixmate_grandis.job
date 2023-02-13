@@ -1,0 +1,21 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=fixmate
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=6gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=8
+#SBATCH --nodes=1
+#SBATCH --output=fixmate_%j.out
+#SBATCH --error=fixmate_%j.err
+
+pwd; hostname; date
+echo Working directory is $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR
+
+module purge
+module load samtools/1.12
+
+samtools fixmate -m -O bam -@ 7 /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/02.process_reads/01.readgroups/SRR10339635_wRG.bam /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/02.process_reads/02.fixmate/SRR10339635_fixed.bam
