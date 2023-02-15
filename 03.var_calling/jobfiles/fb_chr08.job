@@ -5,7 +5,7 @@
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=kasey.pham@ufl.edu
 #SBATCH --mem=10gb
-#SBATCH --time=16-00:00:00
+#SBATCH --time=30-00:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --nodes=1
 #SBATCH --output=freebayes_chr08_%j.out
@@ -23,4 +23,4 @@ REF_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/Eglobulus_genome_X46/EGLOB-
 OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes/"
 
 # Run FreeBayes on all samples at once against E. grandis reference genome, call sites with a maximum depth of 3000
-freebayes -L "$LIST_DIR"/bam_inputs.txt -f "$REF_FILE" -r Chr08 -v "$OUTDIR"/chr08.vcf -g 4000
+freebayes -L "$LIST_DIR"/bam_inputs.txt -f "$REF_FILE" -r Chr08 -v "$OUTDIR"/chr08.vcf -g 3000
