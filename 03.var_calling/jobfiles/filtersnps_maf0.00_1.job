@@ -16,7 +16,7 @@ module load vcftools/0.1.16
 module load bcftools/1.15
 
 export INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes"
-declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
+declare -a VCFLIST=(chr01 chr02 chr04 chr06 chr09 chr10 chr11 chrUn)
 
 export MAF=0.00
 export MISS=0.9
