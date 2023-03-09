@@ -24,6 +24,7 @@ I also included whole genome short reads for _E. grandis_ SRA Accession [SRR1033
 * The whole-genome long read assembly of _Eucalyptus globulus_ (in prep): EGLOB-X46
 * The annotation of the EGLOB-X46 (in prep)
 * The chloroplast assembly of _Eucalyptus globulus_: [AY780259.1](https://www.ncbi.nlm.nih.gov/nuccore/AY780259.1/)
+* The genetic map of _Eucalyptus_ DArT markers mapped to the _E. globulus_ EGLOB-X46 genome assembly: 1060_LH_F2.xlsx
 
 
 ## Python Environment
