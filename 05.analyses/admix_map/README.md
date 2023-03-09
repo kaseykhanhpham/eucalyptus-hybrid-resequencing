@@ -4,7 +4,6 @@ Admixture mapping is the process of assigning loci within the genome of an admix
 Overview of the method: [Winkler et al. 2010](https://doi.org/10.1146/annurev-genom-082509-141523)
 
 
-
 ## Phase Alleles
 ### Remove variants with missing genotypes
 ```bash
@@ -59,8 +58,6 @@ NAME="all_to_ASM1654582_fil_maf0.05_snps_nohap"
 ```
 
 ### Run admixture mapping software [`flare`](https://github.com/browning-lab/flare)
-
-Install `flare` and download genetic map for _E. grandis_:
 
 ```bash
 

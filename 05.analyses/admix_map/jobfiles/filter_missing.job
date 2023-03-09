@@ -14,8 +14,8 @@
 module load vcftools/0.1.16
 module load bcftools/1.15
 
-INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/filter_snps/maf0.05"
-NAME="all_to_ASM1654582_fil_maf0.05"
+INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.05"
+NAME="meehan_all_fil_maf0.05_snps"
 
 export MISS=1.0
 

@@ -1,19 +1,19 @@
 #!/bin/bash
 #SBATCH --account=soltis
 #SBATCH --qos=soltis-b
-#SBATCH --job-name=beagle
+#SBATCH --job-name=flare
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=kasey.pham@ufl.edu
-#SBATCH --mem=50gb
+#SBATCH --mem=10gb
 #SBATCH --time=4-00:00:00
 #SBATCH --cpus-per-task=12
 #SBATCH --nodes=1
-#SBATCH --output=beagle_%j.out
-#SBATCH --error=beagle_%j.err
+#SBATCH --output=flare_%j.out
+#SBATCH --error=flare_%j.err
 
-module load beagle/5.2
+module load java/11.0.1
 
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/05.analyses/admix_map"
 NAME="meehan_all_fil_maf0.05_snps_nomiss"
 
-"$HPC_BEAGLE_BIN"/beagle gt="$NAME".vcf out="$NAME"_phased impute=false burnin=5 iterations=20 phase-states=280 nthreads=11
+java -Xmx10g -jar flare.jar -ref="$WDIR"/"$NAME".vcf -ref-panel=ref_panel.txt -gt="$WDIR"/"$NAME".vcf -gt-samples=gt_samples.txt -map= -nthreads=12 
