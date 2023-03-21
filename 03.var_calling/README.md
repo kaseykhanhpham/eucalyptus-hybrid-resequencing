@@ -36,6 +36,71 @@ OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes/"
 freebayes -L "$LIST_DIR"/bam_inputs.txt -f "$REF_FILE" -r Chr01 -v "$OUTDIR"/Chr01.vcf -g 4000
 ```
 
+Chromosomes 3 and 5 required prohibitive computational resources when run in whole, so I split them up into ten parts and ran each as a separate job. Made a list of segments in which to split each chromosome.
+
+Chromosome 3 length: 65547241
+Chromosome 5 length: 62919971
+
+Split BAM files for each sample by chromosome and segment:
+
+```bash
+# Run via job on UFRC, see split_bam.job for details
+# Resources used: 12Mb, 2 hrs
+module load samtools/1.15
+
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
+IN_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/02.process_reads/04.markdup"
+CHR03_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes/parallel/Chr03"
+CHR05_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes/parallel/Chr05"
+
+# Chromosome 3
+while read NAME
+do
+    while read SECTION
+    do
+        samtools view -b -h -o "$CHR03_DIR"/bamfiles/"$NAME"_Chr03_"$SECTION".bam "$IN_DIR"/"$NAME"_marked.bam Chr03:"$SECTION"
+    done < "$CHR03_DIR"/chr03_section_list.txt
+done < "$LIST_DIR"/seq_ids.txt
+
+while read SECTION
+    do
+        samtools view -b -h -o "$CHR03_DIR"/bamfiles/SRR10339635_Chr03_"$SECTION".bam "$IN_DIR"/SRR10339635_marked.bam Chr03:"$SECTION"
+    done < "$CHR03_DIR"/chr03_section_list.txt
+
+# Chromosome 5
+while read NAME
+do
+    while read SECTION
+    do
+        samtools view -b -h -o "$CHR05_DIR"/bamfiles/"$NAME"_Chr05_"$SECTION".bam "$IN_DIR"/"$NAME"_marked.bam Chr05:"$SECTION"
+    done < "$CHR05_DIR"/chr05_section_list.txt
+done < "$LIST_DIR"/seq_ids.txt
+
+while read SECTION
+do
+    samtools view -b -h -o "$CHR05_DIR"/bamfiles/SRR10339635_Chr05_"$SECTION".bam "$IN_DIR"/SRR10339635_marked.bam Chr05:"$SECTION"
+done < "$CHR05_DIR"/chr05_section_list.txt
+```
+
+Manually generated separate file input lists for each chromosome section to pass to `FreeBayes`; see the files with the name template `bam_inputs_chr0X_XX.txt`.
+
+Ran `FreeBayes` on each chromosome section separately. An example job:
+
+```bash
+# Run via job on UFRC, see fb_chr03_1.job for details
+# Resources used:
+
+module load freebayes/1.3.2
+
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes/parallel/Chr03"
+REF_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/Eglobulus_genome_X46/EGLOB-X46.v1.0.fa"
+OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes/parallel/Chr03"
+
+# Run FreeBayes on all samples at once against E. globulus reference genome, call sites with a maximum depth of 3000
+# Chromosome 3, Section 1: 1 bp to 6554724 bp
+freebayes -L "$LIST_DIR"/bam_inputs_chr03_01.txt -f "$REF_FILE" -v "$OUTDIR"/chr03_01.vcf -g 3000
+```
+
 **Merge VCF files for each chromosome using [picard](https://gatk.broadinstitute.org/hc/en-us/articles/360036713331-MergeVcfs-Picard):**
 
 ```bash
