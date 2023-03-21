@@ -1,0 +1,20 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=dsuite
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=1gb
+#SBATCH --time=1:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=dsuite_%j.out
+#SBATCH --error=dsuite_%j.err
+
+module load dsuite/0.4-r49
+
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/dsuite"
+VCFDIR="WDIR=/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan"
+NAME="meehan_all_fil_maf0.00_snps_biallelic"
+
+Dsuite Dinvestigate -o "$NAME" "$VCFDIR"/"$NAME".vcf "$WDIR"/SETS.txt test_trios.txt
