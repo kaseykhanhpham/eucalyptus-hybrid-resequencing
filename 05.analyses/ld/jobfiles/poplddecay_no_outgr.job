@@ -1,0 +1,25 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=ld_noout
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=10gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=12
+#SBATCH --nodes=1
+#SBATCH --output=ld_no_outgr_%j.out
+#SBATCH --error=ld_no_outgr_%j.err
+
+module load perl/5.24.1
+module load R/4.2
+
+export PATH=$PATH:/blue/soltis/kasey.pham/bin/PopLDdecay/bin/
+
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/admix_map/no_outgroup/"
+VCF_NAME="meehan_no_outgr_nohap_phased_noChrUn"
+PROG_DIR="/blue/soltis/kasey.pham/bin/PopLDdecay/bin"
+
+"$PROG_DIR"/PopLDdecay -InVCF "$VCF_DIR"/"$VCF_NAME".vcf -OutStat ld_glob_no_outgr.stat.gz -SubPop glob_samples.txt -MaxDist 1000 -MAF 0.05 -Het 0.95 -OutType 1
+
+perl "$PROG_DIR"/Plot_OnePop.pl -inFile ld_glob_no_outgr.stat.gz -output ld_glob_no_outgr
