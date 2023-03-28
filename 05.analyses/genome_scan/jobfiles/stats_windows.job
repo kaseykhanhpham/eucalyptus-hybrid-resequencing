@@ -19,5 +19,5 @@ WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan"
 
 conda activate "$ENV_DIR"/euc_hyb_reseq
 
-python "$SCRIPT_DIR"/stats_windows.py "$WDIR"/all_to_ASM1654582_fil_maf0.00_biallelic_noPL.vcf 100000 20000 "$WDIR"/pop_structure.json "$WDIR"/outgroup_structure.json "$WDIR"/chr_list.txt
+python "$SCRIPT_DIR"/stats_windows.py "$WDIR"/meehan_all_fil_maf0.00_biallelic_formatted.vcf 100000 20000 "$WDIR"/pop_structure.json "$WDIR"/outgroup_structure.json "$WDIR"/chr_list.txt
 
