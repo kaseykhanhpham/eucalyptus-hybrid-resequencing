@@ -1,3 +1,0 @@
-JobID  ChrID
-50368105    Chr01
-50627976    Chr04

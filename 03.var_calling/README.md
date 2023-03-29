@@ -36,6 +36,9 @@ OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes/"
 freebayes -L "$LIST_DIR"/bam_inputs.txt -f "$REF_FILE" -r Chr01 -v "$OUTDIR"/Chr01.vcf -g 4000
 ```
 
+### "Parallelize" Chromosome 3 and 5 SNP Calling:
+
+
 Chromosomes 3 and 5 required prohibitive computational resources when run in whole, so I split them up into ten parts and ran each as a separate job. Made a list of segments in which to split each chromosome.
 
 Chromosome 3 length: 65547241
@@ -88,7 +91,7 @@ Ran `FreeBayes` on each chromosome section separately. An example job:
 
 ```bash
 # Run via job on UFRC, see fb_chr03_1.job for details
-# Resources used:
+# Max resources used: 3 Gb, 6 days
 
 module load freebayes/1.3.2
 
@@ -101,18 +104,22 @@ OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes/parallel/Ch
 freebayes -L "$LIST_DIR"/bam_inputs_chr03_01.txt -f "$REF_FILE" -v "$OUTDIR"/chr03_01.vcf -g 3000
 ```
 
-**Merge VCF files for each chromosome using [picard](https://gatk.broadinstitute.org/hc/en-us/articles/360036713331-MergeVcfs-Picard):**
+Merged VCF files for each Chromosome 3/5 piece using [picard](https://gatk.broadinstitute.org/hc/en-us/articles/360036713331-MergeVcfs-Picard). Example job given below.
 
 ```bash
-# Run via job on UFRC, see merge_vcfs_raw.job for details
-# Resources used: 10.2 Gb, 2 hrs 
+# Run via job on UFRC, see merge_vcfs_chr03.job for details
+# Max resources used: 10 Gb, 20 min
 
 module load picard/2.25.5
-VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes"
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes/parallel/Chr03"
+OUT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes"
 
-ls "$VCF_DIR"/*.vcf > "$VCF_DIR"/vcfs_list.txt
-picard MergeVcfs -I "$VCF_DIR"/vcfs_list.txt -O meehan_all_raw.vcf
+picard MergeVcfs -I "$VCF_DIR"/vcfs_list.txt -O "$OUT_DIR"/chr03.vcf
 ```
+
+### SNP Calling Post-processing
+
+Merged VCF files of unfiltered variants for each chromosome using `picard`.
 
 Then calculateed raw variant statistics for the merged file:
 
@@ -121,8 +128,13 @@ module load bcftools
 SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
 VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes"
 
-# Get statistics for entire variant set
-bcftools stats "$VCF_DIR"/meehan_all_raw.vcf > "$VCF_DIR"/all_raw_stats.txt
+declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr09 chr10 chr11 chrUn)
+
+# Get statistics for raw snps on each chromosome
+for NAME in "${VCFLIST[@]}"
+do
+    bcftools stats "$VCF_DIR"/"$NAME".vcf > "$VCF_DIR"/raw_stats/"$NAME"_raw_stats.txt
+done
 ```
 
 ## Filter SNPs
