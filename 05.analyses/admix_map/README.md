@@ -125,8 +125,19 @@ for(i in seq(2,nrow(map_final))){
 write.table(map_final, file = "1060_LH_F2_manual_copy.map", row.names = FALSE, col.names = FALSE, quote = FALSE, sep = "\t")
 ```
 
-### Run admixture mapping software [`flare`](https://github.com/browning-lab/flare)
+## Run admixture mapping software [`flare`](https://github.com/browning-lab/flare)
 
 ```bash
+# Performed in the UFRC queue system. See flare.job for more details.
+# Resources used: 
 
+module load java/11.0.1
+
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/05.analyses/admix_map"
+NAME="meehan_all_fil_maf0.05_snps_nomiss"
+
+java -Xmx10g -jar flare.jar -ref="$WDIR"/"$NAME".vcf -ref-panel=ref_panel.txt -gt="$WDIR"/"$NAME".vcf -gt-samples=gt_samples.txt -map= -nthreads=12 -probs=true
 ```
+
+## Interpret Results
+None of filtered/phased SNPs were classified as _E. cordata_ ancestry... Could be that the filtering restricted introgressed variants from the dataset.
