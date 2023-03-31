@@ -66,9 +66,9 @@ do
 done < "$LIST_DIR"/seq_ids.txt
 
 while read SECTION
-    do
-        samtools view -b -h -o "$CHR03_DIR"/bamfiles/SRR10339635_Chr03_"$SECTION".bam "$IN_DIR"/SRR10339635_marked.bam Chr03:"$SECTION"
-    done < "$CHR03_DIR"/chr03_section_list.txt
+do
+    samtools view -b -h -o "$CHR03_DIR"/bamfiles/SRR10339635_Chr03_"$SECTION".bam "$IN_DIR"/SRR10339635_marked.bam Chr03:"$SECTION"
+done < "$CHR03_DIR"/chr03_section_list.txt
 
 # Chromosome 5
 while read NAME
