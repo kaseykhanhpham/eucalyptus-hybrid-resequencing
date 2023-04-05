@@ -1,0 +1,25 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=pi_samples
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=1gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=pi_windows_%j.out
+#SBATCH --error=pi_windows_%j.err
+
+module load conda 
+
+ENV_DIR="/blue/soltis/kasey.pham/conda/envs"
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan"
+OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pi_samplewise"
+
+conda activate "$ENV_DIR"/euc_hyb_reseq
+
+cd "$OUTDIR"
+
+python "$SCRIPT_DIR"/pi_pairwise.py "$WDIR"/no_outgroup/meehan_all_fil_maf0.00_snps_biallelic_formatted.vcf 100000 20000 "$WDIR"/pop_structure.json "$WDIR"/outgroup_structure.json "$WDIR"/chr_list.txt

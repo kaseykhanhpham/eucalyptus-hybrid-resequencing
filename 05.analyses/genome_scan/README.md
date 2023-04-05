@@ -135,3 +135,33 @@ fst_dxy_windows <- intersect(flagged_fst_windows, flagged_dxy_windows)
 pi_dxy_windows <- intersect(flagged_pi_windows, flagged_dxy_windows)
 dxy_deta_windows <- intersect(flagged_dxy_windows, flagged_deta_neg_windows)
 ```
+
+Very few windows overlapping between outliers in the different statistics. I think this may be because the introgression is not fixed and therefore won't be detected by the more conservative way that I set cutoffs.
+
+Instead, calculated pi for all pairwise comparisons between _individual samples_ of introgressants against reference populations.
+```bash
+# Performed in UFRC queue system. See pi_windows.job for more details.
+# Resources: 
+
+module load conda 
+
+ENV_DIR="/blue/soltis/kasey.pham/conda/envs"
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan"
+OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pi_samplewise"
+
+conda activate "$ENV_DIR"/euc_hyb_reseq
+
+cd "$OUTDIR"
+
+python "$SCRIPT_DIR"/pi_pairwise.py "$WDIR"/no_outgroup/meehan_all_fil_maf0.00_snps_biallelic_formatted.vcf 100000 20000 "$WDIR"/pop_structure.json "$WDIR"/outgroup_structure.json "$WDIR"/chr_list.txt
+```
+
+Calculate Dxy for Meehan Range _E. globulus_ versus _E. cordata_.
+
+```bash
+# Performed in UFRC queue system. See dxy_cordata.job for more details.
+# Resources: 
+
+
+```
