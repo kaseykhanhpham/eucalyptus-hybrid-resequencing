@@ -1,5 +1,5 @@
 # python script to calculate Dxy across a VCF file given a size and step for sliding windows and pop structure
-# usage: python stats_windows.py [vcf_file] [window_size] [window_step] [structure_file] [outgroup_file] [chromosomes_list]
+# usage: python stats_windows.py [vcf_file] [window_size] [window_step] [structure_file] [outgroup_file] [chromosomes_list] [out_name]
 
 # import libraries
 import sys
@@ -15,6 +15,7 @@ window_step = int(sys.argv[3])
 structure_filename = sys.argv[4]
 outgroup_filename = sys.argv[5]
 chr_list_name = sys.argv[6]
+out_name = sys.argv[7]
 
 # import list of chromosomes to iterate through
 chr_list = []
@@ -69,4 +70,4 @@ for chr in chr_list:
         stats_df.loc[len(stats_df.index)] = [chrom, start, end, dxy]
 
 # export dataframe as tab-delimited text file
-stats_df.to_csv("{INFILE}_dxy_cord.tab".format(INFILE = vcf_name), sep = "\t", index = False)
+stats_df.to_csv(out_name, sep = "\t", index = False)

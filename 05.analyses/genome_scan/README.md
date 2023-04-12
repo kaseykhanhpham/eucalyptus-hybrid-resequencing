@@ -20,7 +20,7 @@ module load vcftools/0.1.16
 INFILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.00/meehan_all_fil_maf0.00_snps.vcf"
 POPLIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan"
 
-vcftools --vcf "$INFILE" --out all_maf0.05 --weir-fst-pop "$POPLIST_DIR"/Eglobulus_MR.txt --weir-fst-pop "$POPLIST_DIR"/Eglobulus_ref.txt --fst-window-size 20000 --fst-window-step 2000
+vcftools --vcf "$INFILE" --out all_maf0.00 --weir-fst-pop "$POPLIST_DIR"/Eglobulus_MR.txt --weir-fst-pop "$POPLIST_DIR"/Eglobulus_ref.txt --fst-window-size 20000 --fst-window-step 2000
 ```
 
 ## Sliding Window Pi, Tajima's D, Dxy Calculations
@@ -68,7 +68,7 @@ module load gcc/9.3.0
 module load dsuite/0.4-r49
 
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/dsuite"
-VCFDIR="WDIR=/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan"
+VCFDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan"
 NAME="meehan_all_fil_maf0.00_snps_biallelic"
 
 Dsuite Dinvestigate "$VCFDIR"/"$NAME".vcf "$WDIR"/SETS.txt "$WDIR"/test_trios.txt
@@ -138,10 +138,12 @@ dxy_deta_windows <- intersect(flagged_dxy_windows, flagged_deta_neg_windows)
 
 Very few windows overlapping between outliers in the different statistics. I think this may be because the introgression is not fixed and therefore won't be detected by the more conservative way that I set cutoffs.
 
+## Calculate genome scan statistics... again.
+
 Instead, calculated pi for all pairwise comparisons between _individual samples_ of introgressants against reference populations.
 ```bash
 # Performed in UFRC queue system. See pi_windows.job for more details.
-# Resources: 
+# Resources: 200 Mb, 3 hrs
 
 module load conda 
 
@@ -161,7 +163,89 @@ Calculate Dxy for Meehan Range _E. globulus_ versus _E. cordata_.
 
 ```bash
 # Performed in UFRC queue system. See dxy_cordata.job for more details.
-# Resources: 
+# Resources: 200 Mb, 6 min
 
+module load conda 
 
+ENV_DIR="/blue/soltis/kasey.pham/conda/envs"
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan"
+
+conda activate "$ENV_DIR"/euc_hyb_reseq
+
+python "$SCRIPT_DIR"/dxy_cordata.py "$WDIR"/no_outgroup/meehan_all_fil_maf0.00_snps_biallelic_formatted.vcf 100000 20000 "$WDIR"/pop_structure.json "$WDIR"/outgroup_structure.json "$WDIR"/chr_list.txt
 ```
+
+## Analysis of scan results... again.
+
+Processed pi scan for each sample.
+```bash
+module load R/4.2
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+
+ls *_scan_pi.tab | while read FILE
+do
+    Rscript "$SCRIPT_DIR"/process_pi_scans.r "$FILE"
+done 2>&1 >> process_pi.out
+```
+
+Processed dxy scan against _E. cordata_ on local computer.
+```R
+working_dir <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/genome_scan/windows_output/no_outgroup"
+setwd(working_dir)
+
+dxy_table_name <- "meehan_all_fil_maf0.00_snps_biallelic_formatted.vcf_dxy_cord.tab"
+dxy_table <- read.table(dxy_table_name, header = TRUE, sep = "\t")
+
+summary(dxy_table$Dxy) # Mean = 0.1953, Median = 0.1927
+hist(dxy_table$Dxy) # Too tall to be normally distributed, but at least has the right shape
+
+dxy_mean <- mean(dxy_table$Dxy, na.rm = TRUE)
+dxy_sd <- sd(dxy_table$Dxy, na.rm = TRUE) # sd = 0.04419
+
+flagged_dxy <- which(dxy_table$Dxy < dxy_mean - 2*dxy_sd)
+flagged_dxy_coords <- dxy_table[flagged_dxy ,c("chr", "start", "end")] # 523 outlier windows
+
+write.table(flagged_dxy_coords, "dxy_cord_flagged.tab", quote = FALSE, row.names = FALSE, col.names = TRUE)
+```
+
+Took a look at overlaps in windows of a few samples by hand before automating discovery.
+```R
+working_dir <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/genome_scan/windows_output/no_outgroup"
+setwd(working_dir)
+
+WA01_name <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/genome_scan/pi_samplewise/WA01_scan_pi.tab.flagged_pi.tab"
+WA01_pi <- read.table(WA01_name, header = TRUE) # 799 outlier windows
+intersect(flagged_dxy_coords, WA01_pi) # none
+
+WA03_name <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/genome_scan/pi_samplewise/WA03_scan_pi.tab.flagged_pi.tab" 
+WA03_pi <- read.table(WA03_name, header = TRUE) # 796 outlier windows
+intersect(flagged_dxy_coords, WA01_pi)
+
+# ...etc. for each sample
+```
+
+| Sample | Accession | num pi windows | num dxy intersects |
+| ------ | --------- | -------------- | ------------------ |
+| WA01   | ?         | 799            | 0                  |
+| WA03   | ?         | 796            | 0                  |
+| WA04   | ?         | 801            | 0                  |
+| WB02   | ?         | 794            | 0                  |
+| WB03   | ?         | 810            | 0                  |
+| WB04   | ?         | 760            | 0                  |
+| WC02   | ?         | 727            | 0                  |
+| WC03   | ?         | 790            | 0                  |
+| WC05   | ?         | 792            | 0                  |
+| WD04   | ?         | 780            | 0                  |
+| WE02   | ?         | 801            | 0                  |
+| WE03   | ?         | 806            | 0                  |
+| WE04   | ?         | 822            | 0                  |
+| WE05   | ?         | 804            | 0                  |
+| WF01   | ?         | 799            | 0                  |
+| WG03   | ?         | 750            | 0                  |
+| WG04   | ?         | 734            | 0                  |
+| WG05   | ?         | 785            | 0                  |
+| WH03   | ?         | 815            | 0                  |
+| WH04   | ?         | 758            | 0                  |
+
+No overlaps with windows identified as low distance to _E. cordata_.

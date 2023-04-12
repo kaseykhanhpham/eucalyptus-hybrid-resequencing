@@ -124,17 +124,14 @@ Merged VCF files of unfiltered variants for each chromosome using `picard`.
 Then calculateed raw variant statistics for the merged file:
 
 ```bash
+# Run via job on UFRC, see snp_stats_raw.job for details
+# Max resources used: 
 module load bcftools
 SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
 VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes"
 
-declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr09 chr10 chr11 chrUn)
-
-# Get statistics for raw snps on each chromosome
-for NAME in "${VCFLIST[@]}"
-do
-    bcftools stats "$VCF_DIR"/"$NAME".vcf > "$VCF_DIR"/raw_stats/"$NAME"_raw_stats.txt
-done
+# Get statistics for raw snps on whole genome
+bcftools stats "$VCF_DIR"/meehan_all_raw.vcf > "$VCF_DIR"/raw_stats/meehan_all_raw_stats.txt
 ```
 
 ## Filter SNPs
