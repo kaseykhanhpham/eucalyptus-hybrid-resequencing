@@ -1,0 +1,22 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=dxy_c_noout_10
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=1gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=dxy_cordata_%j.out
+#SBATCH --error=dxy_cordata_%j.err
+
+module load conda 
+
+ENV_DIR="/blue/soltis/kasey.pham/conda/envs"
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan"
+
+conda activate "$ENV_DIR"/euc_hyb_reseq
+
+python "$SCRIPT_DIR"/dxy_cordata.py "$WDIR"/no_outgroup/meehan_all_fil_maf0.00_snps_biallelic_formatted.vcf 10000 5000 "$WDIR"/pop_structure.json "$WDIR"/outgroup_structure.json "$WDIR"/chr_list.txt meehan_intr_cord_dxy_10k.tab

@@ -1,19 +1,37 @@
 # R script to process egglib pi genome scan output
-# Usage: Rscript process_pi_scans.r [infile]
+# Usage: Rscript process_pi_scans.r [infile] [stat] [sd_cutoff] [direction]
+# infile: table output of egglib or vcftools to be processed for outlier windows
+# stat: the stat of interest, should match the column reporting the stat for the window
+# sd_cutoff: multiple of sd to set cutoff
+# direction: set cutoff above or below mean
 
+# import command line arguments and read file
 infile_name <- commandArgs(trailingOnly=TRUE)[1]
-pi_table <- read.table(infile_name, header = TRUE, sep = "\t", na.strings="")
+stat <- commandArgs(trailingOnly=TRUE)[2]
+sd_cutoff <- commandArgs(trailingOnly=TRUE)[3]
+direction <- commandArgs(trailingOnly=TRUE)[4]
+in_table <- read.table(infile_name, header = TRUE, sep = "\t", na.strings="")
 
+
+
+# Report general stats to stdout
 print(paste("Sample", infile_name, ":"))
-print(summary(pi_table$Pi, na.rm = TRUE))
-png(paste(infile_name, ".pi_distr.png", sep = ""), width = 500, height = 500)
-    hist(pi_table$Pi)
+print(summary(in_table[, stat], na.rm = TRUE))
+print(paste("sd:", SD = sd(in_table[, stat], na.rm = TRUE)))
+# Print stat distribution to PNG file
+png(paste(infile_name, "_", stat, "_distr.png", sep = ""), width = 500, height = 500)
+    hist(in_table[, stat])
 dev.off()
 
-pi_mean <- mean(pi_table$Pi, na.rm = TRUE)
-pi_sd <- sd(pi_table$Pi, na.rm = TRUE)
+# Calculate summary stats
+stat_mean <- mean(in_table[, stat], na.rm = TRUE)
+stat_sd <- sd(in_table[, stat], na.rm = TRUE)
 
-flagged_pi <- which(pi_table$Pi > (mean(pi_mean + 2*pi_sd)))
-flagged_pi_windows <- pi_table[flagged_pi, c("chr", "start", "end")]
+# Get outlier windows
 
-write.table(flagged_pi_windows, paste(infile_name, ".flagged_pi.tab", sep = ""), quote = FALSE, row.names = FALSE, col.names = TRUE)
+flagged <- switch(direction,
+    above = which(in_table[, stat] > (mean(stat_mean + 2*stat_sd))),
+    below = which(in_table[, stat] < (mean(stat_mean - 2*stat_sd))))
+flagged_windows <- in_table[flagged, c("chr", "start", "end")]
+
+write.table(flagged_windows, paste(infile_name, ".flagged_", stat, ".tab", sep = ""), quote = FALSE, row.names = FALSE, col.names = TRUE)

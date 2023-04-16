@@ -1,0 +1,20 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=fst_noout_5
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=1gb
+#SBATCH --time=1:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=fst_windows_no_outgr_%j.out
+#SBATCH --error=fst_windows_no_outgr_%j.err
+
+module load vcftools/0.1.16 
+
+INFILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.00/no_outgroup/meehan_all_fil_maf0.00_snps.vcf"
+POPLIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan"
+
+vcftools --vcf "$INFILE" --out all_maf0.00_no_outgr_5 --weir-fst-pop "$POPLIST_DIR"/Eglobulus_MR.txt --weir-fst-pop "$POPLIST_DIR"/Eglobulus_ref.txt --fst-window-size 5000 --fst-window-step 2500
+

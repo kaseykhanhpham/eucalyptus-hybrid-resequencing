@@ -1,0 +1,30 @@
+Copyright (C) 2022 Brian L. Browning
+Enter "java -jar flare.jar" to print a list of command line arguments
+
+Program             :  flare.jar  [ version 0.3.0, 20Oct22.2a6 ]
+Start Time          :  10:58 PM EDT on 22 Mar 2023
+Max Memory          :  10240 MB
+
+Parameters
+  ref               :  /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/admix_map/no_outgroup/meehan_no_outgr_nohap_phased_noChrUn.vcf
+  ref-panel         :  /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/admix_map/no_outgroup/ref_panel.txt
+  gt                :  /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/admix_map/no_outgroup/meehan_no_outgr_nohap_phased_noChrUn.vcf
+  map               :  1060_LH_F2_manual_copy.map
+  out               :  meehan_no_outgr_admap
+  array             :  false
+  min-maf           :  0.005
+  min-mac           :  2
+  probs             :  false
+  gen               :  10.0
+  em                :  true
+  nthreads          :  12
+  seed              :  -99999
+  gt-samples        :  /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/admix_map/no_outgroup/gt_samples.txt
+
+Statistics
+  reference samples :  20
+  target samples    :  20
+  markers           :  32082
+
+Wallclock Time      :  2 seconds
+End Time            :  10:59 PM EDT on 22 Mar 2023

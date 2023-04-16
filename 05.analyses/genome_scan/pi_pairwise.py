@@ -69,4 +69,4 @@ for sample in struct_json["cluster1"]["eglob_mr"]:
             stats_df.loc[len(stats_df.index)] = [chrom, start, end, pi]
 
     # export dataframe as tab-delimited text file
-    stats_df.to_csv("{OUT_NAME}_sample.tab".format(OUT_NAME = out_name), sep = "\t", index = False)
+    stats_df.to_csv("{OUT_NAME}_{SAMPLE}.tab".format(OUT_NAME = out_name, SAMPLE = sample), sep = "\t", index = False)
