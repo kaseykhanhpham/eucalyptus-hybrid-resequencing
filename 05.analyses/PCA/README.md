@@ -267,25 +267,25 @@ d + xlim(-0.125, 0.45) + ylim(-0.2, 0.375) + ggtitle("maf=0.05 with outgr, PC2 v
 
 **Results:**
 
-Two samples, WF03/1051 and WG04/2025, were very different from the rest of their groups (reference _E. globulus_ and introgressed _E. globulus_ respectively) for MAF=0.00 plots. WG04/2025 fell back within range of the rest of introgressed _E. globulus_ variation in MAF=0.05 plots. Below, MAF=0.05 plots are shown.
+Two samples, WF03/1051 and WG04/2025, were very different from the rest of their groups (reference _E. globulus_ and introgressed _E. globulus_ respectively) for MAF=0.00 plots. WG04/2025 fell back within range of the rest of introgressed _E. globulus_ variation in MAF=0.05 plots. Otherwise, MAF=0.00 and MAF=0.05 plots were similar in pattern; samples were more tightly clustered for MAF=0.00, indicating that singletons generally tell the same story as shared variants. Inclusion of the outgroup also did not change the general pattern expressed, it only shunted the observed patterns to PCs 2 and 3, with distance between the ingroup and outgroup dominating PC1. Therefore, only MAF=0.05 plots excluding the outgroup are shown below. Plots with the outgroup and for MAF=0.00 can be viewed in their designated directories.
+ 
 
-FIX THIS!!
-![Plot of PC1 vs PC2; PC1 differentiates strongly between _E. cordata_ and _E. globulus_ (both introgressant and pure), while PC2 differentiates between introgressant and pure _E. globulus_, with _E. cordata_ clustering with introgressant _E. globulus_.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/PCA/maf0.05/maf05_pc12.png "PC1 vs. PC2")
+![Plot of PC1 vs PC2; PC1 differentiates strongly between _E. cordata_ and _E. globulus_ (both introgressant and pure), while PC2 differentiates between introgressant and pure _E. globulus_, with _E. cordata_ clustering with introgressant _E. globulus_.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/PCA/maf0.05/maf0.05_ingr_pc12.png "PC1 vs. PC2")
 
-![Plot of PC1 vs PC3; very similar to PC1 vs PC2 but _E. globulus_ populations intergrade more along PC3.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/PCA/maf0.05/maf05_pc13.png "PC1 vs. PC3")
+![Plot of PC1 vs PC3; very similar to PC1 vs PC2 but _E. globulus_ populations intergrade more along PC3.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/PCA/maf0.05/maf0.05_ingr_pc13.png "PC1 vs. PC3")
 
-![Plot of PC2 vs PC3; pure _E. globulus_ seems to cluster slightly away from the other individuals, while _E. cordata_ clusters tightly in the center of a cloud of introgressant _E. globulus_.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/PCA/maf0.05/maf05_pc23.png "PC2 vs. PC3")
+![Plot of PC2 vs PC3; pure _E. globulus_ seems to cluster slightly away from the other individuals, while _E. cordata_ clusters tightly in the center of a cloud of introgressant _E. globulus_.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/PCA/maf0.05/maf0.05_ingr_pc23.png "PC2 vs. PC3")
 
-![Barplot of percentage genetic variation explained by each principal component; PC1 explains about 30% of variation, while all other PCs pictured explain about 5%](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/PCA/maf0.05/maf05_pc_var_explained.png "Percent Variance Explained by each PC")
+![Barplot of percentage genetic variation explained by each principal component; PC1 explains about 30% of variation, while all other PCs pictured explain about 5%](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/PCA/maf0.05/maf0.05_ingr_variance_explained.png "Percent Variance Explained by each PC")
 
-## Weird Sample Check
-Check PCA without outgroup and sample WF03.
+## Outlier Sample Check
+Checked PCA without outgroup and sample WF03.
 
 ### Calculate PCA eigenvalues for both MAF levels
 
 ```bash
 # Performed on UF HiperGator queue system. See pca_outl_check.job for more details.
-# Resources:
+# Resources: 2Mb, 30 sec
 
 module load plink/1.90b3.39 
 
@@ -398,3 +398,13 @@ h <- h + xlab(paste("PC2 (", signif(pve$pve[2], 3), ")", sep = "")) + ylab(paste
 h <- h
 h
 ```
+
+**Results:**
+
+After excluding the outgroup and outlier WF03/1051, plots looked fairly similar to those retaining those samples.
+
+![Plot of PC1 vs PC2 without WF03/1051; same patterns observed as MAF=0.05 PC1 vs. PC2 with outlier sample.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/PCA/outlier_check/maf0.05_outl_pc12.png "PC1 vs. PC2")
+
+![Plot of PC1 vs PC3; ; same patterns observed as MAF=0.05 PC1 vs. PC3 with outlier sample.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/PCA/outlier_check/maf0.05_outl_pc13.png "PC1 vs. PC3")
+
+![Plot of PC2 vs PC3; ; same patterns observed as MAF=0.05 PC2 vs. PC3 with outlier sample.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/PCA/outlier_check/maf0.05_outl_pc23.png "PC2 vs. PC3")

@@ -2,7 +2,7 @@
 Procedure based heavily on protocol in [Ravinet and Meier's tutorial](https://speciationgenomics.github.io/ADMIXTURE/).
 Uses the maximum-likelihood population structure program [`ADMIXTURE`](http://dalexander.github.io/admixture/).
 
-## `ADMIXTURE` on all samples
+## `ADMIXTURE` on all ingroup samples
 
 Done for both MAF=0.00 and MAF=0.05 variant sets.
 
