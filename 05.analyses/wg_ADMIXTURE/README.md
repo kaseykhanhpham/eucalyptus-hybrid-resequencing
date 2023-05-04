@@ -16,9 +16,10 @@ WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/maf0.00"
 VCF_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.00/meehan_all_fil_maf0.00_snps.vcf"
 PRUNED_VARS="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.00/all_maf0.00.prune.in"
 OUTNAME="meehan_all_fil_maf0.00"
+INGROUP="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/ingroup.fam"
 
 cd "$WDIR"
-plink --vcf "$VCF_FILE" --extract "$PRUNED_VARS" --set-missing-var-ids @:# --allow-extra-chr --vcf-half-call m --make-bed --out "$OUTNAME"
+plink --vcf "$VCF_FILE" --extract "$PRUNED_VARS" --set-missing-var-ids @:# --allow-extra-chr --vcf-half-call m --keep "$INGROUP" --make-bed --out "$OUTNAME"
 awk '{$1="0";print $0}' "$OUTNAME".bim > "$OUTNAME".bim.tmp
 mv "$OUTNAME".bim.tmp "$OUTNAME".bim
 
@@ -29,7 +30,7 @@ PRUNED_VARS="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.05/all_m
 OUTNAME="meehan_all_fil_maf0.05"
 
 cd "$WDIR"
-plink --vcf "$VCF_FILE" --extract "$PRUNED_VARS" --set-missing-var-ids @:# --allow-extra-chr --vcf-half-call m --make-bed --out "$OUTNAME"
+plink --vcf "$VCF_FILE" --extract "$PRUNED_VARS" --set-missing-var-ids @:# --allow-extra-chr --vcf-half-call m --keep "$INGROUP" --make-bed --out "$OUTNAME"
 awk '{$1="0";print $0}' "$OUTNAME".bim > "$OUTNAME".bim.tmp
 mv "$OUTNAME".bim.tmp "$OUTNAME".bim
 ```

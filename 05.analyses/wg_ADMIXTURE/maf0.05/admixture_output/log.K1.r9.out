@@ -1,5 +1,5 @@
 Cross-validation will be performed.  Folds=10.
-Random seed: 4946
+Random seed: 5437
 Point estimation method: Block relaxation algorithm
 Convergence acceleration algorithm: QuasiNewton, 3 secant conditions
 Point estimation will terminate when objective function delta < 0.0001
@@ -10,18 +10,18 @@ Estimation of standard errors disabled; will compute point estimates only.
 ****                   Please cite our paper!                   ****
 ****   Information at www.genetics.ucla.edu/software/admixture  ****
 
-Size of G: 40x113855
+Size of G: 40x158357
 Performing five EM steps to prime main algorithm
-1 (EM) 	Elapsed: 0.056	Loglikelihood: -4.83385e+06	(delta): 3.49283e+06
-2 (EM) 	Elapsed: 0.056	Loglikelihood: -4.83385e+06	(delta): 0
-3 (EM) 	Elapsed: 0.053	Loglikelihood: -4.83385e+06	(delta): 0
-4 (EM) 	Elapsed: 0.056	Loglikelihood: -4.83385e+06	(delta): 0
-5 (EM) 	Elapsed: 0.056	Loglikelihood: -4.83385e+06	(delta): 0
-Initial loglikelihood: -4.83385e+06
+1 (EM) 	Elapsed: 0.135	Loglikelihood: -6.59099e+06	(delta): 4.81773e+06
+2 (EM) 	Elapsed: 0.132	Loglikelihood: -6.59099e+06	(delta): 0
+3 (EM) 	Elapsed: 0.133	Loglikelihood: -6.59099e+06	(delta): 0
+4 (EM) 	Elapsed: 0.133	Loglikelihood: -6.59099e+06	(delta): 0
+5 (EM) 	Elapsed: 0.132	Loglikelihood: -6.59099e+06	(delta): 0
+Initial loglikelihood: -6.59099e+06
 Starting main algorithm
-1 (QN/Block) 	Elapsed: 0.251	Loglikelihood: -4.83385e+06	(delta): 0
+1 (QN/Block) 	Elapsed: 0.645	Loglikelihood: -6.59099e+06	(delta): 0
 Summary: 
-Converged in 1 iterations (0.805 sec)
-Loglikelihood: -4833845.875464
-CV error (K=1): 0.70094
+Converged in 1 iterations (1.846 sec)
+Loglikelihood: -6590993.317832
+CV error (K=1): 0.69867
 Writing output files.
