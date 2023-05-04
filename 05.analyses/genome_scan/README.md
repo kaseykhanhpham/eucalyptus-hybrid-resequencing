@@ -225,27 +225,126 @@ intersect(flagged_dxy_coords, WA01_pi)
 # ...etc. for each sample
 ```
 
-| Sample | Accession | num pi windows | num dxy intersects |
-| ------ | --------- | -------------- | ------------------ |
-| WA01   | ?         | 799            | 0                  |
-| WA03   | ?         | 796            | 0                  |
-| WA04   | ?         | 801            | 0                  |
-| WB02   | ?         | 794            | 0                  |
-| WB03   | ?         | 810            | 0                  |
-| WB04   | ?         | 760            | 0                  |
-| WC02   | ?         | 727            | 0                  |
-| WC03   | ?         | 790            | 0                  |
-| WC05   | ?         | 792            | 0                  |
-| WD04   | ?         | 780            | 0                  |
-| WE02   | ?         | 801            | 0                  |
-| WE03   | ?         | 806            | 0                  |
-| WE04   | ?         | 822            | 0                  |
-| WE05   | ?         | 804            | 0                  |
-| WF01   | ?         | 799            | 0                  |
-| WG03   | ?         | 750            | 0                  |
-| WG04   | ?         | 734            | 0                  |
-| WG05   | ?         | 785            | 0                  |
-| WH03   | ?         | 815            | 0                  |
-| WH04   | ?         | 758            | 0                  |
-
 No overlaps with windows identified as low distance to _E. cordata_.
+NOTE: DID THIS WRONG, NEED TO TRY AGAIN WITH UPDATED CODE FOR FINDING COMMON WINDOWS.
+
+## Genome scan with smaller windows
+### 5k windows
+
+Calculate all stats in 5kbp windows.
+
+```bash
+# Performed in UFRC queue system. See .job for more details.
+# Resources:
+
+```
+
+```bash
+module load R/4.2
+
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/no_outgroup/5k_windows"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan"
+
+# process stat windows to get outliers
+cd "$WDIR"
+Rscript "$SCRIPT_DIR"/reformat_fst.r all_maf0.00_no_outgr_5.windowed.weir.fst
+
+Rscript "$SCRIPT_DIR"/process_stat_scans.r meehan_glob_pi_deta_dxy_5k.tab Pi 2 above # mean: 16.09, sd = 15.24
+Rscript "$SCRIPT_DIR"/process_stat_scans.r meehan_glob_pi_deta_dxy_5k.tab Deta 2 below
+Rscript "$SCRIPT_DIR"/process_stat_scans.r meehan_glob_pi_deta_dxy_5k.tab Dxy 2 above
+Rscript "$SCRIPT_DIR"/process_stat_scans.r all_maf0.00_no_outgr_5.windowed.weir.fst mean_FST 2 above
+Rscript "$SCRIPT_DIR"/process_stat_scans.r meehan_intr_cord_dxy_5k.tab Dxy 2 below
+
+# shorten names for next part
+rename 5k.tab 5k meehan_glob_pi_deta_dxy_5k.tab*
+rename meehan_glob_pi_deta_dxy_5k 5k meehan_glob_pi_deta_dxy_5k*
+rename .flagged_ _ 5k.flagged_*
+mv all_maf0.00_no_outgr_5.windowed.weir.fst.flagged_mean_FST.tab 5k_FST.tab
+mv meehan_intr_cord_dxy_5k.tab.flagged_Dxy.tab 5k_cord_Dxy.tab
+
+# process outlier pi windows for each individual E. glob introgressant sample using pi mean and sd from all E. glob samples
+cd "$WDIR"/pi_samplewise
+while read NAME
+do
+    Rscript "$SCRIPT_DIR"/process_stat_scans.r meehan_glob_pi_pairwise_5k_"$NAME".tab Pi 2 above 16.09 15.24 2>&1 >> pi_samplewise_processing.out
+done < "$LIST_DIR"/Eglobulus_MR.txt
+
+# shorten names for next part
+rename meehan_glob_pi_pairwise_5k_ 5k_Pi_ meehan_glob_pi_pairwise_5k_*.flagged_Pi.tab
+rename .tab.flagged_Pi.tab .tab *
+
+# Get overlaps between different outlier windows
+ln -s ../5k_Deta.tab
+ln -s ../5k_Dxy.tab
+ln -s ../5k_FST.tab
+ln -s ../5k_cord_Dxy.tab
+printf "5k_Dxy.tab\n5k_FST.tab\n5k_cord_Dxy.tab\n" > overlap_files_1.txt
+ls 5k_Pi_W*.tab > overlap_files_2.txt
+
+Rscript "$SCRIPT_DIR"/compare_windows.r overlap_files_1.txt overlap_files_2.txt
+
+# Then moved union files into new subdirectories for organization
+
+# Get overlaps between common windows for pi and Dxy and Tajima's D
+cd "$WDIR"/pi_samplewise/common_windows/Dxy_Pi
+ln -s "$WDIR"/5k_Deta.tab
+printf "5k_Deta.tab\n" > overlap_files_3.txt
+ls common*Dxy*Pi*.tab > overlap_files_4.txt
+
+Rscript "$SCRIPT_DIR"/compare_windows.r overlap_files_3.txt overlap_files_4.txt
+rename common_5k_Deta.tab_common_5k_Dxy.tab_5k_Pi common_5k_Deta_Dxy_Pi *
+# Moved Deta/Pi/Dxy overlap to its own subdirectory
+```
+
+### 10k windows
+
+Identify outlier windows for each genome scan statistic and common outlier windows between stats.
+
+```bash
+module load R/4.2
+
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/no_outgroup/10k_windows"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan"
+
+# process stat windows to get outliers
+cd "$WDIR"
+Rscript "$SCRIPT_DIR"/reformat_fst.r all_maf0.00_no_outgr_10.windowed.weir.fst
+
+Rscript "$SCRIPT_DIR"/process_stat_scans.r meehan_glob_pi_deta_dxy_10k.tab Pi 2 above # mean: 28.71, sd: 26.2
+Rscript "$SCRIPT_DIR"/process_stat_scans.r meehan_glob_pi_deta_dxy_10k.tab Deta 2 below
+Rscript "$SCRIPT_DIR"/process_stat_scans.r meehan_glob_pi_deta_dxy_10k.tab Dxy 2 above
+Rscript "$SCRIPT_DIR"/process_stat_scans.r all_maf0.00_no_outgr_10.windowed.weir.fst mean_FST 2 above
+Rscript "$SCRIPT_DIR"/process_stat_scans.r meehan_intr_cord_dxy_10k.tab Dxy 2 below
+
+# shorten names for next part
+rename 10k.tab 10k meehan_glob_pi_deta_dxy_10k.tab*
+rename meehan_glob_pi_deta_dxy_10k 10k meehan_glob_pi_deta_dxy_10k*
+rename .flagged_ _ 10k.flagged_*
+mv all_maf0.00_no_outgr_10.windowed.weir.fst.flagged_mean_FST.tab 10k_FST.tab
+mv meehan_intr_cord_dxy_10k.tab.flagged_Dxy.tab 10k_cord_Dxy.tab
+
+# process outlier pi windows for each individual E. glob introgressant sample using pi mean and sd from all E. glob samples
+cd "$WDIR"/pi_samplewise
+while read NAME
+do
+    Rscript "$SCRIPT_DIR"/process_stat_scans.r meehan_glob_pi_pairwise_10k_"$NAME".tab Pi 2 above 28.71 26.2 2>&1 >> pi_samplewise_processing.out
+done < "$LIST_DIR"/Eglobulus_MR.txt
+
+# shorten names for next part
+rename meehan_glob_pi_pairwise_10k_ 10k_Pi_ meehan_glob_pi_pairwise_10k_*.flagged_Pi.tab
+rename .tab.flagged_Pi.tab .tab *
+
+# Get overlaps between different outlier windows
+ln -s ../10k_Deta.tab
+ln -s ../10k_Dxy.tab
+ln -s ../10k_FST.tab
+ln -s ../10k_cord_Dxy.tab
+printf "10k_Dxy.tab\n10k_FST.tab\n10k_cord_Dxy.tab\n" > overlap_files_1.txt
+ls 10k_Pi_W*.tab > overlap_files_2.txt
+
+Rscript "$SCRIPT_DIR"/compare_windows.r overlap_files_1.txt overlap_files_2.txt
+
+# No common windows between outliers of pi and dxy, so stopped here.
+```
