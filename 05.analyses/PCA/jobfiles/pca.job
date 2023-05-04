@@ -19,3 +19,7 @@ export INFILE05="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/
 plink --vcf "$INFILE00" --double-id --allow-extra-chr --set-missing-var-ids @:# --extract maf0.00/all_maf0.00.prune.in --vcf-half-call m --make-bed --pca --out maf0.00/all_maf0.00
 plink --vcf "$INFILE05" --double-id --allow-extra-chr --set-missing-var-ids @:# --extract maf0.05/all_maf0.05.prune.in --vcf-half-call m --make-bed --pca --out maf0.05/all_maf0.05
 
+# Without outgroup
+plink --vcf "$INFILE00" --double-id --allow-extra-chr --set-missing-var-ids @:# --extract maf0.00/all_maf0.00.prune.in --vcf-half-call m --make-bed --keep ingroup.fam --pca --out maf0.00/all_maf0.00_ingr
+plink --vcf "$INFILE05" --double-id --allow-extra-chr --set-missing-var-ids @:# --extract maf0.05/all_maf0.05.prune.in --vcf-half-call m --make-bed --keep ingroup.fam --pca --out maf0.05/all_maf0.05_ingr
+
