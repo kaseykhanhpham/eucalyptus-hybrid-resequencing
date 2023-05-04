@@ -200,36 +200,38 @@ LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
 
 picard MergeVcfs -I "$LIST_DIR"/vcfs_fil_to_merge.txt -O meehan_all_fil_maf0.05.vcf
 
-# Separate SNPs and indels:
+# Separate SNPs and indels and remove fields that no longer fit the data:
 # Run via job on UFRC, see split_indels_maf0.05.job for details
 # Resources used: ~10 Gb, ~20 min
 
 module load vcftools/0.1.16
 NAME="meehan_all_fil_maf0.05"
 
-cat "$NAME".vcf | vcftools --vcf - --remove-indels --recode --stdout > "$NAME"_snps.vcf
-cat "$NAME".vcf | vcftools --vcf - --keep-only-indels --recode --stdout > "$NAME"_indels.vcf
+bcftools annotate -x FORMAT/PL,FORMAT/AD,FORMAT/AO,FORMAT/QA -O v -o - "$NAME".vcf | vcftools --vcf - --remove-indels --recode --stdout > "$NAME"_snps.vcf
+bcftools annotate -x FORMAT/PL,FORMAT/AD,FORMAT/AO,FORMAT/QA -O v -o - "$NAME".vcf | vcftools --vcf - --keep-only-indels --recode --stdout > "$NAME"_indels.vcf
 ```
+
+Identify duplicate calls for the same position and check by eye that removed duplicates are similar to first entries for each position.
+
+```bash
+# Merge VCFs:
+# Run via job on UFRC, see validate_vcf_maf0.00.job for details
+# Resources used: 1 Gb, 2 min
+module load python/3.8
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+INFILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.00/meehan_all_fil_maf0.00_snps.vcf"
+
+python "$SCRIPT_DIR"/check_vcf_duplicates.py "$INFILE" "meehan_all_fil_maf0.00_snps_first.txt" "meehan_all_fil_maf0.00_snps_dupes.txt" "meehan_all_fil_maf0.00_snps_nodupes.vcf"
+```
+
 ## Get summary statistics for filtered variant sets
 
 Summary statistics were generated for filtered sets in the [same way they were calculated for the raw variant set](#calculate-raw-variant-statistics). 
 
-**Calculate genome-wide statistics:**
-```bash
-module load bcftools
-MAF00DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.00"
-MAF05DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.05"
-
-bcftools stats "$MAF00DIR"/meehan_all_fil_maf0.00_snps.vcf > "$MAF00DIR"/all_fil_maf0.00_snp_stats.txt
-bcftools stats "$MAF05DIR"/meehan_all_fil_maf0.05_snps.vcf > "$MAF05DIR"/all_fil_maf0.05_snp_stats.txt
-
-bcftools stats "$MAF00DIR"/meehan_all_fil_maf0.00_indels.vcf > "$MAF00DIR"/all_fil_maf0.00_indel_stats.txt
-bcftools stats "$MAF05DIR"/meehan_all_fil_maf0.05_indels.vcf > "$MAF05DIR"/all_fil_maf0.05_indel_stats.txt
-```
-
 Variant counts after filtering:
 | MAF  | SNP count | Indel count |
 | ---- | --------- | ----------- |
-| 0.00 | 5708280   |  1355166    |
-| 0.05 | 3802753   | 818756      |
+| 0.00 | 10390327  | 2034126     |
+| 0.05 | 5473125   | 984256      |
 
+The SNP count at MAF=0.00 is much higher than without an outgroup, likely because of the inclusion of the outgroup. At MAF=0.05, the SNP counts for sets with and without outgroups are comparable.
