@@ -97,34 +97,40 @@ conda deactivate
 ```
 
 Results of visualization:
-![MAF=0.05 ADMIXTURE K=2 through K=6 summarized over 10 individual runs in pong. In K=2 (lowest CV error), introgressed _E. globulus_ has an estimated 1% admixture rate with _E. cordata_ while "pure" _E. globulus_ has an estimated 2% admixture rate with _E. cordata_. In K=3 (second-lowest CV error), Meehan Range _E. globulus_ has a portion of its genetic diversity attributed to a third bin.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/maf0.05/meehan_all_fil_maf0.05_ADMIXTURE.png "ADMIXTURE K=2 through K=6")
 
-![MAF=0.00 ADMIXTURE K=3 for 10 individual runs in pong. Unlike in MAF = 0.05, variation is evenly attributed to two source bins across both reference and Meehan Range _E. globulus_.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/maf0.05/meehan_all_fil_maf0.00_ADMIXTURE.png "ADMIXTURE K=2 through K=6")
+![MAF=0.00 ADMIXTURE K=2 through K=6 summarized over 10 individual runs in pong. In K=2 (lowest CV error), both groups of _E. globulus_ samples (blue) have estimated 0% admixture with _E. cordata_ (yellow). In K=3 (second lowest CV error), individuals across all _E. globulus_ sampling were assigned to one of two bins with little admixture inferred between. Suggests that there is probably a lot of variation to partition in _E. globulus_ as compared with _E. cordata_.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/maf0.00/maf0.00_admixture.png "MAF = 0.00 ADMIXTURE K=2 through K=6")
 
-## `ADMIXTURE` excluding sample WF03/1051 and WG04/2025
-The samples WF03/1051 and WG04/2025 were distant from all other points in the PCA plots, so I ran ADMIXTURE without them to see whether that would change the results. I started by excluding this sample when generating the `BIM` file:
+![MAF=0.05 ADMIXTURE K=2 through K=6 summarized over 10 individual runs in pong. In K=2 (lowest CV error), introgressed _E. globulus_ has an estimated 0% admixture rate with _E. cordata_ while "pure" _E. globulus_ has an estimated 2% admixture rate with _E. cordata_. I think this falls within negligible amounts attributable to being an ADMIXTURE artifact. In K=3 (second-lowest CV error), Meehan Range _E. globulus_ is inferred to be admixed between two bins, one of which all of reference _E. globulus_ is inferred to belong to.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/maf0.05/maf0.05_admixture.png "ADMIXTURE K=2 through K=6")
+
+The K=3 result was surprising, as our reference panel for _E. globulus_ was trees from different populations and therefore probably higher diversity than those sampled from Meehan Range. However, because this pattern is not present in MAF=0.00, it can be inferred that it is being driven by the lack of singletons and increased number of shared variants. When filtering to shared variants, the more diverse reference pool would have rare or singleton alleles differentiating them from their brethren removed, leaving the dataset with the appearance that the reference pool is less diverse.
+
+## `ADMIXTURE` excluding sample WF03/1051
+The samples WF03/1051 was distant from all other points in the PCA plots, so I ran ADMIXTURE without it to see whether that would change the results. I started by excluding this sample when generating the `BIM` file:
 
 ```bash
 module load plink/1.90b3.39
-VCF_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.05/meehan_all_fil_maf0.05_snps.vcf"
-PRUNED_VARS_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.05/all_maf0.05.prune.in"
-MAF00_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/weird_sample_check/maf0.00"
-MAF05_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/weird_sample_check/maf0.05"
+VCF00_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.00/meehan_all_fil_maf0.00_snps.vcf"
+VCF05_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.05/meehan_all_fil_maf0.05_snps.vcf"
 
-# Create file with samples to exclude
-echo "WF03 WF03" > ids_to_exclude.txt
-echo "WG04 WG04" >> ids_to_exclude.txt
+PRUNED_VARS00_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.00/all_maf0.00.prune.in"
+PRUNED_VARS05_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.05/all_maf0.05.prune.in"
+
+MAF00_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/outlier_check/maf0.00"
+MAF05_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/outlier_check/maf0.05"
+
+REMOVE_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/outlier_check/to_remove.fam"
+# Used same file as in PCA analysis to indicate what samples to remove -- WF03/1051 and the outgroup.
 
 # Make BED and BIM files
 # MAF = 0.00
-plink --vcf "$VCF_FILE" --remove ids_to_exclude.txt --extract "$PRUNED_VARS_FILE" --set-missing-var-ids @:# --allow-extra-chr --vcf-half-call m --make-bed --out "$MAF00_DIR"/meehan_all_fil_maf0.00_noWeird
-awk '{$1="0";print $0}' "$MAF00_DIR"/meehan_all_fil_maf0.00_noWeird.bim > "$MAF00_DIR"/meehan_all_fil_maf0.00_noWeird.bim.tmp
-mv "$MAF00_DIR"/meehan_all_fil_maf0.00_noWeird.bim.tmp "$MAF00_DIR"/meehan_all_fil_maf0.00_noWeird.bim
+plink --vcf "$VCF00_FILE" --remove "$REMOVE_FILE" --extract "$PRUNED_VARS00_FILE" --set-missing-var-ids @:# --allow-extra-chr --vcf-half-call m --make-bed --out "$MAF00_DIR"/meehan_all_fil_maf0.00_outl
+awk '{$1="0";print $0}' "$MAF00_DIR"/meehan_all_fil_maf0.00_outl.bim > "$MAF00_DIR"/meehan_all_fil_maf0.00_outl.bim.tmp
+mv "$MAF00_DIR"/meehan_all_fil_maf0.00_outl.bim.tmp "$MAF00_DIR"/meehan_all_fil_maf0.00_outl.bim
 
 # MAF = 0.05
-plink --vcf "$VCF_FILE" --remove ids_to_exclude.txt --extract "$PRUNED_VARS_FILE" --set-missing-var-ids @:# --allow-extra-chr --vcf-half-call m --make-bed --out "$MAF05_DIR"/meehan_all_fil_maf0.05_noWeird
-awk '{$1="0";print $0}' "$MAF05_DIR"/meehan_all_fil_maf0.05_noWeird.bim > "$MAF05_DIR"/meehan_all_fil_maf0.05_noWeird.bim.tmp
-mv "$MAF05_DIR"/meehan_all_fil_maf0.05_noWeird.bim.tmp "$MAF05_DIR"/meehan_all_fil_maf0.05_noWeird.bim
+plink --vcf "$VCF05_FILE" --remove "$REMOVE_FILE" --extract "$PRUNED_VARS05_FILE" --set-missing-var-ids @:# --allow-extra-chr --vcf-half-call m --make-bed --out "$MAF05_DIR"/meehan_all_fil_maf0.05_outl
+awk '{$1="0";print $0}' "$MAF05_DIR"/meehan_all_fil_maf0.05_outl.bim > "$MAF05_DIR"/meehan_all_fil_maf0.05_outl.bim.tmp
+mv "$MAF05_DIR"/meehan_all_fil_maf0.05_outl.bim.tmp "$MAF05_DIR"/meehan_all_fil_maf0.05_outl.bim
 ```
 
 ### Run `ADMIXTURE`
@@ -132,12 +138,12 @@ mv "$MAF05_DIR"/meehan_all_fil_maf0.05_noWeird.bim.tmp "$MAF05_DIR"/meehan_all_f
 The following was done for both MAF=0.00 and MAF=0.05. Jobs below are examples. See respective job files for more details.
 
 ```bash
-# Run via job on UFRC, see admixture_maf0.05_noWeird.job for details
-# Resources used: 200 Mb, 2 hrs
+# Run via job on UFRC, see admixture_maf0.0X_outl.job for details
+# Resources used: 900 Mb, 7 hours
 
 module load admixture/1.23
 
-export NAME="meehan_all_fil_maf0.05_noWeird"
+export NAME="meehan_all_fil_maf0.05_outl"
 # K = 1 through K = 6
 for K in {1..6}
 do
@@ -156,37 +162,39 @@ done
 
 **Get cross-validation error values for each K:**
 ```bash
-MAF00_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/weird_sample_check/maf0.00"
-MAF05_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/weird_sample_check/maf0.05"
+MAF00_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/outlier_check/maf0.00"
+MAF05_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/outlier_check/maf0.05"
 
 cd "$MAF00_DIR" 
-grep "CV" admixture_output/*.out | awk '{print $3,$4}' | sed -e 's/(//;s/)//;s/://;s/K=//' > meehan_all_fil_maf0.00_noWeird.cv.error
+grep "CV" admixture_output/*.out | awk '{print $3,$4}' | sed -e 's/(//;s/)//;s/://;s/K=//' > meehan_all_fil_maf0.00_outl.cv.error
 
 cd "$MAF05_DIR" 
-grep "CV" admixture_output/*.out | awk '{print $3,$4}' | sed -e 's/(//;s/)//;s/://;s/K=//' > meehan_all_fil_maf0.05_noWeird.cv.error
+grep "CV" admixture_output/*.out | awk '{print $3,$4}' | sed -e 's/(//;s/)//;s/://;s/K=//' > meehan_all_fil_maf0.05_outl.cv.error
 ```
+
+K = 2 had the lowest cross-validation error for both datasets.
 
 **Visualize `ADMIXTURE` results:**
 
-Done locally on personal computer. See `vis_admixture_maf0.0X_noWeird.py` for processing steps to generate pong formatting files.
+Done locally on personal computer. See `vis_admixture_maf0.0X_outl.py` for processing steps to generate pong formatting files.
 
 ```bash
 conda activate euc_hyb_reseq
-$MAF00_DIR = "C:\Users\Kasey\OneDrive - University of Florida\Grad School Documents\Projects\eucalyptus-hybrid-resequencing\05.analyses\wg_ADMIXTURE\weird_sample_check\maf0.00"
-$MAF05_DIR = "C:\Users\Kasey\OneDrive - University of Florida\Grad School Documents\Projects\eucalyptus-hybrid-resequencing\05.analyses\wg_ADMIXTURE\weird_sample_check\maf0.05"
+$MAF00_DIR = "C:\Users\Kasey\OneDrive - University of Florida\Grad School Documents\Projects\eucalyptus-hybrid-resequencing\05.analyses\wg_ADMIXTURE\outlier_check\maf0.00"
+$MAF05_DIR = "C:\Users\Kasey\OneDrive - University of Florida\Grad School Documents\Projects\eucalyptus-hybrid-resequencing\05.analyses\wg_ADMIXTURE\outlier_check\maf0.05"
 
 cd $MAF00_DIR
-python vis_admixture_maf0.00_noWeird.py
-pong -m meehan_all_fil_maf0.00_noWeird_filemap.txt -i meehan_all_fil_maf0.00_noWeird_ind2pop.txt -n meehan_all_fil_maf0.00_noWeird_poporder.txt -l meehan_all_fil_maf0.00_noWeird_colors.txt
+python vis_admixture_maf0.00_outl.py
+pong -m meehan_all_fil_maf0.00_outl_filemap.txt -i meehan_all_fil_maf0.00_outl_ind2pop.txt -n meehan_all_fil_maf0.00_outl_poporder.txt -l meehan_all_fil_maf0.00_outl_colors.txt
 
 cd $MAF05_DIR
-python vis_admixture_maf0.05_noWeird.py
-pong -m meehan_all_fil_maf0.05_noWeird_filemap.txt -i meehan_all_fil_maf0.05_noWeird_ind2pop.txt -n meehan_all_fil_maf0.05_noWeird_poporder.txt -l meehan_all_fil_maf0.05_noWeird_colors.txt
+python vis_admixture_maf0.05_outl.py
+pong -m meehan_all_fil_maf0.05_outl_filemap.txt -i meehan_all_fil_maf0.05_outl_ind2pop.txt -n meehan_all_fil_maf0.05_outl_poporder.txt -l meehan_all_fil_maf0.05_outl_colors.txt
 
 conda deactivate
 ```
-![ADMIXTURE K=2 through K=6 excluding samples WF03/1051 and WG04/2025 for MAF=0.00, summarized over 10 individual runs in pong. Without highly divergent samples. MAF=0.00 plot looks similar to MAF=0.05 plot, indicating that singletons in weird samples may have been driving high diversity and "homogenization" between introgressants and reference _E. globulus_?](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/weird_sample_check/maf0.00/meehan_all_fil_maf0.00_noWeird.png "ADMIXTURE K=2 through K=6 MAF=0.00 without weird samples")
+![ADMIXTURE K=2 through K=6 excluding samples WF03/1051 for MAF=0.00, summarized over 10 individual runs in pong (without highly divergent reference sample.) Results resemble dataset with WF03 included. See K=3 plots for other run results.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/outlier_check/maf0.00/maf0.00_outl_admixture.png "ADMIXTURE K=2 through K=6 MAF=0.00 without WF03/1051")
 
-![ADMIXTURE K=3 excluding samples WF03/1051 and WG04/2025 for MAF=0.00, summarized over 10 individual runs in pong. Some of these alternate results are interesting.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/weird_sample_check/maf0.00/meehan_all_fil_maf0.00_noWeird_K3.png "ADMIXTURE K=3 MAF=0.00 without weird samples")
+![ADMIXTURE K=3 excluding samples WF03/1051 for MAF=0.00, summarized over 10 individual runs in pong (without highly divergent reference sample.) Results consistent with those where WF03 was included.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/outlier_check/maf0.00/maf0.00_outl_admixture_k3.png "ADMIXTURE K=3 MAF=0.00 without WF03/1051")
 
-![ADMIXTURE K=2 through K=6 excluding samples WF03/1051 and WG04/2025 for MAF=0.05, summarized over 10 individual runs in pong. Results for K=2 and K=3 are fairly consistent with runs including WF03 and WG04](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/weird_sample_check/maf0.05/meehan_all_fil_maf0.05_noWeird.png "ADMIXTURE K=2 through K=6 MAF=0.05 without weird samples")
+![ADMIXTURE K=2 through K=6 excluding samples WF03/1051 for MAF=0.05, summarized over 10 individual runs in pong. Results are consistent with those where WF03 was included.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/weird_sample_check/maf0.05/maf0.05_outl_admixture.png "ADMIXTURE K=2 through K=6 MAF=0.05 without WF03/1051")

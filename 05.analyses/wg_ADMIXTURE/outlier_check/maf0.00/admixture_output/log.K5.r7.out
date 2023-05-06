@@ -1,0 +1,56 @@
+Cross-validation will be performed.  Folds=10.
+Random seed: 16830
+Point estimation method: Block relaxation algorithm
+Convergence acceleration algorithm: QuasiNewton, 3 secant conditions
+Point estimation will terminate when objective function delta < 0.0001
+Estimation of standard errors disabled; will compute point estimates only.
+****                   ADMIXTURE Version 1.23                   ****
+****                    Copyright 2008-2013                     ****
+****          David Alexander, John  Novembre, Ken Lange        ****
+****                   Please cite our paper!                   ****
+****   Information at www.genetics.ucla.edu/software/admixture  ****
+
+Size of G: 39x583193
+Performing five EM steps to prime main algorithm
+1 (EM) 	Elapsed: 2.504	Loglikelihood: -1.42162e+07	(delta): 1.72782e+07
+2 (EM) 	Elapsed: 2.464	Loglikelihood: -1.35444e+07	(delta): 671807
+3 (EM) 	Elapsed: 2.486	Loglikelihood: -1.33407e+07	(delta): 203765
+4 (EM) 	Elapsed: 2.479	Loglikelihood: -1.31938e+07	(delta): 146917
+5 (EM) 	Elapsed: 2.452	Loglikelihood: -1.30655e+07	(delta): 128235
+Initial loglikelihood: -1.30655e+07
+Starting main algorithm
+1 (QN/Block) 	Elapsed: 8.328	Loglikelihood: -1.15602e+07	(delta): 1.50537e+06
+2 (QN/Block) 	Elapsed: 8.045	Loglikelihood: -1.11992e+07	(delta): 360951
+3 (QN/Block) 	Elapsed: 9.22	Loglikelihood: -1.10156e+07	(delta): 183649
+4 (QN/Block) 	Elapsed: 9.267	Loglikelihood: -1.09042e+07	(delta): 111390
+5 (QN/Block) 	Elapsed: 9.446	Loglikelihood: -1.08543e+07	(delta): 49855.1
+6 (QN/Block) 	Elapsed: 8.949	Loglikelihood: -1.08414e+07	(delta): 12884.5
+7 (QN/Block) 	Elapsed: 9.114	Loglikelihood: -1.08347e+07	(delta): 6685.79
+8 (QN/Block) 	Elapsed: 9.431	Loglikelihood: -1.08256e+07	(delta): 9143.18
+9 (QN/Block) 	Elapsed: 9.186	Loglikelihood: -1.08191e+07	(delta): 6484.1
+10 (QN/Block) 	Elapsed: 9.195	Loglikelihood: -1.08172e+07	(delta): 1929.42
+11 (QN/Block) 	Elapsed: 9.567	Loglikelihood: -1.08162e+07	(delta): 991.694
+12 (QN/Block) 	Elapsed: 8.914	Loglikelihood: -1.08157e+07	(delta): 480.085
+13 (QN/Block) 	Elapsed: 9.366	Loglikelihood: -1.08156e+07	(delta): 139.731
+14 (QN/Block) 	Elapsed: 9.989	Loglikelihood: -1.08153e+07	(delta): 222.668
+15 (QN/Block) 	Elapsed: 9.895	Loglikelihood: -1.0815e+07	(delta): 386.491
+16 (QN/Block) 	Elapsed: 9.814	Loglikelihood: -1.0814e+07	(delta): 952.886
+17 (QN/Block) 	Elapsed: 9.668	Loglikelihood: -1.08138e+07	(delta): 184.921
+18 (QN/Block) 	Elapsed: 9.166	Loglikelihood: -1.08138e+07	(delta): 3.45387
+19 (QN/Block) 	Elapsed: 9.881	Loglikelihood: -1.08138e+07	(delta): 0.772984
+20 (QN/Block) 	Elapsed: 9.851	Loglikelihood: -1.08138e+07	(delta): 0.00169817
+21 (QN/Block) 	Elapsed: 8.794	Loglikelihood: -1.08138e+07	(delta): -3.72529e-09
+22 (QN/Block) 	Elapsed: 9.73	Loglikelihood: -1.08138e+07	(delta): -5.58794e-09
+23 (QN/Block) 	Elapsed: 9.939	Loglikelihood: -1.08138e+07	(delta): 0
+Summary: 
+Converged in 23 iterations (235.083 sec)
+Loglikelihood: -10813815.325815
+Fst divergences between estimated populations: 
+	Pop0	Pop1	Pop2	Pop3	
+Pop0	
+Pop1	0.313	
+Pop2	0.325	0.072	
+Pop3	0.323	0.074	0.085	
+Pop4	0.318	0.067	0.080	0.080	
+CV error (K=5): 0.59792
+Writing output files.

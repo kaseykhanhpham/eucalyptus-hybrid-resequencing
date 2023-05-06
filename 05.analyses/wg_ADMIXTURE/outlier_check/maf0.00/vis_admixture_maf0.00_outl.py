@@ -5,12 +5,12 @@
 
 import pandas as pd
 
-file_prefix = "meehan_all_fil_maf0.00_noWeird"
+file_prefix = "meehan_all_fil_maf0.00_outl"
 
 # Create pong filemap file with each value of K and each run
 K_max = 6
 n_runs = 10
-qfile_dir = "C:\\Users\\Kasey\\OneDrive - University of Florida\\Grad School Documents\\Projects\\eucalyptus-hybrid-resequencing\\05.analyses\\wg_ADMIXTURE\\weird_sample_check\\maf0.00\\admixture_output"
+qfile_dir = "C:\\Users\\Kasey\\OneDrive - University of Florida\\Grad School Documents\\Projects\\eucalyptus-hybrid-resequencing\\05.analyses\\wg_ADMIXTURE\\outlier_check\\maf0.00\\admixture_output"
 
 outfile = open("{PREFIX}_filemap.txt".format(PREFIX=file_prefix), "w")
 
@@ -22,7 +22,7 @@ outfile.close()
 
 # Create pong ind2pop file for samples
 spp_tab_loc = "C:\\Users\\Kasey\\OneDrive - University of Florida\\Grad School Documents\\Projects\\eucalyptus-hybrid-resequencing\\00.metadata\\03.seq_analysis\\sample_spp_table.csv"
-fam_file_loc = "C:\\Users\\Kasey\\OneDrive - University of Florida\\Grad School Documents\\Projects\\eucalyptus-hybrid-resequencing\\05.analyses\\wg_ADMIXTURE\\weird_sample_check\\maf0.00\\" + file_prefix + ".fam"
+fam_file_loc = "C:\\Users\\Kasey\\OneDrive - University of Florida\\Grad School Documents\\Projects\\eucalyptus-hybrid-resequencing\\05.analyses\\wg_ADMIXTURE\\outlier_check\\maf0.00\\" + file_prefix + ".fam"
 
 spp_table = pd.read_csv(spp_tab_loc, header = 0, index_col="RAPiD_ID")
 spp_order = list(pd.read_table(fam_file_loc, sep = " +", header = None, engine = "python").iloc[:,0])
