@@ -138,7 +138,7 @@ Also checked whether genome-wide sliding window distributions of nucleotide dive
 
 ```bash
 # Performed on UFRC queue system. See stats_outlier_check.job for more details.
-# Resources used:
+# Resources used: 400 Mb, 13 hrs
 
 module load conda
 ENV_DIR="/blue/soltis/kasey.pham/conda/envs"
@@ -152,11 +152,11 @@ Then summarized distributions of stats for each jackknifed dataset in R.
 e.g.,
 
 ```R
-wdir <- "\\C:\\Users\\Kasey\\OneDrive - University of Florida\\Grad School Documents\\Projects\\eucalyptus-hybrid-resequencing\\05.analyses\\outlier_check"
-infile_name <- "stats_outlier_check_WA02.tab"
+wdir <- "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/outlier_check/pi_dxy"
+infile_name <- "stats_outlier_check_no_WF03.tab"
 
 setwd(wdir)
-infile <- read.table(infile_name, header = TRUE)
+infile <- read.table(infile_name, header = TRUE, sep = "\t")
 
 summary(infile$Pi)
 summary(infile$Dxy)
@@ -166,10 +166,32 @@ summary(infile$Dxy)
 
 **Nucleotide Diversity:**
 
-| Sample Excluded | Accession | Min   | 1st Quart | Median | Mean | 3rd Quart | Max   |
-| --------------- | --------- | ----- | --------- | ------ | ---- | --------- | ----- |
+| Sample Excluded | Accession | Min   | 1st Quart | Median | Mean  | 3rd Quart | Max    |
+| --------------- | --------- | ----- | --------- | ------ | ----- | --------- | ------ |
+| WF03            | 1051      | 0.00  | 4.51      | 15.73  | 20.26 | 30.19     | 199.15 |
+| WA02            | 1119      | 0.00  | 4.53      | 15.77  | 20.30 | 30.24     | 199.20 |
+| WB05            | 1081      | 0.00  | 4.45      | 15.43  | 19.98 | 29.72     | 198.76 |
+| WC01            | 1129      | 0.00  | 4.27      | 14.79  | 19.30 | 28.62     | 192.42 |
+| WC04            | 1043      | 0.00  | 4.53      | 15.76  | 20.29 | 30.24     | 198.83 |
+| WD01            | 1130      | 0.00  | 4.53      | 15.77  | 20.29 | 30.22     | 199.01 |
+| WD03            | 1116      | 0.00  | 4.52      | 15.75  | 20.28 | 30.22     | 198.73 |
+| WF05            | 1059      | 0.00  | 4.52      | 15.76  | 20.28 | 30.23     | 197.54 |
+| WH01            | 1056      | 0.00  | 4.52      | 15.76  | 20.28 | 30.22     | 194.44 |
+| WH02            | 1128      | 0.00  | 4.41      | 15.40  | 19.86 | 29.60     | 194.22 |
 
 **Absolute Divergence:**
 
 | Sample Excluded | Accession | Min   | 1st Quart | Median | Mean | 3rd Quart | Max   |
 | --------------- | --------- | ----- | --------- | ------ | ---- | --------- | ----- |
+| WF03            | 1051      | 0.00  | 0.13      | 0.16   | 0.17 | 0.20      | 0.78  |
+| WA02            | 1119      | 0.00  | 0.13      | 0.16   | 0.17 | 0.20      | 0.88  |
+| WB05            | 1081      | 0.00  | 0.13      | 0.16   | 0.17 | 0.20      | 0.78  |
+| WC01            | 1129      | 0.00  | 0.12      | 0.15   | 0.16 | 0.19      | 0.78  |
+| WC04            | 1043      | 0.00  | 0.13      | 0.16   | 0.17 | 0.20      | 0.78  |
+| WD01            | 1130      | 0.00  | 0.13      | 0.16   | 0.17 | 0.20      | 0.78  |
+| WD03            | 1116      | 0.00  | 0.13      | 0.16   | 0.17 | 0.20      | 0.79  |
+| WF05            | 1059      | 0.00  | 0.13      | 0.16   | 0.17 | 0.20      | 0.78  |
+| WH01            | 1056      | 0.00  | 0.13      | 0.16   | 0.17 | 0.20      | 0.78  |
+| WH02            | 1128      | 0.00  | 0.13      | 0.16   | 0.17 | 0.20      | 0.78  |
+
+**Conclusion:** There doesn't look to be an overall difference in at least the distribution for my diagnostic stats if I exclude WF03 versus excluding other samples. There could still be a spatial difference across the genome in how these stats are distributed... However, for now, I think it's acceptable to continue on including WF03 within my reference set since it's hard to tell where the differentiation is coming from.
