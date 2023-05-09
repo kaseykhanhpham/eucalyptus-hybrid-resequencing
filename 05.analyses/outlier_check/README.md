@@ -30,105 +30,146 @@ vcftools --vcf "$INFILE05" --weir-fst-pop "$LISTDIR"/Eglobulus_MR.txt --weir-fst
 # SAMPLE GROUPS AGAINST EACH OTHER WITH PROBLEMATIC SAMPLES REMOVED
 # MAF = 0.00
 cd "$MAF00_DIR"
-vcftools --vcf "$INFILE00" --weir-fst-pop "$LISTDIR"/Ecordata.txt --weir-fst-pop "$LISTDIR"/Eglobulus_MR_withoutWG04.txt --weir-fst-pop "$LISTDIR"/Eglobulus_ref_withoutWF03.txt --out maf0.00_all_to_all
-vcftools --vcf "$INFILE00" --weir-fst-pop "$LISTDIR"/Ecordata.txt --weir-fst-pop "$LISTDIR"/Eglobulus_MR_withoutWG04.txt --out maf0.00_cord_globmr
-vcftools --vcf "$INFILE00" --weir-fst-pop "$LISTDIR"/Ecordata.txt --weir-fst-pop "$LISTDIR"/Eglobulus_ref_withoutWF03.txt --out maf0.00_cord_globref
-vcftools --vcf "$INFILE00" --weir-fst-pop "$LISTDIR"/Eglobulus_MR_withoutWG04.txt --weir-fst-pop "$LISTDIR"/Eglobulus_ref_withoutWF03.txt --out maf0.00_globmr_globref
+vcftools --vcf "$INFILE00" --weir-fst-pop "$LISTDIR"/Ecordata.txt --weir-fst-pop "$LISTDIR"/Eglobulus_MR.txt --weir-fst-pop "$LISTDIR"/Eglobulus_ref_withoutWF03.txt --out maf0.00_all_to_all_outl
+vcftools --vcf "$INFILE00" --weir-fst-pop "$LISTDIR"/Ecordata.txt --weir-fst-pop "$LISTDIR"/Eglobulus_MR.txt --out maf0.00_cord_globmr_outl
+vcftools --vcf "$INFILE00" --weir-fst-pop "$LISTDIR"/Ecordata.txt --weir-fst-pop "$LISTDIR"/Eglobulus_ref_withoutWF03.txt --out maf0.00_cord_globref_outl
+vcftools --vcf "$INFILE00" --weir-fst-pop "$LISTDIR"/Eglobulus_MR.txt --weir-fst-pop "$LISTDIR"/Eglobulus_ref_withoutWF03.txt --out maf0.00_globmr_globref_outl
 
 # MAF = 0.05
 cd "$MAF05_DIR"
-vcftools --vcf "$INFILE05" --weir-fst-pop "$LISTDIR"/Ecordata.txt --weir-fst-pop "$LISTDIR"/Eglobulus_MR_withoutWG04.txt --weir-fst-pop "$LISTDIR"/Eglobulus_ref_withoutWF03.txt --out maf0.05_all_to_all
-vcftools --vcf "$INFILE05" --weir-fst-pop "$LISTDIR"/Ecordata.txt --weir-fst-pop "$LISTDIR"/Eglobulus_MR_withoutWG04.txt --out maf0.05_cord_globmr
-vcftools --vcf "$INFILE05" --weir-fst-pop "$LISTDIR"/Ecordata.txt --weir-fst-pop "$LISTDIR"/Eglobulus_ref_withoutWF03.txt --out maf0.05_cord_globref
-vcftools --vcf "$INFILE05" --weir-fst-pop "$LISTDIR"/Eglobulus_MR_withoutWG04.txt --weir-fst-pop "$LISTDIR"/Eglobulus_ref_withoutWF03.txt --out maf0.05_globmr_globref
+vcftools --vcf "$INFILE05" --weir-fst-pop "$LISTDIR"/Ecordata.txt --weir-fst-pop "$LISTDIR"/Eglobulus_MR.txt --weir-fst-pop "$LISTDIR"/Eglobulus_ref_withoutWF03.txt --out maf0.05_all_to_all_outl
+vcftools --vcf "$INFILE05" --weir-fst-pop "$LISTDIR"/Ecordata.txt --weir-fst-pop "$LISTDIR"/Eglobulus_MR.txt --out maf0.05_cord_globmr_outl
+vcftools --vcf "$INFILE05" --weir-fst-pop "$LISTDIR"/Ecordata.txt --weir-fst-pop "$LISTDIR"/Eglobulus_ref_withoutWF03.txt --out maf0.05_cord_globref_outl
+vcftools --vcf "$INFILE05" --weir-fst-pop "$LISTDIR"/Eglobulus_MR.txt --weir-fst-pop "$LISTDIR"/Eglobulus_ref_withoutWF03.txt --out maf0.05_globmr_globref_outl
 ```
 
 Get genome-wide average in `R`:
 
 ```R
-maf00_all_dir <- "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_fst/maf0.00_all"
-maf05_all_dir <- "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_fst/maf0.05_all"
-
-maf00_wf03_dir <- "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_fst/maf0.00_wf03"
-maf00_wg04_dir <- "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_fst/maf0.00_wg04"
-maf05_wf03_dir <- "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_fst/maf0.05_wf03"
-
-maf00_noWeird_dir <- "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_fst/maf0.00_noWeird"
-maf05_noWeird_dir <- "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_fst/maf0.05_noWeird"
+maf00_dir <- "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/outlier_check/maf0.00"
+maf05_dir <- "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/outlier_check/maf0.05"
 
 # ALL SAMPLE GROUPS 
 # MAF=0.00, all sample groups against each other
-setwd(maf00_all_dir)
-maf00_all_to_all_tab <- read.table("maf0.00_all_to_all.weir.fst", header = TRUE, na.strings = "-nan")
-summary(na.omit(maf00_all_to_all_tab$WEIR_AND_COCKERHAM_FST))
-maf00_cord_globmr_tab <- read.table("maf0.00_cord_globmr.weir.fst", header = TRUE, na.strings = "-nan")
-summary(na.omit(maf00_cord_globmr_tab$WEIR_AND_COCKERHAM_FST))
-maf00_cord_globref_tab <- read.table("maf0.00_cord_globref.weir.fst", header = TRUE, na.strings = "-nan")
-summary(na.omit(maf00_cord_globref_tab$WEIR_AND_COCKERHAM_FST))
-maf00_globmr_globref_tab <- read.table("maf0.00_globmr_globref.weir.fst", header = TRUE, na.strings = "-nan")
-summary(na.omit(maf00_globmr_globref_tab$WEIR_AND_COCKERHAM_FST))
+setwd(maf00_dir)
+# import FST results
+maf00_all_to_all <- read.table("maf0.00_all_to_all.weir.fst", header = TRUE, na.strings = "-nan")
+maf00_cord_globmr <- read.table("maf0.00_cord_globmr.weir.fst", header = TRUE, na.strings = "-nan")
+maf00_cord_globref <- read.table("maf0.00_cord_globref.weir.fst", header = TRUE, na.strings = "-nan")
+maf00_globmr_globref <- read.table("maf0.00_globmr_globref.weir.fst", header = TRUE, na.strings = "-nan")
+# get summaries of FST distrs
+summary(na.omit(maf00_all_to_all$WEIR_AND_COCKERHAM_FST))
+summary(na.omit(maf00_cord_globmr$WEIR_AND_COCKERHAM_FST))
+summary(na.omit(maf00_cord_globref$WEIR_AND_COCKERHAM_FST))
+summary(na.omit(maf00_globmr_globref$WEIR_AND_COCKERHAM_FST))
+
+# MAF=0.00, sample groups with WF03 removed against each other
+# import FST results
+maf00_all_to_all_outl <- read.table("maf0.00_all_to_all_outl.weir.fst", header = TRUE, na.strings = "-nan")
+maf00_cord_globmr_outl <- read.table("maf0.00_cord_globmr_outl.weir.fst", header = TRUE, na.strings = "-nan")
+maf00_cord_globref_outl <- read.table("maf0.00_cord_globref_outl.weir.fst", header = TRUE, na.strings = "-nan")
+maf00_globmr_globref_outl <- read.table("maf0.00_globmr_globref_outl.weir.fst", header = TRUE, na.strings = "-nan")
+# get summaries of FST distrs
+summary(na.omit(maf00_all_to_all_outl$WEIR_AND_COCKERHAM_FST))
+summary(na.omit(maf00_cord_globmr_outl$WEIR_AND_COCKERHAM_FST))
+summary(na.omit(maf00_cord_globref_outl$WEIR_AND_COCKERHAM_FST))
+summary(na.omit(maf00_globmr_globref_outl$WEIR_AND_COCKERHAM_FST))
 
 # MAF=0.05, all sample groups against each other
-setwd(maf05_all_dir)
-maf05_all_to_all_tab <- read.table("maf0.05_all_to_all.weir.fst", header = TRUE, na.strings = "-nan")
-summary(na.omit(maf05_all_to_all_tab$WEIR_AND_COCKERHAM_FST))
-maf05_cord_globmr_tab <- read.table("maf0.05_cord_globmr.weir.fst", header = TRUE, na.strings = "-nan")
-summary(na.omit(maf05_cord_globmr_tab$WEIR_AND_COCKERHAM_FST))
-maf05_cord_globref_tab <- read.table("maf0.05_cord_globref.weir.fst", header = TRUE, na.strings = "-nan")
-summary(na.omit(maf05_cord_globref_tab$WEIR_AND_COCKERHAM_FST))
-maf05_globmr_globref_tab <- read.table("maf0.05_globmr_globref.weir.fst", header = TRUE, na.strings = "-nan")
-summary(na.omit(maf05_globmr_globref_tab$WEIR_AND_COCKERHAM_FST))
+setwd(maf05_dir)
+# import FST results
+maf05_all_to_all <- read.table("maf0.05_all_to_all.weir.fst", header = TRUE, na.strings = "-nan")
+maf05_cord_globmr <- read.table("maf0.05_cord_globmr.weir.fst", header = TRUE, na.strings = "-nan")
+maf05_cord_globref <- read.table("maf0.05_cord_globref.weir.fst", header = TRUE, na.strings = "-nan")
+maf05_globmr_globref <- read.table("maf0.05_globmr_globref.weir.fst", header = TRUE, na.strings = "-nan")
 
-# ALL SAMPLE GROUPS WITHOUT PROBLEMATIC SAMPLES
-# MAF=0.00, all sample groups without WF03/1051 & WG04/2025
-setwd(maf00_noWeird_dir)
-maf00_all_to_all_tab <- read.table("maf0.00_all_to_all.weir.fst", header = TRUE, na.strings = "-nan")
-summary(na.omit(maf00_all_to_all_tab$WEIR_AND_COCKERHAM_FST))
-maf00_cord_globmr_tab <- read.table("maf0.00_cord_globmr.weir.fst", header = TRUE, na.strings = "-nan")
-summary(na.omit(maf00_cord_globmr_tab$WEIR_AND_COCKERHAM_FST))
-maf00_cord_globref_tab <- read.table("maf0.00_cord_globref.weir.fst", header = TRUE, na.strings = "-nan")
-summary(na.omit(maf00_cord_globref_tab$WEIR_AND_COCKERHAM_FST))
-maf00_globmr_globref_tab <- read.table("maf0.00_globmr_globref.weir.fst", header = TRUE, na.strings = "-nan")
-summary(na.omit(maf00_globmr_globref_tab$WEIR_AND_COCKERHAM_FST))
+# get summaries of FST distrs
+summary(na.omit(maf05_all_to_all$WEIR_AND_COCKERHAM_FST))
+summary(na.omit(maf05_cord_globmr$WEIR_AND_COCKERHAM_FST))
+summary(na.omit(maf05_cord_globref$WEIR_AND_COCKERHAM_FST))
+summary(na.omit(maf05_globmr_globref$WEIR_AND_COCKERHAM_FST))
 
-# MAF=0.05, all sample groups without WF03/1051 & WG04/2025
-setwd(maf05_noWeird_dir)
-maf05_all_to_all_tab <- read.table("maf0.05_all_to_all.weir.fst", header = TRUE, na.strings = "-nan")
-summary(na.omit(maf05_all_to_all_tab$WEIR_AND_COCKERHAM_FST))
-maf05_cord_globmr_tab <- read.table("maf0.05_cord_globmr.weir.fst", header = TRUE, na.strings = "-nan")
-summary(na.omit(maf05_cord_globmr_tab$WEIR_AND_COCKERHAM_FST))
-maf05_cord_globref_tab <- read.table("maf0.05_cord_globref.weir.fst", header = TRUE, na.strings = "-nan")
-summary(na.omit(maf05_cord_globref_tab$WEIR_AND_COCKERHAM_FST))
-maf05_globmr_globref_tab <- read.table("maf0.05_globmr_globref.weir.fst", header = TRUE, na.strings = "-nan")
-summary(na.omit(maf05_globmr_globref_tab$WEIR_AND_COCKERHAM_FST))
+# MAF=0.05, all sample groups without WF03/1051
+# import FST results
+maf05_all_to_all_outl <- read.table("maf0.05_all_to_all_outl.weir.fst", header = TRUE, na.strings = "-nan")
+maf05_cord_globmr_outl <- read.table("maf0.05_cord_globmr_outl.weir.fst", header = TRUE, na.strings = "-nan")
+maf05_cord_globref_outl <- read.table("maf0.05_cord_globref_outl.weir.fst", header = TRUE, na.strings = "-nan")
+maf05_globmr_globref_outl <- read.table("maf0.05_globmr_globref_outl.weir.fst", header = TRUE, na.strings = "-nan")
+
+# get summaries of FST distrs
+summary(na.omit(maf05_all_to_all_outl$WEIR_AND_COCKERHAM_FST))
+summary(na.omit(maf05_cord_globmr_outl$WEIR_AND_COCKERHAM_FST))
+summary(na.omit(maf05_cord_globref_outl$WEIR_AND_COCKERHAM_FST))
+summary(na.omit(maf05_globmr_globref_outl$WEIR_AND_COCKERHAM_FST))
 ```
 
 Fst distribution for all groups against each other:
-| MAF  | Group 1      | Group 2      | Min    | 1st Quart | Median | Mean   | 3rd Quart | Max  |
-|------|--------------|--------------|--------|-----------|--------|------- |-----------|------|
-| 0.00 | all three    | N/A          | -0.099 | 0.016     | 0.085  | 0.17   | 0.25      | 1.00 |
-| 0.00 | E. cordata   | E. glob intr | -0.10  | 0.019     | 0.13   | 0.22   | 0.35      | 1.00 |
-| 0.00 | E. cordata   | E. glob ref  | -0.15  | 0.0078    | 0.13   | 0.22   | 0.34      | 1.00 |
-| 0.00 | E. glob intr | E. glob ref  | -0.11  | -0.031    | -0.013 | 0.0097 | 0.039     | 0.83 |
-| 0.05 | all three    | N/A          | -0.099 | -0.043    | 0.16   | 0.23   | 0.36      | 1.00 |
-| 0.05 | E. cordata   | E. glob intr | -0.10  | 0.055     | 0.22   | 0.28   | 0.45      | 1.00 |
-| 0.05 | E. cordata   | E. glob ref  | -0.15  | 0.063     | 0.21   | 0.28   | 0.43      | 1.00 |
-| 0.05 | E. glob intr | E. glob ref  | -0.14  | -0.034    | -0.014 | 0.010  | 0.039     | 0.83 |
 
-Fst distribution for sample groups against each other with WF03/1051 and WG04/2025 omitted:
+**MAF = 0.00:**
+| has WF03 | Group 1      | Group 2      | Min    | 1st Quart | Median | Mean   | 3rd Quart | Max  |
+|----------|--------------|--------------|--------|-----------|--------|------- |-----------|------|
+| yes      | all three    | N/A          | -0.106 | 0.0153    | 0.0829 | 0.170  | 0.248     | 1.00 |
+| yes      | E. cordata   | E. glob intr | -0.676 | 0.0162    | 0.125  | 0.217  | 0.348     | 1.00 |
+| yes      | E. cordata   | E. glob ref  | -1.00  | 0.0078    | 0.125  | 0.214  | 0.338     | 1.00 |
+| yes      | E. glob intr | E. glob ref  | -0.195 | -0.0317   | -0.0133| 0.00966| 0.0385    | 0.833|
+| no       | all three    | N/A          | -0.106 | 0.0153    | 0.0829 | 0.170  | 0.249     | 1.00 |
+| no       | E. cordata   | E. glob intr | -0.676 | 0.0162    | 0.125  | 0.217  | 0.348     | 1.00 |
+| no       | E. cordata   | E. glob ref  | -1.00  | 0.00784   | 0.125  | 0.214  | 0.339     | 1.00 |
+| no       | E. glob intr | E. glob ref  | -0.196 | -0.0320   | -0.0136| 0.00966| 0.0391    | 0.916|
 
-| MAF  | Group 1      | Group 2      | Min    | 1st Quart | Median | Mean   | 3rd Quart | Max  |
-|------|--------------|--------------|--------|-----------|--------|------- |-----------|------|
-| 0.00 | all three    | N/A          | -0.10  | 0.016     | 0.086  | 0.17   | 0.25      | 1.00 |
-| 0.00 | E. cordata   | E. glob intr | -0.096 | 0.020     | 0.13   | 0.22   | 0.35      | 1.00 |
-| 0.00 | E. cordata   | E. glob ref  | -0.15  | 0.0078    | 0.13   | 0.22   | 0.34      | 1.00 |
-| 0.00 | E. glob intr | E. glob ref  | -0.11  | -0.032    | -0.014 | 0.0098 | 0.040     | 0.91 |
-| 0.05 | all three    | N/A          | -0.10  | -0.044    | 0.16   | 0.24   | 0.35      | 1.00 |
-| 0.05 | E. cordata   | E. glob intr | -0.096 | 0.055     | 0.22   | 0.28   | 0.45      | 1.00 |
-| 0.05 | E. cordata   | E. glob ref  | -0.15  | 0.066     | 0.21   | 0.28   | 0.43      | 1.00 |
-| 0.05 | E. glob intr | E. glob ref  | -0.11  | -0.035    | -0.014 | 0.010  | 0.039     | 0.91 |
+**MAF = 0.05:**
+| has WF03 | Group 1      | Group 2      | Min    | 1st Quart | Median | Mean   | 3rd Quart | Max  |
+|----------|--------------|--------------|--------|-----------|--------|------- |-----------|------|
+| yes      | all three    | N/A          | -0.104 | 0.0422    | 0.155  | 0.234  | 0.355     | 1.00 |
+| yes      | E. cordata   | E. glob intr | -0.676 | 0.0554    | 0.218  | 0.284  | 0.455     | 1.00 |
+| yes      | E. cordata   | E. glob ref  | -0.392 | 0.0625    | 0.211  | 0.276  | 0.425     | 1.00 |
+| yes      | E. glob intr | E. glob ref  | -0.137 | -0.0344   | -0.0138| 0.0103 | 0.0385    | 0.833|
+| no       | all three    | N/A          | -0.106 | 0.0424    | 0.155  | 0.234  | 0.355     | 1.00 |
+| no       | E. cordata   | E. glob intr | -0.676 | 0.0553    | 0.218  | 0.284  | 0.455     | 1.00 |
+| no       | E. cordata   | E. glob ref  | -0.365 | 0.0625    | 0.211  | 0.276  | 0.425     | 1.00 |
+| no       | E. glob intr | E. glob ref  | -0.178 | -0.0345   | -0.0140| 0.0103 | 0.0385    | 0.915|
 
 
-**Conclusion:** Removing the strange samples doesn't seem to affect differentiation measures (and therefore relative variance in allele frequencies) between my sample groups.
+**Conclusion:** Removing the strange samples doesn't seem to FST (and therefore relative variance in allele frequencies) between my sample groups.
 
-## Nei's D
+## Pi and dXY
+
+Also checked whether genome-wide sliding window distributions of nucleotide diversity (pi) and absolute divergence (dXY) were affected by the inclusion of WF03. To do so, calculated pi and dXY in sliding windows of 5000 bp with a 2500 bp step, excluding once sample from the _E. globulus_ reference group at a time.
+
+```bash
+# Performed on UFRC queue system. See stats_outlier_check.job for more details.
+# Resources used:
+
+module load conda
+ENV_DIR="/blue/soltis/kasey.pham/conda/envs"
+conda activate euc_hyb_reseq
+
+python stats_outlier_check.py
+```
+
+Then summarized distributions of stats for each jackknifed dataset in R.
+
+e.g.,
+
+```R
+wdir <- "\\C:\\Users\\Kasey\\OneDrive - University of Florida\\Grad School Documents\\Projects\\eucalyptus-hybrid-resequencing\\05.analyses\\outlier_check"
+infile_name <- "stats_outlier_check_WA02.tab"
+
+setwd(wdir)
+infile <- read.table(infile_name, header = TRUE)
+
+summary(infile$Pi)
+summary(infile$Dxy)
+```
+
+**Results:**
+
+**Nucleotide Diversity:**
+
+| Sample Excluded | Accession | Min   | 1st Quart | Median | Mean | 3rd Quart | Max   |
+| --------------- | --------- | ----- | --------- | ------ | ---- | --------- | ----- |
+
+**Absolute Divergence:**
+
+| Sample Excluded | Accession | Min   | 1st Quart | Median | Mean | 3rd Quart | Max   |
+| --------------- | --------- | ----- | --------- | ------ | ---- | --------- | ----- |

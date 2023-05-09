@@ -48,7 +48,7 @@ for sample in struct_json["cluster1"]["eglob_mr"]:
     computer = egglib.stats.ComputeStats(struct = pop_struct, multi_hits = True)
     computer.add_stats("Pi")
 
-    # create 4-col dataframe for storing Dxy calculations
+    # create 4-col dataframe for storing Pi calculations
     # 0: chr, 1: start pos, 2: end pos, 3: avg Pi
     stats_df = pd.DataFrame(data = None, columns = ["chr", "start", "end", "Pi"])
 

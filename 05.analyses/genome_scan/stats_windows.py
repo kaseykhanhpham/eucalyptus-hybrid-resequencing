@@ -43,11 +43,14 @@ structure_file.close()
 outgroup_file = open(outgroup_filename, "r")
 outgr_json = json.load(outgroup_file)
 outgroup_file.close()
-pop_struct = egglib.struct_from_dict(struct_json, outgr_json)
 
-# create ComputeStats instance for Dxy
+# make ComputeStats object with sliding window stats
+pop_struct = egglib.struct_from_dict(struct_json, outgr_json)
 computer = egglib.stats.ComputeStats(struct = pop_struct, multi_hits = True)
 computer.add_stats("Pi", "Deta", "Dxy")
+
+# initialize storage table
+stats_df = pd.DataFrame(data = None, columns = ["chr", "start", "end", "Pi", "Deta", "Dxy"])
 
 # initiate sliding window object
 # iterate through VCF
