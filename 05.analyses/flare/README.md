@@ -5,28 +5,23 @@ Overview of the method: [Winkler et al. 2010](https://doi.org/10.1146/annurev-ge
 
 
 ## Phase Alleles
-### Remove variants with missing genotypes
+### Format VCF for phasing in BEAGLE
+Removed variants with missing genotypes, invariants, genotypes with haploid calls, and unanchored contigs. Restricted to only ingroup samples.
+
 ```bash
-# Performed in UFRC queue system. See filter_missing.job for more details.
-# Resources: 75 Mb, 1 min
+# Performed in UFRC queue system. See format_beagle.job for more details.
+# Resources: 16 Mb, 2 min
 
 module load vcftools/0.1.16
 module load bcftools/1.15
 
-INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.05"
-NAME="meehan_all_fil_maf0.05_snps"
+INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.00"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
+NAME="meehan_all_fil_maf0.00_snps"
 
 export MISS=1.0
 
-cat "$INDIR"/"$NAME".vcf | vcftools --vcf - --max-missing $MISS --recode --stdout | bcftools sort -O v - > "$NAME"_nomiss.vcf
-```
-
-### Filter all variants with samples with haploid GT calls and remove unanchored contigs
-```bash
-LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
-module load bcftools/1.15
-
-cat meehan_all_fil_maf0.05_snps_nomiss.vcf | bcftools view -S "$LIST_DIR"/sample_ids.txt | bcftools filter -e 'FORMAT/GT="hap"' -O v -o meehan_all_fil_maf0.05_snps_nohap.vcf 
+vcftools --vcf "$INDIR"/"$NAME".vcf --max-missing $MISS --min-alleles 2 --not-chr ChrUn --recode --stdout | bcftools view -S "$LIST_DIR"/sample_ids.txt - | bcftools filter -e 'FORMAT/GT="hap"' -O v - | bcftools sort -O v - > "$NAME"_beagle_formatted.vcf
 ```
 
 ### Phase alleles with [`Beagle`](https://faculty.washington.edu/browning/beagle/beagle.html)
@@ -37,17 +32,9 @@ cat meehan_all_fil_maf0.05_snps_nomiss.vcf | bcftools view -S "$LIST_DIR"/sample
 module load beagle/5.2
 
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/05.analyses/admix_map"
-NAME="all_to_ASM1654582_fil_maf0.05_snps_nohap"
+NAME="meehan_all_fil_maf0.00_snps"
 
-"$HPC_BEAGLE_BIN"/beagle gt="$NAME".vcf out="$NAME"_phased impute=false burnin=5 iterations=20 phase-states=280 nthreads=11
-```
-
-### Remove unanchored contigs from VCF
-
-```bash
-module load vcftools/0.1.16
-
-vcftools --gzvcf meehan_all_fil_maf0.05_snps_nohap_phased.vcf.gz --recode --not-chr ChrUn --out meehan_all_fil_maf0.05_snps_nohap_phased_noChrUn.vcf
+"$HPC_BEAGLE_BIN"/beagle gt="$NAME"_beagle_formatted.vcf out="$NAME"_phased impute=false burnin=5 iterations=20 phase-states=280 nthreads=11
 ```
 
 ### Curate genetic map
@@ -129,14 +116,15 @@ write.table(map_final, file = "1060_LH_F2_manual_copy.map", row.names = FALSE, c
 
 ```bash
 # Performed in the UFRC queue system. See flare.job for more details.
-# Resources used: 
+# Resources used: 1 Mb, 30 sec
 
 module load java/11.0.1
 
-WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/05.analyses/admix_map"
-NAME="meehan_all_fil_maf0.05_snps_nomiss"
+FLARE_DIR="/blue/soltis/kasey.pham/bin/flare"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/flare"
+NAME="meehan_all_fil_maf0.00_snps_phased"
 
-java -Xmx10g -jar flare.jar -ref="$WDIR"/"$NAME".vcf -ref-panel=ref_panel.txt -gt="$WDIR"/"$NAME".vcf -gt-samples=gt_samples.txt -map= -nthreads=12 -probs=true
+java -Xmx10g -jar "$FLARE_DIR"/flare.jar ref="$WDIR"/"$NAME".vcf.gz ref-panel="$WDIR"/ref_panel.txt gt="$WDIR"/"$NAME".vcf.gz gt-samples="$WDIR"/gt_samples.txt map="$WDIR"/1060_LH_F2_manual_copy.map min-mac=1 nthreads=12 out="$NAME"_flare
 ```
 
 ## Interpret Results

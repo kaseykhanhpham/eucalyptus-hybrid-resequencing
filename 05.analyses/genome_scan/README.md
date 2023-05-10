@@ -43,13 +43,10 @@ Used biallelic SNP set to calculate D statistics for individuals and in a slidin
 
 ```bash
 # Performed in UFRC queue system. See dsuite.job for more details.
-# Resources:
-module load gcc/9.3.0
-module load dsuite/0.4-r49
-
+# Resources: 4 Mb, 17 min
+DSUITE_DIR="/blue/soltis/kasey.pham/bin/Dsuite/Build"
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/dsuite"
-VCFDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/dsuite"
 NAME="meehan_all_fil_maf0.00_snps_biallelic"
 
-Dsuite Dinvestigate "$VCFDIR"/"$NAME".vcf "$WDIR"/SETS.txt "$WDIR"/test_trios.txt
+"$DSUITE_DIR"/Dsuite Dinvestigate -n "$NAME" "$WDIR"/"$NAME".vcf "$WDIR"/SETS.txt test_trios.txt
 ```

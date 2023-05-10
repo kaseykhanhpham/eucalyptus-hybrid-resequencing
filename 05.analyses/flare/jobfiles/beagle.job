@@ -14,6 +14,6 @@
 module load beagle/5.2
 
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/05.analyses/admix_map"
-NAME="meehan_all_fil_maf0.05_snps_nohap"
+NAME="meehan_all_fil_maf0.00_snps"
 
-"$HPC_BEAGLE_BIN"/beagle gt="$NAME".vcf out="$NAME"_phased impute=false burnin=5 iterations=20 phase-states=280 nthreads=11
+"$HPC_BEAGLE_BIN"/beagle gt="$NAME"_beagle_formatted.vcf out="$NAME"_phased impute=false burnin=5 iterations=20 phase-states=280 nthreads=11
