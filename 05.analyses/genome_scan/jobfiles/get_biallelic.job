@@ -1,0 +1,17 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=biallelic
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=800mb
+#SBATCH --time=1:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=get_biallelic_%j.out
+#SBATCH --error=get_biallelic_%j.err
+
+module load vcftools/0.1.16
+VCFDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.00"
+
+vcftools --vcf "$VCFDIR"/meehan_all_fil_maf0.00_snps.vcf --min-alleles 2 --max-alleles 2 --recode --stdout > meehan_all_fil_maf0.00_snps_biallelic.vcf

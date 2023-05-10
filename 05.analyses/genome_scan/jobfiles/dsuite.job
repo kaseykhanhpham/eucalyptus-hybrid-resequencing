@@ -11,10 +11,8 @@
 #SBATCH --output=dsuite_%j.out
 #SBATCH --error=dsuite_%j.err
 
-module load dsuite/0.4-r49
-
+DSUITE_DIR="/blue/soltis/kasey.pham/bin/Dsuite/Build"
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/dsuite"
-VCFDIR="WDIR=/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan"
 NAME="meehan_all_fil_maf0.00_snps_biallelic"
 
-Dsuite Dinvestigate -o "$NAME" "$VCFDIR"/"$NAME".vcf "$WDIR"/SETS.txt test_trios.txt
+"$DSUITE_DIR"/Dsuite Dinvestigate -n "$NAME" "$WDIR"/"$NAME".vcf "$WDIR"/SETS.txt test_trios.txt

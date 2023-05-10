@@ -1,15 +1,15 @@
 #!/bin/bash
 #SBATCH --account=soltis
 #SBATCH --qos=soltis-b
-#SBATCH --job-name=fst
+#SBATCH --job-name=deta
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=kasey.pham@ufl.edu
 #SBATCH --mem=600mb
 #SBATCH --time=1-00:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --nodes=1
-#SBATCH --output=fst_windows_%j.out
-#SBATCH --error=fst_windows_%j.err
+#SBATCH --output=deta_windows_%j.out
+#SBATCH --error=deta_windows_%j.err
 
 module load conda 
 
@@ -20,4 +20,4 @@ WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan"
 
 conda activate "$ENV_DIR"/euc_hyb_reseq
 
-python "$SCRIPT_DIR"/stats_windows.py "$VCF_DIR"/meehan_all_fil_maf0.00_snps.vcf FST 5000 2500 "$WDIR"/glob_structure.json "$WDIR"/glob_outgroup.json "$WDIR"/chr_list.txt glob_fst_windows.tab
+python "$SCRIPT_DIR"/stats_windows.py "$VCF_DIR"/meehan_all_fil_maf0.00_snps.vcf Deta 5000 2500 "$WDIR"/glob_structure.json "$WDIR"/glob_outgroup.json "$WDIR"/chr_list.txt glob_deta_windows.tab
