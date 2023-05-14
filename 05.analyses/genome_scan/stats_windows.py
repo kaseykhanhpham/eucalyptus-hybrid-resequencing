@@ -56,12 +56,13 @@ outgroup_file.close()
 
 # make ComputeStats object with sliding window stats
 pop_struct = egglib.struct_from_dict(struct_json, outgr_json)
+computer = egglib.stats.ComputeStats(struct = pop_struct, multi_hits = True)
 if to_calc == "FST":
-    # if calculating FST, filter out invariant sites
-    computer = egglib.stats.ComputeStats(struct = pop_struct, multi_hits = True, maf = 0.0000001)
-    computer.add_stats("FistWC") # FST is calculated alongside FIS and FIT in egglib under this name
+    computer.add_stats("FistWC")
+elif to_calc == "Pi":
+    computer.add_stats(to_calc)
+    computer.add_stats("lseff")
 else:
-    computer = egglib.stats.ComputeStats(struct = pop_struct, multi_hits = True)
     computer.add_stats(to_calc)
 
 # initiate sliding window object
@@ -73,11 +74,15 @@ for chr in chr_list:
         # calculate stats from window
         stats_dict = computer.process_sites(window)
         if to_calc == "FST":
-            # Access second entry in tuple of FistWC output
-            if stats_dict["FistWC"] != None:
-                calced_stat = stats_dict["FistWC"][1]
-            else:
+            if stats_dict["FistWC"] is None:
                 calced_stat = stats_dict["FistWC"]
+            else:
+                calced_stat = stats_dict["FistWC"][1]
+        elif to_calc == "Pi":
+            if stats_dict["lseff"] != 0:
+                calced_stat = stats_dict[to_calc]/stats_dict["lseff"]
+            else:
+                calced_stat = stats_dict[to_calc]
         else:
             calced_stat = stats_dict[to_calc]
         # extract position info from window
