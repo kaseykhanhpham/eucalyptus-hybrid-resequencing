@@ -5,7 +5,7 @@ Directories are labeled in the order steps were performed. Computation performed
 
 **Collaborators**: Rebecca Jones, Ariane Gélinas Marion, Brad Potts, René Vaillancourt, Pam Soltis, Doug Soltis
 
-**With helpful input from**: Zhe Cai, Matias Kirst, Brad Barbazuk
+**With helpful input from**: Zhe Cai, Matias Kirst, Brad Barbazuk, Shelley Sianta
 
 
 ## Project Design
