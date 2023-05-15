@@ -1,0 +1,26 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis
+#SBATCH --job-name=fbchr11
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=10gb
+#SBATCH --time=20-00:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=freebayes_chr11_%j.out
+#SBATCH --error=freebayes_chr11_%j.err
+
+pwd; hostname; date
+echo Working directory is $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR
+
+module purge
+module load freebayes/1.3.2
+
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes"
+REF_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/Eglobulus_genome_X46/EGLOB-X46.v1.0.fa"
+OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.freebayes/"
+
+# Run FreeBayes on all samples at once against E. grandis reference genome, call sites with a maximum depth of 3000
+freebayes -L "$LIST_DIR"/bam_inputs.txt -f "$REF_FILE" -r Chr11 -v "$OUTDIR"/chr11.vcf -g 3000

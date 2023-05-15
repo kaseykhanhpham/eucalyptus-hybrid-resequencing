@@ -1,0 +1,16 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis
+#SBATCH --job-name=mpchr1_1
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=10gb
+#SBATCH --time=10-00:00:00
+#SBATCH --cpus-per-task=12
+#SBATCH --nodes=1
+#SBATCH --output=mpileup_chr01_1_%j.out
+#SBATCH --error=mpileup_chr01_1_%j.err
+
+module load bcftools/1.15
+
+bcftools mpileup | bcftools call 

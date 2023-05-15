@@ -32,10 +32,14 @@ Started using `conda` environments at the beginning of data analysis.
 
 On UFRC:
 ```bash
+# general working environment
 ENV_DIR="/blue/soltis/kasey.pham/conda/envs"
 conda create -yp "$ENV_DIR"/euc_hyb_reseq python=3.10 pip numpy scipy pandas plotnine
 pip install egglib
-conda install -c conda-forge armadillo
+# env for running pixy
+conda create --prefix "$ENV_DIR"/pixy python=3.8
+conda install -c conda-forge pixy
+conda install -c bioconda htslib
 ```
 
 On local computer:

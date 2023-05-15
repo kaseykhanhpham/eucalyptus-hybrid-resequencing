@@ -9,7 +9,7 @@ Calculated diagnostic statistics for introgression in sliding windows across gen
 
 **structure files**: The JSON files in this directory define the individuals and populations to be used for calculations of diagnostic stats. The "glob" files consider introgressed and reference _E. globulus_ to be the ingroup (stats calculated) and _E. cordata_ and _E. grandis_ to be the outgroup (stats not calculated). The "cord" files consider introgressed _E. globulus_ and _E. cordata_ to be the ingroup and reference _E. globulus_ and _E. grandis_ to be the outgroup.
 
-Ran `stats_windows.py` with the stats arguments "Pi", "Dxy", "Deta" (see below).
+Ran `stats_windows.py` with the stats arguments "Pi", "Dxy", "FST", "Deta" (see below).
 
 ```bash
 # Done on UFRC queue system, see pi_windows.job, dxy_windows.job, dxy_cord_windows.job, fst_windows.job, deta_windows.job for more detail
@@ -75,11 +75,8 @@ Rscript "$SCRIPT_DIR"/process_stat_windows.r "$WDIR"/glob_dxy_windows.tab Dxy pe
 Rscript "$SCRIPT_DIR"/process_stat_windows.r "$WDIR"/cord_dxy_windows.tab Dxy sd 2 below 25
 Rscript "$SCRIPT_DIR"/process_stat_windows.r "$WDIR"/cord_dxy_windows.tab Dxy percent 0.05 below 25
 # Tajima's D
-Rscript "$SCRIPT_DIR"/process_stat_windows.r "$WDIR"/glob_deta_windows.tab Deta sd 2 below 25
-Rscript "$SCRIPT_DIR"/process_stat_windows.r "$WDIR"/glob_deta_windows.tab Deta percent 0.05 below 25
-# FST
-Rscript "$SCRIPT_DIR"/process_stat_windows.r "$WDIR"/glob_fst_windows.tab FST sd 2 above 25
-Rscript "$SCRIPT_DIR"/process_stat_windows.r "$WDIR"/glob_fst_windows.tab FST percent 0.05 above 25
+Rscript "$SCRIPT_DIR"/process_stat_windows.r "$WDIR"/glob_tajd_windows.tab D sd 2 below 25
+Rscript "$SCRIPT_DIR"/process_stat_windows.r "$WDIR"/glob_tajd_windows.tab D percent 0.05 below 25
 ```
 
 Examined overlap between outlier windows in `R`:
@@ -105,4 +102,24 @@ glob_pi_p <- read.table("glob_pi_windows.tab.percent0.05.flagged.tab", header = 
 cord_dxy_glob_pi_p <- inner_join(cord_dxy_p, glob_pi_p) # 0
 glob_dxy_glob_pi_p <- inner_join(glob_dxy_p, glob_pi_p) # 5837
 cord_dxy_glob_deta_p <- inner_join(cord_dxy_p, glob_deta_p) # 1898
+```
+
+## Calculate Pi, Dxy, FST with Pixy
+
+Remove outgroup from VCF and zip the file.
+
+```bash
+module load vcftools
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.00"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy"
+
+vcftools --vcf "$VCF_DIR"/meehan_all_fil_maf0.00_snps.vcf --remove-indv SRR10339635 --recode --out "$WDIR"/meehan_all_fil_maf0.00_snps_noout.vcf
+bgzip meehan_all_fil_maf0.00_snps_noout.vcf
+tabix meehan_all_fil_maf0.00_snps_noout.vcf
+```
+
+Run pixy.
+
+```bash
+
 ```

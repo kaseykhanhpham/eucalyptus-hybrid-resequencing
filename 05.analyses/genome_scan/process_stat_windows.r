@@ -21,15 +21,6 @@ in_table <- read.table(infile_name, header = TRUE, sep = "\t", na.strings="")
 # filter input by num SNPs
 filtered_table <- in_table[which(in_table$num_var >= min_snps),]
 
-# Report general stats to stdout
-write(paste("File:", infile_name, ":"), stdout())
-write(summary(filtered_table[, stat]), stdout())
-write(paste("sd:", SD = sd(filtered_table[, stat])), stdout())
-# Print stat distribution to PNG file
-png(paste(infile_name, "_distr.png", sep = ""), width = 500, height = 500)
-    hist(filtered_table[, stat])
-dev.off()
-
 # Flag using standard deviation cutoff
 if(mode == "sd"){
     # Calculate summary stats

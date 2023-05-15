@@ -1,0 +1,71 @@
+File: /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/pop_stats/ref_dxy_distr.tab :
+min	1stquart	median	mean	3rdquart	max
+0 0.1180121 0.1490261 0.1546798 0.1845263 0.5285556
+sd: 0.0530399701569387
+
+null device 
+          1 
+File: /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/pop_stats/cordata_pi_distr.tab :
+min	1stquart	median	mean	3rdquart	max
+0 0.1177778 0.1555874 0.1602805 0.1965627 0.4909465
+sd: 0.0604922556233237
+
+null device 
+          1 
+File: /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/pop_stats/globmr_pi_distr.tab :
+min	1stquart	median	mean	3rdquart	max
+0.007907092 0.1451378 0.176502 0.1805161 0.2113054 0.4779956
+sd: 0.0522106499029239
+
+null device 
+          1 
+File: /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/pop_stats/globref_pi_distr.tab :
+min	1stquart	median	mean	3rdquart	max
+0 0.103831 0.1332462 0.1381772 0.1666473 0.5125342
+sd: 0.0504844052318598
+
+null device 
+          1 
+File: /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/pop_stats/ref_pi_distr.tab :
+min	1stquart	median	mean	3rdquart	max
+0 0.1170485 0.1472792 0.1523271 0.1816318 0.4825007
+sd: 0.0509607813889829
+
+null device 
+          1 
+File: /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/pop_stats/all_pi_distr.tab :
+min	1stquart	median	mean	3rdquart	max
+0.005625344 0.1320757 0.1613927 0.1658622 0.1945689
+0.4739105
+sd: 0.0494851515905828
+
+null device 
+          1 
+File: /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/pop_stats/cordata_he_distr.tab :
+min	1stquart	median	mean	3rdquart	max
+0 0.1177778 0.1555874 0.1602805 0.1965627 0.4909465
+sd: 0.0604922556233237
+
+null device 
+          1 
+File: /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/pop_stats/globmr_he_distr.tab :
+min	1stquart	median	mean	3rdquart	max
+0.007907092 0.1451378 0.176502 0.1805161 0.2113054 0.4779956
+sd: 0.0522106499029239
+
+null device 
+          1 
+File: /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/pop_stats/globref_he_distr.tab :
+min	1stquart	median	mean	3rdquart	max
+0 0.103831 0.1332462 0.1381772 0.1666473 0.5125342
+sd: 0.0504844052318598
+
+null device 
+          1 
+File: /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/pop_stats/glob_he_distr.tab :
+min	1stquart	median	mean	3rdquart	max
+0.005778259 0.134075 0.1630438 0.1673326 0.1956023 0.4791387
+sd: 0.0492537675568136
+
+null device 
+          1 

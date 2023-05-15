@@ -1,0 +1,32 @@
+File: /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/glob_pi_windows.tab :
+min	1stquart	median	mean	3rdquart	max
+0.005778259 0.134075 0.1630438 0.1673326 0.1956023
+0.4791387
+sd: 0.0492537675568136
+
+null device 
+          1 
+File: /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/glob_dxy_windows.tab :
+min	1stquart	median	mean	3rdquart	max
+0.004447739 0.1284334 0.1572494 0.161836 0.18972
+0.4904908
+sd: 0.0494338128554797
+
+null device 
+          1 
+File: /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/cord_dxy_windows.tab :
+min	1stquart	median	mean	3rdquart	max
+0.006523351 0.133649 0.1651751 0.1697099 0.2005178
+0.4486274
+sd: 0.0522907364520105
+
+null device 
+          1 
+File: /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/glob_tajd_windows.tab :
+min	1stquart	median	mean	3rdquart	max
+-2.642273 -0.5952598 -0.1538452 -0.1120414 0.3249739
+3.566477
+sd: 0.717618403357468
+
+null device 
+          1 
