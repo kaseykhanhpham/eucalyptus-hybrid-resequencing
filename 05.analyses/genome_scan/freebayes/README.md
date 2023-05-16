@@ -104,6 +104,28 @@ glob_dxy_glob_pi_p <- inner_join(glob_dxy_p, glob_pi_p) # 5837
 cord_dxy_glob_deta_p <- inner_join(cord_dxy_p, glob_deta_p) # 1898
 ```
 
+Examine F-stat distributions in `R`.
+
+```R
+f_stats <- read.table("glob-pure-cord_localFstats.txt", header = TRUE, sep = "\t")
+# f_d summary:
+#     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+# -4.97352 -0.05880 -0.00231 -0.00616  0.05567 34.24342
+# sd: 0.50
+fd_outliers <- f_stats[which(f_stats$f_d > (-0.00616 + 2*0.05567)), c("chr", "windowStart", "windowEnd")]
+# f_dM summary:
+#       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+# -0.6560000 -0.0435730 -0.0019290  0.0002319  0.0430072  0.5259070 
+# sd: 0.0928
+fdm_outliers <- f_stats[which(f_stats$f_dM > ), c("chr", "windowStart", "windowEnd")]
+# d_f summary:
+#       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+# -0.5698010 -0.0340507 -0.0015080  0.0004046  0.0329058  0.4947270
+# sd = 0.0727
+df_outliers <- f_stats[which(f_stats$d_f > 0.15), c("chr", "windowStart", "windowEnd")]
+# 113 common windows between fdM and dF
+```
+
 ## Calculate Pi, Dxy, FST with Pixy
 
 Remove outgroup from VCF and zip the file.
@@ -116,10 +138,4 @@ WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy"
 vcftools --vcf "$VCF_DIR"/meehan_all_fil_maf0.00_snps.vcf --remove-indv SRR10339635 --recode --out "$WDIR"/meehan_all_fil_maf0.00_snps_noout.vcf
 bgzip meehan_all_fil_maf0.00_snps_noout.vcf
 tabix meehan_all_fil_maf0.00_snps_noout.vcf
-```
-
-Run pixy.
-
-```bash
-
 ```
