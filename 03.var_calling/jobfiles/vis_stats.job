@@ -1,0 +1,31 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=vis_stats
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=500mb
+#SBATCH --time=2:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=raw_stats_%j.out
+#SBATCH --error=raw_stats_%j.err
+
+pwd; hostname; date
+echo Working directory is $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR
+
+module purge
+module load bcftools/1.15
+module load python/3.10
+module load texlive
+
+REF_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/Eglobulus_genome_X46/EGLOB-X46.v1.0.fa"
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.mpileup"
+OUT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.mpileup/raw_stats"
+declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
+
+for NAME in "${VCFLIST[@]}"
+do
+    "$HPC_BCFTOOLS_DIR"/bin/plot-vcfstats -p "$OUT_DIR"/"$NAME"_vis -t "$NAME" -v "$NAME"_raw_stats.txt
+done

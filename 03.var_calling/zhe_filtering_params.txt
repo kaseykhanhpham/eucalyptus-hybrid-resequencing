@@ -1,0 +1,14 @@
+I called the SNPs using the GATK pipeline (bwa-HaplotypeCaller-VQSR), as the lack of gold SNP dataset, 
+I constructed one using the SNPs from high-depth samples after stringent filtering. 
+The filtering parameters for the gold dataset includes:
+Mapping Quality (>50), 
+Missing Rate (<10%), 
+Minor Allele Frequency (>0.25), 
+Depth (DP in the range of mean±sd), 
+QD/QUAL score normalized by allele depth (>20), 
+StrandOddsRatio (|SOR|<1, evaluating whether there is strand bias in the data), 
+ExcessHet (ExcessHet<10, the probability of the called samples exhibiting excess heterozygosity), 
+BaseQRankSum (|BaseQRankSum|<1, comparing the base qualities of the data supporting the 
+reference allele with those supporting the alternate allele). 
+
+Then the VQSR was applied to filter raw SNPs which were called from the dataset of all samples.  
