@@ -1,15 +1,15 @@
 #!/bin/bash
 #SBATCH --account=soltis
 #SBATCH --qos=soltis
-#SBATCH --job-name=mpchr1_1
+#SBATCH --job-name=mpchr1_5
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=kasey.pham@ufl.edu
 #SBATCH --mem=5gb
 #SBATCH --time=10-00:00:00
 #SBATCH --cpus-per-task=12
 #SBATCH --nodes=1
-#SBATCH --output=mpileup_chr01_1_%j.out
-#SBATCH --error=mpileup_chr01_1_%j.err
+#SBATCH --output=mpileup_chr01_5_%j.out
+#SBATCH --error=mpileup_chr01_5_%j.err
 
 pwd; hostname; date
 echo Working directory is $SLURM_SUBMIT_DIR
@@ -22,4 +22,4 @@ LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.mpileup"
 REF_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/Eglobulus_genome_X46/EGLOB-X46.v1.0.fa"
 OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.mpileup/chr01"
 
-bcftools mpileup --bam-list "$LIST_DIR"/bam_inputs.txt --full-BAQ --max-depth 3000 --fasta-ref "$REF_FILE" --regions Chr01:1-4221956 --seed 9387492 --annotate FORMAT/AD,FORMAT/DP,FORMAT/SP --output-type u --threads 12 | bcftools call --ploidy 2 --output-type z --output "$OUTDIR"/chr01_1.vcf.gz --threads 12 --annotate FORMAT/GQ --multiallelic-caller
+bcftools mpileup --bam-list "$LIST_DIR"/bam_inputs.txt --full-BAQ --max-depth 3000 --fasta-ref "$REF_FILE" --regions Chr01:16887825-21109780 --seed 78 --annotate FORMAT/AD,FORMAT/DP,FORMAT/SP --output-type u --threads 12 | bcftools call --ploidy 2 --output-type z --output "$OUTDIR"/chr01_5.vcf.gz --threads 12 --annotate FORMAT/GQ --multiallelic-caller

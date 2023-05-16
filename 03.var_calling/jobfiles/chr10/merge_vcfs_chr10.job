@@ -1,0 +1,24 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=merge_chr10
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=5gb
+#SBATCH --time=1:00:00
+#SBATCH --cpus-per-task=12
+#SBATCH --nodes=1
+#SBATCH --output=merge_chr10_%j.out
+#SBATCH --error=merge_chr10_%j.err
+
+pwd; hostname; date
+echo Working directory is $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR
+
+module purge
+module load bcftools/1.15
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.mpileup/chr10"
+OUT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.mpileup"
+
+ls "$VCF_DIR"/*.vcf.gz > "$VCF_DIR"/vcfs_list.txt
+bcftools concat -f "$VCF_DIR"/vcfs_list.txt -O z -o "$OUT_DIR"/chr10.vcf.gz --threads 12

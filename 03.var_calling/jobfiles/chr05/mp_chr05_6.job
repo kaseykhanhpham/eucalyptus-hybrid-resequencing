@@ -1,0 +1,25 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=mpchr5_6
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=1gb
+#SBATCH --time=1-00:00:00
+#SBATCH --cpus-per-task=12
+#SBATCH --nodes=1
+#SBATCH --output=mpileup_chr05_6_%j.out
+#SBATCH --error=mpileup_chr05_6_%j.err
+
+pwd; hostname; date
+echo Working directory is $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR
+
+module purge
+module load bcftools/1.15
+
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.mpileup"
+REF_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/Eglobulus_genome_X46/EGLOB-X46.v1.0.fa"
+OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.mpileup/chr05"
+
+bcftools mpileup --bam-list "$LIST_DIR"/bam_inputs.txt --full-BAQ --max-depth 3000 --fasta-ref "$REF_FILE" --regions Chr05:31459991-37751988 --seed 12 --annotate FORMAT/AD,FORMAT/DP,FORMAT/SP --output-type u --threads 12 | bcftools call --ploidy 2 --output-type z --output "$OUTDIR"/chr05_6.vcf.gz --threads 12 --annotate FORMAT/GQ --multiallelic-caller

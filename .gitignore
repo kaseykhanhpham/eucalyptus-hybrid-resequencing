@@ -9,6 +9,8 @@ outgroup_seqs
 r2_csv
 alignments
 pi_samplewise
+admin
+admixture_output
 *.kml
 *.vcf
 *.html
