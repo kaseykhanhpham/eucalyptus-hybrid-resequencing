@@ -1,0 +1,34 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=filtervars
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=4gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=12
+#SBATCH --nodes=1
+#SBATCH --output=filter_vars_%j.out
+#SBATCH --error=filter_vars_%j.err
+
+module purge
+module load vcftools/0.1.16
+module load bcftools/1.15
+
+INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/raw_split"
+declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
+
+export MAF=0.00
+export MISS=0.875
+export QUAL=50
+export MIN_DP=20
+export MAX_DP=60
+# QUAL/Total DP > 0.50
+# SP > 0.10
+# GQ > 40
+
+for NAME in "${VCFLIST[@]}"
+do
+    echo doing "$NAME" variants
+    vcftools --gzvcf "$INDIR"/"$NAME"_snp_var.vcf.gz --maf $MAF --minQ $QUAL --min-meanDP $MIN_DP --max-meanDP $MAX_DP --minDP $MIN_DP --maxDP $MAX_DP --recode --stdout | bcftools view -i 'QUAL/SUM(FORMAT/DP)>0.5 & FORMAT/SP > 0.10 & FORMAT/GQ > 40' --threads 12 -O v - | vcftools --vcf - --max-missing $MISS --recode --stdout | bcftools sort -m 3500 -O z - > "$NAME"_var_fil.vcf.gz
+done

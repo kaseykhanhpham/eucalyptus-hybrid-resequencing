@@ -1,0 +1,39 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=ex_snp_stats
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=500mb
+#SBATCH --time=5:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=explore_snp_stats_%j.out
+#SBATCH --error=explore_snp_stats_%j.err
+
+pwd; hostname; date
+echo Working directory is $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR
+
+module purge
+module load bcftools/1.15
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/raw_split"
+declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
+
+SAMPLE_HEADER="WB02\tWC02\tWD02\tWE02\tWF02\tWG02\tWH02\tWA03\tWB03\tWC03\tWA01\tWD03\tWE03\tWF03\tWG03\tWH03\tWA04\tWB04\tWC04\tWD04\tWE04\tWB01\tWF04\tWG04\tWC01\tWD01\tWE01\tWF01\tWG01\tWH01\tWA02\tWH04\tWA05\tWB05\tWC05\tWD05\tWE05\tWF05\tWG05\tWH05\tSRR10339635\n"
+
+for NAME in "${VCFLIST[@]}"
+do
+    # INFO fields
+    printf 'CHROM\tPOS\tQUAL\tMQ\tMQBZ\tBQBZ\n' > "$NAME"_variant_info.tab
+    bcftools query --format '%CHROM\t%POS\t%QUAL\t%MQ\t%MQBZ\t%BQBZ\n' "$VCF_DIR"/"$NAME"_snp_var.vcf.gz >> "$NAME"_variant_info.tab
+    # DP
+    printf "$SAMPLE_HEADER" > "$NAME"_variant_dp.tab
+    bcftools query --format '[ %DP]\n' "$VCF_DIR"/"$NAME"_snp_var.vcf.gz >> "$NAME"_variant_dp.tab
+    # SP
+    printf "$SAMPLE_HEADER" > "$NAME"_variant_sp.tab
+    bcftools query --format '[ %SP]\n' "$VCF_DIR"/"$NAME"_snp_var.vcf.gz >> "$NAME"_variant_sp.tab
+    # GQ
+    printf "$SAMPLE_HEADER" > "$NAME"_variant_gq.tab
+    bcftools query --format '[ %GQ]\n' "$VCF_DIR"/"$NAME"_snp_var.vcf.gz >> "$NAME"_variant_gq.tab
+done

@@ -1,0 +1,31 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=filterinvars
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=4gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=12
+#SBATCH --nodes=1
+#SBATCH --output=filter_invars_%j.out
+#SBATCH --error=filter_invars_%j.err
+
+module purge
+module load vcftools/0.1.16
+module load bcftools/1.15
+
+INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/raw_split"
+declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
+
+export MISS=0.875
+export QUAL=50
+export MIN_DP=20
+export MAX_DP=60
+# QUAL/Total DP > 0.50
+
+for NAME in "${VCFLIST[@]}"
+do
+    echo doing "$NAME" invariants
+    vcftools --gzvcf "$INDIR"/"$NAME"_invar.vcf.gz --minQ $QUAL --min-meanDP $MIN_DP --max-meanDP $MAX_DP --minDP $MIN_DP --maxDP $MAX_DP --recode --stdout | bcftools view -i 'QUAL/SUM(FORMAT/DP)>0.5' --threads 12 -O v - | vcftools --vcf - --max-missing $MISS --recode --stdout | bcftools sort -m 3500 -O z - > "$NAME"_invar_fil.vcf.gz
+done
