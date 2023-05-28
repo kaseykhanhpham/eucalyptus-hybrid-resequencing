@@ -1,0 +1,25 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=linkprune
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=1gb
+#SBATCH --time=1:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=link_prune_%j.out
+#SBATCH --error=link_prune_%j.err
+
+module load plink/1.90b3.39 
+
+INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
+OUTDIR00="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/pca/maf0.00"
+OUTDIR05="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/pca/maf0.05"
+declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
+
+for NAME in "${VCFLIST[@]}"
+do
+    plink --vcf "$INDIR"/"$NAME"_fil.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --vcf-half-call m --out "$OUTDIR00"/"$NAME"_maf00
+    plink --vcf "$INDIR"/"$NAME"_fil.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --vcf-half-call m --maf 0.05 --out "$OUTDIR05"/"$NAME"_maf05
+done

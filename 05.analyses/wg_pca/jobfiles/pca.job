@@ -1,0 +1,27 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=wg_pca
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=1gb
+#SBATCH --time=1:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=wg_pca_%j.out
+#SBATCH --error=wg_pca_%j.err
+
+module purge
+module load plink/1.90b3.39 
+
+VCF="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/all_fil.vcf.gz"
+OUTDIR00="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.00"
+OUTDIR05="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.05"
+
+plink --vcf "$VCF" --double-id --allow-extra-chr --set-missing-var-ids @:# --extract "$OUTDIR00"/all_maf00.prune.in --vcf-half-call m --make-bed --pca --out "$OUTDIR00"/all_maf00
+plink --vcf "$VCF" --double-id --allow-extra-chr --set-missing-var-ids @:# --extract "$OUTDIR05"/all_maf05.prune.in --vcf-half-call m --maf 0.05 --make-bed --pca --out "$OUTDIR05"/all_maf05
+
+# Without outgroup
+plink --vcf "$VCF" --double-id --allow-extra-chr --set-missing-var-ids @:# --extract "$OUTDIR00"/all_maf00.prune.in --vcf-half-call m --make-bed --keep ingroup.fam --pca --out "$OUTDIR00"/all_maf00_ingr
+plink --vcf "$VCF" --double-id --allow-extra-chr --set-missing-var-ids @:# --extract "$OUTDIR05"/all_maf05.prune.in --vcf-half-call m --make-bed --keep ingroup.fam --maf 0.05 --pca --out "$OUTDIR05"/all_maf05_ingr
+
