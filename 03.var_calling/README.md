@@ -300,9 +300,44 @@ do
 done
 ```
 
+Moved files to `/orange` drive long-term storage and created symlinks to `/blue` working storage. Merged chromosome VCFs (Do not use this for most analyses, too large!)
+
+```bash
+# Done via UFRC queue system; see merge_fil_chr.job for more details.
+# Resources used: 2 Mb, 40 sec
+
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=mergechr
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=5gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=12
+#SBATCH --nodes=1
+#SBATCH --output=merge_fil_chr_%j.out
+#SBATCH --error=merge_fil_chr_%j.err
+
+module purge
+module load bcftools/1.15
+
+WDIR="/orange/soltis/kasey.pham/eucalyptus_hyb_reseq/06.snp_filtering/"
+declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
+
+for NAME in "${VCFLIST[@]}"
+do
+    tabix "$WDIR"/"$NAME"_fil.vcf.gz
+done
+
+ls "$WDIR"/*_fil.vcf.gz > "$WDIR"/vcf_list.txt
+bcftools concat -O z --threads 12 -f "$WDIR"/vcf_list.txt -o "$WDIR"/all_fil.vcf.gz
+
+```
+
 Variant/Invariant Counts:
 
-| Chromosome | Num Variants | Num Invariants | Total       |
+| Chromosome | Num Variants | Num Invariants | **TOTAL**   |
 | ---------- | ------------ | -------------- | ----------- |
 | Chr01      | 94,208       | 683,353        | 784,190     |
 | Chr02      | 93,874       | 736,829        | 837,051     |
@@ -316,4 +351,4 @@ Variant/Invariant Counts:
 | Chr10      | 87,633       | 683,678        | 777,284     |
 | Chr11      | 84,984       | 680,985        | 771,604     |
 | ChrUn      | 1,552        | 18,578         | 20,484      |
-| Total      | 1,036,843    | 7,504,635      | 8,615,142   |
+| **TOTAL**  | 1,036,843    | 7,504,635      | 8,615,142   |
