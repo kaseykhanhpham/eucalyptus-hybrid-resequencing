@@ -35,5 +35,5 @@ outfile.close()
 
 # Create pong color file
 outfile = open("{PREFIX}_colors.txt".format(PREFIX=file_prefix), "w")
-outfile.write("#1A688A\n#FFA716\n#E6E2DF\n#AF1E36\n#68C7D8\n#272623\n")
+outfile.write("#FFA716\n#1A688A\n#E6E2DF\n#AF1E36\n#68C7D8\n#272623\n")
 outfile.close()
