@@ -76,7 +76,7 @@ Split raw variant calls into invariant SNPs, variant SNPs, and indels using `vcf
 
 ```bash
 # Done in UFRC queue system. See split_vcfs.job for more detail.
-# Resources used: 10 Mb, 22 hrs
+# Resources used: 22 Mb, 3 hrs
 module load vcftools/0.1.16
 VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.mpileup"
 declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
@@ -183,7 +183,7 @@ SNP filtering parameters and code were based on several sources, including perso
 | minDP = 10                                  | Remove sample genotypes with a depth (DP) < 10                      |
 | maxDP = 40                                  | Remove sample genotypes with a depth (DP) > 40                      |
 | recode                                      | Write header in VCF format                                          |
-| QUAL/SUM(DP) > 0.5                          | Remove genotypes with a ratio of QUAL to total DP less than 0.5     |
+| QUAL/SMPL_SUM(AD) > 20                      | Remove gts with a ratio of QUAL to total allelic depth per sample < 20|
 | SP > 0.10                                   | Remove genotypes with phred-corrected P-value for strand bias < 0.10|
 | GQ > 40                                     | Remove genotypes with a genotype quality < 40                       |
 | max-missing = 0.875                         | Remove variants with a more than 15% missing genotypes              |
@@ -198,7 +198,7 @@ Filtered variants first to adjust parameters to get enough SNPs to use later.
 
 ```bash
 # Done via UFRC queue system; see filter_vars.job for more details.
-# Resources used: 20 Mb, 50 min
+# Resources used: 363 Mb, 2 hrs
 
 module load vcftools/0.1.16
 module load bcftools/1.15
@@ -226,7 +226,7 @@ Filtered invariant calls based on same parameters.
 
 ```bash
 # Done via UFRC queue system; see filter_invars.job for more details.
-# Resources used: 1.4 Gb, 2 hrs
+# Resources used: 2 Gb, 2 hrs
 module purge
 module load vcftools/0.1.16
 module load bcftools/1.15
@@ -251,7 +251,7 @@ Get entry count for each filtered set:
 
 ```bash
 # Done via UFRC queue system; see fil_var_stats.job for more details.
-# Resources used: 2 Mb, 2 sec
+# Resources used: 2 Mb, 20 sec
 
 module load bcftools/1.15
 REF_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/Eglobulus_genome_X46/EGLOB-X46.v1.0.fa"
@@ -284,7 +284,7 @@ done
 ## Merge variant and invariant filtered sets
 ```bash
 # Done via UFRC queue system; see merge_fil_vcfs.job for more details.
-# Resources used: 4.8 Gb, 7 min
+# Resources used: 5 Gb, 9 min
 
 module load bcftools/1.15
 
@@ -306,20 +306,6 @@ Moved files to `/orange` drive long-term storage and created symlinks to `/blue`
 # Done via UFRC queue system; see merge_fil_chr.job for more details.
 # Resources used: 2 Mb, 40 sec
 
-#!/bin/bash
-#SBATCH --account=soltis
-#SBATCH --qos=soltis-b
-#SBATCH --job-name=mergechr
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=kasey.pham@ufl.edu
-#SBATCH --mem=5gb
-#SBATCH --time=4-00:00:00
-#SBATCH --cpus-per-task=12
-#SBATCH --nodes=1
-#SBATCH --output=merge_fil_chr_%j.out
-#SBATCH --error=merge_fil_chr_%j.err
-
-module purge
 module load bcftools/1.15
 
 WDIR="/orange/soltis/kasey.pham/eucalyptus_hyb_reseq/06.snp_filtering/"
@@ -339,16 +325,16 @@ Variant/Invariant Counts:
 
 | Chromosome | Num Variants | Num Invariants | **TOTAL**   |
 | ---------- | ------------ | -------------- | ----------- |
-| Chr01      | 94,208       | 683,353        | 784,190     |
-| Chr02      | 93,874       | 736,829        | 837,051     |
-| Chr03      | 98,506       | 626,764        | 732,777     |
-| Chr04      | 74,748       | 537,995        | 618,012     |
-| Chr05      | 88,333       | 523,222        | 618,434     |
-| Chr06      | 112,605      | 955,597        | 1,075,617   |
-| Chr07      | 83,908       | 569,128        | 659,248     |
-| Chr08      | 133,239      | 891,142        | 1,034,029   |
-| Chr09      | 83,253       | 597,364        | 686,412     |
-| Chr10      | 87,633       | 683,678        | 777,284     |
-| Chr11      | 84,984       | 680,985        | 771,604     |
-| ChrUn      | 1,552        | 18,578         | 20,484      |
-| **TOTAL**  | 1,036,843    | 7,504,635      | 8,615,142   |
+| Chr01      | 104,238      | 683,245        | 794,815     |
+| Chr02      | 103,048      | 736,819        | 846,804     |
+| Chr03      | 109,888      | 626,633        | 744,893     |
+| Chr04      | 82,161       | 537,914        | 625,853     |
+| Chr05      | 97,546       | 523,135        | 628,252     |
+| Chr06      | 123,996      | 955,530        | 1,087,717   |
+| Chr07      | 92,488       | 568,958        | 668,275     |
+| Chr08      | 146,636      | 891,010        | 1,048,257   |
+| Chr09      | 91,529       | 597,264        | 695,147     |
+| Chr10      | 96,497       | 683,599        | 786,673     |
+| Chr11      | 93,300       | 680,939        | 780,373     |
+| ChrUn      | 4,191        | 19,054         | 23,681      |
+| **TOTAL**  | 1,145,518    | 7,504,100      | 8,730,740   |

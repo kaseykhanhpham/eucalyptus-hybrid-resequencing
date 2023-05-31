@@ -20,7 +20,7 @@ declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 
 
 for NAME in "${VCFLIST[@]}"
 do
-    tabix "$VAR_DIR"/"$NAME"_var_fil.vcf.gz
+    tabix "$VAR_DIR"/"$NAME"_snps_fil.vcf.gz
     tabix "$INVAR_DIR"/"$NAME"_invar_fil.vcf.gz
-    bcftools concat --allow-overlaps -O z --threads 12 "$VAR_DIR"/"$NAME"_var_fil.vcf.gz "$INVAR_DIR"/"$NAME"_invar_fil.vcf.gz | bcftools sort -m 4500 -O z - > "$NAME"_fil.vcf.gz
+    bcftools concat --allow-overlaps -O z --threads 12 "$VAR_DIR"/"$NAME"_snps_fil.vcf.gz "$INVAR_DIR"/"$NAME"_invar_fil.vcf.gz | bcftools sort -m 4500 -O z - > "$NAME"_fil.vcf.gz
 done

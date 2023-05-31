@@ -24,5 +24,5 @@ declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 
 
 for NAME in "${VCFLIST[@]}"
 do
-    bcftools stats --fasta-ref "$REF_FILE" "$VCF_DIR"/"$NAME"_var_fil.vcf.gz > "$OUT_DIR"/"$NAME"_var_fil_stats.txt
+    bcftools stats --fasta-ref "$REF_FILE" "$VCF_DIR"/"$NAME"_snps_fil.vcf.gz > "$OUT_DIR"/"$NAME"_snps_fil_stats.txt
 done

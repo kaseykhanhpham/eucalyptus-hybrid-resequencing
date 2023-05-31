@@ -4,7 +4,7 @@
 #SBATCH --job-name=filterinvars
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=kasey.pham@ufl.edu
-#SBATCH --mem=4gb
+#SBATCH --mem=5gb
 #SBATCH --time=4-00:00:00
 #SBATCH --cpus-per-task=12
 #SBATCH --nodes=1
@@ -27,5 +27,5 @@ export MAX_DP=60
 for NAME in "${VCFLIST[@]}"
 do
     echo doing "$NAME" invariants
-    vcftools --gzvcf "$INDIR"/"$NAME"_invar.vcf.gz --minQ $QUAL --min-meanDP $MIN_DP --max-meanDP $MAX_DP --minDP $MIN_DP --maxDP $MAX_DP --recode --stdout | bcftools view -i 'QUAL/SUM(FORMAT/DP)>0.5' --threads 12 -O v - | vcftools --vcf - --max-missing $MISS --recode --stdout | bcftools sort -m 3500 -O z - > "$NAME"_invar_fil.vcf.gz
+    vcftools --gzvcf "$INDIR"/"$NAME"_invar.vcf.gz --minQ $QUAL --min-meanDP $MIN_DP --max-meanDP $MAX_DP --minDP $MIN_DP --maxDP $MAX_DP --recode --stdout | bcftools view -i 'QUAL/SMPL_SUM(FORMAT/AD)>20' --threads 12 -O v - | vcftools --vcf - --max-missing $MISS --recode --stdout | bcftools sort -m 3500 -O z - > "$NAME"_invar_fil.vcf.gz
 done

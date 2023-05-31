@@ -14,8 +14,8 @@
 module load plink/1.90b3.39 
 
 INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
-OUTDIR00="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/pca/maf0.00"
-OUTDIR05="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/pca/maf0.05"
+OUTDIR00="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.00"
+OUTDIR05="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.05"
 declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
 
 for NAME in "${VCFLIST[@]}"

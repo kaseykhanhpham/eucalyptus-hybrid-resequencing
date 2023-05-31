@@ -1,0 +1,28 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=pixy
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=1gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=12
+#SBATCH --nodes=1
+#SBATCH --output=pixy_%j.out
+#SBATCH --error=pixy_%j.err
+
+module load conda 
+
+ENV_DIR="/blue/soltis/kasey.pham/conda/envs"
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.00"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy"
+declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
+
+conda activate "$ENV_DIR"/pixy
+
+for NAME in "${VCFLIST[@]}"
+do
+    tabix $WDIR"/"$NAME"_fil.vcf.gz
+    pixy --stats pi fst dxy --vcf "$WDIR"/"$NAME"_fil.vcf.gz --populations "$WDIR"/populations.txt --window_size 5000 --n_cores 12 --output_prefix "$NAME"_fil --chromosomes Chr01,Chr02,Chr03,Chr04,Chr05,Chr06,Chr07,Chr08,Chr09,Chr10,Chr11 --fst_type wc
+done
