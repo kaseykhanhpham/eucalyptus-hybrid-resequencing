@@ -22,11 +22,9 @@ do
 done
 ```
 
-Merge pruned chromosome sets.
+Merge pruned chromosome PLINK files.
 
 ```bash
-# Run in UFRC queue system; see merge_chromosomes.job for more details.
-# Resources used: 2 Mb, 2 sec
 OUTDIR00="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.00"
 OUTDIR05="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.05"
 declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
@@ -45,7 +43,7 @@ Calculate PCAs in `plink`.
 
 ```bash
 # Run in UFRC queue system; see pca.job for more details.
-# Resources used: 11 Mb, 2 min
+# Resources used: 20 Mb, 2 min
 
 module load plink/1.90b3.39 
 
@@ -93,7 +91,7 @@ names(pca)[ncol(pca)] <- "taxon"
 # Plot eigenvalues
 pve <- data.frame(PC = 1:(ncol(pca) - 2), pve = eigenval/sum(eigenval))
 a <- ggplot(pve, aes(PC, pve)) + geom_bar(stat = "identity")
-a + ylab("Proportion Variance Explained") + theme_light() + ggtitle("maf=0.00")
+a + ylab("Proportion Variance Explained") + theme_light() + ggtitle("maf=0.00, ingroup only")
 cumsum(pve$pve)
 
 # Plot PCA
@@ -118,7 +116,7 @@ d <- ggplot(pca, aes(PC2, PC3, col = taxon, label = sample)) + geom_point(size =
 d <- d + scale_colour_manual(values = c("goldenrod1", "black", "deepskyblue4"))
 d <- d + coord_equal() + theme_light()
 d <- d + xlab(paste("PC2 (", signif(pve$pve[2], 3), ")", sep = "")) + ylab(paste("PC3 (", signif(pve$pve[3], 3), ")", sep = "")) + ggtitle("maf=0.00 just ingr, PC2 vs. PC3")
-d <- d + ylim(-0.4, 0.4)
+d <- d + ylim(-0.5, 0.5) + xlim(-0.55, 0.45)
 d <- d + geom_text(data = subset(pca, taxon == "cord_MR"), aes(label = sample), hjust = -0.1, vjust = -0.8, size = 3) # label E. cordata samples
 d
 ```
@@ -163,7 +161,7 @@ b <- b + xlab(paste("PC1 (", signif(pve$pve[1], 3), ")", sep = "")) + ylab(paste
 b <- b + xlim(-0.4, 0.7)
 b
 b + xlim(-0.325, 0.125) + ylim(-0.125, 0.3) + ggtitle("maf=0.00 with outgr, PC1 vs. PC2, zoomed") # zoomed to ignore outgroup
-b + xlim(-0.04, -0.02) + ylim(-0.105, -0.08) + geom_text(data = subset(pca, sample %in% c("WF03", "WG04")), aes(label = sample), hjust = 1, vjust = -.25) + ggtitle("maf=0.00 with outgr, PC1 vs. PC2, just E. globulus")
+b + xlim(0.0625, 0.106125) + ylim(-0.0375, 0.0125) + geom_text(data = subset(pca, sample %in% c("WF03", "WG04")), aes(label = sample), hjust = -0.125, vjust = -0.5) + ggtitle("maf=0.00 with outgr, PC1 vs. PC2, just E. globulus")
 
 # PCA 1 & 3
 c <- ggplot(pca, aes(PC1, PC3, col = taxon)) + geom_point(size = 2)
@@ -180,7 +178,6 @@ d <- d + coord_equal() + theme_light()
 d <- d + xlab(paste("PC2 (", signif(pve$pve[2], 3), ")", sep = "")) + ylab(paste("PC3 (", signif(pve$pve[3], 3), ")", sep = "")) + ggtitle("maf=0.00 with outgr, PC2 vs. PC3")
 d <- d + ylim(-0.50, 0.5)
 d
-d + xlim(-0.125, 0.875) + ylim(-0.50, 0.375) + ggtitle("maf=0.00 with outgr, PC2 vs. PC3, zoomed") # zoomed to ignore outgroup
 ```
 
 ### MAF=0.05
@@ -304,7 +301,7 @@ d <- d + xlab(paste("PC2 (", signif(pve$pve[2], 3), ")", sep = "")) + ylab(paste
 d <- d + ylim(-0.5, 0.5)
 d <- d + geom_text(data = subset(pca, sample == "WF03"), aes(label = sample), hjust = 1, vjust = -.25) # label outlier
 d
-d + xlim(-0.1, 0.6) + ylim(-0.3, 0.4) + ggtitle("maf=0.05 with outgr, PC2 vs. PC3, zoomed") # zoomed to ignore outliers and outgroup
+d + xlim(-0.125, 0.75) + ylim(-0.375, 0.50) + ggtitle("maf=0.05 with outgr, PC2 vs. PC3, zoomed") # zoomed to ignore outliers and outgroup
 ```
 
 ## Results
