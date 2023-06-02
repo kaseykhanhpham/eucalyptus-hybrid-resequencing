@@ -6,7 +6,7 @@ Note: this step will not work as given in my job files if using `plink v2` or hi
 
 ```bash
 # Run on UFRC queue system; see link_prune.job for details.
-# Resources used:
+# Resources used: 11 Mb, 2 min
 
 module load plink/1.90b3.39 
 
@@ -25,8 +25,8 @@ done
 Merge pruned chromosome sets.
 
 ```bash
-# Run in UFRC queue system; see merge_chromosomes.ob for more details.
-# Resources used: 2 Mb, 40 sec
+# Run in UFRC queue system; see merge_chromosomes.job for more details.
+# Resources used: 2 Mb, 2 sec
 OUTDIR00="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.00"
 OUTDIR05="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.05"
 declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)

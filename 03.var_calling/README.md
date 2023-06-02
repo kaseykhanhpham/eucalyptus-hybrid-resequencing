@@ -76,16 +76,17 @@ Split raw variant calls into invariant SNPs, variant SNPs, and indels using `vcf
 
 ```bash
 # Done in UFRC queue system. See split_vcfs.job for more detail.
-# Resources used: 22 Mb, 3 hrs
-module load vcftools/0.1.16
+# Resources used: 10 Mb, 24 hrs
+
+module load vcftools/0.1.16 
 VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.mpileup"
 declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
 
 for NAME in "${VCFLIST[@]}"
 do
-    vcftools --gzvcf "$VCF_DIR"/"$NAME".vcf.gz --remove-indels --max-maf 0 --recode --stdout | bgzip -c > "$NAME"_snp_invar.vcf.gz
-    vcftools --gzvcf "$VCF_DIR"/"$NAME".vcf.gz --remove-indels --mac 1 --recode --stdout | bgzip -c > "$NAME"_snp_var.vcf.gz
-    vcftools --gzvcf "$VCF_DIR"/"$NAME".vcf.gz --keep-only-indels --recode --stdout | bgzip -c > "$NAME"_indels.vcf.gz
+    vcftools --gzvcf "$VCF_DIR"/"$NAME".vcf.gz --max-maf 0 --recode --stdout | bgzip -c > "$NAME"_invar.vcf.gz
+    vcftools --gzvcf "$VCF_DIR"/"$NAME".vcf.gz --mac 1 --remove-indels --recode --stdout | bgzip -c > "$NAME"_snps.vcf.gz
+    vcftools --gzvcf "$VCF_DIR"/"$NAME".vcf.gz --mac 1 --keep-only-indels --recode --stdout | bgzip -c > "$NAME"_indels.vcf.gz
 done
 ```
 
@@ -198,7 +199,7 @@ Filtered variants first to adjust parameters to get enough SNPs to use later.
 
 ```bash
 # Done via UFRC queue system; see filter_vars.job for more details.
-# Resources used: 363 Mb, 2 hrs
+# Resources used: 20 Mb, 1 hr
 
 module load vcftools/0.1.16
 module load bcftools/1.15
@@ -218,7 +219,7 @@ export MAX_DP=60
 for NAME in "${VCFLIST[@]}"
 do
     echo doing "$NAME" variants
-    vcftools --gzvcf "$INDIR"/"$NAME"_snp_var.vcf.gz --maf $MAF --minQ $QUAL --min-meanDP $MIN_DP --max-meanDP $MAX_DP --minDP $MIN_DP --maxDP $MAX_DP --recode --stdout | bcftools view -i 'QUAL/SUM(FORMAT/DP)>0.5 & FORMAT/SP > 0.10 & FORMAT/GQ > 40' --threads 12 -O v - | vcftools --vcf - --max-missing $MISS --recode --stdout | bcftools sort -m 1500 -O z - > "$NAME"_var_fil.vcf.gz
+    vcftools --gzvcf "$INDIR"/"$NAME"_snps.vcf.gz --maf $MAF --minQ $QUAL --min-meanDP $MIN_DP --max-meanDP $MAX_DP --minDP $MIN_DP --maxDP $MAX_DP --recode --stdout | bcftools view -i 'QUAL/SMPL_SUM(FORMAT/AD)>20 & FORMAT/SP > 0.10 & FORMAT/GQ > 40' --threads 12 -O v - | vcftools --vcf - --max-missing $MISS --recode --stdout | bcftools sort -m 3500 -O z - > "$NAME"_snps_fil.vcf.gz
 done
 ```
 
@@ -226,8 +227,7 @@ Filtered invariant calls based on same parameters.
 
 ```bash
 # Done via UFRC queue system; see filter_invars.job for more details.
-# Resources used: 2 Gb, 2 hrs
-module purge
+# Resources used: 1 Gb, 2 hrs
 module load vcftools/0.1.16
 module load bcftools/1.15
 
@@ -243,7 +243,7 @@ export MAX_DP=60
 for NAME in "${VCFLIST[@]}"
 do
     echo doing "$NAME" invariants
-    vcftools --gzvcf "$INDIR"/"$NAME"_invar.vcf.gz --minQ $QUAL --min-meanDP $MIN_DP --max-meanDP $MAX_DP --minDP $MIN_DP --maxDP $MAX_DP --recode --stdout | bcftools view -i 'QUAL/SUM(FORMAT/DP)>0.5' --threads 12 -O v - | vcftools --vcf - --max-missing $MISS --recode --stdout | bcftools sort -m 3500 -O z - > "$NAME"_invar_fil.vcf.gz
+    vcftools --gzvcf "$INDIR"/"$NAME"_invar.vcf.gz --minQ $QUAL --min-meanDP $MIN_DP --max-meanDP $MAX_DP --minDP $MIN_DP --maxDP $MAX_DP --remove-indels --recode --stdout | bcftools view -i 'QUAL/SMPL_SUM(FORMAT/AD)>20' --threads 12 -O v - | vcftools --vcf - --max-missing $MISS --recode --stdout | bcftools sort -m 3500 -O z - > "$NAME"_invar_fil.vcf.gz
 done
 ```
 
@@ -261,7 +261,7 @@ declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 
 
 for NAME in "${VCFLIST[@]}"
 do
-    bcftools stats --fasta-ref "$REF_FILE" "$VCF_DIR"/"$NAME"_var_fil.vcf.gz > "$OUT_DIR"/"$NAME"_var_fil_stats.txt
+    bcftools stats --fasta-ref "$REF_FILE" "$VCF_DIR"/"$NAME"_snps_fil.vcf.gz > "$OUT_DIR"/"$NAME"_snps_fil_stats.txt
 done
 ```
 
@@ -284,7 +284,7 @@ done
 ## Merge variant and invariant filtered sets
 ```bash
 # Done via UFRC queue system; see merge_fil_vcfs.job for more details.
-# Resources used: 5 Gb, 9 min
+# Resources used: 5 Gb, 7 min
 
 module load bcftools/1.15
 
@@ -325,16 +325,16 @@ Variant/Invariant Counts:
 
 | Chromosome | Num Variants | Num Invariants | **TOTAL**   |
 | ---------- | ------------ | -------------- | ----------- |
-| Chr01      | 104,238      | 683,245        | 794,815     |
-| Chr02      | 103,048      | 736,819        | 846,804     |
-| Chr03      | 109,888      | 626,633        | 744,893     |
-| Chr04      | 82,161       | 537,914        | 625,853     |
-| Chr05      | 97,546       | 523,135        | 628,252     |
-| Chr06      | 123,996      | 955,530        | 1,087,717   |
-| Chr07      | 92,488       | 568,958        | 668,275     |
-| Chr08      | 146,636      | 891,010        | 1,048,257   |
-| Chr09      | 91,529       | 597,264        | 695,147     |
-| Chr10      | 96,497       | 683,599        | 786,673     |
-| Chr11      | 93,300       | 680,939        | 780,373     |
-| ChrUn      | 4,191        | 19,054         | 23,681      |
-| **TOTAL**  | 1,145,518    | 7,504,100      | 8,730,740   |
+| Chr01      | 104,205      | 683,440        | 794,966     |
+| Chr02      | 103,032      | 736,948        | 846,913     |
+| Chr03      | 109,859      | 626,870        | 745,095     |
+| Chr04      | 82,132       | 538,119        | 626,022     |
+| Chr05      | 97,517       | 523,321        | 628,402     |
+| Chr06      | 123,970      | 955,746        | 1,087,907   |
+| Chr07      | 92,452       | 569,203        | 668,477     |
+| Chr08      | 146,604      | 891,241        | 1,048,448   |
+| Chr09      | 91,501       | 597,460        | 695,308     |
+| Chr10      | 96,478       | 683,749        | 786,802     |
+| Chr11      | 93,288       | 681,067        | 780,487     |
+| ChrUn      | 4,181        | 19,068         | 23,683      |
+| **TOTAL**  | 1,145,219    | 7,506,232      | 8,732,510   |

@@ -6,7 +6,7 @@
 #SBATCH --mail-user=kasey.pham@ufl.edu
 #SBATCH --mem=1gb
 #SBATCH --time=2-00:00:00
-#SBATCH --cpus-per-task=12
+#SBATCH --cpus-per-task=1
 #SBATCH --nodes=1
 #SBATCH --output=splitvcfs_%j.out
 #SBATCH --error=splitvcfs_%j.err
@@ -16,13 +16,13 @@ echo Working directory is $SLURM_SUBMIT_DIR
 cd $SLURM_SUBMIT_DIR
 
 module purge
-module load bcftools/1.15
+module load vcftools/0.1.16 
 VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.mpileup"
 declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
 
 for NAME in "${VCFLIST[@]}"
 do
-    bcftools view --exclude-types snps,indels,mnps,bnd --threads 12 --output-type z --output "$NAME"_invar.vcf.gz "$VCF_DIR"/"$NAME".vcf.gz
-    bcftools view --types snps --threads 12 --output-type z --output "$NAME"_snps.vcf.gz "$VCF_DIR"/"$NAME".vcf.gz
-    bcftools view --types indels --threads 12 --output-type z --output "$NAME"_indels.vcf.gz "$VCF_DIR"/"$NAME".vcf.gz
+    vcftools --gzvcf "$VCF_DIR"/"$NAME".vcf.gz --max-maf 0 --recode --stdout | bgzip -c > "$NAME"_invar.vcf.gz
+    vcftools --gzvcf "$VCF_DIR"/"$NAME".vcf.gz --mac 1 --remove-indels --recode --stdout | bgzip -c > "$NAME"_snps.vcf.gz
+    vcftools --gzvcf "$VCF_DIR"/"$NAME".vcf.gz --mac 1 --keep-only-indels --recode --stdout | bgzip -c > "$NAME"_indels.vcf.gz
 done
