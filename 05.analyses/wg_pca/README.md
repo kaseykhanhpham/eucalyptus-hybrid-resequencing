@@ -446,16 +446,22 @@ h <- ggplot(pca, aes(PC2, PC3, col = taxon, label = sample)) + geom_point(size =
 h <- h + scale_colour_manual(values = c("goldenrod1", "black", "deepskyblue4"))
 h <- h + coord_equal() + theme_light()
 h <- h + xlab(paste("PC2 (", signif(pve$pve[2], 3), ")", sep = "")) + ylab(paste("PC3 (", signif(pve$pve[3], 3), ")", sep = "")) + ggtitle("maf=0.05 no WF03/1051, PC2 vs. PC3")
-h <- h + xlim(-0.3, 0.5)
+h <- h + xlim(-0.5, 0.375) + ylim(-0.375, 0.5)
 h
 ```
 
 ### Outlier Check Results
 
-Results were approximately the same when excluding sample WF03/1051. For MAF=0.00, PC2 and PC3 were switched as they accounted for very similar amounts of variation to begin with. For MAF=0.05, the separation between groups of _E. cordata_ along PC2 were slightly more obvious when excluding WF03/1051, as would be expected with slightly less variation to account for. As there isn't an obvious reason to exclude this sample, I won't be doing so.
+Results were basically the same when excluding sample WF03/1051. As there isn't an obvious reason to exclude this sample, I won't be doing so.
 
-![Plot of PC1 vs PC2 for MAF=0.00 (excluding WF03/1051)](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_pca/outlier_check/all_maf00_outl_check_pc12.png "MAF=0.00 PC1 vs. PC2, no WF03/1051")
+![Plot of PC1 vs PC2 for MAF=0.00 (excluding WF03/1051)](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_pca/outlier_check/all_maf00_outl_pc12.png "MAF=0.00 PC1 vs. PC2, no WF03/1051")
 
-![Plot of PC1 vs PC3 for MAF=0.00 (excluding WF03/1051)](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_pca/outlier_check/all_maf00_outl_check_pc13.png "MAF=0.00 PC1 vs. PC3, no WF03/1051")
+![Plot of PC1 vs PC3 for MAF=0.00 (excluding WF03/1051)](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_pca/outlier_check/all_maf00_outl_pc13.png "MAF=0.00 PC1 vs. PC3, no WF03/1051")
 
-![Plot of PC1 vs PC2 for MAF=0.05 (exlcluding WF03/1051)](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_pca/outlier_check/all_maf05_outl_check_pc12.png "MAF=0.05 PC1 vs. PC2, no WF03/1051")
+![Plot of PC2 vs PC3 for MAF=0.00 (excluding WF03/1051)](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_pca/outlier_check/all_maf00_outl_pc23.png "MAF=0.00 PC1 vs. PC3, no WF03/1051")
+
+![Plot of PC1 vs PC2 for MAF=0.05 (exlcluding WF03/1051)](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_pca/outlier_check/all_maf05_outl_pc12.png "MAF=0.05 PC1 vs. PC2, no WF03/1051")
+
+![Plot of PC1 vs PC3 for MAF=0.05 (exlcluding WF03/1051)](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_pca/outlier_check/all_maf05_outl_pc13.png "MAF=0.05 PC1 vs. PC3, no WF03/1051")
+
+![Plot of PC2 vs PC3 for MAF=0.05 (exlcluding WF03/1051)](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_pca/outlier_check/all_maf05_outl_pc23.png "MAF=0.05 PC2 vs. PC3, no WF03/1051")
