@@ -208,7 +208,7 @@ conda deactivate
 
 MAF = 0.00:
 
-![ADMIXTURE K=2 through K=6 excluding samples WF03/1051 for MAF=0.00, summarized over 10 individual runs in pong. Meehan Range _E. globulus_ is inferred to be admixed between two source populations while the reference remains more coherent without WF03/1051, similar to the MAF=0.05 inference containing WF03/1051.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/outlier_check/maf0.00/all_fil_maf0.00_outl_admixture.png "ADMIXTURE K=2 through K=6 MAF=0.00 without WF03/1051")
+![ADMIXTURE K=2 through K=6 excluding samples WF03/1051 for MAF=0.00, summarized over 10 individual runs in pong. Meehan Range _E. globulus_ is inferred to be admixed between two source populations while the reference remains more coherent without WF03/1051.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/outlier_check/maf0.00/all_fil_maf0.00_outl_admixture.png "ADMIXTURE K=2 through K=6 MAF=0.00 without WF03/1051")
 
 Just K = 3:
 
@@ -221,3 +221,5 @@ MAF = 0.05:
 Just K = 3:
 
 ![ADMIXTURE K=3 excluding samples WF03/1051 for MAF=0.05, summarized over 10 individual runs in pong (without highly divergent reference sample). Most runs infer admixed Meehan Range _E. globulus_, but one run infers _E. cordata_ samples to be grouped in two bins.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/outlier_check/maf0.05/all_fil_maf0.05_outl_admixture_k3.png "ADMIXTURE K=3 MAF=0.05 without WF03/1051")
+
+Given that there are slight differences in results, but similar patterns recovered with and without WF03/1051, I will do the genome scan for pi/dXY/FST both with and without the strange sample.
