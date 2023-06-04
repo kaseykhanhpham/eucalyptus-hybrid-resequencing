@@ -1,0 +1,25 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=rem_outgl
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=500mb
+#SBATCH --time=10:00:00
+#SBATCH --cpus-per-task=12
+#SBATCH --nodes=1
+#SBATCH --output=remove_outgr_outl_%j.out
+#SBATCH --error=remove_outgr_outl_%j.err
+
+module load bcftools/1.15
+
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
+OUTGR_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/no_outgr"
+OUTL_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/no_outl"
+declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
+
+for NAME in "${VCFLIST[@]}"
+do
+    bcftools view --samples ^SRR10339635 --output-type z --output "$OUTGR_DIR"/"$NAME"_fil_no_outgr.vcf.gz --threads 12 "$VCF_DIR"/"$NAME"_fil.vcf.gz
+    bcftools view --samples ^WF03,SRR10339635 --output-type z --output "$OUTL_DIR"/"$NAME"_fil_no_outl.vcf.gz --threads 12 "$VCF_DIR"/"$NAME"_fil.vcf.gz
+done

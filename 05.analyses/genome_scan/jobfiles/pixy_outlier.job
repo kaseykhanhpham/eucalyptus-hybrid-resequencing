@@ -1,0 +1,27 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=pixy_outl
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=1gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=12
+#SBATCH --nodes=1
+#SBATCH --output=pixy_outl_check_%j.out
+#SBATCH --error=pixy_outl_check_%j.err
+
+
+module load conda 
+
+ENV_DIR="/blue/soltis/kasey.pham/conda/envs"
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/no_outl"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/outlier_check"
+declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
+
+conda activate "$ENV_DIR"/pixy
+
+for NAME in "${VCFLIST[@]}"
+do
+    pixy --stats pi fst dxy --vcf "$VCF_DIR"/"$NAME"_fil_no_outl.vcf.gz --populations "$LIST_DIR"/populations_no_outl.txt --window_size 5000 --n_cores 12 --output_prefix "$NAME" --fst_type wc
+done

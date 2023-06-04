@@ -14,15 +14,13 @@
 module load conda 
 
 ENV_DIR="/blue/soltis/kasey.pham/conda/envs"
-SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
-VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/maf0.00"
-WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy"
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/no_outgr"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy"
 declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
 
 conda activate "$ENV_DIR"/pixy
 
 for NAME in "${VCFLIST[@]}"
 do
-    tabix $WDIR"/"$NAME"_fil.vcf.gz
-    pixy --stats pi fst dxy --vcf "$WDIR"/"$NAME"_fil.vcf.gz --populations "$WDIR"/populations.txt --window_size 5000 --n_cores 12 --output_prefix "$NAME"_fil --chromosomes Chr01,Chr02,Chr03,Chr04,Chr05,Chr06,Chr07,Chr08,Chr09,Chr10,Chr11 --fst_type wc
+    pixy --stats pi fst dxy --vcf "$VCF_DIR"/"$NAME"_fil_no_outgr.vcf.gz --populations "$LIST_DIR"/populations.txt --window_size 5000 --n_cores 12 --output_prefix "$NAME" --fst_type wc
 done
