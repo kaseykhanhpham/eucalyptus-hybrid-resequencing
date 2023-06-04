@@ -38,4 +38,4 @@ WH02	glob_pure
 WH03	glob_MR
 WH04	glob_MR
 WH05	cord_MR
-SRR10339635 Outgroup
+SRR10339635	Outgroup
