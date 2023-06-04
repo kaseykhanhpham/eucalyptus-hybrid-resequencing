@@ -11,11 +11,15 @@
 #SBATCH --output=dsuite_%j.out
 #SBATCH --error=dsuite_%j.err
 
+module load gcc/9.3.0
+module load dsuite/0.4-r49
+
 DSUITE_DIR="/blue/soltis/kasey.pham/bin/Dsuite/Build"
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/dsuite"
 declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
 
 for NAME in "${VCFLIST[@]}"
 do
-    "$DSUITE_DIR"/Dsuite Dinvestigate -n "$NAME" "$WDIR"/"$NAME"_fil.vcf "$WDIR"/SETS.txt test_trios.txt
+    Dsuite Dinvestigate -n "$NAME" "$VCF_DIR"/"$NAME"_fil.vcf.gz SETS.txt test_trios.txt
 done
