@@ -201,3 +201,64 @@ Whole-genome dxy comparisons:
 Inclusion of WF03/1051 changed the estimated genome-wide pi for the reference group alone the most, as expected. Values of dXY remained mostly not too strongly different. The numbers don't seem so extremely different that I would be warranted in excluding the sample...
 
 ### Identify outlier windows
+
+
+## Patterson's D and associated statistics
+
+Filtered SNP set to biallelic SNPs only using `vcftools`.
+
+```bash
+# Run on UFRC queue system; see get_biallelic.job for more details.
+# Resources used: 10 Mb, 2 min
+
+module load vcftools/0.1.16
+VCFDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
+
+vcftools --gzvcf "$VCFDIR"/all_fil.vcf.gz --min-alleles 2 --max-alleles 2 --recode --stdout | bgzip -c > "$VCFDIR"/all_fil_biallelic.vcf.gz
+```
+
+Calculated fD and fDM in sliding windows of 40 viable SNPs at a time using [`Dsuite`](https://github.com/millanek/Dsuite).
+
+```bash
+# HALP SEGFAUUUUULT
+```
+
+## Tajima's D and Transition/Transversion
+Calculated Tajima's D and Ts/Tv rate in 5000bp sliding windows using `vcftools`.
+
+```bash
+# Run on UFRC queue system; see tajd_windows.job for more details.
+# Resources used: 5 Mb, 3 min
+
+module load vcftools/0.1.16
+
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/vcftools"
+declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
+
+for NAME in "${VCFLIST[@]}"
+do
+    vcftools --gzvcf "$VCF_DIR"/"$NAME"_fil.vcf.gz --keep Ecordata.txt --TajimaD 5000 --out cord_"$NAME"
+    vcftools --gzvcf "$VCF_DIR"/"$NAME"_fil.vcf.gz --keep Eglobulus_MR.txt --TajimaD 5000 --out glob_mr_"$NAME"
+    vcftools --gzvcf "$VCF_DIR"/"$NAME"_fil.vcf.gz --keep Eglobulus_ref.txt --TajimaD 5000 --out glob_ref_"$NAME"
+done
+```
+
+```bash
+# Run on UFRC queue system; see tstv_windows.job for more details.
+# Resources used: 5 Mb, 2 min
+
+module load vcftools/0.1.16
+
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/vcftools"
+declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
+
+for NAME in "${VCFLIST[@]}"
+do
+    vcftools --gzvcf "$VCF_DIR"/"$NAME"_fil.vcf.gz --keep Ecordata.txt --TsTv 5000 --out cord_"$NAME"
+    vcftools --gzvcf "$VCF_DIR"/"$NAME"_fil.vcf.gz --keep Eglobulus_MR.txt --TsTv 5000 --out glob_mr_"$NAME"
+    vcftools --gzvcf "$VCF_DIR"/"$NAME"_fil.vcf.gz --keep Eglobulus_ref.txt --TsTv 5000 --out glob_ref_"$NAME"
+done
+```
+

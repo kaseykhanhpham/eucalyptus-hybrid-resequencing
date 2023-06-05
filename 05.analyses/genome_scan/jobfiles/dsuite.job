@@ -4,22 +4,19 @@
 #SBATCH --job-name=dsuite
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=kasey.pham@ufl.edu
-#SBATCH --mem=1gb
+#SBATCH --mem=5gb
 #SBATCH --time=1:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --nodes=1
 #SBATCH --output=dsuite_%j.out
 #SBATCH --error=dsuite_%j.err
 
-module load gcc/9.3.0
-module load dsuite/0.4-r49
+module purge
+module load gcc/12.2.0
 
 DSUITE_DIR="/blue/soltis/kasey.pham/bin/Dsuite/Build"
+# My install is compiled on GCC 12.2.0, versus the HPC install on 9.3.0
 VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/dsuite"
-declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
 
-for NAME in "${VCFLIST[@]}"
-do
-    Dsuite Dinvestigate -n "$NAME" "$VCF_DIR"/"$NAME"_fil.vcf.gz SETS.txt test_trios.txt
-done
+"$DSUITE_DIR"/Dsuite Dinvestigate -w 40,20 -g "$VCF_DIR"/all_fil_biallelic.vcf.gz SETS.txt test_trios.txt
