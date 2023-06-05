@@ -220,7 +220,17 @@ vcftools --gzvcf "$VCFDIR"/all_fil.vcf.gz --min-alleles 2 --max-alleles 2 --reco
 Calculated fD and fDM in sliding windows of 40 viable SNPs at a time using [`Dsuite`](https://github.com/millanek/Dsuite).
 
 ```bash
-# HALP SEGFAUUUUULT
+# Run on UFRC queue system; see dsuite.job for more details.
+# Resources used: 4 Mb, 8 min
+
+module load gcc/12.2.0
+
+DSUITE_DIR="/blue/soltis/kasey.pham/bin/Dsuite/Build"
+# My install is compiled on GCC 12.2.0, versus the HPC install on 9.3.0
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/dsuite"
+
+"$DSUITE_DIR"/Dsuite Dinvestigate -w 40,20 -g "$VCF_DIR"/all_fil_biallelic.vcf.gz SETS.txt test_trios.txt
 ```
 
 ## Tajima's D and Transition/Transversion
