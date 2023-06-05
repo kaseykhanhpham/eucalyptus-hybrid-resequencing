@@ -1,0 +1,20 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=flare
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=10gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=12
+#SBATCH --nodes=1
+#SBATCH --output=flare_%j.out
+#SBATCH --error=flare_%j.err
+
+module load java/11.0.1
+
+FLARE_DIR="/blue/soltis/kasey.pham/bin/flare"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/flare"
+NAME="all_fil"
+
+java -Xmx10g -jar "$FLARE_DIR"/flare.jar ref="$WDIR"/"$NAME"_phased.vcf.gz ref-panel="$WDIR"/ref_panel.txt gt="$WDIR"/"$NAME"_phased.vcf.gz gt-samples="$WDIR"/gt_samples.txt map="$WDIR"/1060_LH_F2_manual_copy.map min-mac=1 nthreads=12 out="$NAME"_flare
