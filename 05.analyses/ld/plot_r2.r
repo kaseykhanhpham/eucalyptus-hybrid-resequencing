@@ -20,6 +20,7 @@ if(length(commandArgs(trailingOnly = TRUE)) == 3){
 
 # read input
 r2_tab <- read.csv(infile, header = TRUE)
+r2_tab[which(r2_tab$r2 == -1), "r2_tab"] <- rep(NA, length(which(r2_tab$r2 == -1)))
 
 # plot
 r2_plot <- ggplot(dat = r2_tab, aes(x = dist, y = r2)) + geom_line() + theme(text=element_text(size = 30))
