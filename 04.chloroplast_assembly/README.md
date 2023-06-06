@@ -1,8 +1,10 @@
 # Chloroplast Assembly
 
-### Run `FastPlast`
+## Run `FastPlast`
 
-**Create job to run `FastPlast`:**
+### First round of runs
+
+**Create job to run `FastPlast`**:
 Wrote python script to generate a job file which runs [`FastPlast`](https://github.com/mrmckain/Fast-Plast) on all samples, using trimmed reads from both sequencing runs for each sample:
 
 ```bash
@@ -26,7 +28,7 @@ REF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/organelle"
 perl $HPC_FASTPLAST_DIR/Fast-Plast/fast-plast.pl -1 "$READ_DIR"/S320_R1_paired.fq,"$READ_DIR"/S1_R1_paired.fq -2 "$READ_DIR"/S320_R2_paired.fq,"$READ_DIR"/S1_R2_paired.fq -n WA01 --subsample 30000000 --threads 7 --user_bowtie "REF_DIR"/AY780259.1 --clean deep --skip trim --coverage_analysis --min_coverage 10
 ```
 
-**WE01 Debugging**
+### WE01 Debugging
 
 Sample WE01 assembled strangely and only recovered 40% of chloroplast genes in its final assembly, even though after FastPlast step 4 (`afin` assembly), 90% of chloroplast genes were recovered. I aligned the `afin` assemblies for WE01 and WB01 (another _E. cordata_ sample with an unproblematic assembly) and the identified regions for each (lsc, irb, ssc).
 
@@ -87,7 +89,7 @@ cat irb_temp.fsa >> WE01_CP_pieces.fsa
 rm irb_temp.fsa
 ```
 
-**Housekeeping:**
+### Housekeeping
 ```bash
 SCRIPTS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
 for NAME in WA01 WA02 WA03 WA04 WA05 WB01 WB02 WB03 WB04 WB05
@@ -112,71 +114,4 @@ for NAME in WG01 WG02 WG03 WG04 WG05 WH01 WH02 WH03 WH04 WH05
 do
     "$SCRIPTS_DIR"/clean_fastplast_dir.sh $NAME
 done
-```
-
-### Format outgroups
-
-Used whole chloroplast assemblies of _E. grandis_ ([HM347959.1](https://www.ncbi.nlm.nih.gov/nuccore/HM347959.1)) and _E. saligna_ ([KC180790.1](https://www.ncbi.nlm.nih.gov/nuccore/KC180790.1)) as outgroups.
-
-**_E. grandis_:**
-
-```bash
-module load fastplast/1.2.8
-WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/cp_assembly/HM347959.1"
-REFS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/organelle"
-
-ln -s "$REFS_DIR"/HM347959.1.fasta "$WDIR"/HM347959.1.fasta
-
-perl $HPC_FASTPLAST_DIR/Fast-Plast/bin/sequence_based_ir_id.pl HM347959.1.fasta HM347959.1 3
-
-$HPC_FASTPLAST_DIR/Fast-Plast/bin/ncbi-blast-2.6.0+/bin/blastn -query HM347959.1_regions_split3.fsa -db  $HPC_FASTPLAST_DIR/Fast-Plast/bin/Angiosperm_Chloroplast_Genes.fsa -evalue 1e-10 -outfmt 6 > HM347959.1.split3.blastn
-
-perl $HPC_FASTPLAST_DIR/Fast-Plast/bin/orientate_plastome_v.2.0.pl HM347959.1_regions_split3.fsa HM347959.1.split3.blastn HM347959.1
-```
-
-**_E. saligna_:**
-
-```bash
-module load fastplast/1.2.8
-WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/cp_assembly/KC180790.1"
-REFS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/organelle"
-
-ln -s "$REFS_DIR"/KC180790.1.fasta "$WDIR"/KC180790.1.fasta
-
-perl $HPC_FASTPLAST_DIR/Fast-Plast/bin/sequence_based_ir_id.pl KC180790.1.fasta KC180790.1 3
-
-$HPC_FASTPLAST_DIR/Fast-Plast/bin/ncbi-blast-2.6.0+/bin/blastn -query KC180790.1_regions_split3.fsa -db  $HPC_FASTPLAST_DIR/Fast-Plast/bin/Angiosperm_Chloroplast_Genes.fsa -evalue 1e-10 -outfmt 6 > KC180790.1.split3.blastn
-
-perl $HPC_FASTPLAST_DIR/Fast-Plast/bin/orientate_plastome_v.2.0.pl KC180790.1_regions_split3.fsa KC180790.1.split3.blastn KC180790.1
-```
-
-**Reverse-complemented IRB for both outgroups:**
-```bash
-module load biopieces/2.0
-
-# E. grandis
-cd /blue/soltis/kasey.pham/euc_hyb_reseq/cp_assembly/HM347959.1
-mkdir $BP_DATA $BP_TMP $BP_LOG
-
-mv HM347959.1_CP_pieces.fsa HM347959.1_CP_pieces_raw.fsa
-# reverse complement just the IRB regions
-read_fasta -i HM347959.1_CP_pieces_raw.fsa | grab -p irb | reverse_seq | complement_seq | write_fasta -x -o HM347959.1_CP_pieces.fsa
-# extract the LSC and SSC regions as-is
-read_fasta -i HM347959.1_CP_pieces_raw.fsa | grab -p lsc,ssc | write_fasta -x -o singlecopy_temp.fsa
-# merge IRB sequence with the reverse-complemented sequences
-cat singlecopy_temp.fsa >> HM347959.1_CP_pieces.fsa
-rm singlecopy_temp.fsa
-
-# E. saligna
-cd /blue/soltis/kasey.pham/euc_hyb_reseq/cp_assembly/KC180790.1
-mkdir $BP_DATA $BP_TMP $BP_LOG
-
-mv KC180790.1_CP_pieces.fsa KC180790.1_CP_pieces_raw.fsa
-# reverse complement just the IRB regions
-read_fasta -i KC180790.1_CP_pieces_raw.fsa | grab -p irb | reverse_seq | complement_seq | write_fasta -x -o KC180790.1_CP_pieces.fsa
-# extract the LSC and SSC regions as-is
-read_fasta -i KC180790.1_CP_pieces_raw.fsa | grab -p lsc,ssc | write_fasta -x -o singlecopy_temp.fsa
-# merge IRB sequence with the reverse-complemented sequences
-cat singlecopy_temp.fsa >> KC180790.1_CP_pieces.fsa
-rm singlecopy_temp.fsa
 ```
