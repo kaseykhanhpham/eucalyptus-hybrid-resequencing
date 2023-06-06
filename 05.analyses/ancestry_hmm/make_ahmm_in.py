@@ -52,7 +52,11 @@ for ref1_line in ref_conns[0]:
     count_key = (ref1_fields[0], int(ref1_fields[1]))
     coverage = int(ref1_fields[3])
     allele1_temp.append(int(ref1_fields[4].split(":")[1]))
-    allele2_temp.append(int(ref1_fields[5].split(":")[1]))
+    # check for if invariant site (only 5 columns)
+    if len(ref1_fields) < 6:
+        allele2_temp.append(0)
+    else:
+        allele2_temp.append(int(ref1_fields[5].split(":")[1]))
 
     # check for proper coverage
     if coverage < min_cov[0]:
@@ -64,7 +68,11 @@ for ref1_line in ref_conns[0]:
         ref_fields = ref_line.strip().split()
         coverage = int(ref_fields[3])
         allele1_temp.append(int(ref_fields[4].split(":")[1]))
-        allele2_temp.append(int(ref_fields[5].split(":")[1]))
+        # check for if invariant site (only 5 columns)
+        if len(ref_fields) < 6:
+            allele2_temp.append(0)
+        else:
+            allele2_temp.append(int(ref_fields[5].split(":")[1]))
 
         if coverage < min_cov[i]:
             skip = True
@@ -102,14 +110,22 @@ for adm1_line in admix_conns[0]:
     adm1_fields = adm1_line.strip().split()
     count_key = (adm1_fields[0], int(adm1_fields[1]))
     allele1_temp.append(int(adm1_fields[4].split(":")[1]))
-    allele2_temp.append(int(adm1_fields[5].split(":")[1]))
+    # check for invariant sites (number of columns = 5)
+    if len(adm1_fields) < 6:
+        allele2_temp.append(0)
+    else:
+        allele2_temp.append(int(adm1_fields[5].split(":")[1]))
 
     # do the same for the rest of the admixed samples
     for i in range(1, len(admix_conns)):
         adm_line = admix_conns[i].readline()
         adm_fields = adm_line.strip().split()
         allele1_temp.append(int(adm_fields[4].split(":")[1]))
-        allele2_temp.append(int(adm_fields[5].split(":")[1]))
+        # check for invariant sites (number of columns = 5)
+        if len(adm_fields) < 6:
+            allele2_temp.append(0)
+        else:
+            allele2_temp.append(int(adm_fields[5].split(":")[1]))
     
     # record counts only if the variant passed reference coverage filters
     if count_key in allele1_ref_count.keys():

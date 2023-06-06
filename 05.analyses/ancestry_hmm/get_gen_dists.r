@@ -13,7 +13,7 @@ counts_filename <- commandArgs(trailingOnly = TRUE)[1]
 map_filename <- commandArgs(trailingOnly = TRUE)[2]
 out_name <- commandArgs(trailingOnly = TRUE)[3]
 
-counts_tab <- read.table(counts_filename, skip = 1, header = FALSE, col.names = c("Chr", "Pos", "nalleles", "totalalleles", "A_count", "a_count"), colClasses = c("character", "numeric", "numeric", "numeric", "character", "character"))
+counts_tab <- read.table(counts_filename, skip = 1, header = FALSE, col.names = c("Chr", "Pos", "nalleles", "totalalleles", "A_count", "a_count"), colClasses = c("character", "numeric", "numeric", "numeric", "character", "character"), sep = "\t", fill = TRUE)
 map_tab <- read.table(map_filename, header = FALSE, col.names = c("Chr", "ID", "cM", "bp"), colClasses = c("character", "character", "numeric", "numeric"))
 
 # define function to interpolate genetic distance if passed a chromosome, position, and genetic map.
