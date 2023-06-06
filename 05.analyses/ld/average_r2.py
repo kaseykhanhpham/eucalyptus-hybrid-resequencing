@@ -38,9 +38,12 @@ infile.close()
 # initialize dictionary for storing mean r2s
 avg_r2_dict = {}
 # loop through dictionary of lists
-for snp_dist in all_r2_dict.keys():
-    # average r2 values and save to new dict
-    avg_r2_dict[snp_dist] = mean(all_r2_dict[snp_dist])
+for snp_dist in range(1,1000001):
+    try:
+        # average r2 values and save to new dict
+        avg_r2_dict[snp_dist] = mean(all_r2_dict[snp_dist])
+    except KeyError:
+        avg_r2_dict[snp_dist] = -1 # represent NAs as an impossible value for processing later
 
 # convert averaged dictionary to pandas dataframe
 avg_r2_df = pd.DataFrame(list(avg_r2_dict.items()), columns = ["dist", "r2"])
