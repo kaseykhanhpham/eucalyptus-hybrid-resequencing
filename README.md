@@ -23,8 +23,23 @@ I also included whole genome short reads for _E. grandis_ SRA Accession [SRR1033
 ## References
 * The whole-genome long read assembly of _Eucalyptus globulus_ (in prep): EGLOB-X46
 * The annotation of the EGLOB-X46 (in prep)
-* The chloroplast assembly of _Eucalyptus globulus_: [AY780259.1](https://www.ncbi.nlm.nih.gov/nuccore/AY780259.1/)
 * The genetic map of _Eucalyptus_ DArT markers mapped to the _E. globulus_ EGLOB-X46 genome assembly: 1060_LH_F2.xlsx
+* Chloroplast assemblies of _Eucalyptus globulus_ and _Eucalyptus cordata_ from NCBI
+
+Chloroplast assemblies used:
+
+| Species       | NCBI Accession                                                 | Chloroplast JLA+ Haplotype |
+| ------------- | -------------------------------------------------------------- | -------------------------- |
+| _E. globulus_ | [AY780259.1](https://www.ncbi.nlm.nih.gov/nuccore/AY780259.1)  | ???                        |
+| _E. globulus_ | [KC180787.1](https://www.ncbi.nlm.nih.gov/nuccore/KC180787.1)  | ???                        |
+| _E. globulus_ | [CM024728.1](https://www.ncbi.nlm.nih.gov/nuccore/CM024728.1)  | ???                        |
+| _E. globulus_ | [NC_008115.1](https://www.ncbi.nlm.nih.gov/nuccore/NC_008115.1)| ???                        |
+| _E. nitens_   | [NC_022395.1](https://www.ncbi.nlm.nih.gov/nuccore/NC_022395.1)| ???                        |
+| _E. nitens_   | [KC180788.1](https://www.ncbi.nlm.nih.gov/nuccore/KC180788.1)  | ???                        |
+| _E. viminalis_| [CM024559.1](https://www.ncbi.nlm.nih.gov/nuccore/CM024559.1)  | ???                        |
+| _E. grandis_  | [HM347959.1](https://www.ncbi.nlm.nih.gov/nuccore/HM347959.1)  | ???                        |
+| _E. robusta_  | [MZ670598.1](https://www.ncbi.nlm.nih.gov/nuccore/MZ670598.1)  | ???                        |
+| _E. saligna_  | [NC_022397.1](https://www.ncbi.nlm.nih.gov/nuccore/NC_022397.1)| ???                        |
 
 
 ## Python Environment
