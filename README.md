@@ -37,7 +37,7 @@ Chloroplast assemblies used:
 | _E. nitens_   | _Maidenaria_    | [NC_022395.1](https://www.ncbi.nlm.nih.gov/nuccore/NC_022395.1) | ???            |
 | _E. nitens_   | _Maidenaria_    | [KC180788.1](https://www.ncbi.nlm.nih.gov/nuccore/KC180788.1)   | ???            |
 | _E. viminalis_| _Maidenaria_    | [CM024559.1](https://www.ncbi.nlm.nih.gov/nuccore/CM024559.1)   | ???            |
-| _E. smithii_  | _Maidenaria_    | [MN736961](https://www.ncbi.nlm.nih.gov/nuccore/MN736961)       | ???            |
+| _E. smithii_  | _Maidenaria_    | [MN736961.1](https://www.ncbi.nlm.nih.gov/nuccore/MN736961)       | ???            |
 | _E. grandis_  | _Latoangulae_   | [HM347959.1](https://www.ncbi.nlm.nih.gov/nuccore/HM347959.1)   | ???            |
 | _E. robusta_  | _Latoangulae_   | [MZ670598.1](https://www.ncbi.nlm.nih.gov/nuccore/MZ670598.1)   | ???            |
 | _E. saligna_  | _Latoangulae_   | [KC180790.1](https://www.ncbi.nlm.nih.gov/nuccore/KC180790)     | ???            |

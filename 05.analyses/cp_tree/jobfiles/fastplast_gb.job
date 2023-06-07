@@ -1,0 +1,31 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=fp_genb
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=10gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=10
+#SBATCH --nodes=1
+#SBATCH --output=fastplast_genbank_%j.out
+#SBATCH --error=fastplast_genbank_%j.err
+
+pwd; hostname; date
+echo Working directory is $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR
+
+module load fastplast/1.2.8
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/cp_tree/genbank_seqs"
+REFS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/organelle"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/cp_tree/genbank_seqs"
+
+while read NAME
+do
+    mkdir "$WDIR"/"$NAME"
+    cd "$WDIR"/"$NAME"
+    ln -s "$REFS_DIR"/"$NAME".fasta "$WDIR"/"$NAME"/"$NAME".fasta
+    perl $HPC_FASTPLAST_DIR/Fast-Plast/bin/sequence_based_ir_id.pl "$NAME".fasta "$NAME" 2
+    $HPC_FASTPLAST_DIR/Fast-Plast/bin/ncbi-blast-2.6.0+/bin/blastn -query "$NAME"_regions_split3.fsa -db  $HPC_FASTPLAST_DIR/Fast-Plast/bin/Angiosperm_Chloroplast_Genes.fsa -evalue 1e-10 -outfmt 6 > "$NAME".split3.blastn
+    perl $HPC_FASTPLAST_DIR/Fast-Plast/bin/orientate_plastome_v.2.0.pl "$NAME"_regions_split3.fsa "$NAME".split3.blastn "$NAME"
+done < "$LIST_DIR"/euc_plastome_acc_list.txt

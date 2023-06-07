@@ -1,15 +1,55 @@
 # Chloroplast Haplotype Analysis
 
+## Prepare retrieved assemblies for alignment
+
+Downloaded _Eucalyptus_ chloroplast genome assemblies to include in analysis from NCBI Genbank. See [main project page](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing) for accessions of assemblies used. In short, included assemblies of _E. globulus_, _E. nitens_, _E. viminalis_, _E. grandis_, _E. robusta_, and _E. saligna_.
+
+Ran `FastPlast` just for chloroplast structure identification step to separate the IRB, LSC, and SSC portions for separate alignment.
+
+```bash
+# Run on UFRC's queue system; see fastplast_gb.job for more details.
+# Resources used: 5 Mb, 10 min
+
+module load fastplast/1.2.8
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/cp_tree/genbank_seqs"
+REFS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/organelle"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/cp_tree/genbank_seqs"
+
+while read NAME
+do
+    mkdir "$WDIR"/"$NAME"
+    cd "$WDIR"/"$NAME"
+    ln -s "$REFS_DIR"/"$NAME".fasta "$WDIR"/"$NAME"/"$NAME".fasta
+    perl $HPC_FASTPLAST_DIR/Fast-Plast/bin/sequence_based_ir_id.pl "$NAME".fasta "$NAME" 3
+    $HPC_FASTPLAST_DIR/Fast-Plast/bin/ncbi-blast-2.6.0+/bin/blastn -query "$NAME"_regions_split3.fsa -db  $HPC_FASTPLAST_DIR/Fast-Plast/bin/Angiosperm_Chloroplast_Genes.fsa -evalue 1e-10 -outfmt 6 > "$NAME".split3.blastn
+    perl $HPC_FASTPLAST_DIR/Fast-Plast/bin/orientate_plastome_v.2.0.pl "$NAME"_regions_split3.fsa "$NAME".split3.blastn "$NAME"
+done < "$LIST_DIR"/euc_plastome_acc_list.txt
+```
+Created initial alignment files (see below) and visually inspected for sequences that needed reverse-complementing. The following needed to be reverse-complemented:
+
+| Accession   | Regions   |
+| ----------- | --------- |
+
+
+```bash
+# E. saligna
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
+cd /blue/soltis/kasey.pham/euc_hyb_reseq/cp_assembly/KC180790.1
+```
+
 ## Get chloroplast alignment
 
+First, created a directory of symlinks to all FASTA sequences to include in the tree.
+
 **Create FASTA files with all chloroplast region assemblies and reformat:**
-Wrote python scripts to concatenate chloroplast assemblies from each sample into separate FASTA files for each region (files currently hardcoded!) and reformat FASTA files to split sequences into multiple lines.
+Wrote python scripts to concatenate chloroplast assemblies from each sample into separate FASTA files for each region and reformat FASTA files to split sequences into multiple lines.
 
 ```bash
 module load python/3.8
 SCRIPTS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/cp_tree"
 
-python "$SCRIPTS_DIR"/make_cp_region_fas.py
+python "$SCRIPTS_DIR"/make_cp_region_fas.py "$WDIR"/all_tree_samples.txt "$WDIR"/all_tree_seqs
 # split each sequence into multiple lines
 python "$SCRIPTS_DIR"/reformat_fasta.py 80 irb_temp.fas irb_assemblies.fas
 python "$SCRIPTS_DIR"/reformat_fasta.py 80 lsc_temp.fas lsc_assemblies.fas
