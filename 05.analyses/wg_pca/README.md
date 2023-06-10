@@ -17,8 +17,8 @@ declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 
 
 for NAME in "${VCFLIST[@]}"
 do
-    plink --vcf "$INDIR"/"$NAME"_fil.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --vcf-half-call m --out "$OUTDIR00"/"$NAME"_maf00
-    plink --vcf "$INDIR"/"$NAME"_fil.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.1 --vcf-half-call m --maf 0.05 --out "$OUTDIR05"/"$NAME"_maf05
+    plink --vcf "$INDIR"/"$NAME"_fil.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.2 --vcf-half-call m --out "$OUTDIR00"/"$NAME"_maf00
+    plink --vcf "$INDIR"/"$NAME"_fil.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.2 --vcf-half-call m --maf 0.05 --out "$OUTDIR05"/"$NAME"_maf05
 done
 ```
 
