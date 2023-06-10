@@ -1,5 +1,5 @@
 # R script to process egglib stat genome scan output
-# Usage: Rscript process_stat_windows.r [infile] [stat] [mode] [cutoff] [direction] [min_snps] [mean - OPTIONAL] [sd - OPTIONAL]
+# Usage: Rscript process_stat_windows.r [infile] [stat] [mode] [cutoff] [direction] [min_snps]
 # infile: table output of egglib or vcftools to be processed for outlier windows
 # stat: the stat of interest, should match the column reporting the stat for the window
 # mode: sd (standard deviation-based) or percent (top or bottom percentage of windows)

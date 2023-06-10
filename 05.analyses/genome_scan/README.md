@@ -233,6 +233,9 @@ WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/dsuite"
 "$DSUITE_DIR"/Dsuite Dinvestigate -w 40,20 -g "$VCF_DIR"/all_fil_biallelic.vcf.gz SETS.txt test_trios.txt
 ```
 
+### Get outlier windows
+
+
 ## Tajima's D and Transition/Transversion
 Calculated Tajima's D and Ts/Tv rate in 5000bp sliding windows using `vcftools`.
 
@@ -272,3 +275,10 @@ do
 done
 ```
 
+Merged chromosome files.
+
+```bash
+
+```
+
+### Get outlier windows
