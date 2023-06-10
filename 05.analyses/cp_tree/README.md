@@ -4,37 +4,96 @@
 
 Downloaded _Eucalyptus_ chloroplast genome assemblies to include in analysis from NCBI Genbank. See [main project page](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing) for accessions of assemblies used. In short, included assemblies of _E. globulus_, _E. nitens_, _E. viminalis_, _E. grandis_, _E. robusta_, and _E. saligna_.
 
-Ran `FastPlast` just for chloroplast structure identification step to separate the IRB, LSC, and SSC portions for separate alignment.
+Because they were downloaded manually from NCBI, converted from DOS to Unix encoding.
+```bash
+PLASTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/organelle"
+
+cd "$PLASTDIR"
+ls *.fasta | while read FILE; do dos2unix "$FILE"; done
+```
+
+For any assemblies with chloroplast structure already annotated, retrieved a BED file for structural features from NCBI. Used the annotation to extract structural features separately for alignment in `BEDTools`.
 
 ```bash
-# Run on UFRC's queue system; see fastplast_gb.job for more details.
-# Resources used: 5 Mb, 10 min
+module load bedtools/2.30.0
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/cp_tree/genbank_seqs"
+REFS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/organelle"
 
+declare -a ANNOT_ACC=(AY780259.1 HM347959.1 KC180787.1 KC180788.1 KC180790.1 MZ670598.1 NC_008115.1 NC_022395.1 NC_022397.1)
+
+for ACC in "${ANNOT_ACC[@]}"
+do
+    cd "$WDIR"/"$ACC"
+    bedtools getfasta -nameOnly -fo "$ACC"_CP_pieces.fsa -fi "$REFS_DIR"/"$ACC"/"$ACC".fasta -bed "$REFS_DIR"/"$ACC"/"$ACC".bed
+done
+```
+
+For any NCBI plastome assemblies without an annotation, ran `FastPlast` just for assembly finishing step to identify the IRB, LSC, and SSC portions for separate alignment. Did not automate because `sequence_based_ir_id.pl` should be run for several values and the best result picked.
+
+```bash
 module load fastplast/1.2.8
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/cp_tree/genbank_seqs"
 REFS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/organelle"
 LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/cp_tree/genbank_seqs"
 
-while read NAME
+# CM024559.1
+cd "$WDIR"/CM024559.1
+ln -s "$REFS_DIR"/CM024559.1.fasta
+# run script to identify putative structural features
+for NUM in 0 1 2 3
 do
-    mkdir "$WDIR"/"$NAME"
-    cd "$WDIR"/"$NAME"
-    ln -s "$REFS_DIR"/"$NAME".fasta "$WDIR"/"$NAME"/"$NAME".fasta
-    perl $HPC_FASTPLAST_DIR/Fast-Plast/bin/sequence_based_ir_id.pl "$NAME".fasta "$NAME" 3
-    $HPC_FASTPLAST_DIR/Fast-Plast/bin/ncbi-blast-2.6.0+/bin/blastn -query "$NAME"_regions_split3.fsa -db  $HPC_FASTPLAST_DIR/Fast-Plast/bin/Angiosperm_Chloroplast_Genes.fsa -evalue 1e-10 -outfmt 6 > "$NAME".split3.blastn
-    perl $HPC_FASTPLAST_DIR/Fast-Plast/bin/orientate_plastome_v.2.0.pl "$NAME"_regions_split3.fsa "$NAME".split3.blastn "$NAME"
-done < "$LIST_DIR"/euc_plastome_acc_list.txt
+    perl "$HPC_FASTPLAST_DIR"/Fast-Plast/bin/sequence_based_ir_id.pl CM024559.1.fasta CM024559.1 "$NUM"
+done
+# removed extra IR in final chosen split file: CM024559.1_regions_split0.fsa
+# blast to database and orientate
+"$HPC_FASTPLAST_DIR"/Fast-Plast/bin/ncbi-blast-2.6.0+/bin/blastn -query CM024559.1_regions_split0.fsa -db  $HPC_FASTPLAST_DIR/Fast-Plast/bin/Angiosperm_Chloroplast_Genes.fsa -evalue 1e-10 -outfmt 6 > CM024559.1.split0.blastn
+perl $HPC_FASTPLAST_DIR/Fast-Plast/bin/orientate_plastome_v.2.0.pl CM024559.1_regions_split0.fsa CM024559.1.split0.blastn CM024559.1
+
+# CM024728.1
+cd "$WDIR"/CM024728.1
+ln -s "$REFS_DIR"/CM024728.1.fasta
+# run script to identify putative structural features
+for NUM in 0 1 2 3
+do
+    perl "$HPC_FASTPLAST_DIR"/Fast-Plast/bin/sequence_based_ir_id.pl CM024728.1.fasta CM024728.1 "$NUM"
+done
+# removed extra IR in final chosen split file: CM024728.1_regions_split0.fsa
+# blast to database and orientate
+"$HPC_FASTPLAST_DIR"/Fast-Plast/bin/ncbi-blast-2.6.0+/bin/blastn -query CM024728.1_regions_split0.fsa -db  $HPC_FASTPLAST_DIR/Fast-Plast/bin/Angiosperm_Chloroplast_Genes.fsa -evalue 1e-10 -outfmt 6 > CM024728.1.split0.blastn
+perl $HPC_FASTPLAST_DIR/Fast-Plast/bin/orientate_plastome_v.2.0.pl CM024728.1_regions_split0.fsa CM024728.1.split0.blastn CM024728.1
+
+# MN736961.1
+cd "$WDIR"/MN736961.1
+ln -s "$REFS_DIR"/MN736961.1.fasta
+for NUM in 0 1 2 3
+do
+    perl "$HPC_FASTPLAST_DIR"/Fast-Plast/bin/sequence_based_ir_id.pl MN736961.1.fasta MN736961.1 "$NUM"
+done
+# removed extra IR in final chosen split file: MN736961.1_regions_split0.fsa
+"$HPC_FASTPLAST_DIR"/Fast-Plast/bin/ncbi-blast-2.6.0+/bin/blastn -query MN736961.1_regions_split0.fsa -db  $HPC_FASTPLAST_DIR/Fast-Plast/bin/Angiosperm_Chloroplast_Genes.fsa -evalue 1e-10 -outfmt 6 > MN736961.1.split0.blastn
+perl $HPC_FASTPLAST_DIR/Fast-Plast/bin/orientate_plastome_v.2.0.pl MN736961.1_regions_split0.fsa MN736961.1.split0.blastn MN736961.1
 ```
 Created initial alignment files (see below) and visually inspected for sequences that needed reverse-complementing. The following needed to be reverse-complemented:
 
-| Accession   | Regions   |
-| ----------- | --------- |
-
+| Accession   | Regions     |
+| ----------- | ----------- |
+| CM024728.1  | lsc         |
 
 ```bash
-# E. saligna
-SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
-cd /blue/soltis/kasey.pham/euc_hyb_reseq/cp_assembly/KC180790.1
+module load biopieces/2.0
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/cp_tree/genbank_seqs"
+
+# CM024728.1
+cd "$WDIR"/CM024728.1
+mkdir $BP_DATA $BP_TMP $BP_LOG
+mv CM024728.1_CP_pieces.fsa CM024728.1_CP_pieces_raw.fsa
+# reverse complement just the specified entries
+read_fasta -i CM024728.1_CP_pieces_raw.fsa | grab -p lsc | reverse_seq | complement_seq | write_fasta -x -o CM024728.1_CP_pieces.fsa
+# extract the specified entries as-is
+read_fasta -i CM024728.1_CP_pieces_raw.fsa | grab -p ssc,irb | write_fasta -x -o temp.fsa
+# merge reverse-complemented sequences with the untouched sequences
+cat temp.fsa >> CM024728.1_CP_pieces.fsa
+rm temp.fsa
 ```
 
 ## Get chloroplast alignment
@@ -59,26 +118,37 @@ rm *_temp.fas
 
 **Align chloroplast regions:**
 ```bash
-# Run via job queue on UFRC, see mafft_ssc.job, mafft_irb.job, mafft_lsc.job for more details.
-# Resources used: ~500 Mb, 11 min maximum.
-# One example of the three regions shown below.
+# Run via job queue on UFRC, see mafft.job for more details.
+# Resources used: 600 Mb, 8 min
 
 module load mafft/7.490
 
+mafft --auto --thread 16 irb_assemblies.fas > irb_assemblies_aligned.fas
+mafft --auto --thread 16 ssc_assemblies.fas > ssc_assemblies_aligned.fas
 mafft --auto --thread 16 lsc_assemblies.fas > lsc_assemblies_aligned.fas
 ```
 
-**Manual editing of alignments:**
-* Manually adjusted a few bases among several samples in lsc alignment in `BioEdit`. Saved as `lsc_assemblies_adjusted.fas`
-* Manually adjusted a few bases among several samples in ssc alignment in `BioEdit`. Saved as `ssc_assemblies_adjusted.fas`
+Manually replaced ambiguity codes with "N" as `TrimAl` cannot handle them. 
 
+**Trim alignments:**
+
+Used `TrimAl` to remove low-coverage sites of the alignment.
+```bash
+module load trimal/1.4.1
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/cp_tree"
+
+cd "$WDIR"
+trimal -in irb_assemblies_aligned.fas -out irb_assemblies_trimmed.fas -gt 0.6
+trimal -in ssc_assemblies_aligned.fas -out ssc_assemblies_trimmed.fas -gt 0.6
+trimal -in lsc_assemblies_aligned.fas -out lsc_assemblies_trimmed.fas -gt 0.6
+```
 
 **Concatenate regions:**
 ```bash
 module load python/3.8
 SCRIPTS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
 
-python "$SCRIPTS_DIR"/concatenate_fasta.py irb_assemblies_aligned.fas,lsc_assemblies_adjusted.fas,ssc_assemblies_adjusted.fas concatenated_cp_aligned.fas
+python "$SCRIPTS_DIR"/concatenate_fasta.py irb_assemblies_trimmed.fas,lsc_assemblies_trimmed.fas,ssc_assemblies_trimmed.fas concatenated_cp_aligned.fas
 ```
 
 ## Chloroplast tree
@@ -86,7 +156,7 @@ python "$SCRIPTS_DIR"/concatenate_fasta.py irb_assemblies_aligned.fas,lsc_assemb
 **Phylogenetic analysis in [`IQTree`](http://www.iqtree.org/):**
 ```bash
 # Run via job queueing in UFRC; see iqtree.job for more details
-# Resources: 2 Mb, 15 sec
+# Resources: 2 Mb, 1 min
 
 module load iq-tree/2.1.3
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/cp_tree"
