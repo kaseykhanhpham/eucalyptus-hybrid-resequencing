@@ -231,6 +231,7 @@ VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/dsuite"
 
 "$DSUITE_DIR"/Dsuite Dinvestigate -w 40,20 -g "$VCF_DIR"/all_fil_biallelic.vcf.gz SETS.txt test_trios.txt
+mv glob_pure_glob_MR_cord_MR_localFstats__40_20.txt localFstats_40_20.txt
 ```
 
 ### Get outlier windows
@@ -278,7 +279,24 @@ done
 Merged chromosome files.
 
 ```bash
+declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
 
+touch cord_all.Tajima.D 
+touch cord_all.TsTv
+touch glob_mr_all.Tajima.D
+touch glob_mr_all.TsTv
+touch glob_ref_all.Tajima.D
+touch glob_ref_all.TsTv
+
+for NAME in "${VCFLIST[@]}"
+do
+    cat cord_"$NAME".Tajima.D >> cord_all.Tajima.D
+    cat cord_"$NAME".TsTv >> cord_all.TsTv
+    cat glob_mr_"$NAME".Tajima.D >> glob_mr_all.Tajima.D
+    cat glob_mr_"$NAME".TsTv >> glob_mr_all.TsTv
+    cat glob_ref_"$NAME".Tajima.D >> glob_ref_all.Tajima.D
+    cat glob_ref_"$NAME".TsTv >> glob_ref_all.TsTv
+done
 ```
 
 ### Get outlier windows
