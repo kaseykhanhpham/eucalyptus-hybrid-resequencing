@@ -308,9 +308,9 @@ d + xlim(-0.125, 0.75) + ylim(-0.5, 0.3) + ggtitle("maf=0.05 with outgr, PC2 vs.
 
 **Overall patterns:** PC1 explained the vast majority of variation (~30%) for both the MAF=0.00 and MAF=0.05 datasets, with all other PCs explaining ~5% of present variation. In both datasets and regardless of whether the outgroup was included, PC1 strongly differentiated between _E. cordata_ and reference and Meehan Range _E. globulus_. For MAF=0.00, _E. globulus_ samples continued to group together along PC2, but _E. cordata_ was split into two highly variable clusters. This was not apparent in the MAF=0.05 dataset, where _E. cordata_ clustered together tightly between the _E. globulus_ reference group and the Meehan Range _E. globulus_ reference group. This may indicate that for these filtering parameters, _E. cordata_ samples contain a lot of singleton variation.
 
-**Outliers:** The sample WF03/1051 differentiated from other samples along PC3 in the MAF=0.05 dataset only, indicating that it likely has a different composition of shared variation from other reference samples. This sample also has the Central rather than Southern chloroplast haplotype.
+**Outliers:** The sample WF03/1051 differentiated slightly from other reference samples along PCs 1 and 2 in the MAF=0.00 with the outgroup dataset only. Since this is pretty minor, will probably be retaining it in future analyses.
 
-**The outgroup:** For both MAF=0.00 and MAF=0.05, the outgroup _E. grandis_ associated with _E. cordata_ along PC1, differentiated from both along PC2, and associated with _E. globulus_ along PC3. Patterns were generally the same between datasets that included and did not include the outgroup, so it will be excluded for the subsequent PCA analyses. Plots with the outgroup can be viewed in their designated directories.
+**The outgroup:** For both MAF=0.00 and MAF=0.05, the outgroup _E. grandis_ associated with _E. cordata_ along PC1, differentiated from both along PC2, and associated with _E. globulus_ along PC3. Patterns were generally the same between datasets that included and did not include the outgroup (though shunted back 1 PC because of the extra dimension of variation), so it will be excluded for the subsequent PCA analyses. Plots with the outgroup can be viewed in their designated directories.
 
 ### MAF = 0.00 Plots
 
