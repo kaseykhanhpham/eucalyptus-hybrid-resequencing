@@ -55,10 +55,6 @@ do
 done
 ```
 
-The raw results of each ADMIXTURE run can be viewed in the directory admixture_output.
-* [MAF=0.00](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_admixture/maf0.00/admixture_output)
-* [MAF=0.05](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_admixture/maf0.05/admixture_output)
-
 ### `ADMIXTURE` post-processing
 
 **Get cross-validation error values for each K:**
@@ -99,26 +95,30 @@ conda deactivate
 
 MAF = 0.00:
 
-![MAF=0.00 ADMIXTURE K=2 through K=6 summarized over 10 individual runs in pong. In K=2 (lowest CV error), both groups of _E. globulus_ samples (blue) have estimated 0% admixture with _E. cordata_ (yellow). In K=3 (second lowest CV error), individuals of reference _E. globulus_ were inferred to be non-admixed and to belong to one bin mainly. Meehan Range _E. globulus_ were inferred to be admixed between the reference bin and another. This may be an artifact of the stringent missing data cutoff for invariant sites, restricting invariants to those present in all reference samples.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/maf0.00/all_fil_maf0.00_admixture.png "MAF = 0.00 ADMIXTURE K=2 through K=6")
+![MAF=0.00 ADMIXTURE K=2 through K=6 summarized over 10 individual runs in pong. In K=2 (lowest CV error), both groups of _E. globulus_ samples (blue) have estimated 0% admixture with _E. cordata_ (yellow). In K=3 (second lowest CV error), individuals of reference _E. globulus_ were inferred to be non-admixed and to belong to one bin mainly. Meehan Range _E. globulus_ were inferred to be admixed between the reference bin and another.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/maf0.00/all_maf0.00_admixture.png "MAF = 0.00 ADMIXTURE K=2 through K=6")
 
 Just K = 3:
 
-![MAF=0.00 ADMIXTURE K=3 summarized over 10 individual runs in pong. Almost all runs display a similar pattern to the one displayed in the main ADMIXTURE visualization, except for one which splits _E. cordata_ into two groups, as seen in PC3 of the PCA.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/maf0.00/all_fil_maf0.00_admixture_k3.png "MAF = 0.00 ADMIXTURE K=3")
+![MAF=0.00 ADMIXTURE K=3 summarized over 10 individual runs in pong. Almost all runs display a similar pattern to the one displayed in the main ADMIXTURE visualization. Reference _E. globulus_ is inferred to be unadmixed, while Meehan Range _E. globulus_ is inferred to be admixed between the reference group and another.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/maf0.00/all_maf0.00_admixture_k3.png "MAF = 0.00 ADMIXTURE K=3")
 
 MAF = 0.05:
 
-![MAF=0.05 ADMIXTURE K=2 through K=6 summarized over 10 individual runs in pong. In K=2 (lowest CV error), introgressed _E. globulus_ has an estimated 1% admixture rate with _E. cordata_ while "pure" _E. globulus_ has an estimated 2.6% admixture rate with _E. cordata_. I think this falls within negligible amounts attributable to being an ADMIXTURE artifact. In K=3 (second-lowest CV error), most _E. globulus_ samples are inferred to be admixed between two bins, with Meehan Range samples inferred to be slightly more admixed than the reference.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/maf0.05/all_fil_maf0.05_admixture.png "MAF = 0.05 ADMIXTURE K=2 through K=6")
+![MAF=0.05 ADMIXTURE K=2 through K=6 summarized over 10 individual runs in pong. In K=2 (lowest CV error), introgressed _E. globulus_ has an estimated 1% admixture rate with _E. cordata_ while "pure" _E. globulus_ has an estimated 2.6% admixture rate with _E. cordata_. In K=3 (second-lowest CV error), reference _E. globulus_ is inferred to be mostly unadmixed, while Meehan Range _E. globulus_ is inferred to be admixed between the reference group and another.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/maf0.05/all_maf0.05_admixture.png "MAF = 0.05 ADMIXTURE K=2 through K=6")
 
 Just K = 3:
 
-![MAF=0.05 ADMIXTURE K=3 summarized over 10 individual runs in pong. Almost all runs display a similar pattern to the one displayed in the main ADMIXTURE visualization.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/maf0.05/all_fil_maf0.05_admixture_k3.png "MAF = 0.05 ADMIXTURE K=3")
+![MAF=0.05 ADMIXTURE K=3 summarized over 10 individual runs in pong. Almost all runs display a similar pattern to the one displayed in the main ADMIXTURE visualization.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/wg_ADMIXTURE/maf0.05/all_maf0.05_admixture_k3.png "MAF = 0.05 ADMIXTURE K=3")
 
-The MAF=0.00 K=3 result was surprising, as our reference panel for _E. globulus_ was trees from different populations and therefore probably higher diversity than those sampled from Meehan Range. Because this pattern is not present in MAF=0.05, it's possible that it is being driven by singletons and invariant sites. Perhaps by setting a low missing rate for invariants and singletons, those that do not have coverage across multiple reference samples are not being included, causing the reference group to look more unified than it actually is.
+**Discussion:**
 
-(Also, this pattern was flipped when inferring structure with only variant sites as identified in FreeBayes, which we assumed to be driven by excluding variation not shared across reference samples for MAF = 0.05.)
+The admixture inferred for reference _E. globulus_ with _E. cordata_ in K=2 for both datasets is quite small and probably falls within range of being an artifact of the analysis. Since the level of introgression expected is low, its signal may be largely swamped in a genome-wide `ADMIXTURE` plot.
+
+The MAF=0.00 K=3 result was surprising, as our reference panel for _E. globulus_ was trees from different populations and therefore probably higher diversity than those sampled from Meehan Range. It's therefore strange that they would be inferred as less admixed than the Meehan Range samples. It's possible that my SNP filtering and thinning schema restricted to shared variants, excluding rare ones which would differentiate reference _E. globulus_ samples from each other.
+
+(This pattern only showed up in MAF=0.05 when inferring structure with only variant sites identified in FreeBayes, which we assumed to be driven by excluding variation not shared across reference samples for MAF = 0.05.)
 
 ## `ADMIXTURE` excluding sample WF03/1051
-The sample WF03/1051 was distant from all other points in the PCA plots, so I ran `ADMIXTURE` without it to see whether that would change the results. I started by excluding this sample when generating the `BIM` file:
+The sample WF03/1051 was distant from all other points in the PCA plots, so I ran `ADMIXTURE` without it to see whether that would change the results. (Note: run on a previous dataset where linkage disequilibrium was pruned at r2=0.1 instead of r2=0.2. Results should be fairly consistent between the two, so I didn't re-do this analysis.) I started by excluding this sample when generating the `BIM` file:
 
 ```bash
 module load plink/1.90b3.39
