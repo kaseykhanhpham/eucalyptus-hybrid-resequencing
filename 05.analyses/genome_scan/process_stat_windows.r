@@ -1,64 +1,96 @@
-# R script to process egglib stat genome scan output
-# Usage: Rscript process_stat_windows.r [infile] [stat] [mode] [cutoff] [direction] [min_snps]
-# infile: table output of egglib or vcftools to be processed for outlier windows
-# stat: the stat of interest, should match the column reporting the stat for the window
-# mode: sd (standard deviation-based) or percent (top or bottom percentage of windows)
-# sd_cutoff: multiple of sd / percentage at which to set cutoff
-# direction: set cutoff above or below mean / top or bottom percent
-# min_snps: The minimum number of SNPs to include a window in calculations
-# mean: OPTIONAL - the mean to compare against
-# sd: OPTIONAL - the sd to compare against. If you provide the mean you must provide this too.
+### R script to process egglib stat genome scan output
+### Usage: Rscript process_stat_windows.r [infile] [mode] [cols] [cutoff] [direction] [min_snps] [out]
+###    infile: table output of genome scan program to be processed for outlier windows
+###    mode: sd or percent, determines which measure cutoff is determined by
+###    cols: the comma-separated indices of columns for chr,win_start,win_end,snp_count,statistic
+###          where -1 indicates N/A value
+###    sd_cutoff: multiple of sd / percentage at which to set cutoff
+###    direction: set cutoff above or below mean / top or bottom percent
+###    min_snps: The minimum number of SNPs to include a window in calculations
+###    out: name of file to write with outlier windows
 
 # import command line arguments and read file
 infile_name <- commandArgs(trailingOnly = TRUE)[1]
-stat <- commandArgs(trailingOnly = TRUE)[2]
-mode <- commandArgs(trailingOnly = TRUE)[3]
+mode <- commandArgs(trailingOnly = TRUE)[2]
+col_nums <- commandArgs(trailingOnly = TRUE)[3]
 cutoff <- as.numeric(commandArgs(trailingOnly = TRUE)[4])
 direction <- commandArgs(trailingOnly = TRUE)[5]
 min_snps <- as.numeric(commandArgs(trailingOnly = TRUE)[6])
+outfile_name <- commandArgs(trailingOnly = TRUE)[7]
+
 in_table <- read.table(infile_name, header = TRUE, sep = "\t", na.strings="")
 
+chr_col <- strsplit(col_nums, ",")[1]
+win_start_col <- as.numeric(strsplit(col_nums, ",")[2])
+win_end_col <- as.numeric(strsplit(col_nums, ",")[3])
+snp_count_col <- as.numeric(strsplit(col_nums, ",")[4])
+stat_col <- as.numeric(strsplit(col_nums, ",")[5])
+
 # filter input by num SNPs
-filtered_table <- in_table[which(in_table$num_var >= min_snps),]
+if(snp_count_col == -1){
+    filtered_table <- in_table
+} else {
+    filtered_table <- in_table[which(in_table[, snp_count_col] >= min_snps),]
+}
 
 # Flag using standard deviation cutoff
 if(mode == "sd"){
     # Calculate summary stats
-    stat_mean <- mean(filtered_table[, stat])
-    stat_sd <- sd(filtered_table[, stat])
-    # Replace with user-provided mean and sd if given
-    if(length(commandArgs(trailingOnly = TRUE)) > 6){
-        stat_mean <- as.numeric(commandArgs(trailingOnly = TRUE)[7])
-        stat_sd <- as.numeric(commandArgs(trailingOnly = TRUE)[8])
-    }
+    stat_mean <- mean(filtered_table[, stat_col], na.rm = TRUE)
+    stat_sd <- sd(filtered_table[, stat_col], na.rm = TRUE)
 
     # Calculate cutoff
     sd_cutoff <- cutoff*stat_sd
 
     # Get outlier windows
-    flagged <- switch(direction,
-        above = which(filtered_table[, stat] > (stat_mean + sd_cutoff)),
-        below = which(filtered_table[, stat] < (stat_mean - sd_cutoff)))
+    if(direction == "above"){
+        flagged <- which(filtered_table[, stat_col] > (stat_mean + sd_cutoff))
+    } else if(direction == "below"){
+        flagged <- which(filtered_table[, stat_col] < (stat_mean - sd_cutoff))
+    } else {
+        warning(paste("Direction argument", direction, "not recognized. Specify above or below."))
+    }
 
 # Flag using percentage cutoff
 } else if(mode == "percent"){
     # Calculate cutoff
-    cutoff_index <- switch(direction,
-        above = round((1 - cutoff)*nrow(filtered_table)),
-        below = round(cutoff*nrow(filtered_table))
-    )
-    percent_cutoff <- sort(filtered_table[,stat])[cutoff_index]
+    if(direction == "above"){
+        cutoff_index <- round((1 - cutoff)*nrow(filtered_table))
+    } else if(direction == "below"){
+        cutoff_index <- round(cutoff*nrow(filtered_table))
+    } else {
+        warning(paste("Direction argument", direction, "not recognized. Specify above or below."))
+    }
+
+    percent_cutoff <- sort(filtered_table[, stat_col])[cutoff_index]
 
     # Get outlier windows
-    flagged <- switch(direction,
-        above = which(filtered_table[, stat] >= percent_cutoff),
-        below = which(filtered_table[, stat] <= percent_cutoff)
-    )
+    if(direction == "above"){
+        flagged <- which(filtered_table[, stat_col] >= percent_cutoff)
+    } else if(direction == "below"){
+        flagged <- which(filtered_table[, stat_col] <= percent_cutoff)
+    }
+
 } else {
-    write("Mode value not recognized.", stdout())
+    warning(paste("Mode value", mode, "not recognized. Specify sd or percent."))
 }
 
-flagged_windows <- filtered_table[flagged, c("chr", "start", "end")]
+# Build output table
+if(win_end_col == -1){
+    # If there isn't a window end column in the file, 
+    # assume the window ends just before the next starts
+    win_end <- unlist(sapply(c(1:nrow(filtered_table) - 1), function(i) filtered_table[i + 1, win_start_col] - 1))
+    # assume the final end position is of the same step size as the penultimate one.
+    last_step_size <- win_end[nrow(filtered_table) - 1] - filtered_table[nrow(filtered_table) - 1, win_start_col]
+    last_end_pos <- filtered_table[nrow(filtered_table), win_start_col] + last_step_size
+    win_end <- c(win_end, last_end_pos)
 
-out_name <- paste(infile_name, ".", mode, cutoff, ".flagged.tab", sep = "")
-write.table(flagged_windows, out_name, quote = FALSE, row.names = FALSE, col.names = TRUE)
+    flagged_windows <- filtered_table[flagged, c(chr_col, win_start_col)]
+    flagged_windows <- cbind(flagged_windows, win_end)
+    col.names(flagged_windows) <- c("Chr", "Start", "End")
+} else {
+    flagged_windows <- filtered_table[flagged, c(chr_col, win_start_col, win_end_col)]
+    col.names(flagged_windows) <- c("Chr", "Start", "End")
+}
+
+write.table(flagged_windows, outfile_name, quote = FALSE, row.names = FALSE, col.names = TRUE)
