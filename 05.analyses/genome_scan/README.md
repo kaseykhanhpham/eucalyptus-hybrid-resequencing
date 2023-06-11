@@ -201,7 +201,7 @@ Whole-genome dxy comparisons:
 Inclusion of WF03/1051 changed the estimated genome-wide pi for the reference group alone the most, as expected. Values of dXY remained mostly not too strongly different. The numbers don't seem so extremely different that I would be warranted in excluding the sample...
 
 ### Identify outlier windows
-
+Split pixy output files by comparison.
 
 ## Patterson's D and associated statistics
 
