@@ -201,7 +201,74 @@ Whole-genome dxy comparisons:
 Inclusion of WF03/1051 changed the estimated genome-wide pi for the reference group alone the most, as expected. Values of dXY remained mostly not too strongly different. The numbers don't seem so extremely different that I would be warranted in excluding the sample...
 
 ### Identify outlier windows
-Split pixy output files by comparison.
+Split pixy output files by taxon/comparison.
+
+```R
+options(scipen=999) 
+
+all_pi <- read.table("all_pi.txt", header = TRUE, sep = "\t", as.is = TRUE)
+all_dxy <- read.table("all_dxy.txt", header = TRUE, sep = "\t", as.is = TRUE)
+
+## recalculate pi for all E. globulus samples
+get_pi <- function(df){
+    # recalculate pi
+    tab_subset <- df[which(df$pop %in% c("glob_MR", "glob_pure")),]
+    new_count_diffs <- sum(as.numeric(tab_subset$count_diffs), na.rm = TRUE)
+    new_count_comparisons <- sum(as.numeric(tab_subset$count_comparisons), na.rm = TRUE)
+    new_avg_pi <- new_count_diffs/new_count_comparisons
+
+    # re-calibrate window positions to be in standard genome coords (0-index)
+    new_window_pos_1 <- as.numeric(tab_subset[1, "window_pos_1"]) - 1
+    new_window_pos_2 <- as.numeric(tab_subset[1, "window_pos_2"]) - 1
+    
+    # sum numbers for numeric fields
+    new_count_missing <- sum(as.numeric(tab_subset$count_missing), na.rm = TRUE)
+    new_no_sites <- sum(as.numeric(tab_subset$no_sites))
+
+    # export processed row (convert all vars back to characters for rbind)
+    new_row <- c("glob_all", tab_subset[1, "chromosome"], as.character(new_window_pos_1), as.character(new_window_pos_2), as.character(new_avg_pi), as.character(new_no_sites), as.character(new_count_diffs), as.character(new_count_comparisons), as.character(new_count_missing))
+    return(new_row)
+}
+
+new_glob_rows <- sapply(c(1:length(which(all_pi$pop == "glob_MR"))), function(x) get_pi(all_pi[(x*3-2):(x*3),]))
+new_glob_tab <- t(new_glob_rows)
+colnames(new_glob_tab) <- c("pop", "chromosome", "window_pos_1", "window_pos_2", "avg_pi", "no_sites", "count_diffs", "count_comparisons", "count_missing")
+write.table(new_glob_tab, "glob_pi_formatted.txt", quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
+
+## process dxy for E. cordata - E. globulus MR comparisons
+subset_dxy <- all_dxy[which(all_dxy$pop1 == "glob_MR" & all_dxy$pop2 == "glob_pure"),]
+
+# adjust window positions
+subset_dxy$window_pos_1 <- as.numeric(subset_dxy$window_pos_1) - 1
+subset_dxy$window_pos_2 <- as.numeric(subset_dxy$window_pos_2) - 1
+
+write.table(subset_dxy, "glob_MR_cord_MR_dxy.txt", quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
+```
+
+Retrieved outlier windows using custom `R` script.
+
+```bash
+module load R/4.2
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+
+Rscript "$SCRIPT_DIR"/process_stat_windows.r glob_pi_formatted.txt sd 2,3,4,6,5 2 above 40 glob_pi_outliers_sd2.txt
+Rscript "$SCRIPT_DIR"/process_stat_windows.r glob_pi_formatted.txt percent 2,3,4,6,5 0.05 above 40 glob_pi_outliers_p05.txt
+Rscript "$SCRIPT_DIR"/process_stat_windows.r glob_pi_formatted.txt percent 2,3,4,6,5 0.10 above 40 glob_pi_outliers_p10.txt
+
+Rscript "$SCRIPT_DIR"/process_stat_windows.r glob_MR_cord_MR_dxy.txt sd 3,4,5,7,6 2 below 40 glob_MR_cord_MR_dxy_outliers_sd2.txt
+Rscript "$SCRIPT_DIR"/process_stat_windows.r glob_MR_cord_MR_dxy.txt percent 3,4,5,7,6 0.05 below 40 glob_MR_cord_MR_dxy_outliers_p95.txt
+
+Rscript "$SCRIPT_DIR"/process_stat_windows.r glob_MR_cord_MR_dxy.txt percent 3,4,5,7,6 0.10 below 40 glob_MR_cord_MR_dxy_outliers_p90.txt
+```
+
+| Stat  | Taxon        | Threshold    | Number of Windows |
+| ----- | ------------ | ------------ | ----------------- |
+| pi    | glob         | > +2 sd      | 3049              |
+| pi    | glob         | top 5%       | 2743              |
+| pi    | glob         | top 10%      | 4738              |
+| dxy   | glob MR/cord | < -2 sd      | 0                 |
+| dxy   | glob MR/cord | bottom 5%    | 2743              |
+| dxy   | glob MR/cord | bottom 10%   | 4738              |
 
 ## Patterson's D and associated statistics
 
@@ -235,6 +302,17 @@ mv glob_pure_glob_MR_cord_MR_localFstats__40_20.txt localFstats_40_20.txt
 ```
 
 ### Get outlier windows
+Retrieved outlier windows using custom `R` script.
+
+```bash
+module load R/4.2
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+
+# get highest 5% of windows for each sliding window statistic
+Rscript "$SCRIPT_DIR"/process_stat_windows.r localFstats_40_20.txt percent 1,2,3,-1,5 0.5 above 0 fD_40_20_outliers_p05.txt
+Rscript "$SCRIPT_DIR"/process_stat_windows.r localFstats_40_20.txt percent 1,2,3,-1,6 0.5 above 0 fDm_40_20_outliers_p05.txt
+Rscript "$SCRIPT_DIR"/process_stat_windows.r localFstats_40_20.txt percent 1,2,3,-1,5 0.5 above 0 df_40_20_outliers_p05.txt
+```
 
 
 ## Tajima's D and Transition/Transversion
@@ -300,3 +378,108 @@ done
 ```
 
 ### Get outlier windows
+
+Retrieved outlier windows using custom `R` script.
+
+```bash
+module load R/4.2
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+Rscript "$SCRIPT_DIR"/process_stat_windows.r glob_mr_all.Tajima.D sd 1,2,-1,3,4 2 above 40 glob_mr_all_tajd_outliers.txt
+```
+
+## Compare outlier windows
+
+```R
+library(dplyr)
+
+# import tables of outliers for each statistic
+fd_outl <- read.table("./dsuite/fD_40_20_outliers_p05.txt", header = TRUE)
+fdm_outl <- read.table("./dsuite/fDm_40_20_outliers_p05.txt", header = TRUE)
+df_outl <- read.table("./dsuite/df_40_20_outliers_p05.txt", header = TRUE)
+
+dxy_outl_p95 <- read.table("./pixy/glob_MR_cord_MR_dxy_outliers_p95.txt", header = TRUE)
+dxy_outl_p90 <- read.table("./pixy/glob_MR_cord_MR_dxy_outliers_p90.txt", header = TRUE)
+dxy_outl_p85 <- read.table("./pixy/glob_MR_cord_MR_dxy_outliers_p85.txt", header = TRUE)
+dxy_outl_sd2 <- read.table("./pixy/glob_MR_cord_MR_dxy_outliers_sd2.txt", header = TRUE)
+pi_outl_p05 <- read.table("./pixy/glob_pi_outliers_p05.txt", header = TRUE)
+pi_outl_p10 <- read.table("./pixy/glob_pi_outliers_p10.txt", header = TRUE)
+pi_outl_p15 <- read.table("./pixy/glob_pi_outliers_p15.txt", header = TRUE)
+pi_outl_sd2 <- read.table("./pixy/glob_pi_outliers_sd2.txt", header = TRUE)
+
+tajd_outl <- read.table("./vcftools/glob_mr_all_tajd_outliers.txt", header = TRUE)
+
+# compare windows for overlaps
+dxy05_pi05 <- inner_join(dxy_outl_p95, pi_outl_p05) # 3 common
+dxy10_pi10 <- inner_join(dxy_outl_p90, pi_outl_p10) # 11 common
+dxy15_pi15 <- inner_join(dxy_outl_p85, pi_outl_p15) # 22 common
+
+write.table(dxy05_pi05, "pi_dxy_outl_p05.txt", quote = FALSE, col.names = TRUE, row.names = FALSE)
+write.table(dxy10_pi10, "pi_dxy_outl_p10.txt", quote = FALSE, col.names = TRUE, row.names = FALSE)
+write.table(dxy15_pi15, "pi_dxy_outl_p15.txt", quote = FALSE, col.names = TRUE, row.names = FALSE)
+```
+
+Removed headers from Dxy/Pi overlap files to make them BED format
+
+```bash
+PIXY_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan"
+declare -a PIXY_LIST=(pi_dxy_outl_p05 pi_dxy_outl_p10 pi_dxy_outl_p15)
+DSUITE_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/dsuite"
+declare -a DSUITE_LIST=(df_40_20_outliers_p05 fD_40_20_outliers_p05 fDm_40_20_outliers_p05)
+
+for NAME in "${PIXY_LIST[@]}"
+do
+    tail -n +2 "$PIXY_DIR"/"$NAME".txt | awk '{gsub(" ","\t"); print}' > "$PIXY_DIR"/"$NAME".bed
+done
+
+for NAME in "${DSUITE_LIST[@]}"
+do
+    tail -n +2 "$DSUITE_DIR"/"$NAME".txt | awk '{gsub(" ","\t"); print}' > "$DSUITE_DIR"/"$NAME".bed
+done
+```
+
+Get overlap in fdM windows and pi/dxy windows using `BEDTools`.
+
+```bash
+PIXY_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan"
+DSUITE_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/dsuite"
+
+module load bedtools/2.30.0
+
+bedtools intersect -a "$PIXY_DIR"/pi_dxy_outl_p05.bed -b "$DSUITE_DIR"/df_40_20_outliers_p05.bed -wa > pi_dxy_outl_p05_df.bed
+```
+
+Fstats of overlapping windows as compared to Fstat distribution:
+
+**5%**
+| Chr   | Start    | End       | fD       | fDM      | df       |
+| ----- | -------- | --------- | -------- | -------- | -------- |
+| Chr08 | 67870000 | 67874999  | 0.127294 | 0.077470 | 0.007757 |
+
+**10%**
+| Chr   | Start    | End      | fD        | fDM       | df        |
+| ----- | ---------| ---------| --------- | --------- | --------- |
+| Chr02 | 8340000  | 8344999  | -0.006772 | -0.005344 | -0.008166 |
+| Chr02 | 14115000 | 14119999 | 0.371875  | 0.278639  | 0.337718  |
+| Chr03 | 17195000 | 17199999 | -0.053282 | -0.042062 | -0.029466 |
+| Chr03 | 30380000 | 30384999 | 0.003036  | 0.002502  | 0.015761  |
+| Chr03 | 57880000 | 57884999 | 0.051417  | 0.038933  | 0.028908  |
+| Chr03 | 61200000 | 61204999 | 0.027935  | 0.022333  | 0.003827  |
+| Chr05 | 59150000 | 59154999 | -0.015417 | -0.010327 | -0.022913 |
+| Chr06 | 16120000 | 16124999 | -0.008713 | -0.007472 | -0.005123 |
+| Chr06 | 23855000 | 23859999 | -0.280654 | -0.159607 | -0.051590 |
+| Chr09 | 33970000 | 33974999 | -0.040472 | -0.026516 | -0.009094 |
+
+**15%**
+| Chr   | Start    | End      | fD         | fDM        | df        |
+| ----- | ---------| ---------| ---------- | ---------- | --------- |
+| Chr03 | 29230000 | 29234999 |  0.032828  | 0.025977   | 0.004450  |
+| Chr03 | 61545000 | 61549999 | 0.042820   | 0.035960   | 0.005258  |
+| Chr06 | 4010000  | 4014999  | 0.104500   | 0.075476   | 0.015816  |
+| Chr06 | 17415000 | 17419999 |  -0.008713 | -0.007472  | -0.005123 |
+| Chr06 | 23955000 | 23959999 | -0.280488  | -0.153720  | -0.041347 |
+| Chr06 | 23975000 | 23979999 | -0.280488  | -0.153720  | -0.041347 |
+| Chr06 | 24765000 | 24769999 | -0.028896  | -0.021621  | -0.022063 |
+| Chr06 | 46335000 | 46339999 | 0.204911   | 0.171211   | 0.142243  |
+| Chr08 | 6195000  | 6199999  | 0.039659   | 0.028836   | 0.019434  |
+| Chr08 | 17045000 | 17049999 | -0.004604  | -0.002842  | 0.001133  |
+| Chr09 | 36560000 | 36564999 |  -0.040472 | -0.026516  | -0.009094 |

@@ -9,6 +9,8 @@
 ###    min_snps: The minimum number of SNPs to include a window in calculations
 ###    out: name of file to write with outlier windows
 
+options(scipen = 999)
+
 # import command line arguments and read file
 infile_name <- commandArgs(trailingOnly = TRUE)[1]
 mode <- commandArgs(trailingOnly = TRUE)[2]
@@ -18,13 +20,23 @@ direction <- commandArgs(trailingOnly = TRUE)[5]
 min_snps <- as.numeric(commandArgs(trailingOnly = TRUE)[6])
 outfile_name <- commandArgs(trailingOnly = TRUE)[7]
 
-in_table <- read.table(infile_name, header = TRUE, sep = "\t", na.strings="")
+in_table <- read.table(infile_name, header = TRUE, sep = "\t", na.strings = c("NA", "NaN", "nan"), as.is = TRUE)
 
-chr_col <- strsplit(col_nums, ",")[1]
-win_start_col <- as.numeric(strsplit(col_nums, ",")[2])
-win_end_col <- as.numeric(strsplit(col_nums, ",")[3])
-snp_count_col <- as.numeric(strsplit(col_nums, ",")[4])
-stat_col <- as.numeric(strsplit(col_nums, ",")[5])
+chr_col <- as.numeric(strsplit(col_nums, ",")[[1]][1])
+win_start_col <- as.numeric(strsplit(col_nums, ",")[[1]][2])
+win_end_col <- as.numeric(strsplit(col_nums, ",")[[1]][3])
+snp_count_col <- as.numeric(strsplit(col_nums, ",")[[1]][4])
+stat_col <- as.numeric(strsplit(col_nums, ",")[[1]][5])
+
+# convert relevant columns' classes
+in_table[, win_start_col] <- as.numeric(in_table[, win_start_col])
+if(win_end_col != -1){
+    in_table[, win_end_col] <- as.numeric(in_table[, win_end_col])
+}
+if(snp_count_col != -1){
+    in_table[, snp_count_col] <- as.numeric(in_table[, snp_count_col])
+}
+in_table[, stat_col] <- as.numeric(in_table[, stat_col])
 
 # filter input by num SNPs
 if(snp_count_col == -1){
@@ -41,6 +53,7 @@ if(mode == "sd"){
 
     # Calculate cutoff
     sd_cutoff <- cutoff*stat_sd
+
 
     # Get outlier windows
     if(direction == "above"){
@@ -61,7 +74,6 @@ if(mode == "sd"){
     } else {
         warning(paste("Direction argument", direction, "not recognized. Specify above or below."))
     }
-
     percent_cutoff <- sort(filtered_table[, stat_col])[cutoff_index]
 
     # Get outlier windows
@@ -79,18 +91,18 @@ if(mode == "sd"){
 if(win_end_col == -1){
     # If there isn't a window end column in the file, 
     # assume the window ends just before the next starts
-    win_end <- unlist(sapply(c(1:nrow(filtered_table) - 1), function(i) filtered_table[i + 1, win_start_col] - 1))
+    win_end <- unlist(sapply(c(1:(nrow(filtered_table) - 1)), function(i) filtered_table[i + 1, win_start_col] - 1))
     # assume the final end position is of the same step size as the penultimate one.
     last_step_size <- win_end[nrow(filtered_table) - 1] - filtered_table[nrow(filtered_table) - 1, win_start_col]
     last_end_pos <- filtered_table[nrow(filtered_table), win_start_col] + last_step_size
     win_end <- c(win_end, last_end_pos)
 
     flagged_windows <- filtered_table[flagged, c(chr_col, win_start_col)]
-    flagged_windows <- cbind(flagged_windows, win_end)
-    col.names(flagged_windows) <- c("Chr", "Start", "End")
+    flagged_windows <- cbind(flagged_windows, win_end[flagged])
+    colnames(flagged_windows) <- c("Chr", "Start", "End")
 } else {
     flagged_windows <- filtered_table[flagged, c(chr_col, win_start_col, win_end_col)]
-    col.names(flagged_windows) <- c("Chr", "Start", "End")
+    colnames(flagged_windows) <- c("Chr", "Start", "End")
 }
 
 write.table(flagged_windows, outfile_name, quote = FALSE, row.names = FALSE, col.names = TRUE)
