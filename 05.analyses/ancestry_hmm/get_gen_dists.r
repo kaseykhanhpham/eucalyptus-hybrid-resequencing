@@ -6,7 +6,7 @@
 # out_name: name of the output file to be written with distances corresponding to each row of the provided counts table
 
 # turn off scientific notation
-options(scipen=999)
+options(scipen = 999, digits = 15)
 
 # import CLI arguments
 counts_filename <- commandArgs(trailingOnly = TRUE)[1]
@@ -88,7 +88,7 @@ get_dist <- function(chr, pos, genmap){
             dist <- before_dist + fraction_between * (after_dist - before_dist)
         }
     }
-    morgans <- dist*100
+    morgans <- dist/100
     return(morgans)
 }
 

@@ -172,7 +172,7 @@ for i in range(0,len(sorted_pos)):
         out_line = out_line + str(allele1_ref_count[sorted_pos[i]][j]) + "\t"
         out_line = out_line + str(allele2_ref_count[sorted_pos[i]][j]) + "\t"
     # add genetic distances between variants
-    out_line = out_line + str(round(gen_dists[i], 3)) + "\t"
+    out_line = out_line + "{:.8f}".format(round(gen_dists[i], 8)) + "\t"
     # iterate over admixed samples and add allele counts for each
     for k in range(0, len(admix_conns)):
         out_line = out_line + str(allele1_adm_count[sorted_pos[i]][k]) + "\t"
