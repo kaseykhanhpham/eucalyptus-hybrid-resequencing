@@ -143,6 +143,8 @@ trimal -in ssc_assemblies_aligned.fas -out ssc_assemblies_trimmed.fas -gt 0.6
 trimal -in lsc_assemblies_aligned.fas -out lsc_assemblies_trimmed.fas -gt 0.6
 ```
 
+Made very minor manual adjustments to LSC before concatenating in `BioEdit`.
+
 **Concatenate regions:**
 ```bash
 module load python/3.8
@@ -179,9 +181,13 @@ meta_table <- read.csv(meta_name, header = TRUE, as.is = TRUE)
 cp_table <- read.csv(cp_hap_meta_name, header = TRUE, as.is = TRUE)
 intree <- read.tree(intree_name)
 
-# add outgroup labels
-meta_table <- rbind(meta_table, c("HM347959.1", "", "E. grandis"))
-meta_table <- rbind(meta_table, c("KC180790.1", "", "E. saligna"))
+# add NCBI plastome labels
+assemb_acc <- c("AY780259.1", "KC180787.1", "CM024728.1", "NC_008115.1", "NC_022395.1", "KC180788.1", "CM024559.1", "MN736961.1", "HM347959.1", "MZ670598.1", "KC180790.1", "NC_022397.1")
+assemb_tax <- c("globulus", "globulus",  "globulus","globulus", "nitens", "nitens", "viminalis", "smithii", "grandis", "robusta", "saligna", "saligna")
+
+to_add_to_samples <- cbind(assemb_acc, assemb_tax, assemb_acc)
+colnames(to_add_to_samples) <- c("RAPiD_ID", "Taxon", "Accession")
+meta_table <- rbind(meta_table, to_add_to_samples)
 
 # replace tip names
 label_order <- match(intree$tip.label, meta_table$RAPiD_ID)
@@ -190,12 +196,14 @@ replacemt_labels <- paste(meta_table[label_order, "Accession"], meta_table[label
 intree$tip.label <- replacemt_labels
 
 # root tree
-intree <- root(intree, c("E. grandis__NA"), resolve.root = TRUE)
+intree_rooted <- root(intree, c("MZ670598.1_robusta_NA", "HM347959.1_grandis_NA"), resolve.root = TRUE)
 
 # plot tree
-tip_colors <- sapply(meta_table[label_order, "Taxon"], function(x) ifelse(x == "cord_MR", "goldenrod1", ifelse(x == "glob_MR", "black", "deepskyblue4")))
+tip_colors <- sapply(meta_table[label_order, "Taxon"], function(x) ifelse(x == "cord_MR", "goldenrod1", ifelse(x == "glob_MR", "black", (ifelse(x == "glob_pure", "deepskyblue4", "gray"))))
 
-plot(intree, tip.color = tip_colors, cex = 1, show.node.label = TRUE, adj = 1, align.tip.label = TRUE)
+plot(intree_rooted, tip.color = tip_colors, cex = 0.8)
+nodelabels(intree_rooted$node.label, adj = c(1.25), cex = 0.8, bg = "white")
 ```
 
-![chloroplast phylogeny results, tips labeled by accession and sample species](cp_tree_rough.png "Chloroplast Phylogeny")
+![chloroplast phylogeny results, tips labeled by accession and sample species](concatenated_cp_aligned.png "Chloroplast Phylogeny")
+
