@@ -1,0 +1,12 @@
+Chr08	67870038	67870334	Chr08	Liftoff	gene	67870039	67870334	.	+	.	ID=ANN14063;Note=Similar to PDF2.5: Defensin-like protein 6 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.995;valid_ORFs=1;extra_copy_number=0;copy_num_ID=ANN14063_0
+Chr08	67870038	67870334	Chr08	Liftoff	mRNA	67870039	67870334	.	+	.	ID=ANN14063-RA;Parent=ANN14063;Note=Similar to PDF2.5: Defensin-like protein 6 (Arabidopsis thaliana OX=3702);_AED=0.31;_eAED=0.31;matches_ref_protein=True;valid_ORF=True;extra_copy_number=0
+Chr08	67870038	67870102	Chr08	Liftoff	exon	67870039	67870102	.	+	.	ID=ANN14063-RA:exon:675;Parent=ANN14063-RA;extra_copy_number=0
+Chr08	67870176	67870334	Chr08	Liftoff	exon	67870177	67870334	.	+	.	ID=ANN14063-RA:exon:676;Parent=ANN14063-RA;extra_copy_number=0
+Chr08	67870038	67870102	Chr08	Liftoff	CDS	67870039	67870102	.	+	.	ID=ANN14063-RA:cds;Parent=ANN14063-RA;extra_copy_number=0
+Chr08	67870176	67870334	Chr08	Liftoff	CDS	67870177	67870334	.	+	.	ID=ANN14063-RA:cds;Parent=ANN14063-RA;extra_copy_number=0
+Chr08	67872592	67872888	Chr08	Liftoff	gene	67872593	67872888	.	+	.	ID=ANN14064;Note=Similar to PDF2.5: Defensin-like protein 6 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=1.0;valid_ORFs=1;extra_copy_number=0;copy_num_ID=ANN14064_0
+Chr08	67872592	67872888	Chr08	Liftoff	mRNA	67872593	67872888	.	+	.	ID=ANN14064-RA;Parent=ANN14064;Note=Similar to PDF2.5: Defensin-like protein 6 (Arabidopsis thaliana OX=3702);_AED=0.31;_eAED=0.31;matches_ref_protein=True;valid_ORF=True;extra_copy_number=0
+Chr08	67872592	67872656	Chr08	Liftoff	exon	67872593	67872656	.	+	.	ID=ANN14064-RA:exon:677;Parent=ANN14064-RA;extra_copy_number=0
+Chr08	67872730	67872888	Chr08	Liftoff	exon	67872731	67872888	.	+	.	ID=ANN14064-RA:exon:678;Parent=ANN14064-RA;extra_copy_number=0
+Chr08	67872592	67872656	Chr08	Liftoff	CDS	67872593	67872656	.	+	.	ID=ANN14064-RA:cds;Parent=ANN14064-RA;extra_copy_number=0
+Chr08	67872730	67872888	Chr08	Liftoff	CDS	67872731	67872888	.	+	.	ID=ANN14064-RA:cds;Parent=ANN14064-RA;extra_copy_number=0

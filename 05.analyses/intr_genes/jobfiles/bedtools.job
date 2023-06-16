@@ -1,0 +1,24 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=bedtools
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=1gb
+#SBATCH --time=1:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=bedtools_%j.out
+#SBATCH --error=bedtools_%j.err
+
+module load bedtools/2.30.0
+
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/no_outgroup/go_enrichment"
+WINDOWS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/no_outgroup/go_enrichment/dxy_pi_windows"
+ANNOT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/Eglobulus_genome_X46/"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan"
+
+while read NAME
+do
+    bedtools intersect -a "$WINDOWS_DIR"/common_Dxy_Pi_"$NAME".bed -b "$ANNOT_DIR"/EGLOB-X46.v1.0.annotation.gff -wb > common_Dxy_Pi_genes_"$NAME".tab
+done < "$LIST_DIR"/Eglobulus_MR.txt
