@@ -58,16 +58,16 @@ Initial run parameters:
 * -p: second ancestry pulse for cordy background, start at 1700 generations (assuming pleistocene admixture and generation times of 10 years) and optimize, 1% of current admixed genomes but optimize estimate
 * -g: genotype counts provided rather than read pileups
 * -b: do 100 bootstraps of 10,000 SNP blocks
--ne: effective population size of the admixed population -- I don't know this, so I'm not going to try to provide it.
+* -ne: effective population size of the admixed population -- I don't know this, so I'm not going to try to provide it.
 
 ```bash
 # Run in UFRC queue system; see ancestryhmm.job for more details.
-# Resources used: 23 Gb, 30 min
+# Resources used: 23 Gb, 7 hrs
 
 module load ancestryhmm/1.0.2
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
 
-ancestry_hmm -i "$WDIR"/all_ahmm_in.tab -s "$WDIR"/sample_ploidy.txt -a 2 0.99 0.01 -p 0 100000 0.99 -p 1 -1700 0.01 -g -b 100 10000
+ancestry_hmm -i "$WDIR"/all_ahmm_in.tab -s "$WDIR"/sample_ploidy.txt -a 2 0.99 0.01 -p 0 100000 0.99 -p 1 -1700 0.01 -g -b 100 1000
 ```
 
 ## Analyze results
