@@ -78,7 +78,7 @@ Seem too short to be real genes; Look into further.
 **15%:**
 | Chr   | Start    | End      | X46 Gene ID | Annotation                                                                              |
 | ----- | -------- | -------- | ----------- |---------------------------------------------------------------------------------------- |
-| Chr03 | 29220495 | 29235591 | ANN22523    | Similar to SPCC1672.07: U3 small nucleolar RNA-associated protein 21 homolog (S. pombe (strain 972 / ATCC 24843) OX=284812) |
+| Chr03 | 29220495 | 29235591 | ANN21306    | Similar to SPCC1672.07: U3 small nucleolar RNA-associated protein 21 homolog (S. pombe (strain 972 / ATCC 24843) OX=284812) |
 | Chr06 | 4009547  | 4015598  | ANN14454    | Similar to PEPKR2: Serine/threonine-protein kinase PEPKR2 (A. thaliana OX=3702)         |
 | Chr06 | 17411506 | 17417049 | ANN15492    | Similar to PSI2: Protein PSK SIMULATOR 2 (Arabidopsis thaliana OX=3702)                 |
 | Chr06 | 23955855 | 23960369 | ANN15818    | Similar to GAMMACA1: Gamma carbonic anhydrase 1, mitochondrial (A. thaliana OX=3702)    |
