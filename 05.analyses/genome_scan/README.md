@@ -59,6 +59,15 @@ do
 done
 ```
 
+| Statistic | Pop 1     | Pop 2     | Value    |
+| --------- | --------- | --------- | -------- |
+| pi        | glob_MR   | N/A       | 0.02842  |
+| pi        | glob_pure | N/A       | 0.02856  |
+| pi        | cord_MR   | N/A       | 0.03067  |
+| dxy       | glob_MR   | glob_pure | 0.02847  |
+| dxy       | glob_MR   | cord_MR   | 0.04104  |
+| dxy       | glob_pure | cord_MR   | 0.04081  |
+
 Ran `pixy` for all samples except WF03/1051 and the `E. grandis` outgroup.
 
 ```bash
@@ -375,6 +384,8 @@ do
     cat glob_ref_"$NAME".Tajima.D >> glob_ref_all.Tajima.D
     cat glob_ref_"$NAME".TsTv >> glob_ref_all.TsTv
 done
+
+rm *chr* # clean up chr-specific files
 ```
 
 ### Get outlier windows
@@ -384,7 +395,8 @@ Retrieved outlier windows using custom `R` script.
 ```bash
 module load R/4.2
 SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
-Rscript "$SCRIPT_DIR"/process_stat_windows.r glob_mr_all.Tajima.D sd 1,2,-1,3,4 2 above 40 glob_mr_all_tajd_outliers.txt
+Rscript "$SCRIPT_DIR"/process_stat_windows.r glob_mr_all.Tajima.D percent 1,2,-1,3,4 0.05 below 40 glob_mr_all_tajd_outliers_low.txt
+Rscript "$SCRIPT_DIR"/process_stat_windows.r glob_mr_all.Tajima.D percent 1,2,-1,3,4 0.05 above 40 glob_mr_all_tajd_outliers_high.txt
 ```
 
 ## Compare outlier windows
