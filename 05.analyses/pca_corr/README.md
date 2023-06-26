@@ -75,6 +75,8 @@ PC1 is the only PC which strongly differentiates between _E. globulus_ and _E. c
 
 ![Plot of PC5 vs PC6 for MAF=0.05 (just reference populations); _E. cordata_ clusters in the middle of a wider _E. globulus_ distribution along PCs 5 and 6.](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/blob/main/05.analyses/pca_corr/refs_maf05_pc56.png "MAF=0.05, refs only, PC5 vs. PC6")
 
+### Get outliers
+
 ```R
 library(pcadapt)
 library(qvalue)
@@ -91,7 +93,7 @@ plot(corr_test, option = "qqplot")
 hist(corr_test$pvalues, xlab = "p-values", main = NULL, breaks = 50)
 plot(corr_test, option = "stat.distribution")
 
-# Get outliers
+## Get outliers
 qval <- qvalue(corr_test$pvalues)$qvalues
 alpha <- 0.005
 outliers <- which(qval < alpha)
@@ -101,3 +103,19 @@ write.table(bim_out, "refs_maf05_outliers.bim", quote = FALSE, row.names = FALSE
 ```
 
 There were 4,981 linkage-pruned SNPs out of 63,109 correlated with PC1 after adjustment.
+
+Checked PC-correlated SNPs against outlier windows identified in genome scan analysis.
+
+```bash
+module load R/4.2
+module load bedtools/2.30.0
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+GS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan"
+
+Rscript "$SCRIPT_DIR"/bim_to_bed.r refs_maf05_outliers.bim refs_maf05_outliers.bed
+bedtools intersect -a "$GS_DIR"/pi_dxy_outl_p15.bed -b refs_maf05_outliers.bed -wb > pi15_dxy15_pca_overlap.bed
+```
+
+No PC-correlated variants overlapping with pi/dxy outlier windows.
+
+## Compare PC-correlated SNPs in introgressed samples
