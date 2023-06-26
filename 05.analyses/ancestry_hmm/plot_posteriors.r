@@ -12,7 +12,7 @@ num_states <- ncol(infile) - 2
 state_cols <- colnames(infile)[3:(2 + num_states)]
 
 # Get colors
-if(length(commandArgs(trailingOnly = TRUE) > 1)){
+if(length(commandArgs(trailingOnly = TRUE)) > 1){
     colors_list <- unlist(strsplit(commandArgs(trailingOnly = TRUE)[2], ","))
 } else {
     colors_list <- c()
@@ -20,15 +20,20 @@ if(length(commandArgs(trailingOnly = TRUE) > 1)){
 
 chr_list <- unique(infile$chrom)
 
+split_file_addr <- unlist(strsplit(infile_name, "/"))
+infile_name_relative <- split_file_addr[length(split_file_addr)]
+base_name <- gsub(".posterior$", "", infile_name_relative)
+out_name <- paste(base_name, "posteriors.pdf", sep = "_")
+write(paste("Plotting", infile_name_relative, "to", out_name), stdout())
+pdf(file = out_name, onefile = TRUE)
+
 # plot each chromosome separately
 for(chr in chr_list){
     infile_subset <- infile[which(infile$chrom == chr), ]
     # merge state columns into one and add col for state
     subset_piv <- pivot_longer(infile_subset, cols = state_cols, names_to = "state", values_to = "posterior")
-    base_name <- gsub(".posterior$", "", infile_name)
-    out_name <- paste(base_name, chr, "posts.png", sep = "_")
     # construct lineplot object in ggplot2
-    cplot <- ggplot(subset_piv, aes(x = position, y = posterior)) + geom_line(aes(col = state)) + theme_light()
+    cplot <- ggplot(subset_piv, aes(x = position, y = posterior)) + geom_line(aes(col = state)) + theme_light() + ggtitle(paste(chr, "ancestry posteriors"))
     # generate color palettes
     if(length(colors_list) > 0){
         cplot <- cplot + scale_color_manual(name = "State", labels = state_cols, values = colors_list)
@@ -36,7 +41,9 @@ for(chr in chr_list){
         cplot <- cplot + scale_colour_hue(name = "State", labels = state_cols)
     }
     # plot
-    png(out_name, height = 1000, width = 1000, unit = "px")
-        cplot
-    dev.off()
+    print(cplot)
+    write(paste("\tFinished plotting", chr), stdout())
 }
+dev.off()
+
+write(paste("Done writing to", out_name), stdout())

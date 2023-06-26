@@ -1,0 +1,21 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=cord_ahmm
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=2gb
+#SBATCH --time=1-00:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=get_cord_ahmm_%j.out
+#SBATCH --error=get_cord_ahmm_%j.err
+
+module load R/4.2
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+
+while read NAME
+do
+    Rscript "$SCRIPT_DIR"/get_cord_posterior.r "$WDIR"/posteriors/"$NAME".posterior "$NAME"_cord 0.95
+done < "$WDIR"/Eglobulus_MR.txt

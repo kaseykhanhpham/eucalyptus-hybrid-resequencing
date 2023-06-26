@@ -53,7 +53,7 @@ Ran `Ancestry_HMM` using generated genotype counts input files and results from 
 Initial run parameters:
 * -i: input of genotype counts among reference and introgressed samples
 * -s: ploidy of each sample, all diploid
-* -a: two source populations, 0 (E. globulus) contributed 99% of variation and 1 (E. cordata) contributed 1%
+* -a: two source populations, 0 (_E. globulus_) contributed 99% of variation and 1 (E. cordata) contributed 1%
 * -p: first ancestry pulse for glob background, num generations set above limit to indicate starting background, 99% of current admixed genomes 
 * -p: second ancestry pulse for cordy background, start at 1700 generations (assuming pleistocene admixture and generation times of 10 years) and optimize, 1% of current admixed genomes but optimize estimate
 * -g: genotype counts provided rather than read pileups
@@ -62,7 +62,7 @@ Initial run parameters:
 
 ```bash
 # Run in UFRC queue system; see ancestryhmm.job for more details.
-# Resources used: 23 Gb, 7 hrs
+# Resources used: 24 Gb, 6 hrs
 
 module load ancestryhmm/1.0.2
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
@@ -71,3 +71,34 @@ ancestry_hmm -i "$WDIR"/all_ahmm_in.tab -s "$WDIR"/sample_ploidy.txt -a 2 0.99 0
 ```
 
 ## Analyze results
+
+Plotted posteriors by chromosome for each admixed sample locally.
+```bash
+# Run in UFRC queue system; see plot_posteriors.job for more details.
+# Resources used: 600 Mb, 10 min
+
+module load R/4.2
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+
+while read NAME
+do
+    Rscript "$SCRIPT_DIR"/plot_posteriors.r "$WDIR"/posteriors/"$NAME".posterior "deepskyblue4,green3,goldenrod1"
+done < "$WDIR"/Eglobulus_MR.txt
+```
+
+Retrieved windows with a posterior probability of > 95% for homozygous or heterozygous _E. cordata ancestry_.
+
+```bash
+# Run in UFRC queue system; see get_cord_posterior.job for more details.
+# Resources used: 500 Mb, 7 min
+
+module load R/4.2
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+
+while read NAME
+do
+    Rscript "$SCRIPT_DIR"/get_cord_posterior.r "$WDIR"/posteriors/"$NAME".posterior "$NAME"_cord 0.95
+done < "$WDIR"/Eglobulus_MR.txt
+```
