@@ -1,0 +1,26 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=pixy_inds
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=1gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=12
+#SBATCH --nodes=1
+#SBATCH --output=pixy_inds_%j.out
+#SBATCH --error=pixy_inds_%j.err
+
+module load conda
+module load vcftools/0.1.16
+
+ENV_DIR="/blue/soltis/kasey.pham/conda/envs"
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/individuals"
+
+conda activate "$ENV_DIR"/pixy
+
+while read NAME
+do
+    pixy --stats dxy --vcf "$VCF_DIR"/all_fil.vcf.gz --populations "$LIST_DIR"/population_files/populations_cord_"$NAME".txt --window_size 5000 --n_cores 12 --output_prefix cord_"$NAME"
+done < "$LIST_DIR"/Eglobulus_MR.txt

@@ -495,3 +495,16 @@ Fstats of overlapping windows as compared to Fstat distribution:
 | Chr08 | 6195000  | 6199999  | 0.039659   | 0.028836   | 0.019434  |
 | Chr08 | 17045000 | 17049999 | -0.004604  | -0.002842  | 0.001133  |
 | Chr09 | 36560000 | 36564999 |  -0.040472 | -0.026516  | -0.009094 |
+
+## Calculate dXY for admixed individuals one-by-one
+
+Create population files for each admixed individual.
+```bash
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/individuals"
+
+while read NAME
+do
+    cat "$WDIR"/populations_cord.txt > "$WDIR"/population_files/populations_cord_"$NAME".txt
+    printf '%s\tglob_MR\n' "$NAME" >> "$WDIR"/population_files/populations_cord_"$NAME".txt
+done < "$WDIR"/Eglobulus_MR.txt
+```
