@@ -191,6 +191,8 @@ ref_mr_dxy_outl <- sum(outl_dxy_fil[which(outl_dxy_fil$pop1 == "glob_MR" & outl_
 
 ref_cord_dxy <- sum(all_dxy_fil[which(all_dxy_fil$pop1 == "glob_pure" & all_dxy_fil$pop2 == "cord_MR"),"count_diffs"])/sum(all_dxy_fil[which(all_dxy_fil$pop1 == "glob_pure" & all_dxy_fil$pop2 == "cord_MR"),"count_comparisons"]) # 0.04022
 ref_cord_dxy_outl <- sum(outl_dxy_fil[which(outl_dxy_fil$pop1 == "glob_pure" & outl_dxy_fil$pop2 == "cord_MR"),"count_diffs"])/sum(outl_dxy_fil[which(outl_dxy_fil$pop1 == "glob_pure" & outl_dxy_fil$pop2 == "cord_MR"),"count_comparisons"]) # 0.04089
+
+mr_cord_dxy <- sum(all_dxy_fil[which(all_dxy_fil$pop1 == "glob_MR" & all_dxy_fil$pop2 == "cord_MR"),"count_diffs"])/sum(all_dxy_fil[which(all_dxy_fil$pop1 == "glob_MR" & all_dxy_fil$pop2 == "cord_MR"),"count_comparisons"])
 ```
 
 Whole-genome pi comparisons:
@@ -206,6 +208,7 @@ Whole-genome dxy comparisons:
 | all       | all        | 0.03554            | 0.03610               |
 | _glob_ MR | _glob_ ref | 0.02794            | 0.02857               |
 | _cord_    | _glob_ ref | 0.04022            | 0.04089               |
+| _glob_ MR | _cord_     | 0.04044            | N/A                   |
 
 Inclusion of WF03/1051 changed the estimated genome-wide pi for the reference group alone the most, as expected. Values of dXY remained mostly not too strongly different. The numbers don't seem so extremely different that I would be warranted in excluding the sample...
 
@@ -498,7 +501,7 @@ Fstats of overlapping windows as compared to Fstat distribution:
 
 ## Calculate dXY for admixed individuals one-by-one
 
-Create population files for each admixed individual.
+Created population files for each admixed individual.
 ```bash
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/individuals"
 
@@ -507,4 +510,56 @@ do
     cat "$WDIR"/populations_cord.txt > "$WDIR"/population_files/populations_cord_"$NAME".txt
     printf '%s\tglob_MR\n' "$NAME" >> "$WDIR"/population_files/populations_cord_"$NAME".txt
 done < "$WDIR"/Eglobulus_MR.txt
+```
+
+Ran `pixy` on all individual _E. globulus_ MR samples.
+
+```bash
+# Performed in UFRC queue system; see pixy_inds.job for more details.
+# Resources used: 1.4 Gb, 2 hrs
+
+module load conda
+module load vcftools/0.1.16
+
+ENV_DIR="/blue/soltis/kasey.pham/conda/envs"
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/individuals"
+
+conda activate "$ENV_DIR"/pixy
+
+while read NAME
+do
+    pixy --stats dxy --vcf "$VCF_DIR"/all_fil.vcf.gz --populations "$LIST_DIR"/population_files/populations_cord_"$NAME".txt --window_size 5000 --n_cores 12 --output_prefix cord_"$NAME"
+done < "$LIST_DIR"/Eglobulus_MR.txt
+```
+
+Retrieved outlier windows for each sample.
+
+```bash
+module load R/4.2
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/individuals"
+
+while read NAME
+do
+    Rscript "$SCRIPT_DIR"/process_stat_windows.r "$LIST_DIR"/cord_"$NAME"_dxy.txt percent 3,4,5,7,6 0.05 below 40 cord_"$NAME"_dxy_outl_p95.txt
+done < "$LIST_DIR"/Eglobulus_MR.txt
+
+while read NAME
+do
+    Rscript "$SCRIPT_DIR"/process_stat_windows.r "$LIST_DIR"/cord_"$NAME"_dxy.txt percent 3,4,5,7,6 0.10 below 40 cord_"$NAME"_dxy_outl_p90.txt
+done < "$LIST_DIR"/Eglobulus_MR.txt
+```
+
+Converted outlier windows to genome annotation BED files.
+
+```bash
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/individuals/outlier_files"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/individuals"
+
+while read NAME
+do
+    tail -n +2 cord_"$NAME"_dxy_outl_p90.txt | awk '{gsub(" ","\t"); print}' > "$WDIR"/bedfiles/cord_"$NAME"_dxy_outl_p90.bed
+    tail -n +2 cord_"$NAME"_dxy_outl_p95.txt | awk '{gsub(" ","\t"); print}' > "$WDIR"/bedfiles/cord_"$NAME"_dxy_outl_p95.bed
+done < "$LIST_DIR"/Eglobulus_MR.txt
 ```
