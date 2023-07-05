@@ -10,8 +10,8 @@ outfile_root <- commandArgs(trailingOnly = TRUE)[2]
 cutoff <- as.numeric(commandArgs(trailingOnly = TRUE)[3])
 
 infile <- read.table(infile_name, header = TRUE, sep = "\t")
-heterozygotes <- infile[which(infile[,2] > cutoff),]
-homozygotes <- infile[which(infile[,3] > cutoff),]
+heterozygotes <- infile[which(infile[,4] > cutoff),]
+homozygotes <- infile[which(infile[,5] > cutoff),]
 
 het_outname <- paste(outfile_root, "_het_", cutoff, ".tab", sep = "")
 hom_outname <- paste(outfile_root, "_hom_", cutoff, ".tab", sep = "")

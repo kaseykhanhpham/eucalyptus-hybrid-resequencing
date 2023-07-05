@@ -62,7 +62,7 @@ Initial run parameters:
 
 ```bash
 # Run in UFRC queue system; see ancestryhmm.job for more details.
-# Resources used: 24 Gb, 6 hrs
+# Resources used: 11 Gb, 3 hrs
 
 module load ancestryhmm/1.0.2
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
@@ -83,9 +83,11 @@ SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
 
 while read NAME
 do
-    Rscript "$SCRIPT_DIR"/plot_posteriors.r "$WDIR"/posteriors/"$NAME".posterior "deepskyblue4,green3,goldenrod1"
+    Rscript "$SCRIPT_DIR"/plot_posteriors.r "$WDIR"/posteriors/"$NAME".posterior "goldenrod1,green3,deepskyblue4"
 done < "$WDIR"/Eglobulus_MR.txt
 ```
+
+### Overlap with other outlier windows
 
 Retrieved windows with a posterior probability of > 95% for homozygous or heterozygous _E. cordata ancestry_.
 
@@ -101,4 +103,122 @@ while read NAME
 do
     Rscript "$SCRIPT_DIR"/get_cord_posterior.r "$WDIR"/posteriors/"$NAME".posterior "$NAME"_cord 0.95
 done < "$WDIR"/Eglobulus_MR.txt
+```
+
+Converted posterior tables to genome annotation BED files.
+
+```bash
+module load R/4.2
+
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+
+while read NAME
+do
+    Rscript "$SCRIPT_DIR"/post_to_bed.r "$NAME"_cord_het_0.95.tab bedfiles/"$NAME"_cord_het_0.95.bed_tmp
+    Rscript "$SCRIPT_DIR"/post_to_bed.r "$NAME"_cord_hom_0.95.tab bedfiles/"$NAME"_cord_hom_0.95.bed_tmp
+done < "$WDIR"/Eglobulus_MR.txt
+```
+
+Merged Ancestry_HMM loci together if <500 bp apart using `BEDTools`.
+
+```bash
+module load bedtools/2.30.0
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+
+while read NAME
+do
+    bedtools merge -d 500 -i "$NAME"_cord_het_0.95.bed_tmp > "$NAME"_cord_het_0.95.bed
+    bedtools merge -d 500 -i "$NAME"_cord_hom_0.95.bed_tmp > "$NAME"_cord_hom_0.95.bed
+done < "$LIST_DIR"/Eglobulus_MR.txt
+
+rm *.bed_tmp
+```
+
+Examined overlap between `Ancestry_HMM`-inferred _cordata_ regions, regions of MR _globulus_ with low dxy, and regions with high fdM.
+
+```bash
+module load bedtools/2.30.0
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+DXY_FILES="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/individuals/outlier_files/bedfiles"
+AHMM_FILES="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/cord_loci/bedfiles"
+DSUITE_FILES="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/dsuite"
+
+while read NAME
+do
+    # AHMM with DXY
+    bedtools intersect -a "$AHMM_FILES"/"$NAME"_cord_het_0.95.bed -b "$DXY_FILES"/cord_"$NAME"_dxy_outl_p95.bed > "$NAME"_ahmm_het_dxy_p95.bed
+    bedtools intersect -a "$AHMM_FILES"/"$NAME"_cord_het_0.95.bed -b "$DXY_FILES"/cord_"$NAME"_dxy_outl_p90.bed > "$NAME"_ahmm_het_dxy_p90.bed
+    bedtools intersect -a "$AHMM_FILES"/"$NAME"_cord_hom_0.95.bed -b "$DXY_FILES"/cord_"$NAME"_dxy_outl_p95.bed > "$NAME"_ahmm_hom_dxy_p95.bed
+    bedtools intersect -a "$AHMM_FILES"/"$NAME"_cord_hom_0.95.bed -b "$DXY_FILES"/cord_"$NAME"_dxy_outl_p90.bed > "$NAME"_ahmm_hom_dxy_p90.bed
+
+    # AHMM with f-stats
+    bedtools intersect -a "$AHMM_FILES"/"$NAME"_cord_het_0.95.bed -b "$DSUITE_FILES"/fDm_40_20_outliers_p05.bed > "$NAME"_ahmm_het_fDm.bed
+    bedtools intersect -a "$AHMM_FILES"/"$NAME"_cord_het_0.95.bed -b "$DSUITE_FILES"/df_40_20_outliers_p05.bed > "$NAME"_ahmm_het_df.bed
+    bedtools intersect -a "$AHMM_FILES"/"$NAME"_cord_hom_0.95.bed -b "$DSUITE_FILES"/fDm_40_20_outliers_p05.bed > "$NAME"_ahmm_hom_fDm.bed
+    bedtools intersect -a "$AHMM_FILES"/"$NAME"_cord_hom_0.95.bed -b "$DSUITE_FILES"/df_40_20_outliers_p05.bed > "$NAME"_ahmm_hom_df.bed
+
+done < "$LIST_DIR"/Eglobulus_MR.txt
+```
+
+### Characterize stats within high-posterior windows
+
+Converted `pixy` output into BED file of windows.
+
+```R
+wdir <- "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy"
+setwd(wdir)
+options(scipen=999)
+
+all_dxy <- read.table("all_dxy.txt", header = TRUE)
+all_pi <- read.table("all_pi.txt", header = TRUE)
+
+dxy_bed <- all_dxy[which(all_dxy$pop1 == "glob_MR" & all_dxy$pop2 == "cord_MR"), c("chromosome", "window_pos_1", "window_pos_2")]
+dxy_bed$window_pos_1 <- as.numeric(dxy_bed$window_pos_1) - 1
+write.table(dxy_bed, "all_dxy.bed", row.names = FALSE, col.names = FALSE, quote = FALSE, sep = "\t")
+
+pi_bed <- all_pi[which(all_pi$pop == "glob_MR"), c("chromosome", "window_pos_1", "window_pos_2")]
+pi_bed$window_pos_1 <- as.numeric(pi_bed$window_pos_1) - 1
+write.table(pi_bed, "all_pi.bed", row.names = FALSE, col.names = FALSE, quote = FALSE, sep = "\t")
+```
+
+Got pi/dxy windows for windows of high posterior probability of _cordata_ ancestry.
+
+```bash
+module load bedtools/2.30.0
+STAT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy"
+AHMM_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/cord_loci/bedfiles"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+
+while read NAME
+do
+    bedtools intersect -a "$STAT_DIR"/all_pi.bed -b "$AHMM_DIR"/"$NAME"_cord_hom_0.95.bed -wa > "$NAME"_cord_hom_0.95_pixy_windows.bed
+    bedtools intersect -a "$STAT_DIR"/all_pi.bed -b "$AHMM_DIR"/"$NAME"_cord_het_0.95.bed -wa > "$NAME"_cord_het_0.95_pixy_windows.bed
+done < "$LIST_DIR"/Eglobulus_MR.txt
+
+
+```
+
+Retrieved pi/dxy values for windows.
+
+```bash
+module load R/4.2
+PIXY_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy"
+BED_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+
+while read NAME
+do
+    # pi
+    Rscript calc_window_stats.r "$PIXY_DIR"/all_pi.txt "$BED_DIR"/"$NAME"_cord_hom_0.95_pixy_windows.bed 40 "pi" "glob_MR"
+    Rscript calc_window_stats.r "$PIXY_DIR"/all_pi.txt "$BED_DIR"/"$NAME"_cord_het_0.95_pixy_windows.bed 40 "pi" "glob_MR"
+
+    # dxy
+    Rscript calc_window_stats.r "$PIXY_DIR"/all_dxy.txt "$BED_DIR"/"$NAME"_cord_hom_0.95_pixy_windows.bed 40 "dxy" "glob_MR" "cord_MR"
+    Rscript calc_window_stats.r "$PIXY_DIR"/all_dxy.txt "$BED_DIR"/"$NAME"_cord_het_0.95_pixy_windows.bed 40 "dxy" "glob_MR" "cord_MR"
+
+    # fst
+    Rscript calc_window_stats.r "$PIXY_DIR"/all_fst.txt "$BED_DIR"/"$NAME"_cord_hom_0.95_pixy_windows.bed 40 "fst" "glob_MR" "cord_MR"
+    Rscript calc_window_stats.r "$PIXY_DIR"/all_fst.txt "$BED_DIR"/"$NAME"_cord_het_0.95_pixy_windows.bed 40 "fst" "glob_MR" "cord_MR"
+done < "$LIST_DIR"/Eglobulus_MR.txt
 ```

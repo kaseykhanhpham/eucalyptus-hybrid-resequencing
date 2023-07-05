@@ -17,6 +17,6 @@ SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
 
 while read NAME
 do
-    Rscript "$SCRIPT_DIR"/plot_posteriors.r "$WDIR"/posteriors/"$NAME".posterior "deepskyblue4,green3,goldenrod1"
+    Rscript "$SCRIPT_DIR"/plot_posteriors.r "$WDIR"/posteriors/"$NAME".posterior "goldenrod1,green3,deepskyblue4"
 done < "$WDIR"/Eglobulus_MR.txt
 

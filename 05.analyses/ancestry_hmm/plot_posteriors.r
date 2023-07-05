@@ -36,9 +36,9 @@ for(chr in chr_list){
     cplot <- ggplot(subset_piv, aes(x = position, y = posterior)) + geom_line(aes(col = state)) + theme_light() + ggtitle(paste(chr, "ancestry posteriors"))
     # generate color palettes
     if(length(colors_list) > 0){
-        cplot <- cplot + scale_color_manual(name = "State", labels = state_cols, values = colors_list)
+        cplot <- cplot + scale_color_manual(name = "State", values = colors_list)
     } else {
-        cplot <- cplot + scale_colour_hue(name = "State", labels = state_cols)
+        cplot <- cplot + scale_colour_hue(name = "State")
     }
     # plot
     print(cplot)

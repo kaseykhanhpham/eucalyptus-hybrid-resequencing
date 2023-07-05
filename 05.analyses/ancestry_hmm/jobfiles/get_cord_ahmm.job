@@ -4,7 +4,7 @@
 #SBATCH --job-name=cord_ahmm
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=kasey.pham@ufl.edu
-#SBATCH --mem=2gb
+#SBATCH --mem=1gb
 #SBATCH --time=1-00:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --nodes=1
