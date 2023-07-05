@@ -25,12 +25,13 @@ pixy_file <- read.table(pixy_file_name, header = TRUE)
 bed_file <- read.table(bed_file_name, header = FALSE)
 
 # correct for index-1 in bedfile
-bed_file[,2] <- bed_file[,2] - 1
+bed_file[,2] <- bed_file[,2] + 1
 
 # subset by bedfile-specified windows
-pixy_bed_mask <- unlist(apply(bed_file, 1, function(row) which(pixy_file$chromosome == row[1] &
+pixy_bed_mask <- c(unlist(apply(bed_file, 1, function(row) which(pixy_file$chromosome == row[1] &
                                                                pixy_file$window_pos_1 == as.numeric(row[2]) &
-                                                               pixy_file$window_pos_2 == as.numeric(row[3]))))
+                                                               pixy_file$window_pos_2 == as.numeric(row[3])))))
+pixy_bed_mask <- unique(pixy_bed_mask) # remove dupes
 # subset by minimum coverage
 if(stat %in% c("pi", "dxy")){
     pixy_cov_mask <- which(pixy_file$no_sites >= min_cov)
@@ -44,14 +45,14 @@ if(stat == "pi"){
     pixy_pop_mask <- unlist(sapply(seq(1,length(pop1)), function(i) which(pixy_file$pop1 == pop1[i] &
                                                                           pixy_file$pop2 == pop2[i])))
 }
-pixy_full_mask <- intersect(pixy_bed_mask, pixy_cov_mask, pixy_pop_mask)
+pixy_full_mask <- intersect(intersect(pixy_bed_mask, pixy_cov_mask), pixy_pop_mask)
 
 # calculate mean stat over windows subset
 if(stat %in% c("pi", "dxy")){
-    stat_calc <- sum(pixy_file[pixy_full_mask,"count_diffs"]) /
-                 sum(pixy_file[pixy_full_mask,"count_comparisons"])
+    stat_calc <- sum(as.numeric(pixy_file[pixy_full_mask,"count_diffs"])) /
+                 sum(as.numeric(pixy_file[pixy_full_mask,"count_comparisons"]))
 } else {
-    stat_calc <- mean(pixy_file[pixy_full_mask, "avg_wc_fst"], na.rm = TRUE)
+    stat_calc <- mean(as.numeric(pixy_file[pixy_full_mask, "avg_wc_fst"]), na.rm = TRUE)
 }
 
 # calculate SD forstats in window subset
@@ -63,13 +64,19 @@ if(stat %in% c("pi", "dxy")){
 stat_sd <- sd(pixy_file[pixy_full_mask, stat_col], na.rm = TRUE)
 
 # print histogram of stat in window subset
-hist_name <- paste(pixy_file_name, bed_file, "hist.png", sep = "_")
+pixy_file_only <- unlist(strsplit(pixy_file_name, "/"))[length(unlist(strsplit(pixy_file_name, "/")))]
+pixy_name_root <- gsub(".txt", "", pixy_file_only)
+bed_file_only <- unlist(strsplit(bed_file_name, "/"))[length(unlist(strsplit(bed_file_name, "/")))]
+bed_name_root <- gsub(".bed", "", bed_file_only)
+
+hist_name <- paste(pixy_name_root, bed_name_root, "hist.png", sep = "_")
 png(hist_name, height = 1000, width = 1000, units = "px")
-    hist(pixy_file[pixy_full_mask, stat_col])
+    hist(as.numeric(pixy_file[pixy_full_mask, stat_col]), breaks = 30)
 dev.off()
 
 # print to stdout()
 write(paste("Stat Calculations for", pixy_file_name, "and", bed_file_name), "", append = TRUE)
+write(paste("calculated for", length(pixy_full_mask), "windows\n"), "", append = TRUE)
 write(paste("mean", stat, ":", stat_calc, "\n"), "", append = TRUE)
 write(paste("sd of", stat, ":", stat_sd, "\n"), "", append = TRUE)
 write(paste("hist written to:", hist_name, "\n"), "", append = TRUE)

@@ -195,8 +195,6 @@ do
     bedtools intersect -a "$STAT_DIR"/all_pi.bed -b "$AHMM_DIR"/"$NAME"_cord_hom_0.95.bed -wa > "$NAME"_cord_hom_0.95_pixy_windows.bed
     bedtools intersect -a "$STAT_DIR"/all_pi.bed -b "$AHMM_DIR"/"$NAME"_cord_het_0.95.bed -wa > "$NAME"_cord_het_0.95_pixy_windows.bed
 done < "$LIST_DIR"/Eglobulus_MR.txt
-
-
 ```
 
 Retrieved pi/dxy values for windows.
@@ -206,19 +204,22 @@ module load R/4.2
 PIXY_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy"
 BED_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows"
 LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+
+touch ahmm_window_stats.txt
 
 while read NAME
 do
     # pi
-    Rscript calc_window_stats.r "$PIXY_DIR"/all_pi.txt "$BED_DIR"/"$NAME"_cord_hom_0.95_pixy_windows.bed 40 "pi" "glob_MR"
-    Rscript calc_window_stats.r "$PIXY_DIR"/all_pi.txt "$BED_DIR"/"$NAME"_cord_het_0.95_pixy_windows.bed 40 "pi" "glob_MR"
+    Rscript "$SCRIPT_DIR"/calc_window_stats.r "$PIXY_DIR"/all_pi.txt "$BED_DIR"/"$NAME"_cord_hom_0.95_pixy_windows.bed 40 "pi" "glob_MR" >> ahmm_window_stats_40.txt
+    Rscript "$SCRIPT_DIR"/calc_window_stats.r "$PIXY_DIR"/all_pi.txt "$BED_DIR"/"$NAME"_cord_het_0.95_pixy_windows.bed 40 "pi" "glob_MR">> ahmm_window_stats_40.txt
 
     # dxy
-    Rscript calc_window_stats.r "$PIXY_DIR"/all_dxy.txt "$BED_DIR"/"$NAME"_cord_hom_0.95_pixy_windows.bed 40 "dxy" "glob_MR" "cord_MR"
-    Rscript calc_window_stats.r "$PIXY_DIR"/all_dxy.txt "$BED_DIR"/"$NAME"_cord_het_0.95_pixy_windows.bed 40 "dxy" "glob_MR" "cord_MR"
+    Rscript "$SCRIPT_DIR"/calc_window_stats.r "$PIXY_DIR"/all_dxy.txt "$BED_DIR"/"$NAME"_cord_hom_0.95_pixy_windows.bed 40 "dxy" "glob_MR" "cord_MR" >> ahmm_window_stats_40.txt
+    Rscript "$SCRIPT_DIR"/calc_window_stats.r "$PIXY_DIR"/all_dxy.txt "$BED_DIR"/"$NAME"_cord_het_0.95_pixy_windows.bed 40 "dxy" "glob_MR" "cord_MR" >> ahmm_window_stats_40.txt
 
     # fst
-    Rscript calc_window_stats.r "$PIXY_DIR"/all_fst.txt "$BED_DIR"/"$NAME"_cord_hom_0.95_pixy_windows.bed 40 "fst" "glob_MR" "cord_MR"
-    Rscript calc_window_stats.r "$PIXY_DIR"/all_fst.txt "$BED_DIR"/"$NAME"_cord_het_0.95_pixy_windows.bed 40 "fst" "glob_MR" "cord_MR"
+    Rscript "$SCRIPT_DIR"/calc_window_stats.r "$PIXY_DIR"/all_fst.txt "$BED_DIR"/"$NAME"_cord_hom_0.95_pixy_windows.bed 40 "fst" "glob_MR" "cord_MR" >> ahmm_window_stats_40.txt
+    Rscript "$SCRIPT_DIR"/calc_window_stats.r "$PIXY_DIR"/all_fst.txt "$BED_DIR"/"$NAME"_cord_het_0.95_pixy_windows.bed 40 "fst" "glob_MR" "cord_MR" >> ahmm_window_stats_40.txt
 done < "$LIST_DIR"/Eglobulus_MR.txt
 ```
