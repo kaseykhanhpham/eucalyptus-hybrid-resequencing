@@ -1,0 +1,6 @@
+Chr07	24107332	24107333	Chr07	Liftoff	gene	24106568	24110143	.	+	.	ID=ANN04460;Note=Similar to NTL9: Protein NTM1-like 9 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.994;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN04460_0
+Chr07	24107332	24107333	Chr07	Liftoff	mRNA	24106568	24110143	.	+	.	ID=ANN04460-RA;Parent=ANN04460;Note=Similar to NTL9: Protein NTM1-like 9 (Arabidopsis thaliana OX=3702);_AED=0.41;_eAED=0.41;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr07	24109917	24110000	Chr07	Liftoff	gene	24106568	24110143	.	+	.	ID=ANN04460;Note=Similar to NTL9: Protein NTM1-like 9 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.994;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN04460_0
+Chr07	24109917	24110000	Chr07	Liftoff	mRNA	24106568	24110143	.	+	.	ID=ANN04460-RA;Parent=ANN04460;Note=Similar to NTL9: Protein NTM1-like 9 (Arabidopsis thaliana OX=3702);_AED=0.41;_eAED=0.41;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr07	24109985	24110000	Chr07	Liftoff	exon	24109986	24110143	.	+	.	ID=ANN04460-RA:exon:814;Parent=ANN04460-RA;extra_copy_number=0
+Chr07	24109985	24110000	Chr07	Liftoff	three_prime_UTR	24109986	24110143	.	+	.	ID=ANN04460-RA:three_prime_utr;Parent=ANN04460-RA;extra_copy_number=0

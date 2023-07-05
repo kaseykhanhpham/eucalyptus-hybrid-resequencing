@@ -1,0 +1,4 @@
+Chr09	5688776	5689143	Chr09	Liftoff	exon	5688777	5689237	.	-	.	ID=ANN32665-RA:exon:522;Parent=ANN32665-RA;extra_copy_number=0
+Chr09	5688776	5689143	Chr09	Liftoff	CDS	5688777	5689237	.	-	.	ID=ANN32665-RA:cds;Parent=ANN32665-RA;extra_copy_number=0
+Chr09	5687860	5689143	Chr09	Liftoff	gene	5682890	5689698	.	-	.	ID=ANN32665;Note=Similar to At5g10020: Probable inactive receptor kinase At5g10020 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.999;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN32665_0
+Chr09	5687860	5689143	Chr09	Liftoff	mRNA	5682890	5689698	.	-	.	ID=ANN32665-RA;Parent=ANN32665;Note=Similar to At5g10020: Probable inactive receptor kinase At5g10020 (Arabidopsis thaliana OX=3702);_AED=0.11;_eAED=0.11;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0

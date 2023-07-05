@@ -1,0 +1,8 @@
+Chr05	30421523	30421528	Chr05	Liftoff	gene	30420844	30421987	.	+	.	ID=ANN27334;Note=Similar to TGD1: Protein TRIGALACTOSYLDIACYLGLYCEROL 1, chloroplastic (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.998;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN27334_0
+Chr05	30421523	30421528	Chr05	Liftoff	mRNA	30420844	30421987	.	+	.	ID=ANN27334-RA;Parent=ANN27334;Note=Similar to TGD1: Protein TRIGALACTOSYLDIACYLGLYCEROL 1, chloroplastic (Arabidopsis thaliana OX=3702);_AED=0.00;_eAED=0.00;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr05	30421523	30421528	Chr05	Liftoff	exon	30420973	30421987	.	+	.	ID=ANN27334-RA:exon:504;Parent=ANN27334-RA;extra_copy_number=0
+Chr05	30421523	30421528	Chr05	Liftoff	CDS	30421213	30421987	.	+	.	ID=ANN27334-RA:cds;Parent=ANN27334-RA;extra_copy_number=0
+Chr05	30453727	30454450	Chr05	Liftoff	gene	30452232	30456515	.	-	.	ID=ANN27336;Note=Protein of unknown function;coverage=1.0;sequence_ID=0.995;valid_ORFs=1;extra_copy_number=0;copy_num_ID=ANN27336_0
+Chr05	30453727	30454450	Chr05	Liftoff	mRNA	30452232	30456515	.	-	.	ID=ANN27336-RA;Parent=ANN27336;Note=Protein of unknown function;_AED=0.01;_eAED=0.01;matches_ref_protein=True;valid_ORF=True;extra_copy_number=0
+Chr05	30455470	30455954	Chr05	Liftoff	gene	30452232	30456515	.	-	.	ID=ANN27336;Note=Protein of unknown function;coverage=1.0;sequence_ID=0.995;valid_ORFs=1;extra_copy_number=0;copy_num_ID=ANN27336_0
+Chr05	30455470	30455954	Chr05	Liftoff	mRNA	30452232	30456515	.	-	.	ID=ANN27336-RA;Parent=ANN27336;Note=Protein of unknown function;_AED=0.01;_eAED=0.01;matches_ref_protein=True;valid_ORF=True;extra_copy_number=0

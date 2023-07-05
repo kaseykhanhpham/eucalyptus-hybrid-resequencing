@@ -1,0 +1,14 @@
+Chr09	3327292	3327308	Chr09	Liftoff	exon	3327198	3327308	.	+	.	ID=ANN32795-RA:exon:422;Parent=ANN32795-RA;extra_copy_number=0
+Chr09	3327292	3327308	Chr09	Liftoff	CDS	3327198	3327308	.	+	.	ID=ANN32795-RA:cds;Parent=ANN32795-RA;extra_copy_number=0
+Chr09	3327292	3327333	Chr09	Liftoff	gene	3325934	3340870	.	+	.	ID=ANN32795;Note=Similar to CALS5: Callose synthase 5 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.999;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN32795_0
+Chr09	3327292	3327333	Chr09	Liftoff	mRNA	3325934	3340870	.	+	.	ID=ANN32795-RA;Parent=ANN32795;Note=Similar to CALS5: Callose synthase 5 (Arabidopsis thaliana OX=3702);_AED=0.20;_eAED=0.23;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr09	3336940	3336974	Chr09	Liftoff	exon	3336819	3337005	.	+	.	ID=ANN32795-RA:exon:398;Parent=ANN32795-RA;extra_copy_number=0
+Chr09	3336940	3336974	Chr09	Liftoff	CDS	3336819	3337005	.	+	.	ID=ANN32795-RA:cds;Parent=ANN32795-RA;extra_copy_number=0
+Chr09	3336940	3336974	Chr09	Liftoff	gene	3325934	3340870	.	+	.	ID=ANN32795;Note=Similar to CALS5: Callose synthase 5 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.999;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN32795_0
+Chr09	3336940	3336974	Chr09	Liftoff	mRNA	3325934	3340870	.	+	.	ID=ANN32795-RA;Parent=ANN32795;Note=Similar to CALS5: Callose synthase 5 (Arabidopsis thaliana OX=3702);_AED=0.20;_eAED=0.23;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr09	3337682	3337696	Chr09	Liftoff	gene	3325934	3340870	.	+	.	ID=ANN32795;Note=Similar to CALS5: Callose synthase 5 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.999;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN32795_0
+Chr09	3337682	3337696	Chr09	Liftoff	mRNA	3325934	3340870	.	+	.	ID=ANN32795-RA;Parent=ANN32795;Note=Similar to CALS5: Callose synthase 5 (Arabidopsis thaliana OX=3702);_AED=0.20;_eAED=0.23;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr09	3339575	3339576	Chr09	Liftoff	exon	3338995	3339660	.	+	.	ID=ANN32795-RA:exon:391;Parent=ANN32795-RA;extra_copy_number=0
+Chr09	3339575	3339576	Chr09	Liftoff	CDS	3338995	3339660	.	+	.	ID=ANN32795-RA:cds;Parent=ANN32795-RA;extra_copy_number=0
+Chr09	3339575	3339576	Chr09	Liftoff	gene	3325934	3340870	.	+	.	ID=ANN32795;Note=Similar to CALS5: Callose synthase 5 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.999;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN32795_0
+Chr09	3339575	3339576	Chr09	Liftoff	mRNA	3325934	3340870	.	+	.	ID=ANN32795-RA;Parent=ANN32795;Note=Similar to CALS5: Callose synthase 5 (Arabidopsis thaliana OX=3702);_AED=0.20;_eAED=0.23;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0

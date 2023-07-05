@@ -1,0 +1,8 @@
+Chr03	18524413	18524459	Chr03	Liftoff	gene	18522610	18524755	.	+	.	ID=ANN24154;Note=Similar to SPX2: SPX domain-containing protein 2 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.992;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN24154_0
+Chr03	18524413	18524459	Chr03	Liftoff	mRNA	18522610	18524755	.	+	.	ID=ANN24154-RA;Parent=ANN24154;Note=Similar to SPX2: SPX domain-containing protein 2 (Arabidopsis thaliana OX=3702);_AED=0.05;_eAED=0.05;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr03	18524413	18524459	Chr03	Liftoff	exon	18524345	18524755	.	+	.	ID=ANN24154-RA:exon:605;Parent=ANN24154-RA;extra_copy_number=0
+Chr03	18524413	18524459	Chr03	Liftoff	CDS	18524345	18524755	.	+	.	ID=ANN24154-RA:cds;Parent=ANN24154-RA;extra_copy_number=0
+Chr09	10171824	10171889	Chr09	Liftoff	exon	10171623	10171993	.	-	.	ID=ANN32478-RA:exon:479;Parent=ANN32478-RA;extra_copy_number=0
+Chr09	10171824	10171889	Chr09	Liftoff	CDS	10171623	10171993	.	-	.	ID=ANN32478-RA:cds;Parent=ANN32478-RA;extra_copy_number=0
+Chr09	10171824	10171889	Chr09	Liftoff	gene	10171325	10174691	.	-	.	ID=ANN32478;Note=Similar to Os07g0190000: Probable 1-deoxy-D-xylulose-5-phosphate synthase 2, chloroplastic (Oryza sativa subsp. japonica OX=39947);coverage=1.0;sequence_ID=0.999;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN32478_0
+Chr09	10171824	10171889	Chr09	Liftoff	mRNA	10171325	10174691	.	-	.	ID=ANN32478-RA;Parent=ANN32478;Note=Similar to Os07g0190000: Probable 1-deoxy-D-xylulose-5-phosphate synthase 2, chloroplastic (Oryza sativa subsp. japonica OX=39947);_AED=0.12;_eAED=0.09;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0

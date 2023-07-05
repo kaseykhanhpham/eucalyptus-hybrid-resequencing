@@ -86,3 +86,33 @@ Seem too short to be real genes; Look into further.
 | Chr06 | 46333564 | 46335504 | ANN17316    | Protein of unknown function                                                             |
 | Chr08 | 6198010  | 6202241  | ANN10679    | Similar to SEOB: Protein SIEVE ELEMENT OCCLUSION B (Arabidopsis thaliana OX=3702)       |
 | Chr09 | 36559718 | 36561710 | ANN30585    | Similar to UGT85A24: 7-deoxyloganetin glucosyltransferase (Gardenia jasminoides OX=114476) |
+
+## Get genes within Ancestry_HMM windows
+
+Retrieved overlap with reference genome annotation using `BEDTools`.
+
+```bash
+module load bedtools/2.30.0
+
+BED_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/common_intervals"
+ANNOT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/Eglobulus_genome_X46"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+
+while read NAME
+do
+    # df
+    bedtools intersect -a "$BED_DIR"/df/"$NAME"_ahmm_het_df.bed -b "$ANNOT_DIR"/EGLOB-X46.v1.0.annotation.gff -wb > df/"$NAME"_ahmm_het_df_genes.bed
+    bedtools intersect -a "$BED_DIR"/df/"$NAME"_ahmm_hom_df.bed -b "$ANNOT_DIR"/EGLOB-X46.v1.0.annotation.gff -wb > df/"$NAME"_ahmm_hom_df_genes.bed
+
+    # fDm
+    bedtools intersect -a "$BED_DIR"/fDm/"$NAME"_ahmm_het_fDm.bed -b "$ANNOT_DIR"/EGLOB-X46.v1.0.annotation.gff -wb > fDm/"$NAME"_ahmm_het_fDm_genes.bed
+    bedtools intersect -a "$BED_DIR"/fDm/"$NAME"_ahmm_hom_fDm.bed -b "$ANNOT_DIR"/EGLOB-X46.v1.0.annotation.gff -wb > fDm/"$NAME"_ahmm_hom_fDm_genes.bed
+
+    # dxy
+    bedtools intersect -a "$BED_DIR"/dxy/"$NAME"_ahmm_het_dxy_p90.bed -b "$ANNOT_DIR"/EGLOB-X46.v1.0.annotation.gff -wb > dxy/"$NAME"_ahmm_het_dxy_p90_genes.bed
+    bedtools intersect -a "$BED_DIR"/dxy/"$NAME"_ahmm_het_dxy_p95.bed -b "$ANNOT_DIR"/EGLOB-X46.v1.0.annotation.gff -wb > dxy/"$NAME"_ahmm_het_dxy_p95_genes.bed
+    bedtools intersect -a "$BED_DIR"/dxy/"$NAME"_ahmm_hom_dxy_p90.bed -b "$ANNOT_DIR"/EGLOB-X46.v1.0.annotation.gff -wb > dxy/"$NAME"_ahmm_hom_dxy_p90_genes.bed
+    bedtools intersect -a "$BED_DIR"/dxy/"$NAME"_ahmm_hom_dxy_p95.bed -b "$ANNOT_DIR"/EGLOB-X46.v1.0.annotation.gff -wb > dxy/"$NAME"_ahmm_hom_dxy_p95_genes.bed
+done < "$LIST_DIR"/Eglobulus_MR.txt
+
+```

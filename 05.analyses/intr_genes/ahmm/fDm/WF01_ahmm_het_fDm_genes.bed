@@ -1,0 +1,178 @@
+Chr01	23852648	23852662	Chr01	Liftoff	gene	23852458	23854506	.	-	.	ID=ANN06910;Note=Protein of unknown function;coverage=1.0;sequence_ID=0.966;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN06910_0
+Chr01	23852648	23852662	Chr01	Liftoff	mRNA	23852458	23854506	.	-	.	ID=ANN06910-RA;Parent=ANN06910;Note=Protein of unknown function;_AED=0.79;_eAED=0.66;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr01	27092933	27093878	Chr01	Liftoff	gene	27092934	27096813	.	+	.	ID=ANN07132;Note=Similar to Alpha-bisabolol synthase (Santalum spicatum OX=453088);coverage=1.0;sequence_ID=0.977;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN07132_0
+Chr01	27092933	27093878	Chr01	Liftoff	mRNA	27092934	27096813	.	+	.	ID=ANN07132-RA;Parent=ANN07132;Note=Similar to Alpha-bisabolol synthase (Santalum spicatum OX=453088);_AED=0.43;_eAED=0.23;matches_ref_protein=False;valid_ORF=False;inframe_stop_codon=True;extra_copy_number=0
+Chr01	27092933	27093148	Chr01	Liftoff	exon	27092934	27093148	.	+	.	ID=ANN07132-RA:exon:244;Parent=ANN07132-RA;extra_copy_number=0
+Chr01	27093508	27093771	Chr01	Liftoff	exon	27093509	27093771	.	+	.	ID=ANN07132-RA:exon:245;Parent=ANN07132-RA;extra_copy_number=0
+Chr01	27092933	27093148	Chr01	Liftoff	CDS	27092934	27093148	.	+	.	ID=ANN07132-RA:cds;Parent=ANN07132-RA;extra_copy_number=0
+Chr01	27093508	27093771	Chr01	Liftoff	CDS	27093509	27093771	.	+	.	ID=ANN07132-RA:cds;Parent=ANN07132-RA;extra_copy_number=0
+Chr01	27092933	27093878	Chr01	Liftoff	gene	27092934	27096813	.	+	.	ID=ANN07132;Note=Similar to Alpha-bisabolol synthase (Santalum spicatum OX=453088);coverage=1.0;sequence_ID=0.977;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN07132_0
+Chr01	27092933	27093878	Chr01	Liftoff	mRNA	27092934	27096813	.	+	.	ID=ANN07132-RA;Parent=ANN07132;Note=Similar to Alpha-bisabolol synthase (Santalum spicatum OX=453088);_AED=0.43;_eAED=0.23;matches_ref_protein=False;valid_ORF=False;inframe_stop_codon=True;extra_copy_number=0
+Chr01	27092933	27093148	Chr01	Liftoff	exon	27092934	27093148	.	+	.	ID=ANN07132-RA:exon:244;Parent=ANN07132-RA;extra_copy_number=0
+Chr01	27093508	27093771	Chr01	Liftoff	exon	27093509	27093771	.	+	.	ID=ANN07132-RA:exon:245;Parent=ANN07132-RA;extra_copy_number=0
+Chr01	27092933	27093148	Chr01	Liftoff	CDS	27092934	27093148	.	+	.	ID=ANN07132-RA:cds;Parent=ANN07132-RA;extra_copy_number=0
+Chr01	27093508	27093771	Chr01	Liftoff	CDS	27093509	27093771	.	+	.	ID=ANN07132-RA:cds;Parent=ANN07132-RA;extra_copy_number=0
+Chr01	27122105	27122252	Chr01	Liftoff	gene	27119950	27123233	.	+	.	ID=ANN07133;Note=Similar to Alpha-terpineol synthase, chloroplastic (Magnolia grandiflora OX=3406);coverage=1.0;sequence_ID=0.994;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN07133_0
+Chr01	27122105	27122252	Chr01	Liftoff	mRNA	27119950	27123233	.	+	.	ID=ANN07133-RA;Parent=ANN07133;Note=Similar to Alpha-terpineol synthase, chloroplastic (Magnolia grandiflora OX=3406);_AED=0.29;_eAED=0.28;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr01	27122206	27122220	Chr01	Liftoff	exon	27122207	27122220	.	+	.	ID=ANN07133-RA:exon:255;Parent=ANN07133-RA;extra_copy_number=0
+Chr01	27122206	27122220	Chr01	Liftoff	CDS	27122207	27122220	.	+	.	ID=ANN07133-RA:cds;Parent=ANN07133-RA;extra_copy_number=0
+Chr01	27122105	27122252	Chr01	Liftoff	gene	27119950	27123233	.	+	.	ID=ANN07133;Note=Similar to Alpha-terpineol synthase, chloroplastic (Magnolia grandiflora OX=3406);coverage=1.0;sequence_ID=0.994;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN07133_0
+Chr01	27122105	27122252	Chr01	Liftoff	mRNA	27119950	27123233	.	+	.	ID=ANN07133-RA;Parent=ANN07133;Note=Similar to Alpha-terpineol synthase, chloroplastic (Magnolia grandiflora OX=3406);_AED=0.29;_eAED=0.28;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr01	27122206	27122220	Chr01	Liftoff	exon	27122207	27122220	.	+	.	ID=ANN07133-RA:exon:255;Parent=ANN07133-RA;extra_copy_number=0
+Chr01	27122206	27122220	Chr01	Liftoff	CDS	27122207	27122220	.	+	.	ID=ANN07133-RA:cds;Parent=ANN07133-RA;extra_copy_number=0
+Chr01	27122819	27123088	Chr01	Liftoff	gene	27119950	27123233	.	+	.	ID=ANN07133;Note=Similar to Alpha-terpineol synthase, chloroplastic (Magnolia grandiflora OX=3406);coverage=1.0;sequence_ID=0.994;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN07133_0
+Chr01	27122819	27123088	Chr01	Liftoff	mRNA	27119950	27123233	.	+	.	ID=ANN07133-RA;Parent=ANN07133;Note=Similar to Alpha-terpineol synthase, chloroplastic (Magnolia grandiflora OX=3406);_AED=0.29;_eAED=0.28;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr01	27122819	27122878	Chr01	Liftoff	exon	27122630	27122878	.	+	.	ID=ANN07133-RA:exon:257;Parent=ANN07133-RA;extra_copy_number=0
+Chr01	27123046	27123088	Chr01	Liftoff	exon	27123047	27123233	.	+	.	ID=ANN07133-RA:exon:258;Parent=ANN07133-RA;extra_copy_number=0
+Chr01	27122819	27122878	Chr01	Liftoff	CDS	27122630	27122878	.	+	.	ID=ANN07133-RA:cds;Parent=ANN07133-RA;extra_copy_number=0
+Chr01	27123046	27123088	Chr01	Liftoff	CDS	27123047	27123233	.	+	.	ID=ANN07133-RA:cds;Parent=ANN07133-RA;extra_copy_number=0
+Chr01	27122819	27123088	Chr01	Liftoff	gene	27119950	27123233	.	+	.	ID=ANN07133;Note=Similar to Alpha-terpineol synthase, chloroplastic (Magnolia grandiflora OX=3406);coverage=1.0;sequence_ID=0.994;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN07133_0
+Chr01	27122819	27123088	Chr01	Liftoff	mRNA	27119950	27123233	.	+	.	ID=ANN07133-RA;Parent=ANN07133;Note=Similar to Alpha-terpineol synthase, chloroplastic (Magnolia grandiflora OX=3406);_AED=0.29;_eAED=0.28;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr01	27122819	27122878	Chr01	Liftoff	exon	27122630	27122878	.	+	.	ID=ANN07133-RA:exon:257;Parent=ANN07133-RA;extra_copy_number=0
+Chr01	27123046	27123088	Chr01	Liftoff	exon	27123047	27123233	.	+	.	ID=ANN07133-RA:exon:258;Parent=ANN07133-RA;extra_copy_number=0
+Chr01	27122819	27122878	Chr01	Liftoff	CDS	27122630	27122878	.	+	.	ID=ANN07133-RA:cds;Parent=ANN07133-RA;extra_copy_number=0
+Chr01	27123046	27123088	Chr01	Liftoff	CDS	27123047	27123233	.	+	.	ID=ANN07133-RA:cds;Parent=ANN07133-RA;extra_copy_number=0
+Chr01	30770520	30770535	Chr01	Liftoff	gene	30770194	30774522	.	-	.	ID=ANN07350;Note=Similar to At1g14600: Putative Myb family transcription factor At1g14600 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.999;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN07350_0
+Chr01	30770520	30770535	Chr01	Liftoff	mRNA	30770194	30774522	.	-	.	ID=ANN07350-RA;Parent=ANN07350;Note=Similar to At1g14600: Putative Myb family transcription factor At1g14600 (Arabidopsis thaliana OX=3702);_AED=0.01;_eAED=0.01;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr02	16271736	16272257	Chr02	Liftoff	gene	16271704	16276809	.	+	.	ID=ANN17835;Note=Similar to IO: Iridoid oxidase (Catharanthus roseus OX=4058);coverage=1.0;sequence_ID=0.996;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN17835_0
+Chr02	16271736	16272257	Chr02	Liftoff	mRNA	16271704	16276809	.	+	.	ID=ANN17835-RA;Parent=ANN17835;Note=Similar to IO: Iridoid oxidase (Catharanthus roseus OX=4058);_AED=0.13;_eAED=0.07;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr02	16271736	16271799	Chr02	Liftoff	exon	16271704	16271799	.	+	.	ID=ANN17835-RA:exon:10;Parent=ANN17835-RA;extra_copy_number=0
+Chr02	16271736	16271799	Chr02	Liftoff	CDS	16271704	16271799	.	+	.	ID=ANN17835-RA:cds;Parent=ANN17835-RA;extra_copy_number=0
+Chr02	16273483	16273773	Chr02	Liftoff	gene	16271704	16276809	.	+	.	ID=ANN17835;Note=Similar to IO: Iridoid oxidase (Catharanthus roseus OX=4058);coverage=1.0;sequence_ID=0.996;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN17835_0
+Chr02	16273483	16273773	Chr02	Liftoff	mRNA	16271704	16276809	.	+	.	ID=ANN17835-RA;Parent=ANN17835;Note=Similar to IO: Iridoid oxidase (Catharanthus roseus OX=4058);_AED=0.13;_eAED=0.07;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr02	16297518	16297589	Chr02	Liftoff	gene	16295760	16302078	.	+	.	ID=ANN17834;Note=Similar to IO: Iridoid oxidase (Catharanthus roseus OX=4058);coverage=1.0;sequence_ID=0.997;valid_ORFs=1;extra_copy_number=0;copy_num_ID=ANN17834_0
+Chr02	16297518	16297589	Chr02	Liftoff	mRNA	16295760	16302078	.	+	.	ID=ANN17834-RA;Parent=ANN17834;Note=Similar to IO: Iridoid oxidase (Catharanthus roseus OX=4058);_AED=0.00;_eAED=0.00;matches_ref_protein=True;valid_ORF=True;extra_copy_number=0
+Chr03	19291638	19291906	Chr03	Liftoff	gene	19290391	19292500	.	-	.	ID=ANN24181;Note=Protein of unknown function;coverage=1.0;sequence_ID=0.987;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN24181_0
+Chr03	19291638	19291906	Chr03	Liftoff	mRNA	19290391	19292500	.	-	.	ID=ANN24181-RA;Parent=ANN24181;Note=Protein of unknown function;_AED=0.65;_eAED=0.37;matches_ref_protein=False;valid_ORF=False;inframe_stop_codon=True;extra_copy_number=0
+Chr05	3004838	3004839	Chr05	Liftoff	gene	3003745	3005767	.	+	.	ID=ANN25904;Note=Similar to TOM2B: Tobamovirus multiplication protein 2B (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.995;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN25904_0
+Chr05	3004838	3004839	Chr05	Liftoff	mRNA	3003745	3005767	.	+	.	ID=ANN25904-RA;Parent=ANN25904;Note=Similar to TOM2B: Tobamovirus multiplication protein 2B (Arabidopsis thaliana OX=3702);_AED=0.30;_eAED=0.30;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr05	3004838	3004839	Chr05	Liftoff	gene	3003745	3005767	.	+	.	ID=ANN25904;Note=Similar to TOM2B: Tobamovirus multiplication protein 2B (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.995;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN25904_0
+Chr05	3004838	3004839	Chr05	Liftoff	mRNA	3003745	3005767	.	+	.	ID=ANN25904-RA;Parent=ANN25904;Note=Similar to TOM2B: Tobamovirus multiplication protein 2B (Arabidopsis thaliana OX=3702);_AED=0.30;_eAED=0.30;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr05	9590046	9590080	Chr05	Liftoff	gene	9588101	9590843	.	-	.	ID=ANN35161;Note=Similar to CAD1: Probable cinnamyl alcohol dehydrogenase 1 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.991;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN35161_0
+Chr05	9590046	9590080	Chr05	Liftoff	mRNA	9588101	9590843	.	-	.	ID=ANN35161-RA;Parent=ANN35161;Note=Similar to CAD1: Probable cinnamyl alcohol dehydrogenase 1 (Arabidopsis thaliana OX=3702);_AED=0.12;_eAED=0.12;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr05	9590077	9590080	Chr05	Liftoff	exon	9590078	9590191	.	-	.	ID=ANN35161-RA:exon:51;Parent=ANN35161-RA;extra_copy_number=0
+Chr05	9590077	9590080	Chr05	Liftoff	CDS	9590078	9590191	.	-	.	ID=ANN35161-RA:cds;Parent=ANN35161-RA;extra_copy_number=0
+Chr05	9590046	9590080	Chr05	Liftoff	gene	9588101	9590843	.	-	.	ID=ANN35161;Note=Similar to CAD1: Probable cinnamyl alcohol dehydrogenase 1 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.991;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN35161_0
+Chr05	9590046	9590080	Chr05	Liftoff	mRNA	9588101	9590843	.	-	.	ID=ANN35161-RA;Parent=ANN35161;Note=Similar to CAD1: Probable cinnamyl alcohol dehydrogenase 1 (Arabidopsis thaliana OX=3702);_AED=0.12;_eAED=0.12;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr05	9590077	9590080	Chr05	Liftoff	exon	9590078	9590191	.	-	.	ID=ANN35161-RA:exon:51;Parent=ANN35161-RA;extra_copy_number=0
+Chr05	9590077	9590080	Chr05	Liftoff	CDS	9590078	9590191	.	-	.	ID=ANN35161-RA:cds;Parent=ANN35161-RA;extra_copy_number=0
+Chr05	58532440	58532456	Chr05	Liftoff	gene	58530474	58533441	.	+	.	ID=ANN25441;Note=Similar to LAC21: Laccase-21 (Oryza sativa subsp. japonica OX=39947);coverage=1.0;sequence_ID=0.983;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN25441_0
+Chr05	58532440	58532456	Chr05	Liftoff	mRNA	58530474	58533441	.	+	.	ID=ANN25441-RA;Parent=ANN25441;Note=Similar to LAC21: Laccase-21 (Oryza sativa subsp. japonica OX=39947);_AED=0.12;_eAED=0.09;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr05	58532440	58532456	Chr05	Liftoff	exon	58531949	58532537	.	+	.	ID=ANN25441-RA:exon:191;Parent=ANN25441-RA;extra_copy_number=0
+Chr05	58532440	58532456	Chr05	Liftoff	five_prime_UTR	58531949	58532537	.	+	.	ID=ANN25441-RA:five_prime_utr;Parent=ANN25441-RA;extra_copy_number=0
+Chr05	58532440	58532456	Chr05	Liftoff	gene	58530474	58533441	.	+	.	ID=ANN25441;Note=Similar to LAC21: Laccase-21 (Oryza sativa subsp. japonica OX=39947);coverage=1.0;sequence_ID=0.983;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN25441_0
+Chr05	58532440	58532456	Chr05	Liftoff	mRNA	58530474	58533441	.	+	.	ID=ANN25441-RA;Parent=ANN25441;Note=Similar to LAC21: Laccase-21 (Oryza sativa subsp. japonica OX=39947);_AED=0.12;_eAED=0.09;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr05	58532440	58532456	Chr05	Liftoff	exon	58531949	58532537	.	+	.	ID=ANN25441-RA:exon:191;Parent=ANN25441-RA;extra_copy_number=0
+Chr05	58532440	58532456	Chr05	Liftoff	five_prime_UTR	58531949	58532537	.	+	.	ID=ANN25441-RA:five_prime_utr;Parent=ANN25441-RA;extra_copy_number=0
+Chr05	58533225	58533315	Chr05	Liftoff	gene	58530474	58533441	.	+	.	ID=ANN25441;Note=Similar to LAC21: Laccase-21 (Oryza sativa subsp. japonica OX=39947);coverage=1.0;sequence_ID=0.983;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN25441_0
+Chr05	58533225	58533315	Chr05	Liftoff	mRNA	58530474	58533441	.	+	.	ID=ANN25441-RA;Parent=ANN25441;Note=Similar to LAC21: Laccase-21 (Oryza sativa subsp. japonica OX=39947);_AED=0.12;_eAED=0.09;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr05	58533252	58533315	Chr05	Liftoff	exon	58533253	58533441	.	+	.	ID=ANN25441-RA:exon:193;Parent=ANN25441-RA;extra_copy_number=0
+Chr05	58533252	58533315	Chr05	Liftoff	CDS	58533253	58533441	.	+	.	ID=ANN25441-RA:cds;Parent=ANN25441-RA;extra_copy_number=0
+Chr05	58533225	58533315	Chr05	Liftoff	gene	58530474	58533441	.	+	.	ID=ANN25441;Note=Similar to LAC21: Laccase-21 (Oryza sativa subsp. japonica OX=39947);coverage=1.0;sequence_ID=0.983;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN25441_0
+Chr05	58533225	58533315	Chr05	Liftoff	mRNA	58530474	58533441	.	+	.	ID=ANN25441-RA;Parent=ANN25441;Note=Similar to LAC21: Laccase-21 (Oryza sativa subsp. japonica OX=39947);_AED=0.12;_eAED=0.09;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr05	58533252	58533315	Chr05	Liftoff	exon	58533253	58533441	.	+	.	ID=ANN25441-RA:exon:193;Parent=ANN25441-RA;extra_copy_number=0
+Chr05	58533252	58533315	Chr05	Liftoff	CDS	58533253	58533441	.	+	.	ID=ANN25441-RA:cds;Parent=ANN25441-RA;extra_copy_number=0
+Chr05	58545270	58545271	Chr05	Liftoff	gene	58544371	58545470	.	-	.	ID=ANN25443;Note=Similar to AT5: Probable long-chain-alcohol O-fatty-acyltransferase 5 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.995;valid_ORFs=1;extra_copy_number=0;copy_num_ID=ANN25443_0
+Chr05	58545270	58545271	Chr05	Liftoff	mRNA	58544371	58545470	.	-	.	ID=ANN25443-RA;Parent=ANN25443;Note=Similar to AT5: Probable long-chain-alcohol O-fatty-acyltransferase 5 (Arabidopsis thaliana OX=3702);_AED=0.19;_eAED=0.19;matches_ref_protein=False;valid_ORF=True;extra_copy_number=0
+Chr05	58545270	58545271	Chr05	Liftoff	gene	58544371	58545470	.	-	.	ID=ANN25443;Note=Similar to AT5: Probable long-chain-alcohol O-fatty-acyltransferase 5 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.995;valid_ORFs=1;extra_copy_number=0;copy_num_ID=ANN25443_0
+Chr05	58545270	58545271	Chr05	Liftoff	mRNA	58544371	58545470	.	-	.	ID=ANN25443-RA;Parent=ANN25443;Note=Similar to AT5: Probable long-chain-alcohol O-fatty-acyltransferase 5 (Arabidopsis thaliana OX=3702);_AED=0.19;_eAED=0.19;matches_ref_protein=False;valid_ORF=True;extra_copy_number=0
+Chr05	58561988	58562901	Chr05	Liftoff	gene	58559362	58570461	.	-	.	ID=ANN25444;Note=Similar to Long-chain-alcohol O-fatty-acyltransferase (Simmondsia chinensis OX=3999);coverage=1.0;sequence_ID=0.985;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN25444_0
+Chr05	58561988	58562901	Chr05	Liftoff	mRNA	58559362	58570461	.	-	.	ID=ANN25444-RA;Parent=ANN25444;Note=Similar to Long-chain-alcohol O-fatty-acyltransferase (Simmondsia chinensis OX=3999);_AED=0.47;_eAED=0.45;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr05	58562744	58562762	Chr05	Liftoff	exon	58562745	58562762	.	-	.	ID=ANN25444-RA:exon:205;Parent=ANN25444-RA;extra_copy_number=0
+Chr05	58562744	58562762	Chr05	Liftoff	CDS	58562745	58562762	.	-	.	ID=ANN25444-RA:cds;Parent=ANN25444-RA;extra_copy_number=0
+Chr05	58561779	58561935	Chr05	Liftoff	gene	58559362	58570461	.	-	.	ID=ANN25444;Note=Similar to Long-chain-alcohol O-fatty-acyltransferase (Simmondsia chinensis OX=3999);coverage=1.0;sequence_ID=0.985;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN25444_0
+Chr05	58561779	58561935	Chr05	Liftoff	mRNA	58559362	58570461	.	-	.	ID=ANN25444-RA;Parent=ANN25444;Note=Similar to Long-chain-alcohol O-fatty-acyltransferase (Simmondsia chinensis OX=3999);_AED=0.47;_eAED=0.45;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr05	58561779	58562901	Chr05	Liftoff	gene	58559362	58570461	.	-	.	ID=ANN25444;Note=Similar to Long-chain-alcohol O-fatty-acyltransferase (Simmondsia chinensis OX=3999);coverage=1.0;sequence_ID=0.985;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN25444_0
+Chr05	58561779	58562901	Chr05	Liftoff	mRNA	58559362	58570461	.	-	.	ID=ANN25444-RA;Parent=ANN25444;Note=Similar to Long-chain-alcohol O-fatty-acyltransferase (Simmondsia chinensis OX=3999);_AED=0.47;_eAED=0.45;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr05	58562744	58562762	Chr05	Liftoff	exon	58562745	58562762	.	-	.	ID=ANN25444-RA:exon:205;Parent=ANN25444-RA;extra_copy_number=0
+Chr05	58562744	58562762	Chr05	Liftoff	CDS	58562745	58562762	.	-	.	ID=ANN25444-RA:cds;Parent=ANN25444-RA;extra_copy_number=0
+Chr05	58563931	58565454	Chr05	Liftoff	gene	58559362	58570461	.	-	.	ID=ANN25444;Note=Similar to Long-chain-alcohol O-fatty-acyltransferase (Simmondsia chinensis OX=3999);coverage=1.0;sequence_ID=0.985;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN25444_0
+Chr05	58563931	58565454	Chr05	Liftoff	mRNA	58559362	58570461	.	-	.	ID=ANN25444-RA;Parent=ANN25444;Note=Similar to Long-chain-alcohol O-fatty-acyltransferase (Simmondsia chinensis OX=3999);_AED=0.47;_eAED=0.45;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr05	58564468	58564580	Chr05	Liftoff	exon	58564469	58564580	.	-	.	ID=ANN25444-RA:exon:206;Parent=ANN25444-RA;extra_copy_number=0
+Chr05	58564468	58564580	Chr05	Liftoff	CDS	58564469	58564580	.	-	.	ID=ANN25444-RA:cds;Parent=ANN25444-RA;extra_copy_number=0
+Chr05	58564422	58565454	Chr05	Liftoff	gene	58559362	58570461	.	-	.	ID=ANN25444;Note=Similar to Long-chain-alcohol O-fatty-acyltransferase (Simmondsia chinensis OX=3999);coverage=1.0;sequence_ID=0.985;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN25444_0
+Chr05	58564422	58565454	Chr05	Liftoff	mRNA	58559362	58570461	.	-	.	ID=ANN25444-RA;Parent=ANN25444;Note=Similar to Long-chain-alcohol O-fatty-acyltransferase (Simmondsia chinensis OX=3999);_AED=0.47;_eAED=0.45;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr05	58564468	58564580	Chr05	Liftoff	exon	58564469	58564580	.	-	.	ID=ANN25444-RA:exon:206;Parent=ANN25444-RA;extra_copy_number=0
+Chr05	58564468	58564580	Chr05	Liftoff	CDS	58564469	58564580	.	-	.	ID=ANN25444-RA:cds;Parent=ANN25444-RA;extra_copy_number=0
+Chr05	58595853	58595854	Chr05	Liftoff	gene	58595797	58596897	.	-	.	ID=ANN25446;Note=Similar to ASAT1: Acyl-CoA--sterol O-acyltransferase 1 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=1.0;valid_ORFs=1;extra_copy_number=0;copy_num_ID=ANN25446_0
+Chr05	58595853	58595854	Chr05	Liftoff	mRNA	58595797	58596897	.	-	.	ID=ANN25446-RA;Parent=ANN25446;Note=Similar to ASAT1: Acyl-CoA--sterol O-acyltransferase 1 (Arabidopsis thaliana OX=3702);_AED=0.35;_eAED=0.35;matches_ref_protein=True;valid_ORF=True;extra_copy_number=0
+Chr05	58595853	58595854	Chr05	Liftoff	exon	58595797	58596897	.	-	.	ID=ANN25446-RA:exon:248;Parent=ANN25446-RA;extra_copy_number=0
+Chr05	58595853	58595854	Chr05	Liftoff	CDS	58595797	58596897	.	-	.	ID=ANN25446-RA:cds;Parent=ANN25446-RA;extra_copy_number=0
+Chr06	42486774	42491409	Chr06	Liftoff	gene	42484562	42499084	.	-	.	ID=ANN16990;Note=Similar to LYK5: Protein LYK5 (Arabidopsis thaliana OX=3702);coverage=0.998;sequence_ID=0.994;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN16990_0
+Chr06	42486774	42491409	Chr06	Liftoff	mRNA	42484562	42499084	.	-	.	ID=ANN16990-RA;Parent=ANN16990;Note=Similar to LYK5: Protein LYK5 (Arabidopsis thaliana OX=3702);_AED=0.24;_eAED=0.10;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr06	42487458	42487860	Chr06	Liftoff	exon	42487459	42487860	.	-	.	ID=ANN16990-RA:exon:190;Parent=ANN16990-RA;extra_copy_number=0
+Chr06	42487973	42488319	Chr06	Liftoff	exon	42487974	42488319	.	-	.	ID=ANN16990-RA:exon:191;Parent=ANN16990-RA;extra_copy_number=0
+Chr06	42488462	42488624	Chr06	Liftoff	exon	42488463	42488624	.	-	.	ID=ANN16990-RA:exon:192;Parent=ANN16990-RA;extra_copy_number=0
+Chr06	42488732	42489008	Chr06	Liftoff	exon	42488733	42489008	.	-	.	ID=ANN16990-RA:exon:193;Parent=ANN16990-RA;extra_copy_number=0
+Chr06	42487458	42487860	Chr06	Liftoff	CDS	42487459	42487860	.	-	.	ID=ANN16990-RA:cds;Parent=ANN16990-RA;extra_copy_number=0
+Chr06	42487973	42488319	Chr06	Liftoff	CDS	42487974	42488319	.	-	.	ID=ANN16990-RA:cds;Parent=ANN16990-RA;extra_copy_number=0
+Chr06	42488462	42488624	Chr06	Liftoff	CDS	42488463	42488624	.	-	.	ID=ANN16990-RA:cds;Parent=ANN16990-RA;extra_copy_number=0
+Chr06	42488732	42489008	Chr06	Liftoff	CDS	42488733	42489008	.	-	.	ID=ANN16990-RA:cds;Parent=ANN16990-RA;extra_copy_number=0
+Chr06	42486774	42491409	Chr06	Liftoff	gene	42484562	42499084	.	-	.	ID=ANN16990;Note=Similar to LYK5: Protein LYK5 (Arabidopsis thaliana OX=3702);coverage=0.998;sequence_ID=0.994;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN16990_0
+Chr06	42486774	42491409	Chr06	Liftoff	mRNA	42484562	42499084	.	-	.	ID=ANN16990-RA;Parent=ANN16990;Note=Similar to LYK5: Protein LYK5 (Arabidopsis thaliana OX=3702);_AED=0.24;_eAED=0.10;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr06	42487458	42487860	Chr06	Liftoff	exon	42487459	42487860	.	-	.	ID=ANN16990-RA:exon:190;Parent=ANN16990-RA;extra_copy_number=0
+Chr06	42487973	42488319	Chr06	Liftoff	exon	42487974	42488319	.	-	.	ID=ANN16990-RA:exon:191;Parent=ANN16990-RA;extra_copy_number=0
+Chr06	42488462	42488624	Chr06	Liftoff	exon	42488463	42488624	.	-	.	ID=ANN16990-RA:exon:192;Parent=ANN16990-RA;extra_copy_number=0
+Chr06	42488732	42489008	Chr06	Liftoff	exon	42488733	42489008	.	-	.	ID=ANN16990-RA:exon:193;Parent=ANN16990-RA;extra_copy_number=0
+Chr06	42487458	42487860	Chr06	Liftoff	CDS	42487459	42487860	.	-	.	ID=ANN16990-RA:cds;Parent=ANN16990-RA;extra_copy_number=0
+Chr06	42487973	42488319	Chr06	Liftoff	CDS	42487974	42488319	.	-	.	ID=ANN16990-RA:cds;Parent=ANN16990-RA;extra_copy_number=0
+Chr06	42488462	42488624	Chr06	Liftoff	CDS	42488463	42488624	.	-	.	ID=ANN16990-RA:cds;Parent=ANN16990-RA;extra_copy_number=0
+Chr06	42488732	42489008	Chr06	Liftoff	CDS	42488733	42489008	.	-	.	ID=ANN16990-RA:cds;Parent=ANN16990-RA;extra_copy_number=0
+Chr06	42492153	42493190	Chr06	Liftoff	gene	42484562	42499084	.	-	.	ID=ANN16990;Note=Similar to LYK5: Protein LYK5 (Arabidopsis thaliana OX=3702);coverage=0.998;sequence_ID=0.994;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN16990_0
+Chr06	42492153	42493190	Chr06	Liftoff	mRNA	42484562	42499084	.	-	.	ID=ANN16990-RA;Parent=ANN16990;Note=Similar to LYK5: Protein LYK5 (Arabidopsis thaliana OX=3702);_AED=0.24;_eAED=0.10;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr06	42492153	42493190	Chr06	Liftoff	gene	42484562	42499084	.	-	.	ID=ANN16990;Note=Similar to LYK5: Protein LYK5 (Arabidopsis thaliana OX=3702);coverage=0.998;sequence_ID=0.994;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN16990_0
+Chr06	42492153	42493190	Chr06	Liftoff	mRNA	42484562	42499084	.	-	.	ID=ANN16990-RA;Parent=ANN16990;Note=Similar to LYK5: Protein LYK5 (Arabidopsis thaliana OX=3702);_AED=0.24;_eAED=0.10;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr06	51639741	51639779	Chr06	Liftoff	gene	51636339	51651277	.	-	.	ID=ANN17662;Note=Protein of unknown function;coverage=1.0;sequence_ID=0.998;valid_ORFs=1;extra_copy_number=0;copy_num_ID=ANN17662_0
+Chr06	51639741	51639779	Chr06	Liftoff	mRNA	51636339	51651277	.	-	.	ID=ANN17662-RA;Parent=ANN17662;Note=Protein of unknown function;_AED=0.48;_eAED=0.48;matches_ref_protein=True;valid_ORF=True;extra_copy_number=0
+Chr09	5514781	5514782	Chr09	Liftoff	gene	5512247	5514958	.	+	.	ID=ANN32681;Note=Similar to NRPB4: DNA-directed RNA polymerase II subunit 4 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.995;valid_ORFs=1;extra_copy_number=0;copy_num_ID=ANN32681_0
+Chr09	5514781	5514782	Chr09	Liftoff	mRNA	5512247	5514958	.	+	.	ID=ANN32681-RA;Parent=ANN32681;Note=Similar to NRPB4: DNA-directed RNA polymerase II subunit 4 (Arabidopsis thaliana OX=3702);_AED=0.11;_eAED=0.11;matches_ref_protein=True;valid_ORF=True;extra_copy_number=0
+Chr09	7465008	7465333	Chr09	Liftoff	gene	7464820	7468144	.	+	.	ID=ANN32599;Note=Similar to VRN1: B3 domain-containing transcription factor VRN1 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.999;valid_ORFs=1;extra_copy_number=0;copy_num_ID=ANN32599_0
+Chr09	7465008	7465333	Chr09	Liftoff	mRNA	7464820	7468144	.	+	.	ID=ANN32599-RA;Parent=ANN32599;Note=Similar to VRN1: B3 domain-containing transcription factor VRN1 (Arabidopsis thaliana OX=3702);_AED=0.14;_eAED=0.14;matches_ref_protein=False;valid_ORF=True;extra_copy_number=0
+Chr09	7467409	7467431	Chr09	Liftoff	gene	7464820	7468144	.	+	.	ID=ANN32599;Note=Similar to VRN1: B3 domain-containing transcription factor VRN1 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.999;valid_ORFs=1;extra_copy_number=0;copy_num_ID=ANN32599_0
+Chr09	7467409	7467431	Chr09	Liftoff	mRNA	7464820	7468144	.	+	.	ID=ANN32599-RA;Parent=ANN32599;Note=Similar to VRN1: B3 domain-containing transcription factor VRN1 (Arabidopsis thaliana OX=3702);_AED=0.14;_eAED=0.14;matches_ref_protein=False;valid_ORF=True;extra_copy_number=0
+Chr09	7525425	7525756	Chr09	Liftoff	gene	7523241	7526035	.	+	.	ID=ANN32592;Note=Similar to ALMT4: Aluminum-activated malate transporter 4 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.998;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN32592_0
+Chr09	7525425	7525756	Chr09	Liftoff	mRNA	7523241	7526035	.	+	.	ID=ANN32592-RA;Parent=ANN32592;Note=Similar to ALMT4: Aluminum-activated malate transporter 4 (Arabidopsis thaliana OX=3702);_AED=0.10;_eAED=0.08;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr09	7525425	7525756	Chr09	Liftoff	exon	7525332	7526035	.	+	.	ID=ANN32592-RA:exon:531;Parent=ANN32592-RA;extra_copy_number=0
+Chr09	7525425	7525756	Chr09	Liftoff	CDS	7525332	7526035	.	+	.	ID=ANN32592-RA:cds;Parent=ANN32592-RA;extra_copy_number=0
+Chr09	7600957	7601107	Chr09	Liftoff	exon	7600958	7601107	.	-	.	ID=ANN32590-RA:exon:422;Parent=ANN32590-RA;extra_copy_number=0
+Chr09	7601232	7601402	Chr09	Liftoff	exon	7601233	7601402	.	-	.	ID=ANN32590-RA:exon:421;Parent=ANN32590-RA;extra_copy_number=0
+Chr09	7601487	7601531	Chr09	Liftoff	exon	7601488	7601646	.	-	.	ID=ANN32590-RA:exon:420;Parent=ANN32590-RA;extra_copy_number=0
+Chr09	7600957	7601107	Chr09	Liftoff	CDS	7600958	7601107	.	-	.	ID=ANN32590-RA:cds;Parent=ANN32590-RA;extra_copy_number=0
+Chr09	7601232	7601402	Chr09	Liftoff	CDS	7601233	7601402	.	-	.	ID=ANN32590-RA:cds;Parent=ANN32590-RA;extra_copy_number=0
+Chr09	7601487	7601531	Chr09	Liftoff	CDS	7601488	7601646	.	-	.	ID=ANN32590-RA:cds;Parent=ANN32590-RA;extra_copy_number=0
+Chr09	7600860	7601531	Chr09	Liftoff	gene	7600139	7604509	.	-	.	ID=ANN32590;Note=Similar to exgA: Probable glucan 1,3-beta-glucosidase A (Emericella nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139) OX=227321);coverage=1.0;sequence_ID=0.998;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN32590_0
+Chr09	7600860	7601531	Chr09	Liftoff	mRNA	7600139	7604509	.	-	.	ID=ANN32590-RA;Parent=ANN32590;Note=Similar to exgA: Probable glucan 1,3-beta-glucosidase A (Emericella nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139) OX=227321);_AED=0.17;_eAED=0.17;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr09	7603875	7603940	Chr09	Liftoff	gene	7600139	7604509	.	-	.	ID=ANN32590;Note=Similar to exgA: Probable glucan 1,3-beta-glucosidase A (Emericella nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139) OX=227321);coverage=1.0;sequence_ID=0.998;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN32590_0
+Chr09	7603875	7603940	Chr09	Liftoff	mRNA	7600139	7604509	.	-	.	ID=ANN32590-RA;Parent=ANN32590;Note=Similar to exgA: Probable glucan 1,3-beta-glucosidase A (Emericella nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139) OX=227321);_AED=0.17;_eAED=0.17;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr09	7684033	7684120	Chr09	Liftoff	gene	7684034	7686131	.	-	.	ID=ANN32585;Note=Similar to CF-9: Receptor-like protein Cf-9 (Solanum pimpinellifolium OX=4084);coverage=1.0;sequence_ID=0.995;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN32585_0
+Chr09	7684033	7684120	Chr09	Liftoff	mRNA	7684034	7686131	.	-	.	ID=ANN32585-RA;Parent=ANN32585;Note=Similar to CF-9: Receptor-like protein Cf-9 (Solanum pimpinellifolium OX=4084);_AED=0.77;_eAED=0.27;matches_ref_protein=False;valid_ORF=False;inframe_stop_codon=True;extra_copy_number=0
+Chr09	7684033	7684120	Chr09	Liftoff	exon	7684034	7684516	.	-	.	ID=ANN32585-RA:exon:353;Parent=ANN32585-RA;extra_copy_number=0
+Chr09	7684033	7684120	Chr09	Liftoff	CDS	7684034	7684516	.	-	.	ID=ANN32585-RA:cds;Parent=ANN32585-RA;extra_copy_number=0
+Chr09	7684033	7684120	Chr09	Liftoff	gene	7684034	7686131	.	-	.	ID=ANN32585;Note=Similar to CF-9: Receptor-like protein Cf-9 (Solanum pimpinellifolium OX=4084);coverage=1.0;sequence_ID=0.995;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN32585_0
+Chr09	7684033	7684120	Chr09	Liftoff	mRNA	7684034	7686131	.	-	.	ID=ANN32585-RA;Parent=ANN32585;Note=Similar to CF-9: Receptor-like protein Cf-9 (Solanum pimpinellifolium OX=4084);_AED=0.77;_eAED=0.27;matches_ref_protein=False;valid_ORF=False;inframe_stop_codon=True;extra_copy_number=0
+Chr09	7684033	7684120	Chr09	Liftoff	exon	7684034	7684516	.	-	.	ID=ANN32585-RA:exon:353;Parent=ANN32585-RA;extra_copy_number=0
+Chr09	7684033	7684120	Chr09	Liftoff	CDS	7684034	7684516	.	-	.	ID=ANN32585-RA:cds;Parent=ANN32585-RA;extra_copy_number=0
+Chr09	7686735	7686744	Chr09	Liftoff	gene	7686500	7686744	.	-	.	ID=ANN32584;Note=Protein of unknown function;coverage=1.0;sequence_ID=0.991;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN32584_0
+Chr09	7686735	7686744	Chr09	Liftoff	mRNA	7686500	7686744	.	-	.	ID=ANN32584-RA;Parent=ANN32584;Note=Protein of unknown function;_AED=0.45;_eAED=0.45;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr09	7686735	7686744	Chr09	Liftoff	exon	7686500	7686744	.	-	.	ID=ANN32584-RA:exon:358;Parent=ANN32584-RA;extra_copy_number=0
+Chr09	7686735	7686744	Chr09	Liftoff	CDS	7686500	7686744	.	-	.	ID=ANN32584-RA:cds;Parent=ANN32584-RA;extra_copy_number=0
+Chr09	7686735	7686744	Chr09	Liftoff	gene	7686500	7686744	.	-	.	ID=ANN32584;Note=Protein of unknown function;coverage=1.0;sequence_ID=0.991;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN32584_0
+Chr09	7686735	7686744	Chr09	Liftoff	mRNA	7686500	7686744	.	-	.	ID=ANN32584-RA;Parent=ANN32584;Note=Protein of unknown function;_AED=0.45;_eAED=0.45;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr09	7686735	7686744	Chr09	Liftoff	exon	7686500	7686744	.	-	.	ID=ANN32584-RA:exon:358;Parent=ANN32584-RA;extra_copy_number=0
+Chr09	7686735	7686744	Chr09	Liftoff	CDS	7686500	7686744	.	-	.	ID=ANN32584-RA:cds;Parent=ANN32584-RA;extra_copy_number=0
+Chr09	7711385	7711724	Chr09	Liftoff	gene	7710564	7714062	.	-	.	ID=ANN32582;Note=Similar to EXG1: Glucan 1,3-beta-glucosidase (Yarrowia lipolytica (strain CLIB 122 / E 150) OX=284591);coverage=1.0;sequence_ID=0.989;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN32582_0
+Chr09	7711385	7711724	Chr09	Liftoff	mRNA	7710564	7714062	.	-	.	ID=ANN32582-RA;Parent=ANN32582;Note=Similar to EXG1: Glucan 1,3-beta-glucosidase (Yarrowia lipolytica (strain CLIB 122 / E 150) OX=284591);_AED=0.20;_eAED=0.20;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr09	7711385	7711524	Chr09	Liftoff	exon	7711375	7711524	.	-	.	ID=ANN32582-RA:exon:348;Parent=ANN32582-RA;extra_copy_number=0
+Chr09	7711686	7711724	Chr09	Liftoff	exon	7711687	7711856	.	-	.	ID=ANN32582-RA:exon:347;Parent=ANN32582-RA;extra_copy_number=0
+Chr09	7711385	7711524	Chr09	Liftoff	CDS	7711375	7711524	.	-	.	ID=ANN32582-RA:cds;Parent=ANN32582-RA;extra_copy_number=0
+Chr09	7711686	7711724	Chr09	Liftoff	CDS	7711687	7711856	.	-	.	ID=ANN32582-RA:cds;Parent=ANN32582-RA;extra_copy_number=0
+Chr09	7711385	7711724	Chr09	Liftoff	gene	7710564	7714062	.	-	.	ID=ANN32582;Note=Similar to EXG1: Glucan 1,3-beta-glucosidase (Yarrowia lipolytica (strain CLIB 122 / E 150) OX=284591);coverage=1.0;sequence_ID=0.989;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN32582_0
+Chr09	7711385	7711724	Chr09	Liftoff	mRNA	7710564	7714062	.	-	.	ID=ANN32582-RA;Parent=ANN32582;Note=Similar to EXG1: Glucan 1,3-beta-glucosidase (Yarrowia lipolytica (strain CLIB 122 / E 150) OX=284591);_AED=0.20;_eAED=0.20;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr09	7711385	7711524	Chr09	Liftoff	exon	7711375	7711524	.	-	.	ID=ANN32582-RA:exon:348;Parent=ANN32582-RA;extra_copy_number=0
+Chr09	7711686	7711724	Chr09	Liftoff	exon	7711687	7711856	.	-	.	ID=ANN32582-RA:exon:347;Parent=ANN32582-RA;extra_copy_number=0
+Chr09	7711385	7711524	Chr09	Liftoff	CDS	7711375	7711524	.	-	.	ID=ANN32582-RA:cds;Parent=ANN32582-RA;extra_copy_number=0
+Chr09	7711686	7711724	Chr09	Liftoff	CDS	7711687	7711856	.	-	.	ID=ANN32582-RA:cds;Parent=ANN32582-RA;extra_copy_number=0
+Chr09	7713460	7713602	Chr09	Liftoff	gene	7710564	7714062	.	-	.	ID=ANN32582;Note=Similar to EXG1: Glucan 1,3-beta-glucosidase (Yarrowia lipolytica (strain CLIB 122 / E 150) OX=284591);coverage=1.0;sequence_ID=0.989;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN32582_0
+Chr09	7713460	7713602	Chr09	Liftoff	mRNA	7710564	7714062	.	-	.	ID=ANN32582-RA;Parent=ANN32582;Note=Similar to EXG1: Glucan 1,3-beta-glucosidase (Yarrowia lipolytica (strain CLIB 122 / E 150) OX=284591);_AED=0.20;_eAED=0.20;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr09	7713460	7713602	Chr09	Liftoff	gene	7710564	7714062	.	-	.	ID=ANN32582;Note=Similar to EXG1: Glucan 1,3-beta-glucosidase (Yarrowia lipolytica (strain CLIB 122 / E 150) OX=284591);coverage=1.0;sequence_ID=0.989;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN32582_0
+Chr09	7713460	7713602	Chr09	Liftoff	mRNA	7710564	7714062	.	-	.	ID=ANN32582-RA;Parent=ANN32582;Note=Similar to EXG1: Glucan 1,3-beta-glucosidase (Yarrowia lipolytica (strain CLIB 122 / E 150) OX=284591);_AED=0.20;_eAED=0.20;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0

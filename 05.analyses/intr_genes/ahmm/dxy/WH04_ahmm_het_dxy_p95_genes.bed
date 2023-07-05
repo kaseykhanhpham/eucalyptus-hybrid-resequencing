@@ -1,0 +1,24 @@
+Chr09	37120399	37120580	Chr09	Liftoff	exon	37120400	37120794	.	-	.	ID=ANN30522-RA:exon:17;Parent=ANN30522-RA;extra_copy_number=0
+Chr09	37120399	37120580	Chr09	Liftoff	CDS	37120400	37120794	.	-	.	ID=ANN30522-RA:cds;Parent=ANN30522-RA;extra_copy_number=0
+Chr09	37120327	37120580	Chr09	Liftoff	gene	37119824	37128211	.	-	.	ID=ANN30522;Note=Similar to BAK1: BRASSINOSTEROID INSENSITIVE 1-associated receptor kinase 1 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.998;valid_ORFs=1;extra_copy_number=0;copy_num_ID=ANN30522_0
+Chr09	37120327	37120580	Chr09	Liftoff	mRNA	37119824	37128211	.	-	.	ID=ANN30522-RA;Parent=ANN30522;Note=Similar to BAK1: BRASSINOSTEROID INSENSITIVE 1-associated receptor kinase 1 (Arabidopsis thaliana OX=3702);_AED=0.14;_eAED=0.14;matches_ref_protein=True;valid_ORF=True;extra_copy_number=0
+Chr09	37121511	37121512	Chr09	Liftoff	gene	37119824	37128211	.	-	.	ID=ANN30522;Note=Similar to BAK1: BRASSINOSTEROID INSENSITIVE 1-associated receptor kinase 1 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.998;valid_ORFs=1;extra_copy_number=0;copy_num_ID=ANN30522_0
+Chr09	37121511	37121512	Chr09	Liftoff	mRNA	37119824	37128211	.	-	.	ID=ANN30522-RA;Parent=ANN30522;Note=Similar to BAK1: BRASSINOSTEROID INSENSITIVE 1-associated receptor kinase 1 (Arabidopsis thaliana OX=3702);_AED=0.14;_eAED=0.14;matches_ref_protein=True;valid_ORF=True;extra_copy_number=0
+Chr09	37122401	37122438	Chr09	Liftoff	exon	37122359	37122438	.	-	.	ID=ANN30522-RA:exon:14;Parent=ANN30522-RA;extra_copy_number=0
+Chr09	37122519	37122591	Chr09	Liftoff	exon	37122520	37122591	.	-	.	ID=ANN30522-RA:exon:13;Parent=ANN30522-RA;extra_copy_number=0
+Chr09	37122693	37122736	Chr09	Liftoff	exon	37122694	37122765	.	-	.	ID=ANN30522-RA:exon:12;Parent=ANN30522-RA;extra_copy_number=0
+Chr09	37122401	37122438	Chr09	Liftoff	five_prime_UTR	37122359	37122438	.	-	.	ID=ANN30522-RA:five_prime_utr;Parent=ANN30522-RA;extra_copy_number=0
+Chr09	37122519	37122591	Chr09	Liftoff	five_prime_UTR	37122520	37122591	.	-	.	ID=ANN30522-RA:five_prime_utr;Parent=ANN30522-RA;extra_copy_number=0
+Chr09	37122693	37122736	Chr09	Liftoff	five_prime_UTR	37122694	37122765	.	-	.	ID=ANN30522-RA:five_prime_utr;Parent=ANN30522-RA;extra_copy_number=0
+Chr09	37122401	37122736	Chr09	Liftoff	gene	37119824	37128211	.	-	.	ID=ANN30522;Note=Similar to BAK1: BRASSINOSTEROID INSENSITIVE 1-associated receptor kinase 1 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.998;valid_ORFs=1;extra_copy_number=0;copy_num_ID=ANN30522_0
+Chr09	37122401	37122736	Chr09	Liftoff	mRNA	37119824	37128211	.	-	.	ID=ANN30522-RA;Parent=ANN30522;Note=Similar to BAK1: BRASSINOSTEROID INSENSITIVE 1-associated receptor kinase 1 (Arabidopsis thaliana OX=3702);_AED=0.14;_eAED=0.14;matches_ref_protein=True;valid_ORF=True;extra_copy_number=0
+Chr09	37124784	37125000	Chr09	Liftoff	gene	37119824	37128211	.	-	.	ID=ANN30522;Note=Similar to BAK1: BRASSINOSTEROID INSENSITIVE 1-associated receptor kinase 1 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.998;valid_ORFs=1;extra_copy_number=0;copy_num_ID=ANN30522_0
+Chr09	37124784	37125000	Chr09	Liftoff	mRNA	37119824	37128211	.	-	.	ID=ANN30522-RA;Parent=ANN30522;Note=Similar to BAK1: BRASSINOSTEROID INSENSITIVE 1-associated receptor kinase 1 (Arabidopsis thaliana OX=3702);_AED=0.14;_eAED=0.14;matches_ref_protein=True;valid_ORF=True;extra_copy_number=0
+Chr11	1435209	1435358	Chr11	Liftoff	gene	1435210	1441754	.	+	.	ID=ANN27877;Note=Protein of unknown function;coverage=1.0;sequence_ID=0.997;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN27877_0
+Chr11	1435209	1435358	Chr11	Liftoff	mRNA	1435210	1441754	.	+	.	ID=ANN27877-RA;Parent=ANN27877;Note=Protein of unknown function;_AED=0.08;_eAED=0.07;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr11	1435209	1435294	Chr11	Liftoff	exon	1435210	1435294	.	+	.	ID=ANN27877-RA:exon:48;Parent=ANN27877-RA;extra_copy_number=0
+Chr11	1435209	1435294	Chr11	Liftoff	five_prime_UTR	1435210	1435294	.	+	.	ID=ANN27877-RA:five_prime_utr;Parent=ANN27877-RA;extra_copy_number=0
+Chr11	1436628	1436629	Chr11	Liftoff	gene	1435210	1441754	.	+	.	ID=ANN27877;Note=Protein of unknown function;coverage=1.0;sequence_ID=0.997;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN27877_0
+Chr11	1436628	1436629	Chr11	Liftoff	mRNA	1435210	1441754	.	+	.	ID=ANN27877-RA;Parent=ANN27877;Note=Protein of unknown function;_AED=0.08;_eAED=0.07;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr11	1436628	1436629	Chr11	Liftoff	exon	1436548	1436964	.	+	.	ID=ANN27877-RA:exon:50;Parent=ANN27877-RA;extra_copy_number=0
+Chr11	1436628	1436629	Chr11	Liftoff	five_prime_UTR	1436548	1436964	.	+	.	ID=ANN27877-RA:five_prime_utr;Parent=ANN27877-RA;extra_copy_number=0

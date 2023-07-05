@@ -1,0 +1,16 @@
+Chr06	3340001	3340060	Chr06	Liftoff	exon	3339984	3340060	.	+	.	ID=ANN14413-RA:exon:33;Parent=ANN14413-RA;extra_copy_number=0
+Chr06	3340110	3340190	Chr06	Liftoff	exon	3340111	3340190	.	+	.	ID=ANN14413-RA:exon:34;Parent=ANN14413-RA;extra_copy_number=0
+Chr06	3340001	3340060	Chr06	Liftoff	CDS	3339984	3340060	.	+	.	ID=ANN14413-RA:cds;Parent=ANN14413-RA;extra_copy_number=0
+Chr06	3340110	3340190	Chr06	Liftoff	CDS	3340111	3340190	.	+	.	ID=ANN14413-RA:cds;Parent=ANN14413-RA;extra_copy_number=0
+Chr06	3340001	3340241	Chr06	Liftoff	gene	3339404	3344163	.	+	.	ID=ANN14413;Note=Similar to At5g64460: Phosphoglycerate mutase-like protein 1 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.997;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN14413_0
+Chr06	3340001	3340241	Chr06	Liftoff	mRNA	3339404	3344163	.	+	.	ID=ANN14413-RA;Parent=ANN14413;Note=Similar to At5g64460: Phosphoglycerate mutase-like protein 1 (Arabidopsis thaliana OX=3702);_AED=0.44;_eAED=0.40;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr06	3340970	3341004	Chr06	Liftoff	exon	3340842	3341004	.	+	.	ID=ANN14413-RA:exon:35;Parent=ANN14413-RA;extra_copy_number=0
+Chr06	3340970	3341004	Chr06	Liftoff	CDS	3340842	3341004	.	+	.	ID=ANN14413-RA:cds;Parent=ANN14413-RA;extra_copy_number=0
+Chr06	3342487	3342576	Chr06	Liftoff	exon	3342488	3342576	.	+	.	ID=ANN14413-RA:exon:37;Parent=ANN14413-RA;extra_copy_number=0
+Chr06	3342741	3342861	Chr06	Liftoff	exon	3342742	3342861	.	+	.	ID=ANN14413-RA:exon:38;Parent=ANN14413-RA;extra_copy_number=0
+Chr06	3342487	3342576	Chr06	Liftoff	CDS	3342488	3342576	.	+	.	ID=ANN14413-RA:cds;Parent=ANN14413-RA;extra_copy_number=0
+Chr06	3342741	3342861	Chr06	Liftoff	CDS	3342742	3342861	.	+	.	ID=ANN14413-RA:cds;Parent=ANN14413-RA;extra_copy_number=0
+Chr06	3340970	3343568	Chr06	Liftoff	gene	3339404	3344163	.	+	.	ID=ANN14413;Note=Similar to At5g64460: Phosphoglycerate mutase-like protein 1 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.997;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN14413_0
+Chr06	3340970	3343568	Chr06	Liftoff	mRNA	3339404	3344163	.	+	.	ID=ANN14413-RA;Parent=ANN14413;Note=Similar to At5g64460: Phosphoglycerate mutase-like protein 1 (Arabidopsis thaliana OX=3702);_AED=0.44;_eAED=0.40;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
+Chr06	3342310	3342385	Chr06	Liftoff	exon	3342311	3342385	.	+	.	ID=ANN14413-RA:exon:36;Parent=ANN14413-RA;extra_copy_number=0
+Chr06	3342310	3342385	Chr06	Liftoff	CDS	3342311	3342385	.	+	.	ID=ANN14413-RA:cds;Parent=ANN14413-RA;extra_copy_number=0

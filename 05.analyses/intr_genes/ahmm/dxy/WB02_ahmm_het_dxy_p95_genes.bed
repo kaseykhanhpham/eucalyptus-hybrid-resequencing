@@ -1,0 +1,2 @@
+Chr06	45161595	45161596	Chr06	Liftoff	gene	45156298	45163529	.	-	.	ID=ANN17228;Note=Similar to TPL: Protein TOPLESS (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.999;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN17228_0
+Chr06	45161595	45161596	Chr06	Liftoff	mRNA	45156298	45163529	.	-	.	ID=ANN17228-RA;Parent=ANN17228;Note=Similar to TPL: Protein TOPLESS (Arabidopsis thaliana OX=3702);_AED=0.26;_eAED=0.26;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
