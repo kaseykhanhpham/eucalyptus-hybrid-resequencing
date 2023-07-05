@@ -34,5 +34,5 @@ if(zoom){
 }
 
 png(filename = outfile, width = 1600, height = 1000, units = "px")
-r2_plot
+print(r2_plot)
 dev.off()

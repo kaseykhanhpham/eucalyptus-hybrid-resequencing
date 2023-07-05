@@ -74,8 +74,32 @@ do
 	Rscript "$SCRIPTS_DIR"/plot_r2.r "$NAME"_r2_glob00.csv r2_plots/"$NAME"_r2_glob00.png "$NAME" 500
 done
 ```
+### Curve Fitting
+Followed the equation for expected r^2 from [Remington et al. 2001 PNAS](www.pnas.org/cgi/doi/10.1073/pnas.201394398), which they derived from Hill and Weir 1988 Theor Pop Bio. Referenced [the Martin Lab's tutorial on curve fitting in R](https://martinlab.chem.umass.edu/r-fitting-data/).
 
-Fitted r^2 decay curve. ???? IDK how...
+```R
+# library(ggplot2)
+
+exp_rsquare <- function(l, C) (((10+C*l)/((2+C*l)*(11+C*l)))*(1+(((3+C*l)*(12+12*C*l+(C*l)^2))/(30*(2+C*l)*(11+C*l)))))
+
+## MAF = 0.00
+maf00_tab <- read.csv("genomewide_r2_maf0.00.csv", header = TRUE)
+glob_maf00_model <- nls(r2 ~ exp_rsquare(dist, estC), data = maf00_tab, start = list(estC = 1))
+plot(maf00_tab$dist[seq(from = 1, to = nrow(maf00_tab), by = 5)], maf00_tab$r2[seq(from = 1, to = nrow(maf00_tab), by = 5)], main = "MAF=0.00 Linkage Disequilibrium", xlab = "distance (bp)", ylab = "r2")
+lines(maf00_tab$dist, predict(glob_maf00_model), col = "red")
+
+## MAF = 0.05
+maf05_tab <- read.csv("genomewide_r2_maf0.05.csv", header = TRUE)
+glob_maf05_model <- nls(r2 ~ exp_rsquare(dist, estC), data = maf05_tab, start = list(estC = 1))
+plot(maf05_tab$r2, maf05_tab$dist, main = "MAF=0.05 Linkage Disequilibrium", xlab = "distance (bp)", ylab = "r2")
+lines(maf05_tab$dist,predict(glob_maf05_model), col = "red")
+```
+
+| MAF  | Est. C | Std Error | dist r^2 = 0.2 |
+| ---- | ------ | --------- | -------------- |
+| 0.00 | 0.5833 | 0.0001541 | 
+| 0.05 | 0.5664 | 0.0001641 |
+
 
 ## _E. cordata_
 
