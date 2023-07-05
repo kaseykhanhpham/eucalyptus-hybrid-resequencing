@@ -1,0 +1,21 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=repmask2
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=100gb
+#SBATCH --time=96:00:00
+#SBATCH --cpus-per-task=12
+#SBATCH --nodes=1
+#SBATCH --output=repmask2_%j.out
+#SBATCH --error=repmask2_%j.err
+
+pwd; hostname; date
+echo Working directory is $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR
+
+module purge
+module load repeatmasker/4.0.9
+
+RepeatMasker -pa 12 -e ncbi -lib /blue/soltis/kasey.pham/tprat_genome/repeat_lib/denovo/RM_100984.WedMay51749352021/consensi.fa.classified -dir denovo_mask /blue/soltis/kasey.pham/tprat_genome/repeat_lib/repeatmasker/asteraceae/ragoo_filtered1k.fasta.masked

@@ -1,0 +1,17 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=procmak1
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=5gb
+#SBATCH --time=24:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=process_maker01_%j.out
+#SBATCH --error=process_maker01_%j.err
+
+module load maker
+gff3_merge -s -d maker01_master_datastore_index.log > tprat.all.maker.gff
+fasta_merge -d maker01_master_datastore_index.log
+gff3_merge -n -s -d maker01_master_datastore_index.log > tprat.all.maker.noseq.gff

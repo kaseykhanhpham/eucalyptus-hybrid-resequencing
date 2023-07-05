@@ -1,0 +1,30 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=compreps
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=30gb
+#SBATCH --time=5:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=compreps_%j.out
+#SBATCH --error=compreps_%j.err
+
+pwd; hostname; date
+echo Working directory is $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR
+
+module purge
+module load repeatmasker/4.0.9
+
+module load repeatmasker/4.0.9
+/apps/repeatmasker/4.0.9/share/RepeatMasker/util/rmOutToGFF3.pl tprat_repeat_fullmask.out > tprat_repeat_fullmask.out.gff3
+cat tprat_repeat_fullmask.out.gff3 | \
+  perl -ane '$id; if(!/^\#/){@F = split(/\t/, $_); chomp $F[-1];$id++; $F[-1] .= "\;ID=$id"; $_ = join("\t", @F)."\n"} print $_' \
+  > tprat_repeat_fullmask.out.reformat.gff3
+grep -v -e "Satellite" -e ")n" -e "-rich" tprat_repeat_fullmask.out.gff3 > tprat_repeat_fullmask.out.complex.gff3
+cat tprat_repeat_fullmask.out.complex.gff3 | \
+  perl -ane '$id; if(!/^\#/){@F = split(/\t/, $_); chomp $F[-1];$id++; $F[-1] .= "\;ID=$id"; $_ = join("\t", @F)."\n"} print $_' \
+  > tprat_repeat_fullmask.out.complex_reformat.gff3
+

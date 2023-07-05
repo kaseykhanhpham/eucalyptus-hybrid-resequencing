@@ -1,0 +1,22 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=repmod
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=8gb
+#SBATCH --time=96:00:00
+#SBATCH --cpus-per-task=12
+#SBATCH --nodes=1
+#SBATCH --output=repmod_%j.out
+#SBATCH --error=repmod_%j.err
+
+pwd; hostname; date
+echo Working directory is $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR
+
+module purge
+module load repeatmodeler/2.0
+
+RepeatModeler -pa 11 -engine ncbi -database eglob_x46 2>&1
+
