@@ -207,3 +207,8 @@ nodelabels(intree_rooted$node.label, adj = c(1.25), cex = 0.8, bg = "white")
 
 ![chloroplast phylogeny results, tips labeled by accession and sample species](concatenated_cp_aligned.png "Chloroplast Phylogeny")
 
+Calculated date to capture of S83 in _E. globulus_ from _E. cordata_. Used the general seed plant chloroplast substitution rate, 1.01 x 10^-9 substitutions per site per year.
+
+Branch length from _E. globulus_ S83 to the last common ancestor with _E. cordata_ S83: 0.0000376547 substitutions per site.
+
+Years to capture: 37,282 years
