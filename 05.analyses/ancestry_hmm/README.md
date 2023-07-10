@@ -505,7 +505,7 @@ chr06b2_3_het <- ggplot(chr06b2_3_df, aes(window, acc, fill = het_mat)) +
               ggtitle("At least one locus with 95% E. cordata ancestry") + 
               xlab("Chromosome 06 Window") + ylab("E. globulus Sample") + 
               scale_x_discrete(labels = chr06b2_3_xlabs) +
-              hm_theme
+              hm_theme + theme(axis.text.x = element_text(angle = 60, vjust = 0.95, hjust=1))
 chr06b2_3_het
 
 # Chromosome 7 Block 1-1
@@ -525,7 +525,7 @@ chr07b1_1_het <- ggplot(chr07b1_1_df, aes(window, acc, fill = het_mat)) +
               ggtitle("At least one locus with 95% E. cordata ancestry") + 
               xlab("Chromosome 07 Window") + ylab("E. globulus Sample") + 
               scale_x_discrete(labels = chr07b1_1_xlabs) +
-              hm_theme
+              hm_theme + theme(axis.text.x = element_text(angle = 60, vjust = 0.95, hjust=1))
 chr07b1_1_het
 
 # Chromosome 7 Block 1-7
@@ -545,7 +545,7 @@ chr07b1_7_het <- ggplot(chr07b1_7_df, aes(window, acc, fill = het_mat)) +
               ggtitle("At least one locus with 95% E. cordata ancestry") + 
               xlab("Chromosome 07 Window") + ylab("E. globulus Sample") + 
               scale_x_discrete(labels = chr07b1_7_xlabs) +
-              hm_theme
+              hm_theme + theme(axis.text.x = element_text(angle = 60, vjust = 0.95, hjust=1))
 chr07b1_7_het
 
 # Chromosome 8 Block 2-67
@@ -565,14 +565,133 @@ chr08b2_67_het <- ggplot(chr08b2_67_df, aes(window, acc, fill = het_mat)) +
               ggtitle("At least one locus with 95% E. cordata ancestry") + 
               xlab("Chromosome 08 Window") + ylab("E. globulus Sample") + 
               scale_x_discrete(labels = chr08b2_67_xlabs) +
-              hm_theme
+              hm_theme + theme(axis.text.x = element_text(angle = 60, vjust = 0.95, hjust=1))
 chr08b2_67_het
 ```
 
-![Presence of _E. cordata_ ancestry in Chromosome 6 12513761 bp to 13556574 bp; heterozygotes were scored as half in presence/absence matrix.](chr06b2-3_het_windows.png "_E. cordata_ ancestry heatmap for Chromosome 6 Block 3")
+![Presence of _E. cordata_ ancestry in Chromosome 6 12513761 bp to 13556574 bp; heterozygotes were scored as half in presence/absence matrix.](chr06b2-3_het_windows.png "_E. cordata_ ancestry heatmap for Chromosome 6 Block 2_3")
 
-![Presence of _E. cordata_ ancestry in Chromosome 7 1 bp to 1085053 bp; heterozygotes were scored as half in presence/absence matrix.](chr07b1-1_het_windows.png "_E. cordata_ ancestry heatmap for Chromosome 7 Block 1-1")
+![Presence of _E. cordata_ ancestry in Chromosome 7 1 bp to 1085053 bp; heterozygotes were scored as half in presence/absence matrix.](chr07b1-1_het_windows.png "_E. cordata_ ancestry heatmap for Chromosome 7 Block 1_1")
 
-![Presence of _E. cordata_ ancestry in Chromosome 7 6510319 bp to 7595371 bp; heterozygotes were scored as half in presence/absence matrix.](chr07b1-7_het_windows.png "_E. cordata_ ancestry heatmap for Chromosome 7 Block 1-7")
+![Presence of _E. cordata_ ancestry in Chromosome 7 6510319 bp to 7595371 bp; heterozygotes were scored as half in presence/absence matrix.](chr07b1-7_het_windows.png "_E. cordata_ ancestry heatmap for Chromosome 7 Block 1_7")
 
-![Presence of _E. cordata_ ancestry in Chromosome 8 21064388 to 23872973 bp; heterozygotes were scored as half in presence/absence matrix.](chr08b2-67_het_windows.png "_E. cordata_ ancestry heatmap for Chromosome 8 Block 2-67")
+![Presence of _E. cordata_ ancestry in Chromosome 8 21064388 to 23872973 bp; heterozygotes were scored as half in presence/absence matrix.](chr08b2-67_het_windows.png "_E. cordata_ ancestry heatmap for Chromosome 8 Block 2_6-7")
+
+| Chromosome | Start (bp)  | End (bp)    |
+| ---------- | ----------- | ----------- |
+| Chr06      | 13,139,453  | 13,190,593  |
+| Chr07      | 217,013     | 488,277     |
+| Chr07      | 7,052,849   | 7,161,354   |
+| Chr08      | 22,328,249  | 22,749,536  |
+
+Plotted zoomed shared blocks, split again.
+
+```R
+library(ggplot2)
+
+# Chromosome 6 Block 2-3
+chr06b2_3_13_filename_rel <- "chr06_block2-3-13_windows.csv"
+chr06b2_3_13_filename <- paste(wdir, chr06b2_3_13_filename_rel, sep = "/")
+chr06b2_3_13_tab <- read.csv(chr06b2_3_13_filename, header = FALSE, col.names = c("chrom", "start", "end"), colClasses = c("character", "integer", "integer"))
+chr06b2_3_13_df <- populate_mat(chr06b2_samples, chr06b2_3_13_tab)
+
+label_order <- match(chr06b2_3_13_df$sample, name_table$RAPiD_ID)
+chr06b2_3_13_df$acc <- name_table$Accession[label_order]
+chr06b2_3_13_xlabs <- unique(gsub("Chr06_", "", chr06b2_3_13_df$window))
+
+chr06b2_3_13_het <- ggplot(chr06b2_3_13_df, aes(window, acc, fill = het_mat)) + 
+              geom_tile(color = "#005267") + 
+              scale_fill_steps(high = "#ffd966", low = "#007c9b") + 
+              guides(fill = guide_coloursteps(title = NULL, show.limits = TRUE)) +
+              ggtitle("At least one locus with 95% E. cordata ancestry") + 
+              xlab("Chromosome 06 Window") + ylab("E. globulus Sample") + 
+              scale_x_discrete(labels = chr06b2_3_13_xlabs) +
+              hm_theme + theme(axis.text.x = element_text(angle = 60, vjust = 0.95, hjust=1))
+chr06b2_3_13_het
+
+# Chromosome 7 Block 1-1
+chr07b1_1_59_filename_rel <- "chr07_block1-1-59_windows.csv"
+chr07b1_1_59_filename <- paste(wdir, chr07b1_1_59_filename_rel, sep = "/")
+chr07b1_1_59_tab <- read.csv(chr07b1_1_59_filename, header = FALSE, col.names = c("chrom", "start", "end"), colClasses = c("character", "integer", "integer"))
+chr07b1_1_59_df <- populate_mat(chr07b1_samples, chr07b1_1_59_tab)
+
+label_order <- match(chr07b1_1_59_df$sample, name_table$RAPiD_ID)
+chr07b1_1_59_df$acc <- name_table$Accession[label_order]
+chr07b1_1_59_xlabs <- unique(gsub("Chr07_", "", chr07b1_1_59_df$window))
+
+chr07b1_1_59_het <- ggplot(chr07b1_1_59_df, aes(window, acc, fill = het_mat)) + 
+              geom_tile(color = "#005267") + 
+              scale_fill_steps(high = "#ffd966", low = "#007c9b") + 
+              guides(fill = guide_coloursteps(title = NULL, show.limits = TRUE)) +
+              ggtitle("At least one locus with 95% E. cordata ancestry") + 
+              xlab("Chromosome 07 Window") + ylab("E. globulus Sample") + 
+              scale_x_discrete(labels = chr07b1_1_59_xlabs) +
+              hm_theme + theme(axis.text.x = element_text(angle = 60, vjust = 0.95, hjust=1))
+chr07b1_1_59_het
+
+# Chromosome 7 Block 1-7
+chr07b1_7_1112_filename_rel <- "chr07_block1-7-1112_windows.csv"
+chr07b1_7_1112_filename <- paste(wdir, chr07b1_7_1112_filename_rel, sep = "/")
+chr07b1_7_1112_tab <- read.csv(chr07b1_7_1112_filename, header = FALSE, col.names = c("chrom", "start", "end"), colClasses = c("character", "integer", "integer"))
+chr07b1_7_1112_df <- populate_mat(chr07b1_samples, chr07b1_7_1112_tab)
+
+label_order <- match(chr07b1_7_1112_df$sample, name_table$RAPiD_ID)
+chr07b1_7_1112_df$acc <- name_table$Accession[label_order]
+chr07b1_7_1112_xlabs <- unique(gsub("Chr07_", "", chr07b1_7_1112_df$window))
+
+chr07b1_7_1112_het <- ggplot(chr07b1_7_1112_df, aes(window, acc, fill = het_mat)) + 
+              geom_tile(color = "#005267") + 
+              scale_fill_steps(high = "#ffd966", low = "#007c9b") + 
+              guides(fill = guide_coloursteps(title = NULL, show.limits = TRUE)) +
+              ggtitle("At least one locus with 95% E. cordata ancestry") + 
+              xlab("Chromosome 07 Window") + ylab("E. globulus Sample") + 
+              scale_x_discrete(labels = chr07b1_7_1112_xlabs) +
+              hm_theme + theme(axis.text.x = element_text(angle = 60, vjust = 0.95, hjust=1))
+chr07b1_7_1112_het
+
+# Chromosome 8 Block 2-67
+chr08b2_67_1012_filename_rel <- "chr08_block2-67-1012_windows.csv"
+chr08b2_67_1012_filename <- paste(wdir, chr08b2_67_1012_filename_rel, sep = "/")
+chr08b2_67_1012_tab <- read.csv(chr08b2_67_1012_filename, header = FALSE, col.names = c("chrom", "start", "end"), colClasses = c("character", "integer", "integer"))
+chr08b2_67_1012_df <- populate_mat(chr08b2_samples, chr08b2_67_1012_tab)
+
+label_order <- match(chr08b2_67_1012_df$sample, name_table$RAPiD_ID)
+chr08b2_67_1012_df$acc <- name_table$Accession[label_order]
+chr08b2_67_1012_xlabs <- unique(gsub("Chr08_", "", chr08b2_67_1012_df$window))
+
+chr08b2_67_1012_het <- ggplot(chr08b2_67_1012_df, aes(window, acc, fill = het_mat)) + 
+              geom_tile(color = "#005267") + 
+              scale_fill_steps(high = "#ffd966", low = "#007c9b") + 
+              guides(fill = guide_coloursteps(title = NULL, show.limits = TRUE)) +
+              ggtitle("At least one locus with 95% E. cordata ancestry") + 
+              xlab("Chromosome 08 Window") + ylab("E. globulus Sample") + 
+              scale_x_discrete(labels = chr08b2_67_1012_xlabs) +
+              hm_theme + theme(axis.text.x = element_text(angle = 60, vjust = 0.95, hjust=1))
+chr08b2_67_1012_het
+```
+
+![Presence of _E. cordata_ ancestry in Chromosome 6 13139453 bp to 13190593 bp; heterozygotes were scored as half in presence/absence matrix.](chr06b2-3-13_het_windows.png "_E. cordata_ ancestry heatmap for Chromosome 6 Block 2_3_13")
+
+![Presence of _E. cordata_ ancestry in Chromosome 7 217013 bp to 488277 bp; heterozygotes were scored as half in presence/absence matrix.](chr07b1-1-59_het_windows.png "_E. cordata_ ancestry heatmap for Chromosome 7 Block 1_1_5-9")
+
+![Presence of _E. cordata_ ancestry in Chromosome 7 7052849 bp to 7161354 bp; heterozygotes were scored as half in presence/absence matrix.](chr07b1-7-1112_het_windows.png "_E. cordata_ ancestry heatmap for Chromosome 7 Block 1_7_11-12")
+
+![Presence of _E. cordata_ ancestry in Chromosome 8 22328249 to 22749536 bp; heterozygotes were scored as half in presence/absence matrix.](chr08b2-67-1012_het_windows.png "_E. cordata_ ancestry heatmap for Chromosome 8 Block 2_6-7_10-12")
+
+Final intervals to investigate further:
+
+| Chromosome | Start (bp)  | End (bp)    |
+| ---------- | ----------- | ----------- |
+| Chr06      | 13,159,909  | 13,180,364  |
+| Chr07      | 230,577     | 237,358     |
+| Chr07      | 278,051     | 284,832     |
+| Chr07      | 427,255     | 447,600     |
+| Chr07      | 7,074,553   | 7,123,386   |
+| Chr08      | 22,454,645  | 22,486,243  |
+
+Intervals for single samples:
+
+| Sample | Chromosome | Start (bp)  | End (bp)    |
+| ------ | ---------- | ----------- | ----------- |
+| 6024   | Chr08      | 22,496,777  | 22,602,106  |
+| 4207   | Chr08      | 22,654,772  | 22,739,035  |
