@@ -55,7 +55,7 @@ if(stat %in% c("pi", "dxy")){
     stat_calc <- mean(as.numeric(pixy_file[pixy_full_mask, "avg_wc_fst"]), na.rm = TRUE)
 }
 
-# calculate SD forstats in window subset
+# calculate SD for stats in window subset
 if(stat %in% c("pi", "dxy")){
     stat_col <- paste("avg", stat, sep = "_")
 } else {
