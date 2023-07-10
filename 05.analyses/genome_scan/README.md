@@ -201,6 +201,8 @@ Whole-genome pi comparisons:
 | all        | 0.02827           | 0.02843              |
 | _E. glob_  | 0.02790           | 0.02809              |
 | _glob_ ref | 0.02802           | 0.02938              |
+| _glob_ MR  | 0.02788           | N/A                  |
+| _cord_     | 0.03014           | N/A                  |
 
 Whole-genome dxy comparisons:
 | group 1   | group 2    | dxy with WF03/1051 | dxy without WF03/1051 |
@@ -211,6 +213,46 @@ Whole-genome dxy comparisons:
 | _glob_ MR | _cord_     | 0.04044            | N/A                   |
 
 Inclusion of WF03/1051 changed the estimated genome-wide pi for the reference group alone the most, as expected. Values of dXY remained mostly not too strongly different. The numbers don't seem so extremely different that I would be warranted in excluding the sample...
+
+### Characterize `pixy` results
+```R
+all_pi <- read.table("all_pi.txt", header = TRUE, sep = "\t", as.is = TRUE)
+all_dxy <- read.table("all_dxy.txt", header = TRUE, sep = "\t", as.is = TRUE)
+
+summary(all_pi[which(all_pi$pop == "glob_MR" & all_pi$no_sites >= 40), "avg_pi"])
+hist(all_pi[which(all_pi$pop == "glob_MR" & all_pi$no_sites >= 40), "avg_pi"], breaks = 50, main = "Pi Distr E.glob MR", xlab = "Pi")
+hist(log(all_pi[which(all_pi$pop == "glob_MR" & all_pi$no_sites >= 40), "avg_pi"]), breaks = 50, main = "Log(Pi) Distr E.glob MR", xlab = "Log(Pi)")
+abline(a = mean(log(all_pi[which(all_pi$pop == "glob_MR" & all_pi$no_sites >= 40), "avg_pi"])))
+# Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+# 0.00000 0.00828 0.01734 0.02894 0.03750 0.38726
+
+summary(all_pi[which(all_pi$pop == "glob_pure" & all_pi$no_sites >= 40), "avg_pi"])
+hist(all_pi[which(all_pi$pop == "glob_pure" & all_pi$no_sites >= 40), "avg_pi"], breaks = 50, main = "Pi Distr E.glob ref", xlab = "Pi")
+hist(log(all_pi[which(all_pi$pop == "glob_pure" & all_pi$no_sites >= 40), "avg_pi"]), breaks = 50, main = "Log(Pi) Distr E.glob ref", xlab = "Log(Pi)")
+# Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+# 0.000000 0.008038 0.017163 0.028810 0.037109 0.400848
+summary(all_pi[which(all_pi$pop == "cord_MR" & all_pi$no_sites >= 40), "avg_pi"])
+hist(all_pi[which(all_pi$pop == "cord_MR" & all_pi$no_sites >= 40), "avg_pi"], breaks = 50, main = "Pi Distr E.cord", xlab = "Pi")
+hist(log(all_pi[which(all_pi$pop == "cord_MR" & all_pi$no_sites >= 40), "avg_pi"]), breaks = 50, main = "Log(Pi) Distr E.cord", xlab = "Log(Pi)")
+# Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+# 0.000000 0.008988 0.018740 0.031670 0.041366 0.392020
+
+summary(all_dxy[which(all_dxy$pop1 == "glob_MR" & all_dxy$pop2 == "cord_MR" & all_pi$no_sites >= 40), "avg_dxy"])
+hist(all_dxy[which(all_dxy$pop1 == "glob_MR" & all_dxy$pop2 == "cord_MR" & all_pi$no_sites >= 40), "avg_dxy"], breaks = 50, main = "Dxy Distr E.glob MR - E.cord", xlab = "Dxy")
+hist(log(all_dxy[which(all_dxy$pop1 == "glob_MR" & all_dxy$pop2 == "cord_MR" & all_pi$no_sites >= 40), "avg_dxy"]), breaks = 50, main = "Log(Dxy) Distr E.glob MR - E.cord", xlab = "Log(Dxy)")
+# Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+# 0.00000 0.01625 0.02917 0.04232 0.05646 0.38499
+summary(all_dxy[which(all_dxy$pop1 == "glob_MR" & all_dxy$pop2 == "glob_pure" & all_pi$no_sites >= 40), "avg_dxy"])
+hist(all_dxy[which(all_dxy$pop1 == "glob_MR" & all_dxy$pop2 == "glob_pure" & all_pi$no_sites >= 40), "avg_dxy"], breaks = 50, main = "Dxy Distr E.glob MR - E.glob ref", xlab = "Dxy")
+hist(log(all_dxy[which(all_dxy$pop1 == "glob_MR" & all_dxy$pop2 == "glob_pure" & all_pi$no_sites >= 40), "avg_dxy"]), breaks = 50, main = "Log(Dxy) Distr E.glob MR - E.glob ref", xlab = "Log(Dxy)")
+# Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+# 0.000000 0.008429 0.017479 0.028887 0.037468 0.386034
+summary(all_dxy[which(all_dxy$pop1 == "glob_pure" & all_dxy$pop2 == "cord_MR" & all_pi$no_sites >= 40), "avg_dxy"])
+hist(all_dxy[which(all_dxy$pop1 == "glob_pure" & all_dxy$pop2 == "cord_MR" & all_pi$no_sites >= 40), "avg_dxy"], breaks = 50, main = "Dxy Distr E.glob ref - E.cord", xlab = "Dxy")
+hist(log(all_dxy[which(all_dxy$pop1 == "glob_pure" & all_dxy$pop2 == "cord_MR" & all_pi$no_sites >= 40), "avg_dxy"]), breaks = 50, main = "Log(Dxy) Distr E.glob ref - E.cord", xlab = "Log(Dxy)")
+#  Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+# 0.00000 0.01607 0.02884 0.04192 0.05590 0.38714
+```
 
 ### Identify outlier windows
 Split pixy output files by taxon/comparison.
