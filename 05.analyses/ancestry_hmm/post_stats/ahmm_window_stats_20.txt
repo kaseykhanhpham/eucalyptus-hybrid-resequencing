@@ -1230,3 +1230,1257 @@ sd of fst : 0.159624164233085
 
 hist written to: all_fst_WH04_cord_het_0.95_pixy_windows_hist.png 
 
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WA01_cord_hom_0.95_pixy_windows.bed
+calculated for 9 windows
+
+mean pi : 0.0517195094491479 
+
+sd of pi : 0.0369760969382984 
+
+hist written to: all_pi_WA01_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WA01_cord_het_0.95_pixy_windows.bed
+calculated for 63 windows
+
+mean pi : 0.0579504214696277 
+
+sd of pi : 0.043426878164329 
+
+hist written to: all_pi_WA01_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WA01_cord_hom_0.95_pixy_windows.bed
+calculated for 9 windows
+
+mean dxy : 0.0455120863839012 
+
+sd of dxy : 0.0561996910561835 
+
+hist written to: all_dxy_WA01_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WA01_cord_het_0.95_pixy_windows.bed
+calculated for 63 windows
+
+mean dxy : 0.0740461679630597 
+
+sd of dxy : 0.0481449265160427 
+
+hist written to: all_dxy_WA01_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WA01_cord_hom_0.95_pixy_windows.bed
+calculated for 6 windows
+
+mean fst : 0.116405859808008 
+
+sd of fst : 0.0503012655210361 
+
+hist written to: all_fst_WA01_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WA01_cord_het_0.95_pixy_windows.bed
+calculated for 65 windows
+
+mean fst : 0.25626108683363 
+
+sd of fst : 0.160851446318071 
+
+hist written to: all_fst_WA01_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WA03_cord_hom_0.95_pixy_windows.bed
+calculated for 4 windows
+
+mean pi : 0.0870726126961273 
+
+sd of pi : 0.0588649386348529 
+
+hist written to: all_pi_WA03_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WA03_cord_het_0.95_pixy_windows.bed
+calculated for 120 windows
+
+mean pi : 0.0601810038599257 
+
+sd of pi : 0.0407115159694848 
+
+hist written to: all_pi_WA03_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WA03_cord_hom_0.95_pixy_windows.bed
+calculated for 4 windows
+
+mean dxy : 0.0951235108029885 
+
+sd of dxy : 0.0403099461999222 
+
+hist written to: all_dxy_WA03_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WA03_cord_het_0.95_pixy_windows.bed
+calculated for 120 windows
+
+mean dxy : 0.0790081682033405 
+
+sd of dxy : 0.051518260743611 
+
+hist written to: all_dxy_WA03_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WA03_cord_hom_0.95_pixy_windows.bed
+calculated for 4 windows
+
+mean fst : 0.534877817060035 
+
+sd of fst : 0.308483371587837 
+
+hist written to: all_fst_WA03_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WA03_cord_het_0.95_pixy_windows.bed
+calculated for 113 windows
+
+mean fst : 0.280269249234623 
+
+sd of fst : 0.151612745719529 
+
+hist written to: all_fst_WA03_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WA04_cord_hom_0.95_pixy_windows.bed
+calculated for 9 windows
+
+mean pi : 0.0544273293827357 
+
+sd of pi : 0.0339116856244686 
+
+hist written to: all_pi_WA04_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WA04_cord_het_0.95_pixy_windows.bed
+calculated for 145 windows
+
+mean pi : 0.0541785532183963 
+
+sd of pi : 0.0384558724664777 
+
+hist written to: all_pi_WA04_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WA04_cord_hom_0.95_pixy_windows.bed
+calculated for 9 windows
+
+mean dxy : 0.0523023490700941 
+
+sd of dxy : 0.0506036541712889 
+
+hist written to: all_dxy_WA04_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WA04_cord_het_0.95_pixy_windows.bed
+calculated for 145 windows
+
+mean dxy : 0.0747988362068601 
+
+sd of dxy : 0.0486499472720628 
+
+hist written to: all_dxy_WA04_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WA04_cord_hom_0.95_pixy_windows.bed
+calculated for 9 windows
+
+mean fst : 0.282067815245338 
+
+sd of fst : 0.180840621447617 
+
+hist written to: all_fst_WA04_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WA04_cord_het_0.95_pixy_windows.bed
+calculated for 159 windows
+
+mean fst : 0.338184310305472 
+
+sd of fst : 0.173698528739631 
+
+hist written to: all_fst_WA04_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WB02_cord_hom_0.95_pixy_windows.bed
+calculated for 23 windows
+
+mean pi : 0.0428488321795947 
+
+sd of pi : 0.0428463799266622 
+
+hist written to: all_pi_WB02_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WB02_cord_het_0.95_pixy_windows.bed
+calculated for 87 windows
+
+mean pi : 0.059406903496792 
+
+sd of pi : 0.040712351904793 
+
+hist written to: all_pi_WB02_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WB02_cord_hom_0.95_pixy_windows.bed
+calculated for 23 windows
+
+mean dxy : 0.047959197263426 
+
+sd of dxy : 0.0530785743782975 
+
+hist written to: all_dxy_WB02_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WB02_cord_het_0.95_pixy_windows.bed
+calculated for 87 windows
+
+mean dxy : 0.0768896446617791 
+
+sd of dxy : 0.0460658505582793 
+
+hist written to: all_dxy_WB02_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WB02_cord_hom_0.95_pixy_windows.bed
+calculated for 17 windows
+
+mean fst : 0.237985936574729 
+
+sd of fst : 0.137293875690075 
+
+hist written to: all_fst_WB02_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WB02_cord_het_0.95_pixy_windows.bed
+calculated for 92 windows
+
+mean fst : 0.29184077842473 
+
+sd of fst : 0.15610370221894 
+
+hist written to: all_fst_WB02_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WB03_cord_het_0.95_pixy_windows.bed
+calculated for 85 windows
+
+mean pi : 0.052319540158736 
+
+sd of pi : 0.0388835940906709 
+
+hist written to: all_pi_WB03_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WB03_cord_het_0.95_pixy_windows.bed
+calculated for 85 windows
+
+mean dxy : 0.0707124048976124 
+
+sd of dxy : 0.0492089516648092 
+
+hist written to: all_dxy_WB03_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WB03_cord_het_0.95_pixy_windows.bed
+calculated for 92 windows
+
+mean fst : 0.321361691439533 
+
+sd of fst : 0.154620400940492 
+
+hist written to: all_fst_WB03_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WB04_cord_hom_0.95_pixy_windows.bed
+calculated for 13 windows
+
+mean pi : 0.0457701570591687 
+
+sd of pi : 0.0280398182573247 
+
+hist written to: all_pi_WB04_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WB04_cord_het_0.95_pixy_windows.bed
+calculated for 143 windows
+
+mean pi : 0.0521801864644614 
+
+sd of pi : 0.0402218385378162 
+
+hist written to: all_pi_WB04_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WB04_cord_hom_0.95_pixy_windows.bed
+calculated for 13 windows
+
+mean dxy : 0.0423405358077372 
+
+sd of dxy : 0.028895928270582 
+
+hist written to: all_dxy_WB04_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WB04_cord_het_0.95_pixy_windows.bed
+calculated for 143 windows
+
+mean dxy : 0.0771498465601011 
+
+sd of dxy : 0.0546337415314697 
+
+hist written to: all_dxy_WB04_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WB04_cord_hom_0.95_pixy_windows.bed
+calculated for 9 windows
+
+mean fst : 0.159181740018388 
+
+sd of fst : 0.0733060991918087 
+
+hist written to: all_fst_WB04_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WB04_cord_het_0.95_pixy_windows.bed
+calculated for 143 windows
+
+mean fst : 0.322908419595902 
+
+sd of fst : 0.183204421929872 
+
+hist written to: all_fst_WB04_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WC02_cord_hom_0.95_pixy_windows.bed
+calculated for 17 windows
+
+mean pi : 0.0731273955648824 
+
+sd of pi : 0.0351171327245611 
+
+hist written to: all_pi_WC02_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WC02_cord_het_0.95_pixy_windows.bed
+calculated for 61 windows
+
+mean pi : 0.052108522688061 
+
+sd of pi : 0.0397770202475509 
+
+hist written to: all_pi_WC02_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WC02_cord_hom_0.95_pixy_windows.bed
+calculated for 17 windows
+
+mean dxy : 0.0694717987686677 
+
+sd of dxy : 0.0415932999722027 
+
+hist written to: all_dxy_WC02_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WC02_cord_het_0.95_pixy_windows.bed
+calculated for 61 windows
+
+mean dxy : 0.0756596570467699 
+
+sd of dxy : 0.0508255885852097 
+
+hist written to: all_dxy_WC02_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WC02_cord_hom_0.95_pixy_windows.bed
+calculated for 11 windows
+
+mean fst : 0.175893481849379 
+
+sd of fst : 0.104429832583822 
+
+hist written to: all_fst_WC02_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WC02_cord_het_0.95_pixy_windows.bed
+calculated for 64 windows
+
+mean fst : 0.3110948978381 
+
+sd of fst : 0.174935052847416 
+
+hist written to: all_fst_WC02_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WC03_cord_hom_0.95_pixy_windows.bed
+calculated for 17 windows
+
+mean pi : 0.0730034612574654 
+
+sd of pi : 0.0328333620339181 
+
+hist written to: all_pi_WC03_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WC03_cord_het_0.95_pixy_windows.bed
+calculated for 81 windows
+
+mean pi : 0.0655696547257053 
+
+sd of pi : 0.0394296003817991 
+
+hist written to: all_pi_WC03_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WC03_cord_hom_0.95_pixy_windows.bed
+calculated for 17 windows
+
+mean dxy : 0.0708262831359278 
+
+sd of dxy : 0.0422914873811917 
+
+hist written to: all_dxy_WC03_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WC03_cord_het_0.95_pixy_windows.bed
+calculated for 81 windows
+
+mean dxy : 0.0883205346947279 
+
+sd of dxy : 0.050725590753429 
+
+hist written to: all_dxy_WC03_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WC03_cord_hom_0.95_pixy_windows.bed
+calculated for 14 windows
+
+mean fst : 0.191248291392802 
+
+sd of fst : 0.0931085394266741 
+
+hist written to: all_fst_WC03_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WC03_cord_het_0.95_pixy_windows.bed
+calculated for 87 windows
+
+mean fst : 0.337583554027069 
+
+sd of fst : 0.163903503738453 
+
+hist written to: all_fst_WC03_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WC05_cord_hom_0.95_pixy_windows.bed
+calculated for 7 windows
+
+mean pi : 0.0371454591048874 
+
+sd of pi : 0.0211359146811366 
+
+hist written to: all_pi_WC05_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WC05_cord_het_0.95_pixy_windows.bed
+calculated for 105 windows
+
+mean pi : 0.0617312730232804 
+
+sd of pi : 0.0414900611648672 
+
+hist written to: all_pi_WC05_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WC05_cord_hom_0.95_pixy_windows.bed
+calculated for 7 windows
+
+mean dxy : 0.0462623322359411 
+
+sd of dxy : 0.0228811054371604 
+
+hist written to: all_dxy_WC05_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WC05_cord_het_0.95_pixy_windows.bed
+calculated for 105 windows
+
+mean dxy : 0.0857440526449234 
+
+sd of dxy : 0.0561508824163177 
+
+hist written to: all_dxy_WC05_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WC05_cord_hom_0.95_pixy_windows.bed
+calculated for 7 windows
+
+mean fst : 0.339652278134997 
+
+sd of fst : 0.0678185570310735 
+
+hist written to: all_fst_WC05_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WC05_cord_het_0.95_pixy_windows.bed
+calculated for 119 windows
+
+mean fst : 0.310320332633784 
+
+sd of fst : 0.186259383225052 
+
+hist written to: all_fst_WC05_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WD04_cord_hom_0.95_pixy_windows.bed
+calculated for 2 windows
+
+mean pi : 0.0415702203076613 
+
+sd of pi : 0.0296117858105769 
+
+hist written to: all_pi_WD04_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WD04_cord_het_0.95_pixy_windows.bed
+calculated for 100 windows
+
+mean pi : 0.0590842676456627 
+
+sd of pi : 0.04663767434313 
+
+hist written to: all_pi_WD04_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WD04_cord_hom_0.95_pixy_windows.bed
+calculated for 2 windows
+
+mean dxy : 0.0385216818409125 
+
+sd of dxy : 0.0269997625176781 
+
+hist written to: all_dxy_WD04_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WD04_cord_het_0.95_pixy_windows.bed
+calculated for 100 windows
+
+mean dxy : 0.0796828975159289 
+
+sd of dxy : 0.0551868295724573 
+
+hist written to: all_dxy_WD04_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WD04_cord_hom_0.95_pixy_windows.bed
+calculated for 1 windows
+
+mean fst : 0.103285110684682 
+
+sd of fst : NA 
+
+hist written to: all_fst_WD04_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WD04_cord_het_0.95_pixy_windows.bed
+calculated for 114 windows
+
+mean fst : 0.312271796907589 
+
+sd of fst : 0.167526060148794 
+
+hist written to: all_fst_WD04_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WE02_cord_hom_0.95_pixy_windows.bed
+calculated for 7 windows
+
+mean pi : 0.0681730754223462 
+
+sd of pi : 0.039586673509473 
+
+hist written to: all_pi_WE02_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WE02_cord_het_0.95_pixy_windows.bed
+calculated for 147 windows
+
+mean pi : 0.0523059745413172 
+
+sd of pi : 0.0352782887582118 
+
+hist written to: all_pi_WE02_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WE02_cord_hom_0.95_pixy_windows.bed
+calculated for 7 windows
+
+mean dxy : 0.068534745615054 
+
+sd of dxy : 0.0648676542740279 
+
+hist written to: all_dxy_WE02_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WE02_cord_het_0.95_pixy_windows.bed
+calculated for 147 windows
+
+mean dxy : 0.0711166661330367 
+
+sd of dxy : 0.0437054158187332 
+
+hist written to: all_dxy_WE02_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WE02_cord_hom_0.95_pixy_windows.bed
+calculated for 5 windows
+
+mean fst : 0.131712482497624 
+
+sd of fst : 0.0711295734349482 
+
+hist written to: all_fst_WE02_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WE02_cord_het_0.95_pixy_windows.bed
+calculated for 163 windows
+
+mean fst : 0.281365003507479 
+
+sd of fst : 0.179057542197581 
+
+hist written to: all_fst_WE02_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WE03_cord_het_0.95_pixy_windows.bed
+calculated for 101 windows
+
+mean pi : 0.0516550546440868 
+
+sd of pi : 0.0370772170038158 
+
+hist written to: all_pi_WE03_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WE03_cord_het_0.95_pixy_windows.bed
+calculated for 101 windows
+
+mean dxy : 0.0712447008681388 
+
+sd of dxy : 0.0395186826071974 
+
+hist written to: all_dxy_WE03_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WE03_cord_het_0.95_pixy_windows.bed
+calculated for 113 windows
+
+mean fst : 0.357271994232544 
+
+sd of fst : 0.178103994129455 
+
+hist written to: all_fst_WE03_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WE04_cord_hom_0.95_pixy_windows.bed
+calculated for 21 windows
+
+mean pi : 0.062710259985635 
+
+sd of pi : 0.0415576290060473 
+
+hist written to: all_pi_WE04_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WE04_cord_het_0.95_pixy_windows.bed
+calculated for 93 windows
+
+mean pi : 0.0630811332668511 
+
+sd of pi : 0.0456851411208699 
+
+hist written to: all_pi_WE04_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WE04_cord_hom_0.95_pixy_windows.bed
+calculated for 21 windows
+
+mean dxy : 0.0590549707252063 
+
+sd of dxy : 0.0450115825331402 
+
+hist written to: all_dxy_WE04_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WE04_cord_het_0.95_pixy_windows.bed
+calculated for 93 windows
+
+mean dxy : 0.0829024663329963 
+
+sd of dxy : 0.0573543603674438 
+
+hist written to: all_dxy_WE04_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WE04_cord_hom_0.95_pixy_windows.bed
+calculated for 17 windows
+
+mean fst : 0.197298150006426 
+
+sd of fst : 0.0935095202164407 
+
+hist written to: all_fst_WE04_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WE04_cord_het_0.95_pixy_windows.bed
+calculated for 92 windows
+
+mean fst : 0.332521463207602 
+
+sd of fst : 0.182058454603231 
+
+hist written to: all_fst_WE04_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WE05_cord_hom_0.95_pixy_windows.bed
+calculated for 9 windows
+
+mean pi : 0.0488196127616143 
+
+sd of pi : 0.0451623437137134 
+
+hist written to: all_pi_WE05_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WE05_cord_het_0.95_pixy_windows.bed
+calculated for 60 windows
+
+mean pi : 0.0620440543278861 
+
+sd of pi : 0.0431732546806875 
+
+hist written to: all_pi_WE05_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WE05_cord_hom_0.95_pixy_windows.bed
+calculated for 9 windows
+
+mean dxy : 0.0646838233286927 
+
+sd of dxy : 0.0533807939386165 
+
+hist written to: all_dxy_WE05_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WE05_cord_het_0.95_pixy_windows.bed
+calculated for 60 windows
+
+mean dxy : 0.083750457290379 
+
+sd of dxy : 0.0510524904861647 
+
+hist written to: all_dxy_WE05_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WE05_cord_hom_0.95_pixy_windows.bed
+calculated for 9 windows
+
+mean fst : 0.348549076537717 
+
+sd of fst : 0.155868430221691 
+
+hist written to: all_fst_WE05_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WE05_cord_het_0.95_pixy_windows.bed
+calculated for 62 windows
+
+mean fst : 0.26930110891222 
+
+sd of fst : 0.173699517342441 
+
+hist written to: all_fst_WE05_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WF01_cord_hom_0.95_pixy_windows.bed
+calculated for 5 windows
+
+mean pi : 0.0287021565831073 
+
+sd of pi : 0.00723158631634439 
+
+hist written to: all_pi_WF01_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WF01_cord_het_0.95_pixy_windows.bed
+calculated for 115 windows
+
+mean pi : 0.0478543297774842 
+
+sd of pi : 0.0483623706074239 
+
+hist written to: all_pi_WF01_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WF01_cord_hom_0.95_pixy_windows.bed
+calculated for 5 windows
+
+mean dxy : 0.0516159510554101 
+
+sd of dxy : 0.0158871430574207 
+
+hist written to: all_dxy_WF01_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WF01_cord_het_0.95_pixy_windows.bed
+calculated for 115 windows
+
+mean dxy : 0.0653881314981825 
+
+sd of dxy : 0.0480057560134483 
+
+hist written to: all_dxy_WF01_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WF01_cord_hom_0.95_pixy_windows.bed
+calculated for 6 windows
+
+mean fst : 0.33581321029936 
+
+sd of fst : 0.106659999131596 
+
+hist written to: all_fst_WF01_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WF01_cord_het_0.95_pixy_windows.bed
+calculated for 128 windows
+
+mean fst : 0.34296559950524 
+
+sd of fst : 0.157685449980789 
+
+hist written to: all_fst_WF01_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WG03_cord_hom_0.95_pixy_windows.bed
+calculated for 70 windows
+
+mean pi : 0.040952260829926 
+
+sd of pi : 0.0284110466640497 
+
+hist written to: all_pi_WG03_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WG03_cord_het_0.95_pixy_windows.bed
+calculated for 62 windows
+
+mean pi : 0.0524752098913616 
+
+sd of pi : 0.0415179682281346 
+
+hist written to: all_pi_WG03_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WG03_cord_hom_0.95_pixy_windows.bed
+calculated for 70 windows
+
+mean dxy : 0.0484014934847965 
+
+sd of dxy : 0.0369735528466468 
+
+hist written to: all_dxy_WG03_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WG03_cord_het_0.95_pixy_windows.bed
+calculated for 62 windows
+
+mean dxy : 0.07347186398254 
+
+sd of dxy : 0.0484047980180777 
+
+hist written to: all_dxy_WG03_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WG03_cord_hom_0.95_pixy_windows.bed
+calculated for 76 windows
+
+mean fst : 0.237464173132013 
+
+sd of fst : 0.15028432242638 
+
+hist written to: all_fst_WG03_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WG03_cord_het_0.95_pixy_windows.bed
+calculated for 73 windows
+
+mean fst : 0.33266042715758 
+
+sd of fst : 0.161091173605147 
+
+hist written to: all_fst_WG03_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WG04_cord_hom_0.95_pixy_windows.bed
+calculated for 18 windows
+
+mean pi : 0.0520361054568304 
+
+sd of pi : 0.0273156112391064 
+
+hist written to: all_pi_WG04_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WG04_cord_het_0.95_pixy_windows.bed
+calculated for 68 windows
+
+mean pi : 0.0577416499569558 
+
+sd of pi : 0.0387890332588307 
+
+hist written to: all_pi_WG04_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WG04_cord_hom_0.95_pixy_windows.bed
+calculated for 18 windows
+
+mean dxy : 0.0541495319995002 
+
+sd of dxy : 0.0329003271747603 
+
+hist written to: all_dxy_WG04_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WG04_cord_het_0.95_pixy_windows.bed
+calculated for 68 windows
+
+mean dxy : 0.0869561267980068 
+
+sd of dxy : 0.0553582369309023 
+
+hist written to: all_dxy_WG04_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WG04_cord_hom_0.95_pixy_windows.bed
+calculated for 16 windows
+
+mean fst : 0.309426977467229 
+
+sd of fst : 0.182627268456004 
+
+hist written to: all_fst_WG04_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WG04_cord_het_0.95_pixy_windows.bed
+calculated for 67 windows
+
+mean fst : 0.360714140131276 
+
+sd of fst : 0.165186154067349 
+
+hist written to: all_fst_WG04_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WG05_cord_hom_0.95_pixy_windows.bed
+calculated for 5 windows
+
+mean pi : 0.0724863504218961 
+
+sd of pi : 0.050843349847462 
+
+hist written to: all_pi_WG05_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WG05_cord_het_0.95_pixy_windows.bed
+calculated for 139 windows
+
+mean pi : 0.049445189935053 
+
+sd of pi : 0.0351523028068348 
+
+hist written to: all_pi_WG05_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WG05_cord_hom_0.95_pixy_windows.bed
+calculated for 5 windows
+
+mean dxy : 0.070519729751045 
+
+sd of dxy : 0.0714464209393855 
+
+hist written to: all_dxy_WG05_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WG05_cord_het_0.95_pixy_windows.bed
+calculated for 139 windows
+
+mean dxy : 0.0681265876705853 
+
+sd of dxy : 0.0457069899019313 
+
+hist written to: all_dxy_WG05_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WG05_cord_hom_0.95_pixy_windows.bed
+calculated for 4 windows
+
+mean fst : 0.201243586095671 
+
+sd of fst : 0.0574195026485441 
+
+hist written to: all_fst_WG05_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WG05_cord_het_0.95_pixy_windows.bed
+calculated for 140 windows
+
+mean fst : 0.319384572565917 
+
+sd of fst : 0.188065172709962 
+
+hist written to: all_fst_WG05_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WH03_cord_hom_0.95_pixy_windows.bed
+calculated for 12 windows
+
+mean pi : 0.0689175212448445 
+
+sd of pi : 0.0292304922751145 
+
+hist written to: all_pi_WH03_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WH03_cord_het_0.95_pixy_windows.bed
+calculated for 183 windows
+
+mean pi : 0.0489615963310945 
+
+sd of pi : 0.0395217603338148 
+
+hist written to: all_pi_WH03_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WH03_cord_hom_0.95_pixy_windows.bed
+calculated for 12 windows
+
+mean dxy : 0.0698358881690137 
+
+sd of dxy : 0.0300812079841005 
+
+hist written to: all_dxy_WH03_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WH03_cord_het_0.95_pixy_windows.bed
+calculated for 183 windows
+
+mean dxy : 0.0637573030969233 
+
+sd of dxy : 0.0470473193235564 
+
+hist written to: all_dxy_WH03_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WH03_cord_hom_0.95_pixy_windows.bed
+calculated for 7 windows
+
+mean fst : 0.196559104027398 
+
+sd of fst : 0.13144068168331 
+
+hist written to: all_fst_WH03_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WH03_cord_het_0.95_pixy_windows.bed
+calculated for 192 windows
+
+mean fst : 0.288599811539514 
+
+sd of fst : 0.162104123206494 
+
+hist written to: all_fst_WH03_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WH04_cord_hom_0.95_pixy_windows.bed
+calculated for 14 windows
+
+mean pi : 0.0616188719705158 
+
+sd of pi : 0.0296285658507314 
+
+hist written to: all_pi_WH04_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_pi.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WH04_cord_het_0.95_pixy_windows.bed
+calculated for 127 windows
+
+mean pi : 0.0579275478569276 
+
+sd of pi : 0.0448618329350557 
+
+hist written to: all_pi_WH04_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WH04_cord_hom_0.95_pixy_windows.bed
+calculated for 14 windows
+
+mean dxy : 0.0594870688736257 
+
+sd of dxy : 0.0424693736895649 
+
+hist written to: all_dxy_WH04_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_dxy.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WH04_cord_het_0.95_pixy_windows.bed
+calculated for 127 windows
+
+mean dxy : 0.0741334106204435 
+
+sd of dxy : 0.0468271605324338 
+
+hist written to: all_dxy_WH04_cord_het_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WH04_cord_hom_0.95_pixy_windows.bed
+calculated for 11 windows
+
+mean fst : 0.254947737178323 
+
+sd of fst : 0.129964068753428 
+
+hist written to: all_fst_WH04_cord_hom_0.95_pixy_windows_hist.png 
+
+null device 
+          1 
+Stat Calculations for /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/all_fst.txt and /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows/WH04_cord_het_0.95_pixy_windows.bed
+calculated for 119 windows
+
+mean fst : 0.321658985511015 
+
+sd of fst : 0.186320094644756 
+
+hist written to: all_fst_WH04_cord_het_0.95_pixy_windows_hist.png 
+
