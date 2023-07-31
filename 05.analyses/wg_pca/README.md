@@ -119,6 +119,31 @@ d <- d + xlab(paste("PC2 (", signif(pve$pve[2], 3), ")", sep = "")) + ylab(paste
 d <- d + ylim(-0.5, 0.5) + xlim(-0.55, 0.45)
 d <- d + geom_text(data = subset(pca, taxon == "cord_MR"), aes(label = sample), hjust = -0.1, vjust = -0.8, size = 3) # label E. cordata samples
 d
+
+## FOR JULY 2023 TALKS:
+# scale pca by variation explained
+pca_scaled <- as.data.frame(sapply(c(1:20), function(i) pve[i, "pve"] * pca[, paste("PC", i, sep = "")]))
+colnames(pca_scaled) <- colnames(pca)[2:21]
+pca_scaled$taxon <- pca$taxon
+
+e <- ggplot(pca_scaled, aes(PC1, PC2, col = taxon)) + geom_point(size = 4)
+e <- e + scale_colour_manual(values = c("goldenrod1", "black", "deepskyblue4"))
+e <- e + theme_light() + coord_equal()
+e <- e + xlab(paste("PC1 (", signif(pve$pve[1], 3), ")", sep = "")) + ylab(paste("PC2 (", signif(pve$pve[2], 3), ")", sep = "")) + ggtitle("maf=0.00, PC1 vs. PC2, scaled by var. explained")
+e <- e + theme(axis.text=element_text(size=18), axis.title=element_text(size=22), plot.title=element_text(size=28),
+        legend.text=element_text(size=14), legend.title=element_text(size=18))
+e <- e + xlim(-0.10, 0.10) + ylim(-0.10, 0.10)
+e
+
+f <- ggplot(pca_scaled, aes(PC3, PC4, col = taxon)) + geom_point(size = 4)
+f <- f + scale_colour_manual(values = c("goldenrod1", "black", "deepskyblue4"))
+f <- f + theme_light() + coord_equal()
+f <- f + xlab(paste("PC3 (", signif(pve$pve[3], 3), ")", sep = "")) + ylab(paste("PC4 (", signif(pve$pve[4], 3), ")", sep = "")) + ggtitle("maf=0.00, PC3 vs. PC4, scaled by var. explained")
+f <- f + theme(axis.text=element_text(size=18), axis.title=element_text(size=22), plot.title=element_text(size=28),
+        legend.text=element_text(size=14), legend.title=element_text(size=18))
+f <- f + xlim(-0.10, 0.10) + ylim(-0.10, 0.10)
+f
+
 ```
 
 **With outgroup:**

@@ -1,0 +1,23 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=dist_mat
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=1gb
+#SBATCH --time=1:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=dist_mat_%j.out
+#SBATCH --error=dist_mat_%j.err
+
+module purge
+module load plink/1.90b3.39 
+
+VCF="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/all_fil.vcf.gz"
+LD_DIR_00="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.00"
+LD_DIR_05="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.05"
+OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/trees/nucl_upgma'
+
+plink --vcf "$VCF" --double-id --allow-extra-chr --set-missing-var-ids @:# --extract "$LD_DIR_00"/all_maf00.prune.in --vcf-half-call m --make-bed --distance --out "$OUTDIR"/maf00
+plink --vcf "$VCF" --double-id --allow-extra-chr --set-missing-var-ids @:# --extract "$LD_DIR_05"/all_maf05.prune.in --vcf-half-call m --maf 0.05 --make-bed --distance --out "$OUTDIR"/maf05

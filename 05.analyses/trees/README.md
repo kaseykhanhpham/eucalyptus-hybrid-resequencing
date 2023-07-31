@@ -198,11 +198,26 @@ intree$tip.label <- replacemt_labels
 # root tree
 intree_rooted <- root(intree, c("MZ670598.1_robusta_NA", "HM347959.1_grandis_NA"), resolve.root = TRUE)
 
-# plot tree
-tip_colors <- sapply(meta_table[label_order, "Taxon"], function(x) ifelse(x == "cord_MR", "goldenrod1", ifelse(x == "glob_MR", "black", (ifelse(x == "glob_pure", "deepskyblue4", "gray"))))
+write.tree(intree_rooted, "rooted_euc_mr_cp.tre")
 
-plot(intree_rooted, tip.color = tip_colors, cex = 0.8)
-nodelabels(intree_rooted$node.label, adj = c(1.25), cex = 0.8, bg = "white")
+# plot tree
+tip_colors <- sapply(meta_table[label_order, "Taxon"], function(x) ifelse(x == "cord_MR", "goldenrod1", ifelse(x == "glob_MR", "black", (ifelse(x == "glob_pure", "deepskyblue4", "darkgray")))))
+
+png("cp_tree_no_nodes.png", height = 1600, width = 2400)
+plot(intree_rooted, tip.color = tip_colors, cex = 1.5 , edge.width = 2, root.edge = TRUE, label.offset = 0.000005)
+add.scale.bar()
+nodelabels(intree_rooted$node.label, adj = c(1.25), cex = 0.50, bg = "white")
+dev.off()
+
+# for talk
+library(ggtree)
+intree_collapsed <- as.polytomy(intree, feature = 'node.label', fun = function(x) as.numeric(x) < 85)
+intree_collapsed_rooted <- root(intree_collapsed, c("MZ670598.1_robusta_NA", "HM347959.1_grandis_NA"), resolve.root = TRUE)
+plot(intree_collapsed_rooted, show.tip.label = FALSE, cex = 1.25 , edge.width = 1.5, root.edge = TRUE, label.offset = 0.000005)
+add.scale.bar()
+tip_pch <- sapply(meta_table[label_order, "Taxon"], function(x) ifelse(x == "cord_MR", 15, ifelse(x == "glob_MR", 19, (ifelse(x == "glob_pure", 17, 18)))))
+tip_cex <- ifelse(tip_pch == 15, 1, 1.25)
+tiplabels(pch = tip_pch, cex = tip_cex)
 ```
 
 ![chloroplast phylogeny results, tips labeled by accession and sample species](concatenated_cp_aligned.png "Chloroplast Phylogeny")
@@ -212,3 +227,36 @@ Calculated date to capture of S83 in _E. globulus_ from _E. cordata_. Used the g
 Branch length from _E. globulus_ S83 to the last common ancestor with _E. cordata_ S83: 0.0000376547 substitutions per site.
 
 Years to capture: 37,282 years
+
+## UPGMA tree of nuclear data
+Created a pairwise distance matrix for number of allele differences between samples for linkage-pruned SNPs in `PLINK`.
+
+```bash
+# Done in UFRC queue system; see dist_mat.job for more details.
+# Resources used:
+
+module load plink/1.90b3.39 
+
+VCF="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/all_fil.vcf.gz"
+LD_DIR_00="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.00"
+LD_DIR_05="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.05"
+OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/trees/nucl_upgma'
+
+plink --vcf "$VCF" --double-id --allow-extra-chr --set-missing-var-ids @:# --extract "$LD_DIR_00"/all_maf00.prune.in --vcf-half-call m --make-bed --distance --out "$OUTDIR"/maf00
+plink --vcf "$VCF" --double-id --allow-extra-chr --set-missing-var-ids @:# --extract "$LD_DIR_05"/all_maf05.prune.in --vcf-half-call m --maf 0.05 --make-bed --distance --out "$OUTDIR"/maf05
+```
+
+Generated UPGMA tree from distance matrix in the `R` package `phangorn`.
+
+```R
+library(phangorn)
+
+wdir <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Files/Projects/eucalyptus-hybrid-resequencing/05.analyses/trees/nucl_upgma"
+dist_mat_name <- "maf00.dist"
+
+setwd(wdir)
+dist_mat <- read.table(dist_mat_name)
+nucl_upgma <- upgma(dist_mat_name)
+
+# plot in ggplot2?
+```

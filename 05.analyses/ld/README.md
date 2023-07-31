@@ -81,12 +81,17 @@ Followed the equation for expected r^2 from [Remington et al. 2001 PNAS](www.pna
 # library(ggplot2)
 
 exp_rsquare <- function(l, C) (((10+C*l)/((2+C*l)*(11+C*l)))*(1+(((3+C*l)*(12+12*C*l+(C*l)^2))/(30*(2+C*l)*(11+C*l)))))
+simple_rsquare <- function(l, C) 1/(1+C*l)
 
 ## MAF = 0.00
 maf00_tab <- read.csv("genomewide_r2_maf0.00.csv", header = TRUE)
 glob_maf00_model <- nls(r2 ~ exp_rsquare(dist, estC), data = maf00_tab, start = list(estC = 1))
 plot(maf00_tab$dist[seq(from = 1, to = nrow(maf00_tab), by = 5)], maf00_tab$r2[seq(from = 1, to = nrow(maf00_tab), by = 5)], main = "MAF=0.00 Linkage Disequilibrium", xlab = "distance (bp)", ylab = "r2")
 lines(maf00_tab$dist, predict(glob_maf00_model), col = "red")
+
+glob_maf00_simple_model <- nls(r2 ~ simple_rsquare(dist, estC), data = maf00_tab, start = list(estC = 1))
+plot(maf00_tab$dist[seq(from = 1, to = nrow(maf00_tab), by = 5)], maf00_tab$r2[seq(from = 1, to = nrow(maf00_tab), by = 5)], main = "MAF=0.00 Linkage Disequilibrium", xlab = "distance (bp)", ylab = "r2")
+lines(maf00_tab$dist, predict(glob_maf00_simple_model), col = "red")
 
 ## MAF = 0.05
 maf05_tab <- read.csv("genomewide_r2_maf0.05.csv", header = TRUE)
