@@ -1,0 +1,11 @@
+Chr01,Chr01
+Chr02,Chr02
+Chr03,Chr03
+Chr04,Chr04
+Chr05,Chr05
+Chr06,Chr06
+Chr07,Chr07
+Chr08,Chr08
+Chr09,Chr09
+Chr10,Chr10
+Chr11,Chr11
