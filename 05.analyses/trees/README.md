@@ -233,7 +233,7 @@ Created a pairwise distance matrix for number of allele differences between samp
 
 ```bash
 # Done in UFRC queue system; see dist_mat.job for more details.
-# Resources used:
+# Resources used: 11 Mb, 2 min
 
 module load plink/1.90b3.39 
 
