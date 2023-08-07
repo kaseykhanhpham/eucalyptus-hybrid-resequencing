@@ -220,7 +220,7 @@ tip_cex <- ifelse(tip_pch == 15, 1, 1.25)
 tiplabels(pch = tip_pch, cex = tip_cex)
 ```
 
-![chloroplast phylogeny results, tips labeled by accession and sample species](concatenated_cp_aligned.png "Chloroplast Phylogeny")
+![chloroplast phylogeny results, tips labeled by accession and sample species](plastome/concatenated_cp_aligned.png "Chloroplast Phylogeny")
 
 Calculated date to capture of S83 in _E. globulus_ from _E. cordata_. Used the general seed plant chloroplast substitution rate, 1.01 x 10^-9 substitutions per site per year.
 
@@ -246,17 +246,54 @@ plink --vcf "$VCF" --double-id --allow-extra-chr --set-missing-var-ids @:# --ext
 plink --vcf "$VCF" --double-id --allow-extra-chr --set-missing-var-ids @:# --extract "$LD_DIR_05"/all_maf05.prune.in --vcf-half-call m --maf 0.05 --make-bed --distance --out "$OUTDIR"/maf05
 ```
 
+Calculated relatedness between individuals using relatedness statistic from [Manichaikul et al. 2010 _Bioinformatics_](https://doi.org/10.1093/bioinformatics/btq559), calculated in `vcftools`.
+
+```bash
+# Done in UFRC queue system; see vcft_dist.job for more details.
+# Resources used:
+
+module load vcftools/0.1.16 
+
+IN_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
+POPLIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/trees/nucl_upgma"
+
+# maf = 0.00
+vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out "$WDIR"/maf00/globMR_maf00 --keep "$POPLIST_DIR"/Eglobulus_MR.txt --min-alleles 1 --max-alleles 2 --relatedness2
+
+# maf = 0.05
+vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out "$WDIR"/maf05/globMR_maf05 --keep "$POPLIST_DIR"/Eglobulus_MR.txt --min-alleles 1 --max-alleles 2 --relatedness2
+```
+
 Generated UPGMA tree from distance matrix in the `R` package `phangorn`.
 
 ```R
 library(phangorn)
+library(ape)
 
-wdir <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Files/Projects/eucalyptus-hybrid-resequencing/05.analyses/trees/nucl_upgma"
-dist_mat_name <- "maf00.dist"
+wdir <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/trees/nucl_upgma/"
+infile_name <- "globMR_maf00.relatedness2"
 
 setwd(wdir)
-dist_mat <- read.table(dist_mat_name)
-nucl_upgma <- upgma(dist_mat_name)
 
-# plot in ggplot2?
+# create distance matrix
+dist_df <- read.table(infile_name, header = TRUE, sep = "\t")
+non_diag_rows <- which(dist_df[,1] != dist_df[,2])
+dist_df_pruned <- dist_df[non_diag_rows,]
+# https://stackoverflow.com/questions/22492767/converting-pairwise-distances-into-a-distance-matrix-in-r 
+dist_mat <- as.dist(xtabs(dist_df_pruned[, 7] ~ dist_df_pruned[, 2] + dist_df_pruned[, 1])) 
+
+# create upgma object
+nucl_upgma <- upgma(dist_mat, method = "average")
+# rename tips
+meta_name <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/00.metadata/03.seq_analysis/sample_spp_table.csv"
+meta_table <- read.csv(meta_name, header = TRUE, as.is = TRUE)
+label_order <- match(nucl_upgma$tip.label, meta_table$RAPiD_ID)
+nucl_upgma_renamed <- nucl_upgma
+nucl_upgma_renamed$tip.label <- meta_table$Accession[label_order]
+
+# plot in ape
+plot(nucl_upgma_renamed, cex = 1.75, use.edge.length = FALSE)
 ```
+
+![nuclear UPGMA tree of Meehan Range _E. globulus_ by relatedness score, tips labeled by accession](nucl_upgma/upgma_tree_no_brlen_rough.png "Nuclear UPGMA Tree")
