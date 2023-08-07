@@ -1,5 +1,31 @@
 # Characterize intervals of interest from Ancestry_HMM
 
+## Delimit Introgressed Regions
+
+Extracted introgressed regions identified by `Ancestry_HMM` for each sample using a custom R script. Introgressed regions were defined as:
+* Containing no more than 750 bp in a row with less than 0.90 posterior probability of homozygous _E. cordata_ ancestry
+* Containing at least one variant with a > 0.95 posterior probability of homozygous _E. cordata_ ancestry
+
+```bash
+# Performed in UFRC queue system; see get_intr_regions.job for more details.
+# Resources used: 1.59 Mb, 1 min
+
+module load R/4.2
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+POST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/posteriors"
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+
+while read NAME
+do
+    echo doing "$NAME"
+    Rscript "$SCRIPT_DIR"/get_intr_bed.r "$POST_DIR"/"$NAME".posterior 0.95 0.90 750 0.85 ind_region_beds/"$NAME"_ahmm_regions.bed
+done < "$LIST_DIR"/Eglobulus_MR.txt
+```
+
+For the regions on Chromosomes 6, 7, and 8 with many individuals sharing regions, got the intersection and union of regions between the samples.
+
+Included the larger region for the first introgressed region in Chromosome 7 in the intersect set because all but two samples had it.
+
 ## genome scan statistics
 Checked pi, dxy, and f-stats for intervals.
 
