@@ -250,7 +250,7 @@ Calculated relatedness between individuals using relatedness statistic from [Man
 
 ```bash
 # Done in UFRC queue system; see vcft_dist.job for more details.
-# Resources used:
+# Resources used: 5 Mb, 2 min
 
 module load vcftools/0.1.16 
 
@@ -262,7 +262,7 @@ WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/trees/nucl_upgma"
 vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out "$WDIR"/maf00/globMR_maf00 --keep "$POPLIST_DIR"/Eglobulus_MR.txt --min-alleles 1 --max-alleles 2 --relatedness2
 
 # maf = 0.05
-vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out "$WDIR"/maf05/globMR_maf05 --keep "$POPLIST_DIR"/Eglobulus_MR.txt --min-alleles 1 --max-alleles 2 --relatedness2
+vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out "$WDIR"/maf05/globMR_maf05 --keep "$POPLIST_DIR"/Eglobulus_MR.txt --min-alleles 1 --max-alleles 2 --maf 0.05 --relatedness2
 ```
 
 Generated UPGMA tree from distance matrix in the `R` package `phangorn`.
