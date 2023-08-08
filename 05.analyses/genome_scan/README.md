@@ -26,8 +26,8 @@ Moved to `/orange` and indexed with `tabix`.
 
 ```bash
 module load bcftools/1.15
-OUTGR_DIR="/orange/soltis/kasey.pham/eucalyptus_hybrid_resequencing/06.snp_filtering/no_outgroup"
-OUTL_DIR="/orange/soltis/kasey.pham/eucalyptus_hybrid_resequencing/06.snp_filtering/no_outlier"
+OUTGR_DIR="/orange/soltis/kasey.pham/eucalyptus_hyb_reseq/06.snp_filtering/no_outgroup"
+OUTL_DIR="/orange/soltis/kasey.pham/eucalyptus_hyb_reseq/06.snp_filtering/no_outlier"
 
 cd "$OUTGR_DIR"
 ls *.vcf.gz | while read FILE; do tabix "$FILE"; done
@@ -90,36 +90,36 @@ done
 ```
 
 ### Compare `pixy` results with and without outlier WF03/1051
-Consolidate results:
+Consolidated results:
 
 ```bash
 # all but outgroup
-OUTGR_DIR="/orange/soltis/kasey.pham/eucalyptus_hybrid_resequencing/06.snp_filtering/no_outgroup"
-OUTL_DIR="/orange/soltis/kasey.pham/eucalyptus_hybrid_resequencing/06.snp_filtering/no_outlier"
-declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy"
+OUTL_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/outl_check"
+declare -a VCFLIST=(chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
 
-cd "$OUTGR_DIR"
-touch all_pi.txt
-touch all_dxy.txt
-touch all_fst.txt
+cd "$WDIR"
+cat chr01_pi.txt > all_pi.txt
+cat chr01_dxy.txt > all_dxy.txt
+cat chr01_fst.txt > all_fst.txt
 
 for NAME in "${VCFLIST[@]}"
 do
-    cat "$NAME"_pi.txt >> all_pi.txt
-    cat "$NAME"_dxy.txt >> all_dxy.txt
-    cat "$NAME"_fst.txt >> all_fst.txt
+    tail -n +1 "$NAME"_pi.txt >> all_pi.txt
+    tail -n +1 "$NAME"_dxy.txt >> all_dxy.txt
+    tail -n +1 "$NAME"_fst.txt >> all_fst.txt
 done
 
 cd "$OUTL_DIR"
-touch all_outl_pi.txt
-touch all_outl_dxy.txt
-touch all_outl_fst.txt
+cat chr01_pi.txt > all_outl_pi.txt
+cat chr01_dxy.txt > all_outl_dxy.txt
+cat chr01_fst.txt > all_outl_fst.txt
 
 for NAME in "${VCFLIST[@]}"
 do
-    cat "$NAME"_pi.txt >> all_outl_pi.txt
-    cat "$NAME"_dxy.txt >> all_outl_dxy.txt
-    cat "$NAME"_fst.txt >> all_outl_fst.txt
+    tail -n +1 "$NAME"_pi.txt >> all_outl_pi.txt
+    tail -n +1 "$NAME"_dxy.txt >> all_outl_dxy.txt
+    tail -n +1 "$NAME"_fst.txt >> all_outl_fst.txt
 done
 ```
 
@@ -132,33 +132,13 @@ working_dir <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Docu
 setwd(working_dir)
 
 # import pixy files
-all_pi <- read.table("all_pi.txt", header = TRUE, sep = "\t", na.strings="NA", as.is = TRUE)
-all_dxy <- read.table("all_dxy.txt", header = TRUE, sep = "\t", na.strings="NA", as.is = TRUE)
-all_fst <- read.table("all_fst.txt", header = TRUE, sep = "\t", na.strings="NA", as.is = TRUE)
+all_pi <- read.table("all_pi.txt", header = TRUE, sep = "\t", na.strings="NA")
+all_dxy <- read.table("all_dxy.txt", header = TRUE, sep = "\t", na.strings="NA")
+all_fst <- read.table("all_fst.txt", header = TRUE, sep = "\t", na.strings="NA")
 
-outl_pi <- read.table("all_outl_pi.txt", header = TRUE, sep = "\t", na.strings="NA", as.is = TRUE)
-outl_dxy <- read.table("all_outl_dxy.txt", header = TRUE, sep = "\t", na.strings="NA", as.is = TRUE)
-outl_fst <- read.table("all_outl_fst.txt", header = TRUE, sep = "\t", na.strings="NA", as.is = TRUE)
-
-# cast column classes
-pi_to_cast <- c("avg_pi", "no_sites", "count_diffs", "count_comparisons", "count_missing")
-dxy_to_cast <- c("avg_dxy", "no_sites", "count_diffs", "count_comparisons", "count_missing")
-fst_to_cast <- c("avg_wc_fst", "no_snps")
-
-for(col_name in pi_to_cast){
-    all_pi[,col_name] <- as.numeric(all_pi[,col_name])
-    outl_pi[,col_name] <- as.numeric(outl_pi[,col_name])
-}
-
-for(col_name in dxy_to_cast){
-    all_dxy[,col_name] <- as.numeric(all_dxy[,col_name])
-    outl_dxy[,col_name] <- as.numeric(outl_dxy[,col_name])
-}
-
-for(col_name in fst_to_cast){
-    all_fst[,col_name] <- as.numeric(all_fst[,col_name])
-    outl_fst[,col_name] <- as.numeric(outl_fst[,col_name])
-}
+outl_pi <- read.table("all_outl_pi.txt", header = TRUE, sep = "\t", na.strings="NA")
+outl_dxy <- read.table("all_outl_dxy.txt", header = TRUE, sep = "\t", na.strings="NA")
+outl_fst <- read.table("all_outl_fst.txt", header = TRUE, sep = "\t", na.strings="NA")
 
 # filter by number of sites used to calculate in window
 all_pi_fil <- all_pi[which(all_pi$no_sites > 40),]
