@@ -1,10 +1,9 @@
-# Local Ancestry Inference
 # HMM Inference of Local Ancestry
 Performed using the tool [`Ancestry_HMM`](https://github.com/russcd/Ancestry_HMM). Thanks to Shelley Sianta for suggesting this analysis.
 
-## Prepare inputs
-### Genotype count input file
-
+## MAF = 0.00
+### Prepare inputs
+#### Genotype count input file
 First retrieved allele counts for each sample using `VCFTools`. Excluded ChrUn from this analysis as it does not have corresponding distances in the genetic map.
 
 ```bash
@@ -17,10 +16,10 @@ IN_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
 POPLIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
 
 # Get genotype counts for E. cordata
-vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out cord_ref --keep "$POPLIST_DIR"/Ecordata.txt --min-alleles 1 --max-alleles 2 --not-chr ChrUn --counts
+vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out gt_counts/cord_ref --keep "$POPLIST_DIR"/Ecordata.txt --min-alleles 1 --max-alleles 2 --not-chr ChrUn --counts
 
 # E. globulus ref
-vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out glob_ref --keep "$POPLIST_DIR"/Eglobulus_ref.txt --min-alleles 1 --max-alleles 2 --not-chr ChrUn --counts
+vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out gt_counts/glob_ref --keep "$POPLIST_DIR"/Eglobulus_ref.txt --min-alleles 1 --max-alleles 2 --not-chr ChrUn --counts
 
 # Introgressants
 while read NAME
@@ -38,16 +37,16 @@ Generated input file for `Ancestry_HMM` using a custom `python` script.
 
 module load R/4.2
 
-WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
 SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
 MAP_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/flare"
-COUNTS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/gt_counts"
+COUNTS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/maf00/gt_counts"
 
 Rscript "$SCRIPT_DIR"/get_gen_dists.r "$COUNTS_DIR"/glob_ref.frq.count "$MAP_DIR"/1060_LH_F2_manual_copy.map gen_dists.tab
-python "$SCRIPT_DIR"/make_ahmm_in.py ref_files.txt coverage.txt sample_files.txt gen_dists.tab all_ahmm_in.tab
+python "$SCRIPT_DIR"/make_ahmm_in.py ref_files.txt "$LIST_DIR"/coverage.txt sample_files.txt gen_dists.tab all_ahmm_in.tab
 ```
 
-## Run the program
+### Run the program
 Ran `Ancestry_HMM` using generated genotype counts input files and results from [`ADMIXTURE`](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/tree/main/05.analyses/wg_ADMIXTURE) to provide contributions from source populations.
 
 Initial run parameters:
@@ -65,12 +64,12 @@ Initial run parameters:
 # Resources used: 11 Gb, 3 hrs
 
 module load ancestryhmm/1.0.2
-WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
 
-ancestry_hmm -i "$WDIR"/all_ahmm_in.tab -s "$WDIR"/sample_ploidy.txt -a 2 0.99 0.01 -p 0 100000 0.99 -p 1 -1700 0.01 -g -b 100 1000
+ancestry_hmm -i all_ahmm_in.tab -s "$LIST_DIR"/sample_ploidy.txt -a 2 0.99 0.01 -p 0 100000 0.99 -p 1 -1700 0.01 -g -b 100 1000
 ```
 
-## Analyze results
+### Analyze results
 
 Plotted posteriors by chromosome for each admixed sample locally.
 ```bash
@@ -87,7 +86,7 @@ do
 done < "$WDIR"/Eglobulus_MR.txt
 ```
 
-### Overlap with other outlier windows
+#### Overlap with other outlier windows
 
 Retrieved windows with a posterior probability of > 95% for homozygous or heterozygous _E. cordata ancestry_.
 
@@ -141,7 +140,7 @@ Examined overlap between `Ancestry_HMM`-inferred _cordata_ regions, regions of M
 module load bedtools/2.30.0
 LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
 DXY_FILES="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/individuals/outlier_files/bedfiles"
-AHMM_FILES="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/cord_loci/bedfiles"
+AHMM_FILES="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/maf00/cord_loci/bedfiles"
 DSUITE_FILES="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/dsuite"
 
 while read NAME
@@ -161,107 +160,92 @@ do
 done < "$LIST_DIR"/Eglobulus_MR.txt
 ```
 
-### Characterize stats within high-posterior windows
-
-Converted `pixy` output into BED file of windows.
-
-```R
-wdir <- "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy"
-setwd(wdir)
-options(scipen=999)
-
-all_dxy <- read.table("all_dxy.txt", header = TRUE)
-all_pi <- read.table("all_pi.txt", header = TRUE)
-
-dxy_bed <- all_dxy[which(all_dxy$pop1 == "glob_MR" & all_dxy$pop2 == "cord_MR"), c("chromosome", "window_pos_1", "window_pos_2")]
-dxy_bed$window_pos_1 <- as.numeric(dxy_bed$window_pos_1) - 1
-write.table(dxy_bed, "all_dxy.bed", row.names = FALSE, col.names = FALSE, quote = FALSE, sep = "\t")
-
-pi_bed <- all_pi[which(all_pi$pop == "glob_MR"), c("chromosome", "window_pos_1", "window_pos_2")]
-pi_bed$window_pos_1 <- as.numeric(pi_bed$window_pos_1) - 1
-write.table(pi_bed, "all_pi.bed", row.names = FALSE, col.names = FALSE, quote = FALSE, sep = "\t")
-```
-
-Got pi/dxy windows for windows of high posterior probability of _cordata_ ancestry.
+## MAF = 0.05
+### Prepare inputs
+#### Genotype count input file
+First retrieved allele counts for each sample using `VCFTools`. Excluded ChrUn from this analysis as it does not have corresponding distances in the genetic map.
 
 ```bash
-module load bedtools/2.30.0
-STAT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy"
-AHMM_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/cord_loci/bedfiles"
-LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+# Run in UFRC queue system; see gt_counts_maf05.job for more details.
+# Resources used: 
 
+module load vcftools/0.1.16 
+
+IN_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
+POPLIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+
+# Get genotype counts for E. cordata
+vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --maf 0.05 --recode --stdout | vcftools --vcf - --out gt_counts/cord_ref --keep "$POPLIST_DIR"/Ecordata.txt --min-alleles 1 --max-alleles 2 --maf 0.05 --not-chr ChrUn --counts
+
+# E. globulus ref
+vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --maf 0.05 --recode --stdout | vcftools --vcf -  --out gt_counts/glob_ref --keep "$POPLIST_DIR"/Eglobulus_ref.txt --min-alleles 1 --max-alleles 2 --maf 0.05 --not-chr ChrUn --counts
+
+# Introgressants
 while read NAME
 do
-    bedtools intersect -a "$STAT_DIR"/all_pi.bed -b "$AHMM_DIR"/"$NAME"_cord_hom_0.95.bed -wa > "$NAME"_cord_hom_0.95_pixy_windows.bed
-    bedtools intersect -a "$STAT_DIR"/all_pi.bed -b "$AHMM_DIR"/"$NAME"_cord_het_0.95.bed -wa > "$NAME"_cord_het_0.95_pixy_windows.bed
-done < "$LIST_DIR"/Eglobulus_MR.txt
+    vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --maf 0.05 --recode --stdout | vcftools --vcf - --out gt_counts/"$NAME" --indv "$NAME" --min-alleles 1 --max-alleles 2 --maf 0.05 --not-chr ChrUn --counts
+done < "$POPLIST_DIR"/Eglobulus_MR.txt
 ```
 
-Retrieved pi/dxy values for windows.
+### AncestryHMM input file
+Generated input file for `Ancestry_HMM` using a custom `python` script.
 
 ```bash
+# Run in UFRC queue system; see get_ahmm_in.job for more details.
+# Resources used: 4 Gb, 30 min
+
 module load R/4.2
-PIXY_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy"
-BED_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/post_stats/pixy_windows"
+
 LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
 SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+MAP_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/flare"
+COUNTS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/maf05/gt_counts"
 
-# summary stats for E. glob MR and all E. cordata (looking for high values of pi and low values of dxy/fst)
-# Minimum of 40 SNPs per window
-touch ahmm_window_stats_40.txt
-while read NAME
-do
-    # pi
-    Rscript "$SCRIPT_DIR"/calc_window_stats.r "$PIXY_DIR"/all_pi.txt "$BED_DIR"/"$NAME"_cord_hom_0.95_pixy_windows.bed 40 "pi" "glob_MR" >> ahmm_window_stats_40.txt
-    Rscript "$SCRIPT_DIR"/calc_window_stats.r "$PIXY_DIR"/all_pi.txt "$BED_DIR"/"$NAME"_cord_het_0.95_pixy_windows.bed 40 "pi" "glob_MR">> ahmm_window_stats_40.txt
-
-    # dxy
-    Rscript "$SCRIPT_DIR"/calc_window_stats.r "$PIXY_DIR"/all_dxy.txt "$BED_DIR"/"$NAME"_cord_hom_0.95_pixy_windows.bed 40 "dxy" "glob_MR" "cord_MR" >> ahmm_window_stats_40.txt
-    Rscript "$SCRIPT_DIR"/calc_window_stats.r "$PIXY_DIR"/all_dxy.txt "$BED_DIR"/"$NAME"_cord_het_0.95_pixy_windows.bed 40 "dxy" "glob_MR" "cord_MR" >> ahmm_window_stats_40.txt
-
-    # fst
-    Rscript "$SCRIPT_DIR"/calc_window_stats.r "$PIXY_DIR"/all_fst.txt "$BED_DIR"/"$NAME"_cord_hom_0.95_pixy_windows.bed 40 "fst" "glob_MR" "cord_MR" >> ahmm_window_stats_40.txt
-    Rscript "$SCRIPT_DIR"/calc_window_stats.r "$PIXY_DIR"/all_fst.txt "$BED_DIR"/"$NAME"_cord_het_0.95_pixy_windows.bed 40 "fst" "glob_MR" "cord_MR" >> ahmm_window_stats_40.txt
-done < "$LIST_DIR"/Eglobulus_MR.txt
-
-# Minimum of 20 SNPs per winndow (little change from 40 SNPs per window)
-touch ahmm_window_stats_20.txt
-while read NAME
-do
-    # pi
-    Rscript "$SCRIPT_DIR"/calc_window_stats.r "$PIXY_DIR"/all_pi.txt "$BED_DIR"/"$NAME"_cord_hom_0.95_pixy_windows.bed 20 "pi" "glob_MR" >> ahmm_window_stats_20.txt
-    Rscript "$SCRIPT_DIR"/calc_window_stats.r "$PIXY_DIR"/all_pi.txt "$BED_DIR"/"$NAME"_cord_het_0.95_pixy_windows.bed 20 "pi" "glob_MR">> ahmm_window_stats_20.txt
-
-    # dxy
-    Rscript "$SCRIPT_DIR"/calc_window_stats.r "$PIXY_DIR"/all_dxy.txt "$BED_DIR"/"$NAME"_cord_hom_0.95_pixy_windows.bed 20 "dxy" "glob_MR" "cord_MR" >> ahmm_window_stats_20.txt
-    Rscript "$SCRIPT_DIR"/calc_window_stats.r "$PIXY_DIR"/all_dxy.txt "$BED_DIR"/"$NAME"_cord_het_0.95_pixy_windows.bed 20 "dxy" "glob_MR" "cord_MR" >> ahmm_window_stats_20.txt
-
-    # fst
-    Rscript "$SCRIPT_DIR"/calc_window_stats.r "$PIXY_DIR"/all_fst.txt "$BED_DIR"/"$NAME"_cord_hom_0.95_pixy_windows.bed 20 "fst" "glob_MR" "cord_MR" >> ahmm_window_stats_20.txt
-    Rscript "$SCRIPT_DIR"/calc_window_stats.r "$PIXY_DIR"/all_fst.txt "$BED_DIR"/"$NAME"_cord_het_0.95_pixy_windows.bed 20 "fst" "glob_MR" "cord_MR" >> ahmm_window_stats_20.txt
-done < "$LIST_DIR"/Eglobulus_MR.txt
-
-# dxy between individuals in E. glob MR and all E. cordata (looking for low values)
-PIXY_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/individuals"
-while read NAME
-do
-    # dxy
-    Rscript "$SCRIPT_DIR"/calc_window_stats.r "$PIXY_DIR"/cord_"$NAME"_dxy.txt "$BED_DIR"/"$NAME"_cord_hom_0.95_pixy_windows.bed 40 "dxy" "glob_MR" "cord_MR" >> ahmm_window_stats_inds.txt
-    Rscript "$SCRIPT_DIR"/calc_window_stats.r "$PIXY_DIR"/cord_"$NAME"_dxy.txt "$BED_DIR"/"$NAME"_cord_het_0.95_pixy_windows.bed 40 "dxy" "cord_MR" "glob_MR" >> ahmm_window_stats_inds.txt
-done < "$LIST_DIR"/Eglobulus_MR.txt
-
-# dxy between E. glob MR and E. glob reference (looking for high values)
-PIXY_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy"
-while read NAME
-do
-    # dxy
-    Rscript "$SCRIPT_DIR"/calc_window_stats.r "$PIXY_DIR"/all_dxy.txt "$BED_DIR"/"$NAME"_cord_hom_0.95_pixy_windows.bed 40 "dxy" "glob_MR" "glob_pure" >> ahmm_window_stats_glob.txt
-    Rscript "$SCRIPT_DIR"/calc_window_stats.r "$PIXY_DIR"/all_dxy.txt "$BED_DIR"/"$NAME"_cord_het_0.95_pixy_windows.bed 40 "dxy" "glob_MR" "glob_pure" >> ahmm_window_stats_glob.txt
-done < "$LIST_DIR"/Eglobulus_MR.txt
+Rscript "$SCRIPT_DIR"/get_gen_dists.r "$COUNTS_DIR"/glob_ref.frq.count "$MAP_DIR"/1060_LH_F2_manual_copy.map gen_dists.tab
+python "$SCRIPT_DIR"/make_ahmm_in.py ref_files.txt "$LIST_DIR"/coverage.txt sample_files.txt gen_dists.tab all_ahmm_in.tab
 ```
 
-Most windows with pi/dxy at or a bit larger than genome-wide calculation... Could be that introgressed alleles are at a low enough frequency in _E. glob_ MR population to not show signal in dxy. 
+### Run the program
+Ran `Ancestry_HMM` using generated genotype counts input files and results from [`ADMIXTURE`](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/tree/main/05.analyses/wg_ADMIXTURE) to provide contributions from source populations.
 
-### Define windows more methodically
-Defined introgressed windows as a region containing > 0.95 posterior probability of homozygous _E. cordata_ ancestry and any surrounding region with > 0.85 posterior probability for more than 3 evaluated sites in a row.
+Initial run parameters:
+* -i: input of genotype counts among reference and introgressed samples
+* -s: ploidy of each sample, all diploid
+* -a: two source populations, 0 (_E. globulus_) contributed 99% of variation and 1 (E. cordata) contributed 1%
+* -p: first ancestry pulse for glob background, num generations set above limit to indicate starting background, 99% of current admixed genomes 
+* -p: second ancestry pulse for cordy background, start at 1700 generations (assuming pleistocene admixture and generation times of 10 years) and optimize, 1% of current admixed genomes but optimize estimate
+* -g: genotype counts provided rather than read pileups
+* -b: do 100 bootstraps of 10,000 SNP blocks
+* -ne: effective population size of the admixed population -- I don't know this, so I'm not going to try to provide it.
 
+```bash
+# Run in UFRC queue system; see ancestryhmm.job for more details.
+# Resources used: 11 Gb, 3 hrs
+
+module load ancestryhmm/1.0.2
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+
+ancestry_hmm -i "$WDIR"/all_ahmm_in.tab -s "$WDIR"/sample_ploidy.txt -a 2 0.99 0.01 -p 0 100000 0.99 -p 1 -1700 0.01 -g -b 100 1000
+```
+
+### Analyze results
+
+Plotted posteriors by chromosome for each admixed sample locally.
+```bash
+# Run in UFRC queue system; see plot_posteriors.job for more details.
+# Resources used: 600 Mb, 10 min
+
+module load R/4.2
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+
+while read NAME
+do
+    Rscript "$SCRIPT_DIR"/plot_posteriors.r "$WDIR"/posteriors/"$NAME".posterior "goldenrod1,green3,deepskyblue4"
+done < "$WDIR"/Eglobulus_MR.txt
+```
+
+
+## Characterized windows by statistics
+
+See maf00/char_windows and maf05/char_windows.

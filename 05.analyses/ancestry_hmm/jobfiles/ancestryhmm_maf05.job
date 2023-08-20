@@ -1,15 +1,15 @@
 #!/bin/bash
 #SBATCH --account=soltis
 #SBATCH --qos=soltis-b
-#SBATCH --job-name=hmm_lai
+#SBATCH --job-name=hmm_lai_maf05
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=kasey.pham@ufl.edu
 #SBATCH --mem=30gb
 #SBATCH --time=1-00:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --nodes=1
-#SBATCH --output=ancestryhmm_%j.out
-#SBATCH --error=ancestryhmm_%j.err
+#SBATCH --output=ancestryhmm_maf05_%j.out
+#SBATCH --error=ancestryhmm_maf05_%j.err
 
 module load ancestryhmm/1.0.2
 LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
