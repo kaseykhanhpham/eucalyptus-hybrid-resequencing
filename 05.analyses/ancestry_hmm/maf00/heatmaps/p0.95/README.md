@@ -1,4 +1,4 @@
-# Visualize windows with inferred posterior > 0.95 E. cordata ancestry
+# Visualize windows with inferred posterior > 0.95 E. cordata ancestry for MAF=0.00 run
 
 Split chromosomes into 5 sections each and plotted presence/absence of heterozygous and homozygous _cordata_ loci above 95% posterior probability.
 
@@ -10,16 +10,16 @@ Split chromosomes into five chunks each and marked any windows with at least one
 library(ggplot2)
 library(RColorBrewer)
 
-source("C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/ancestry_hmm/heatmaps/heatmaps_fun.r")
+source("C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/ancestry_hmm/heatmaps_fun.r")
 
-post_file_loc <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/ancestry_hmm/posteriors"
-wdir <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/ancestry_hmm/heatmaps/p0.95"
+post_file_loc <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/ancestry_hmm/maf00/posteriors"
+wdir <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/ancestry_hmm/maf00/heatmaps/p0.95"
 glob_mr_samples <- c("WA01", "WA03", "WA04", "WB02", "WB03", "WB04", "WC02", "WC03", "WC05", "WD04", "WE02", "WE03", "WE04", "WE05", "WF01", "WG03", "WG04", "WG05", "WH03", "WH04")
 chromosomes <- c("Chr01", "Chr02", "Chr03", "Chr04", "Chr05", "Chr06", "Chr07", "Chr08", "Chr09", "Chr10", "Chr11")
 
 setwd(wdir)
-coarsewin_filename <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/ancestry_hmm/heatmaps/coarse_windows.csv"
-coarsewin_tab <- read.csv(window_filename, header = FALSE, col.names = c("chrom", "start", "end"), colClasses = c("character", "integer", "integer"))
+coarsewin_filename <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/ancestry_hmm/maf00/heatmaps/coarse_windows.csv"
+coarsewin_tab <- read.csv(coarsewin_filename, header = FALSE, col.names = c("chrom", "start", "end"), colClasses = c("character", "integer", "integer"))
 
 # populate matrix
 coarse_mat_df <- populate_mat(glob_mr_samples, coarsewin_tab, 0.95)
@@ -283,7 +283,7 @@ Performed chi-square test on 5kb windows for Chromosomes 6, 7, and 8 to test for
 
 ```R
 library(ggplot2)
-ahmm_in_name <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/ancestry_hmm/all_ahmm_in.tab"
+ahmm_in_name <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/ancestry_hmm/maf00/all_ahmm_in.tab"
 ahmm_in <- read.table(ahmm_in_name, sep = "\t", header = FALSE)
 
 # Chromosome 6

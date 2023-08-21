@@ -18,13 +18,13 @@ IN_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
 POPLIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
 
 # Get genotype counts for E. cordata
-vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --maf 0.05 --recode --stdout | vcftools --vcf - --out gt_counts/cord_ref --keep "$POPLIST_DIR"/Ecordata.txt --min-alleles 1 --max-alleles 2 --maf 0.05 --not-chr ChrUn --counts
+vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --maf 0.05 --recode --stdout | vcftools --vcf - --out gt_counts/cord_ref --keep "$POPLIST_DIR"/Ecordata.txt --min-alleles 1 --max-alleles 2 --not-chr ChrUn --counts
 
 # E. globulus ref
-vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --maf 0.05 --recode --stdout | vcftools --vcf -  --out gt_counts/glob_ref --keep "$POPLIST_DIR"/Eglobulus_ref.txt --min-alleles 1 --max-alleles 2 --maf 0.05 --not-chr ChrUn --counts
+vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --maf 0.05 --recode --stdout | vcftools --vcf -  --out gt_counts/glob_ref --keep "$POPLIST_DIR"/Eglobulus_ref.txt --min-alleles 1 --max-alleles 2 --not-chr ChrUn --counts
 
 # Introgressants
 while read NAME
 do
-    vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --maf 0.05 --recode --stdout | vcftools --vcf - --out gt_counts/"$NAME" --indv "$NAME" --min-alleles 1 --max-alleles 2 --maf 0.05 --not-chr ChrUn --counts
+    vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --maf 0.05 --recode --stdout | vcftools --vcf - --out gt_counts/"$NAME" --indv "$NAME" --min-alleles 1 --max-alleles 2 --not-chr ChrUn --counts
 done < "$POPLIST_DIR"/Eglobulus_MR.txt

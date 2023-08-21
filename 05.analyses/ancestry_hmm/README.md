@@ -71,6 +71,7 @@ ancestry_hmm -i all_ahmm_in.tab -s "$LIST_DIR"/sample_ploidy.txt -a 2 0.99 0.01 
 
 ### Analyze results
 
+#### Summary plots
 Plotted posteriors by chromosome for each admixed sample locally.
 ```bash
 # Run in UFRC queue system; see plot_posteriors.job for more details.
@@ -85,6 +86,8 @@ do
     Rscript "$SCRIPT_DIR"/plot_posteriors.r "$WDIR"/posteriors/"$NAME".posterior "goldenrod1,green3,deepskyblue4"
 done < "$WDIR"/Eglobulus_MR.txt
 ```
+
+Plotted heatmaps of presence/absence of inferred introgressed regions across chromosomes. See maf00/heatmaps/p0.95 and maf00/heatmaps/p0.90.
 
 #### Overlap with other outlier windows
 
@@ -160,6 +163,9 @@ do
 done < "$LIST_DIR"/Eglobulus_MR.txt
 ```
 
+#### Statistics in Introgressed Windows
+Delimited introgressed windows more precisely and checked SNP calling stats and genome scan stats for putative regions. See maf00/char_windows.
+
 ## MAF = 0.05
 ### Prepare inputs
 #### Genotype count input file
@@ -167,7 +173,7 @@ First retrieved allele counts for each sample using `VCFTools`. Excluded ChrUn f
 
 ```bash
 # Run in UFRC queue system; see gt_counts_maf05.job for more details.
-# Resources used: 
+# Resources used: 6 Mb, 2 hrs
 
 module load vcftools/0.1.16 
 
@@ -175,15 +181,15 @@ IN_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
 POPLIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
 
 # Get genotype counts for E. cordata
-vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --maf 0.05 --recode --stdout | vcftools --vcf - --out gt_counts/cord_ref --keep "$POPLIST_DIR"/Ecordata.txt --min-alleles 1 --max-alleles 2 --maf 0.05 --not-chr ChrUn --counts
+vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --maf 0.05 --recode --stdout | vcftools --vcf - --out gt_counts/cord_ref --keep "$POPLIST_DIR"/Ecordata.txt --min-alleles 1 --max-alleles 2 --not-chr ChrUn --counts
 
 # E. globulus ref
-vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --maf 0.05 --recode --stdout | vcftools --vcf -  --out gt_counts/glob_ref --keep "$POPLIST_DIR"/Eglobulus_ref.txt --min-alleles 1 --max-alleles 2 --maf 0.05 --not-chr ChrUn --counts
+vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --maf 0.05 --recode --stdout | vcftools --vcf -  --out gt_counts/glob_ref --keep "$POPLIST_DIR"/Eglobulus_ref.txt --min-alleles 1 --max-alleles 2 --not-chr ChrUn --counts
 
 # Introgressants
 while read NAME
 do
-    vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --maf 0.05 --recode --stdout | vcftools --vcf - --out gt_counts/"$NAME" --indv "$NAME" --min-alleles 1 --max-alleles 2 --maf 0.05 --not-chr ChrUn --counts
+    vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --maf 0.05 --recode --stdout | vcftools --vcf - --out gt_counts/"$NAME" --indv "$NAME" --min-alleles 1 --max-alleles 2 --not-chr ChrUn --counts
 done < "$POPLIST_DIR"/Eglobulus_MR.txt
 ```
 
@@ -191,8 +197,8 @@ done < "$POPLIST_DIR"/Eglobulus_MR.txt
 Generated input file for `Ancestry_HMM` using a custom `python` script.
 
 ```bash
-# Run in UFRC queue system; see get_ahmm_in.job for more details.
-# Resources used: 4 Gb, 30 min
+# Run in UFRC queue system; see get_ahmm_in_maf05.job for more details.
+# Resources used: 500 Mb, 7 min
 
 module load R/4.2
 
@@ -219,21 +225,22 @@ Initial run parameters:
 * -ne: effective population size of the admixed population -- I don't know this, so I'm not going to try to provide it.
 
 ```bash
-# Run in UFRC queue system; see ancestryhmm.job for more details.
-# Resources used: 11 Gb, 3 hrs
+# Run in UFRC queue system; see ancestryhmm_maf05.job for more details.
+# Resources used: 2 Gb, 7 min
 
 module load ancestryhmm/1.0.2
-WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
 
-ancestry_hmm -i "$WDIR"/all_ahmm_in.tab -s "$WDIR"/sample_ploidy.txt -a 2 0.99 0.01 -p 0 100000 0.99 -p 1 -1700 0.01 -g -b 100 1000
+ancestry_hmm -i all_ahmm_in.tab -s "$LIST_DIR"/sample_ploidy.txt -a 2 0.99 0.01 -p 0 100000 0.99 -p 1 -1700 0.01 -g -b 100 1000
 ```
 
 ### Analyze results
 
+#### Summary Plots
 Plotted posteriors by chromosome for each admixed sample locally.
 ```bash
-# Run in UFRC queue system; see plot_posteriors.job for more details.
-# Resources used: 600 Mb, 10 min
+# Run in UFRC queue system; see plot_posteriors_maf05.job for more details.
+# Resources used:
 
 module load R/4.2
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
@@ -241,11 +248,11 @@ SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
 
 while read NAME
 do
-    Rscript "$SCRIPT_DIR"/plot_posteriors.r "$WDIR"/posteriors/"$NAME".posterior "goldenrod1,green3,deepskyblue4"
+    Rscript "$SCRIPT_DIR"/plot_posteriors.r "$WDIR"/maf05/posteriors/"$NAME".posterior "goldenrod1,green3,deepskyblue4"
 done < "$WDIR"/Eglobulus_MR.txt
 ```
 
+Plotted heatmaps of presence/absence of inferred introgressed regions across chromosomes. See maf05/heatmaps.
 
-## Characterized windows by statistics
-
-See maf00/char_windows and maf05/char_windows.
+#### Statistics in Introgressed Windows
+Delimited introgressed windows more precisely and checked SNP calling stats and genome scan stats for putative regions. See maf05/char_windows.
