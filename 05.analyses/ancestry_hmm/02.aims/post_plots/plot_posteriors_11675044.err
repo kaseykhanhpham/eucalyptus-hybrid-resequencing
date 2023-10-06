@@ -1,0 +1,200 @@
+Warning message:
+Using an external vector in selections was deprecated in tidyselect 1.1.0.
+ℹ Please use `all_of()` or `any_of()` instead.
+  # Was:
+  data %>% select(state_cols)
+
+  # Now:
+  data %>% select(all_of(state_cols))
+
+See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>. 
+Warning message:
+Using an external vector in selections was deprecated in tidyselect 1.1.0.
+ℹ Please use `all_of()` or `any_of()` instead.
+  # Was:
+  data %>% select(state_cols)
+
+  # Now:
+  data %>% select(all_of(state_cols))
+
+See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>. 
+Warning message:
+Using an external vector in selections was deprecated in tidyselect 1.1.0.
+ℹ Please use `all_of()` or `any_of()` instead.
+  # Was:
+  data %>% select(state_cols)
+
+  # Now:
+  data %>% select(all_of(state_cols))
+
+See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>. 
+Warning message:
+Using an external vector in selections was deprecated in tidyselect 1.1.0.
+ℹ Please use `all_of()` or `any_of()` instead.
+  # Was:
+  data %>% select(state_cols)
+
+  # Now:
+  data %>% select(all_of(state_cols))
+
+See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>. 
+Warning message:
+Using an external vector in selections was deprecated in tidyselect 1.1.0.
+ℹ Please use `all_of()` or `any_of()` instead.
+  # Was:
+  data %>% select(state_cols)
+
+  # Now:
+  data %>% select(all_of(state_cols))
+
+See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>. 
+Warning message:
+Using an external vector in selections was deprecated in tidyselect 1.1.0.
+ℹ Please use `all_of()` or `any_of()` instead.
+  # Was:
+  data %>% select(state_cols)
+
+  # Now:
+  data %>% select(all_of(state_cols))
+
+See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>. 
+Warning message:
+Using an external vector in selections was deprecated in tidyselect 1.1.0.
+ℹ Please use `all_of()` or `any_of()` instead.
+  # Was:
+  data %>% select(state_cols)
+
+  # Now:
+  data %>% select(all_of(state_cols))
+
+See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>. 
+Warning message:
+Using an external vector in selections was deprecated in tidyselect 1.1.0.
+ℹ Please use `all_of()` or `any_of()` instead.
+  # Was:
+  data %>% select(state_cols)
+
+  # Now:
+  data %>% select(all_of(state_cols))
+
+See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>. 
+Warning message:
+Using an external vector in selections was deprecated in tidyselect 1.1.0.
+ℹ Please use `all_of()` or `any_of()` instead.
+  # Was:
+  data %>% select(state_cols)
+
+  # Now:
+  data %>% select(all_of(state_cols))
+
+See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>. 
+Warning message:
+Using an external vector in selections was deprecated in tidyselect 1.1.0.
+ℹ Please use `all_of()` or `any_of()` instead.
+  # Was:
+  data %>% select(state_cols)
+
+  # Now:
+  data %>% select(all_of(state_cols))
+
+See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>. 
+Warning message:
+Using an external vector in selections was deprecated in tidyselect 1.1.0.
+ℹ Please use `all_of()` or `any_of()` instead.
+  # Was:
+  data %>% select(state_cols)
+
+  # Now:
+  data %>% select(all_of(state_cols))
+
+See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>. 
+Warning message:
+Using an external vector in selections was deprecated in tidyselect 1.1.0.
+ℹ Please use `all_of()` or `any_of()` instead.
+  # Was:
+  data %>% select(state_cols)
+
+  # Now:
+  data %>% select(all_of(state_cols))
+
+See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>. 
+Warning message:
+Using an external vector in selections was deprecated in tidyselect 1.1.0.
+ℹ Please use `all_of()` or `any_of()` instead.
+  # Was:
+  data %>% select(state_cols)
+
+  # Now:
+  data %>% select(all_of(state_cols))
+
+See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>. 
+Warning message:
+Using an external vector in selections was deprecated in tidyselect 1.1.0.
+ℹ Please use `all_of()` or `any_of()` instead.
+  # Was:
+  data %>% select(state_cols)
+
+  # Now:
+  data %>% select(all_of(state_cols))
+
+See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>. 
+Warning message:
+Using an external vector in selections was deprecated in tidyselect 1.1.0.
+ℹ Please use `all_of()` or `any_of()` instead.
+  # Was:
+  data %>% select(state_cols)
+
+  # Now:
+  data %>% select(all_of(state_cols))
+
+See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>. 
+Warning message:
+Using an external vector in selections was deprecated in tidyselect 1.1.0.
+ℹ Please use `all_of()` or `any_of()` instead.
+  # Was:
+  data %>% select(state_cols)
+
+  # Now:
+  data %>% select(all_of(state_cols))
+
+See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>. 
+Warning message:
+Using an external vector in selections was deprecated in tidyselect 1.1.0.
+ℹ Please use `all_of()` or `any_of()` instead.
+  # Was:
+  data %>% select(state_cols)
+
+  # Now:
+  data %>% select(all_of(state_cols))
+
+See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>. 
+Warning message:
+Using an external vector in selections was deprecated in tidyselect 1.1.0.
+ℹ Please use `all_of()` or `any_of()` instead.
+  # Was:
+  data %>% select(state_cols)
+
+  # Now:
+  data %>% select(all_of(state_cols))
+
+See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>. 
+Warning message:
+Using an external vector in selections was deprecated in tidyselect 1.1.0.
+ℹ Please use `all_of()` or `any_of()` instead.
+  # Was:
+  data %>% select(state_cols)
+
+  # Now:
+  data %>% select(all_of(state_cols))
+
+See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>. 
+Warning message:
+Using an external vector in selections was deprecated in tidyselect 1.1.0.
+ℹ Please use `all_of()` or `any_of()` instead.
+  # Was:
+  data %>% select(state_cols)
+
+  # Now:
+  data %>% select(all_of(state_cols))
+
+See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>. 

@@ -1,0 +1,2 @@
+/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/02.aims/gt_counts/glob_ref.frq.count
+/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/02.aims/gt_counts/cord_ref.frq.count
