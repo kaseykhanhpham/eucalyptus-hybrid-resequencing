@@ -304,6 +304,25 @@ Rscript "$SCRIPT_DIR"/process_stat_windows.r glob_MR_cord_MR_dxy.txt percent 3,4
 | dxy   | glob MR/cord | bottom 5%    | 2743              |
 | dxy   | glob MR/cord | bottom 10%   | 4738              |
 
+Converted `pixy` output into BED file of windows.
+
+```R
+wdir <- "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy"
+setwd(wdir)
+options(scipen=999)
+
+all_dxy <- read.table("all_dxy.txt", header = TRUE)
+all_pi <- read.table("all_pi.txt", header = TRUE)
+
+dxy_bed <- all_dxy[which(all_dxy$pop1 == "glob_MR" & all_dxy$pop2 == "cord_MR"), c("chromosome", "window_pos_1", "window_pos_2")]
+dxy_bed$window_pos_1 <- as.numeric(dxy_bed$window_pos_1) - 1
+write.table(dxy_bed, "all_dxy.bed", row.names = FALSE, col.names = FALSE, quote = FALSE, sep = "\t")
+
+pi_bed <- all_pi[which(all_pi$pop == "glob_MR"), c("chromosome", "window_pos_1", "window_pos_2")]
+pi_bed$window_pos_1 <- as.numeric(pi_bed$window_pos_1) - 1
+write.table(pi_bed, "all_pi.bed", row.names = FALSE, col.names = FALSE, quote = FALSE, sep = "\t")
+```
+
 ## Patterson's D and associated statistics
 
 Filtered SNP set to biallelic SNPs only using `vcftools`.
