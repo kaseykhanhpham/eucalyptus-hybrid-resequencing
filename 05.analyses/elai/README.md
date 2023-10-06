@@ -65,13 +65,21 @@ done
 rm *.tmp
 ```
 
+<<<<<<< HEAD
 ## Run `ELAI`
+=======
+## Ran `ELAI`
+>>>>>>> 4995d592cc72ddb1a98faa95c079d825149752c6
 
 For MAF = 0.00 and estimated generation time since admixture = 100 (based on discussion with Brad and Rene, re: 40k year chloroplast capture). Multiple runs performed and results averaged as per recommendations of the developer; example given below.
 
 ```bash
 # Run on UFRC queue system; see elai_maf00_g100_r1.job for more details.
+<<<<<<< HEAD
 # Resources used: 2 Gb, 6 hrs
+=======
+# Resources used:
+>>>>>>> 4995d592cc72ddb1a98faa95c079d825149752c6
 
 module load gsl/2.6
 
@@ -89,7 +97,11 @@ For MAF = 0.05 and estimated generation time since admixture = 100. Multiple run
 
 ```bash
 # Run on UFRC queue system; see elai_maf05_g100_r1.job for more details.
+<<<<<<< HEAD
 # Resources used: 2 Gb, 6 hrs
+=======
+# Resources used:
+>>>>>>> 4995d592cc72ddb1a98faa95c079d825149752c6
 
 module load gsl/2.6
 
@@ -121,11 +133,19 @@ do
 done
 ```
 
+<<<<<<< HEAD
 For MAF = 0.05 and estimated generation time since admixture = 800.
 
 ```bash
 # Run on UFRC queue system; see elai_maf05_g800_r1.job for more details.
 # Resources used: 2 Gb, 6 hrs
+=======
+For MAF = 0.05 and estimated generation time since admixture = 800. Multiple runs performed and results averaged as per recommendations of the developer; example given below.
+
+```bash
+# Run on UFRC queue system; see elai_maf05_g800_r1.job for more details.
+# Resources used:
+>>>>>>> 4995d592cc72ddb1a98faa95c079d825149752c6
 
 module load gsl/2.6
 
@@ -137,6 +157,7 @@ for CHR in "${CHRLIST[@]}"
 do
     "$BIN_DIR"/elai -g "$WDIR"/geno_by_chr/glob_ref_"$CHR"_geno.txt -p 10 -g "$WDIR"/geno_by_chr/cord_"$CHR"_geno.txt -p 11 -g "$WDIR"/geno_by_chr/glob_mr_"$CHR"_geno.txt -p 1 -pos "$WDIR"/geno_by_chr/pos_"$CHR".txt -s 30 -o "$CHR"_r1 -C 2 -c 10 -mg 800 -exclude-maf 0.05
 done
+<<<<<<< HEAD
 ```
 
 ## Process Results
@@ -232,4 +253,6 @@ cutoff_coarse <- ggplot(coarse_cutoff_mat_df, aes(window, acc, fill = dosage)) +
                      axis.text.x = element_text(size = 9),
                      axis.text.y = element_text(size = 14))
 cutoff_coarse
+=======
+>>>>>>> 4995d592cc72ddb1a98faa95c079d825149752c6
 ```
