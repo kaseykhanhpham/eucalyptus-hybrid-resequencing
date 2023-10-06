@@ -7,17 +7,18 @@ Got genes which fall within outlier windows using [`BEDTools`](https://bedtools.
 ```bash
 module load bedtools/2.30.0
 
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/intr_genes/pi_dxy"
 BED_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan"
-ANNOT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/Eglobulus_genome_X46"
+ANNOT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/annot_genome/liftoff"
 declare -a NAMELIST=(pi_dxy_outl_p05 pi_dxy_outl_p10 pi_dxy_outl_p15)
 
 for NAME in "${NAMELIST[@]}"
 do
-    bedtools intersect -a "$BED_DIR"/"$NAME".bed -b "$ANNOT_DIR"/EGLOB-X46.v1.0.annotation.gff -wb > "$NAME"_genes.bed
+    bedtools intersect -a "$BED_DIR"/"$NAME".bed -b "$ANNOT_DIR"/Eglob_X46_liftoff_20230731.gff3_polished -wb > "$NAME"_genes.bed
 done
 ```
 
-Retrieved names of genes in overlapping regions.
+Retrieved names of genes in overlapping regions. *Need to redo below here for new annotations!
 
 ```bash
 declare -a NAMELIST=(pi_dxy_outl_p05 pi_dxy_outl_p10 pi_dxy_outl_p15)
@@ -35,7 +36,7 @@ Extracted genes from reference matching genes in overlap regions.
 ```R
 library(seqinr)
 
-ref_genes <- read.fasta("/blue/soltis/kasey.pham/euc_hyb_reseq/refs/Eglobulus_genome_X46/EGLOB-X46.v1.0.genes.fa")
+ref_genes <- read.fasta("/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/annot_genome/liftoff/Eglob_X46_liftoff_20230731_genes.fa")
 p05_list <- read.table("pi_dxy_outl_p05_genelist.txt", header = FALSE, as.is = TRUE)$V1
 p10_list <- read.table("pi_dxy_outl_p10_genelist.txt", header = FALSE, as.is = TRUE)$V1
 p15_list <- read.table("pi_dxy_outl_p15_genelist.txt", header = FALSE, as.is = TRUE)$V1
@@ -90,29 +91,39 @@ Seem too short to be real genes; Look into further.
 ## Get genes within Ancestry_HMM windows
 
 Retrieved overlap with reference genome annotation using `BEDTools`.
-
 ```bash
 module load bedtools/2.30.0
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/intr_genes/ahmm"
+BED_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/maf00/char_regions"
+ANNOT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/annot_genome/liftoff"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
 
-BED_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/common_intervals"
-ANNOT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/Eglobulus_genome_X46"
+bedtools intersect -a "$BED_DIR"/ahmm_intr_regions.bed -b "$ANNOT_DIR"/Eglob_X46_liftoff_20230731_genes.gff3_polished -wb > ahmm_shared_genes.bed
+```
+
+Retrieved overlap with reference genome annotation and outlier windows of genome scan statistics for individuals.
+```bash
+module load bedtools/2.30.0
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/intr_genes/ahmm"
+BED_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/maf00/common_intervals"
+ANNOT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/annot_genome/liftoff"
 LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
 
 while read NAME
 do
     # df
-    bedtools intersect -a "$BED_DIR"/df/"$NAME"_ahmm_het_df.bed -b "$ANNOT_DIR"/EGLOB-X46.v1.0.annotation.gff -wb > df/"$NAME"_ahmm_het_df_genes.bed
-    bedtools intersect -a "$BED_DIR"/df/"$NAME"_ahmm_hom_df.bed -b "$ANNOT_DIR"/EGLOB-X46.v1.0.annotation.gff -wb > df/"$NAME"_ahmm_hom_df_genes.bed
+    bedtools intersect -a "$BED_DIR"/df/"$NAME"_ahmm_het_df.bed -b "$ANNOT_DIR"/Eglob_X46_liftoff_20230731_genes.gff3_polished -wb > df/"$NAME"_ahmm_het_df_genes.bed
+    bedtools intersect -a "$BED_DIR"/df/"$NAME"_ahmm_hom_df.bed -b "$ANNOT_DIR"/Eglob_X46_liftoff_20230731_genes.gff3_polished -wb > df/"$NAME"_ahmm_hom_df_genes.bed
 
     # fDm
-    bedtools intersect -a "$BED_DIR"/fDm/"$NAME"_ahmm_het_fDm.bed -b "$ANNOT_DIR"/EGLOB-X46.v1.0.annotation.gff -wb > fDm/"$NAME"_ahmm_het_fDm_genes.bed
-    bedtools intersect -a "$BED_DIR"/fDm/"$NAME"_ahmm_hom_fDm.bed -b "$ANNOT_DIR"/EGLOB-X46.v1.0.annotation.gff -wb > fDm/"$NAME"_ahmm_hom_fDm_genes.bed
+    bedtools intersect -a "$BED_DIR"/fDm/"$NAME"_ahmm_het_fDm.bed -b "$ANNOT_DIR"/Eglob_X46_liftoff_20230731_genes.gff3_polished -wb > fDm/"$NAME"_ahmm_het_fDm_genes.bed
+    bedtools intersect -a "$BED_DIR"/fDm/"$NAME"_ahmm_hom_fDm.bed -b "$ANNOT_DIR"/Eglob_X46_liftoff_20230731_genes.gff3_polished -wb > fDm/"$NAME"_ahmm_hom_fDm_genes.bed
 
     # dxy
-    bedtools intersect -a "$BED_DIR"/dxy/"$NAME"_ahmm_het_dxy_p90.bed -b "$ANNOT_DIR"/EGLOB-X46.v1.0.annotation.gff -wb > dxy/"$NAME"_ahmm_het_dxy_p90_genes.bed
-    bedtools intersect -a "$BED_DIR"/dxy/"$NAME"_ahmm_het_dxy_p95.bed -b "$ANNOT_DIR"/EGLOB-X46.v1.0.annotation.gff -wb > dxy/"$NAME"_ahmm_het_dxy_p95_genes.bed
-    bedtools intersect -a "$BED_DIR"/dxy/"$NAME"_ahmm_hom_dxy_p90.bed -b "$ANNOT_DIR"/EGLOB-X46.v1.0.annotation.gff -wb > dxy/"$NAME"_ahmm_hom_dxy_p90_genes.bed
-    bedtools intersect -a "$BED_DIR"/dxy/"$NAME"_ahmm_hom_dxy_p95.bed -b "$ANNOT_DIR"/EGLOB-X46.v1.0.annotation.gff -wb > dxy/"$NAME"_ahmm_hom_dxy_p95_genes.bed
+    bedtools intersect -a "$BED_DIR"/dxy/"$NAME"_ahmm_het_dxy_p90.bed -b "$ANNOT_DIR"/Eglob_X46_liftoff_20230731_genes.gff3_polished -wb > dxy/"$NAME"_ahmm_het_dxy_p90_genes.bed
+    bedtools intersect -a "$BED_DIR"/dxy/"$NAME"_ahmm_het_dxy_p95.bed -b "$ANNOT_DIR"/Eglob_X46_liftoff_20230731_genes.gff3_polished -wb > dxy/"$NAME"_ahmm_het_dxy_p95_genes.bed
+    bedtools intersect -a "$BED_DIR"/dxy/"$NAME"_ahmm_hom_dxy_p90.bed -b "$ANNOT_DIR"/Eglob_X46_liftoff_20230731_genes.gff3_polished -wb > dxy/"$NAME"_ahmm_hom_dxy_p90_genes.bed
+    bedtools intersect -a "$BED_DIR"/dxy/"$NAME"_ahmm_hom_dxy_p95.bed -b "$ANNOT_DIR"/Eglob_X46_liftoff_20230731_genes.gff3_polished -wb > dxy/"$NAME"_ahmm_hom_dxy_p95_genes.bed
 done < "$LIST_DIR"/Eglobulus_MR.txt
 
 ```
