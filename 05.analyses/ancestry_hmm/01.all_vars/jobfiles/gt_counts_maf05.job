@@ -1,0 +1,30 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=gtcounts05
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=500mb
+#SBATCH --time=1-00:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=gt_counts_maf05_%j.out
+#SBATCH --error=gt_counts_maf05_%j.err
+
+module purge
+module load vcftools/0.1.16 
+
+IN_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
+POPLIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+
+# Get genotype counts for E. cordata
+vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --maf 0.05 --recode --stdout | vcftools --vcf - --out gt_counts/cord_ref --keep "$POPLIST_DIR"/Ecordata.txt --min-alleles 1 --max-alleles 2 --not-chr ChrUn --counts
+
+# E. globulus ref
+vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --maf 0.05 --recode --stdout | vcftools --vcf -  --out gt_counts/glob_ref --keep "$POPLIST_DIR"/Eglobulus_ref.txt --min-alleles 1 --max-alleles 2 --not-chr ChrUn --counts
+
+# Introgressants
+while read NAME
+do
+    vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --maf 0.05 --recode --stdout | vcftools --vcf - --out gt_counts/"$NAME" --indv "$NAME" --min-alleles 1 --max-alleles 2 --not-chr ChrUn --counts
+done < "$POPLIST_DIR"/Eglobulus_MR.txt
