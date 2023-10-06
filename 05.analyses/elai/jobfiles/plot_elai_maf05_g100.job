@@ -1,0 +1,23 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=plotelaim5g100r1
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=3gb
+#SBATCH --time=1-00:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=plot_elai_maf05_g100_run1_%j.out
+#SBATCH --error=plot_elai_maf05_g100_run1_%j.err
+
+module purge
+module load R/4.2
+
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/elai"
+
+while read IND
+do
+    Rscript "$SCRIPT_DIR"/plot_elai.r "$WDIR"/maf05/g100/output {CHR}_r1 "$WDIR"/chr_list.txt "$WDIR"/Eglobulus_MR_inds.txt "$IND" "$IND"_elai_plots.pdf
+done < "$WDIR"/Eglobulus_MR_inds.txt

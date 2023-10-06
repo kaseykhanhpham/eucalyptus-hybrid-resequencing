@@ -1,0 +1,19 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=splitbimbam
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=1gb
+#SBATCH --time=1:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=split_bimbam_%j.out
+#SBATCH --error=split_bimbam_%j.err
+
+module purge
+module load python/3.8
+
+SCRIPTS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+
+python "$SCRIPTS_DIR"/split_bimbam.py
