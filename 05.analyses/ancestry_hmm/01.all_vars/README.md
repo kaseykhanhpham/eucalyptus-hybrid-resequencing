@@ -40,7 +40,7 @@ module load R/4.2
 LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
 SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
 MAP_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/flare"
-COUNTS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/maf00/gt_counts"
+COUNTS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/01.all_vars/maf00/gt_counts"
 
 Rscript "$SCRIPT_DIR"/get_gen_dists.r "$COUNTS_DIR"/glob_ref.frq.count "$MAP_DIR"/1060_LH_F2_manual_copy.map gen_dists.tab
 python "$SCRIPT_DIR"/make_ahmm_in.py ref_files.txt "$LIST_DIR"/coverage.txt sample_files.txt gen_dists.tab all_ahmm_in.tab
@@ -140,7 +140,7 @@ Examined overlap between `Ancestry_HMM`-inferred _cordata_ regions, regions of M
 module load bedtools/2.30.0
 LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
 DXY_FILES="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy/individuals/outlier_files/bedfiles"
-AHMM_FILES="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/maf00/cord_loci/bedfiles"
+AHMM_FILES="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/01.all_vars/maf00/cord_loci/bedfiles"
 DSUITE_FILES="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/dsuite"
 
 while read NAME
@@ -199,7 +199,7 @@ module load R/4.2
 LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
 SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
 MAP_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/flare"
-COUNTS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/maf05/gt_counts"
+COUNTS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/01.all_vars/maf05/gt_counts"
 
 Rscript "$SCRIPT_DIR"/get_gen_dists.r "$COUNTS_DIR"/glob_ref.frq.count "$MAP_DIR"/1060_LH_F2_manual_copy.map gen_dists.tab
 python "$SCRIPT_DIR"/make_ahmm_in.py ref_files.txt "$LIST_DIR"/coverage.txt sample_files.txt gen_dists.tab all_ahmm_in.tab

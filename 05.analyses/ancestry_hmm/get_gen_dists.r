@@ -24,7 +24,7 @@ map_tab <- read.table(map_filename, header = FALSE, col.names = c("Chr", "ID", "
 # Chr05 500000, Expected: -0.4747846
 # Chr09 39043096, Expected: 8628.917
 get_dist <- function(chr, pos, genmap){
-    write(paste("doing", chr, pos, sep = " "), stdout()) # debug
+#    write(paste("doing", chr, pos, sep = " "), stdout()) # debug
 
     all_chr_pos <- genmap[which(genmap$Chr == chr), "bp"]
     smaller <- which(all_chr_pos <= pos)

@@ -157,7 +157,9 @@ for line in dist_conn:
         gen_dists.append(dist_counter)
         dist_counter = 0
 
-dist_conn.close()
+dist_conn.close() # debug
+
+print("dist vector length: " + str(len(gen_dists)))
 
 ## Construct final table ##
 ###########################
@@ -165,7 +167,9 @@ dist_conn.close()
 sorted_pos = sorted(allele1_ref_count.keys())
 outfile = open(out_name, "w")
 
+print("sites to do: " + str(len(sorted_pos))) # debug
 for i in range(0,len(sorted_pos)):
+    print("doing row " + str(i)) # debug
     out_line = sorted_pos[i][0] + "\t" + str(sorted_pos[i][1]) + "\t"
     # iterate over reference panels and add allele counts for each
     for j in range(0,len(ref_conns)):
