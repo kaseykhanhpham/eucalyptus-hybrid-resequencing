@@ -1,0 +1,22 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=ahmm_in
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=3gb
+#SBATCH --time=4:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=get_ahmm_in_%j.out
+#SBATCH --error=get_ahmm_in_%j.err
+
+module load R/4.2
+
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+MAP_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/flare"
+COUNTS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/02.aims/gt_counts"
+
+Rscript "$SCRIPT_DIR"/get_gen_dists.r "$COUNTS_DIR"/glob_ref.frq.count "$MAP_DIR"/1060_LH_F2_manual_copy.map gen_dists.tab
+python "$SCRIPT_DIR"/make_ahmm_in.py "$LIST_DIR"/02.aims/ref_files.txt "$LIST_DIR"/02.aims/low_cov/coverage.txt "$LIST_DIR"/02.aims/sample_files.txt gen_dists.tab all_ahmm_in_aims_lc.tab

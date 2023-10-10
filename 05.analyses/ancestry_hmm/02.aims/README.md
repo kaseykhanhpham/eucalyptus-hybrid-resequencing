@@ -1,8 +1,9 @@
 # HMM Inference of Local Ancestry - Ancestry-Informative Markers
 Several studies using `Ancestry_HMM` filtered SNPs first by informativeness in ancestral populations, either using FST or allele frequency. Since `AHMM` uses allele frequency to assign each individual's loci to a population, this should increase the power of the study and my confidence that we're not inferring off of high-conservation regions.
 
-## Data Preparation
-### Marker Filtering
+## High-Coverage Analysis
+### Data Preparation
+#### Marker Filtering
 
 Plotted average Weir-Cockerham FST values [calculated in `pixy`](https://github.com/kaseykhanhpham/eucalyptus-hybrid-resequencing/tree/main/05.analyses/genome_scan/pixy) from 5kb windows across the genome between the _E. globulus_ reference group and _E. cordata_ to determine filtering cutoff. FST values appear in a right-skewed distribution with a median of 0.2641 and a mean of 0.2934. As these species are long-diverged and admixture is expected to have occurred only intermittently, I decided that a cutoff at the genome-wide median would be fine for capturing SNPs which would differentiate between species.
 
@@ -75,8 +76,8 @@ Rscript "$SCRIPT_DIR"/get_gen_dists.r "$COUNTS_DIR"/glob_ref.frq.count "$MAP_DIR
 python "$SCRIPT_DIR"/make_ahmm_in.py ref_files.txt "$LIST_DIR"/coverage.txt sample_files.txt gen_dists.tab all_ahmm_in_aims.tab
 ```
 
-## Run Program and Visualize Results
-### Run Ancestry_HMM
+### Run Program and Visualize Results
+#### Run Ancestry_HMM
 
 Arguments:
 * -i: input of genotype counts among reference and introgressed samples
@@ -98,8 +99,8 @@ LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
 ancestry_hmm -i all_ahmm_in_aims.tab -s "$LIST_DIR"/sample_ploidy.txt -a 2 0.99 0.01 -p 0 100000 0.99 -p 1 -1700 0.01 -g -b 100 1000
 ```
 
-### Summary Plots
-#### Across all chromosomes
+#### Summary Plots
+##### Across all chromosomes
 Split chromosomes into five chunks each and marked any windows with at least one variant with posterior > 0.95 of homozygous _E. cordata_ ancestry.
 
 ```R
@@ -161,7 +162,7 @@ Blocks of interest for homozygous _E. cordata_ ancestry at the following based o
 | Chr07      | 1           | 10,850,526  | 8                      |
 | Chr08      | 14,042,923  | 28,085,844  | 6 (14 with het)        |
 
-Split chromosome blocks into finer windows.
+##### Finer Windows within Chromosomes
 
 ```R
 # Chromosome 1, Block 3
@@ -228,3 +229,80 @@ Chromosome 7 was able to be narrowed down to the blocks of interest immediately.
 ![Presence of _E. cordata_ ancestry in Chromosome 8 Block 2; heterozygotes were scored as half in presence/absence matrix.](chr08b2-7.png "_E. cordata_ ancestry heatmap for Chromosome 8 Block 2_7")
 
 The only region with a lot of individuals is Chromosome 7 Block 1, which is somewhat concerning given that this region is also much sparser in variant calling density.
+
+## Low Coverage Analysis
+### Generate Input files
+```bash
+# Run on UFRC queue system; see get_ahmm_in_aims_lc.job for more details.
+# Resources used:
+
+module load R/4.2
+
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+MAP_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/flare"
+COUNTS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/02.aims/gt_counts"
+
+Rscript "$SCRIPT_DIR"/get_gen_dists.r "$COUNTS_DIR"/glob_ref.frq.count "$MAP_DIR"/1060_LH_F2_manual_copy.map gen_dists.tab
+python "$SCRIPT_DIR"/make_ahmm_in.py "$LIST_DIR"/02.aims/ref_files.txt "$LIST_DIR"/02.aims/low_cov/coverage.txt "$LIST_DIR"/02.aims/sample_files.txt gen_dists.tab all_ahmm_in_aims_lc.tab
+```
+
+```bash
+# Run on UFRC queue system; see ancestryhmm_aims_lc.job for more details.
+# Resources used:
+
+module load ancestryhmm/1.0.2
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+
+ancestry_hmm -i all_ahmm_in_aims_lc.tab -s "$LIST_DIR"/sample_ploidy.txt -a 2 0.99 0.01 -p 0 100000 0.99 -p 1 -1700 0.01 -g -b 100 1000
+```
+
+### Plot results
+```R
+library(ggplot2)
+library(RColorBrewer)
+
+source("C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/ancestry_hmm/heatmaps_fun.r")
+
+post_file_loc <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/ancestry_hmm/02.aims/low_cov/posteriors"
+wdir <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/ancestry_hmm/02.aims/low_cov/heatmaps"
+glob_mr_samples <- c("WA01", "WA03", "WA04", "WB02", "WB03", "WB04", "WC02", "WC03", "WC05", "WD04", "WE02", "WE03", "WE04", "WE05", "WF01", "WG03", "WG04", "WG05", "WH03", "WH04")
+chromosomes <- c("Chr01", "Chr02", "Chr03", "Chr04", "Chr05", "Chr06", "Chr07", "Chr08", "Chr09", "Chr10", "Chr11")
+
+setwd(wdir)
+coarsewin_filename <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/ancestry_hmm/02.aims/high_cov/heatmaps/coarse_windows.csv"
+coarsewin_tab <- read.csv(coarsewin_filename, header = FALSE, col.names = c("chrom", "start", "end"), colClasses = c("character", "integer", "integer"))
+
+# populate matrix
+coarse_mat_df <- populate_mat(glob_mr_samples, coarsewin_tab, 0.95, post_file_loc)
+
+# plot heatmaps
+x_axis_breaks <- c("Chr01_16887823_25331733", "Chr02_20331353_30497028", "Chr03_26218899_39328347", "Chr04_15439735_23159601"
+, "Chr05_25167991_37751985", "Chr06_20856265_31284396", "Chr07_21701053_32551578", "Chr08_28085845_42128766", "Chr09_15320131_22980195", "Chr10_15489065_23233596", "Chr11_16822585_25233876")
+
+name_table_name <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/00.metadata/03.seq_analysis/sample_spp_table.csv"
+name_table <- read.csv(name_table_name, header = TRUE, as.is = TRUE)
+label_order <- match(coarse_mat_df$sample, name_table$RAPiD_ID)
+coarse_mat_df$acc <- name_table$Accession[label_order]
+
+hom_coarse <- ggplot(coarse_mat_df, aes(window, acc, fill = hom_mat)) + 
+              geom_tile(color = "#00617a") + 
+              scale_fill_steps(high = "#ffd966", low = "#0a9cc1") + 
+              guides(fill = guide_coloursteps(title = NULL, show.limits = TRUE)) +
+              ggtitle("At least one locus with 95% homozygous E. cordata ancestry - AIMs") + 
+              xlab("Chromosome Window") + ylab("E. globulus Sample") + 
+              scale_x_discrete(breaks = x_axis_breaks, labels = chromosomes) +
+              theme(text=element_text(size=16))
+hom_coarse
+
+het_coarse <- ggplot(coarse_mat_df, aes(window, acc, fill = het_mat)) + 
+              geom_tile(color = "#005267") + 
+              scale_fill_steps(high = "#ffd966", low = "#007c9b") + 
+              guides(fill = guide_coloursteps(title = NULL, show.limits = TRUE)) +
+              ggtitle("At least one locus with 95% E. cordata ancestry - AIMs") + 
+              xlab("Chromosome Window") + ylab("E. globulus Sample") + 
+              scale_x_discrete(breaks = x_axis_breaks, labels = chromosomes) +
+              theme(text=element_text(size=16))
+het_coarse
+```
+
