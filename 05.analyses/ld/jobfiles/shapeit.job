@@ -1,0 +1,22 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=shapeit
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=10gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=13
+#SBATCH --nodes=1
+#SBATCH --output=shapeit_%j.out
+#SBATCH --error=shapeit_%j.err
+
+module purge
+module load shapeit4/4.2.2
+MAP_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/phase"
+declare -a VCFLIST=(01 02 03 04 05 06 07 08 09 10 11)
+
+for NUM in "${VCFLIST[@]}"
+do
+    shapeit4 --input chr"$NUM"_hapmarked.vcf.gz --map "$MAP_DIR"/1060_LH_F2_manual_copy_Chr"$NUM".gmap --region Chr"$NUM" --output chr"$NUM"_phased.vcf --thread 12
+done
