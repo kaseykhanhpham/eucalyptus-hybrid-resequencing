@@ -151,7 +151,7 @@ het_coarse <- ggplot(coarse_mat_df, aes(window, acc, fill = het_mat)) +
 het_coarse
 ```
 
-![Presence of homozygous _E. cordata_ ancestry > 0.95 posterior per chromosome and sample; chromosomes 7,8 have regions shared between a large number of individuals.](heatmaps/coarse_hom_windows.png "Homozygous _E. cordata_ ancestry heatmap, AIMs only")
+![Presence of homozygous _E. cordata_ ancestry > 0.95 posterior per chromosome and sample; chromosomes 7,8 have regions shared between a large number of individuals.](high_cov/heatmaps/coarse_hom_windows.png "Homozygous _E. cordata_ ancestry heatmap, AIMs only")
 
 Similar to results with all variants, but with some former positive hits missing.
 Blocks of interest for homozygous _E. cordata_ ancestry at the following based on sharing between individuals:
@@ -222,15 +222,17 @@ Chromosome 7 was able to be narrowed down to the blocks of interest immediately.
 | Chromosome 7 | 430,000 bp    | 445,000 bp    | 8                      |
 | Chromosome 8 | 22,470,000 bp | 22,485,000 bp | 3 (11 with het)        |
 
-![Presence of _E. cordata_ ancestry in Chromosome 1 Block 3; heterozygotes were scored as half in presence/absence matrix.](chr01b3-8.png "_E. cordata_ ancestry heatmap for Chromosome 1 Block 3_8")
+![Presence of _E. cordata_ ancestry in Chromosome 1 Block 3; heterozygotes were scored as half in presence/absence matrix.](high_cov/heatmaps/chr01b3-8.png "_E. cordata_ ancestry heatmap for Chromosome 1 Block 3_8")
 
-![Presence of _E. cordata_ ancestry in Chromosome 7 Block 1; heterozygotes were scored as half in presence/absence matrix.](chr07b1.png "_E. cordata_ ancestry heatmap for Chromosome 7 Block 1")
+![Presence of _E. cordata_ ancestry in Chromosome 7 Block 1; heterozygotes were scored as half in presence/absence matrix.](high_cov/heatmaps/chr07b1.png "_E. cordata_ ancestry heatmap for Chromosome 7 Block 1")
 
-![Presence of _E. cordata_ ancestry in Chromosome 8 Block 2; heterozygotes were scored as half in presence/absence matrix.](chr08b2-7.png "_E. cordata_ ancestry heatmap for Chromosome 8 Block 2_7")
+![Presence of _E. cordata_ ancestry in Chromosome 8 Block 2; heterozygotes were scored as half in presence/absence matrix.](high_cov/heatmaps/chr08b2-7.png "_E. cordata_ ancestry heatmap for Chromosome 8 Block 2_7")
 
 The only region with a lot of individuals is Chromosome 7 Block 1, which is somewhat concerning given that this region is also much sparser in variant calling density.
 
 ## Low Coverage Analysis
+Re-ran analysis for a minimum occupancy in source populations of 14 individuals rather than 18/20.
+
 ### Generate Input files
 ```bash
 # Run on UFRC queue system; see get_ahmm_in_aims_lc.job for more details.
@@ -306,3 +308,6 @@ het_coarse <- ggplot(coarse_mat_df, aes(window, acc, fill = het_mat)) +
 het_coarse
 ```
 
+![Presence of homozygous _E. cordata_ ancestry > 0.95 posterior per chromosome and sample; lots of windows with homozygous _E. cordata_ hits](low_cov/heatmaps/coarse_hom_windows.png "Homozygous _E. cordata_ ancestry heatmap, AIMs only, low coverage")
+
+Troublingly, a plurality of windows were marked as having an _E. cordata_ homozygous hit when I lowered the missing rate requirement on SNPs in the source populations. Does AHMM just have a very high false positive rate, or did I give it the wrong parameters somewhere? 
