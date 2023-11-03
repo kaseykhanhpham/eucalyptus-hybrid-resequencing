@@ -604,3 +604,6 @@ do
     tail -n +2 cord_"$NAME"_dxy_outl_p95.txt | awk '{gsub(" ","\t"); print}' > "$WDIR"/bedfiles/cord_"$NAME"_dxy_outl_p95.bed
 done < "$LIST_DIR"/Eglobulus_MR.txt
 ```
+
+## Calculate genome-wide mutation rate
+Used `egglib` package in `python` to calculate genome-wide Watterson's Theta... MAYBE...
