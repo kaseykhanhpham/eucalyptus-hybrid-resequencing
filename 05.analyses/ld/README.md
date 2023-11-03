@@ -35,7 +35,7 @@ for NAME in "${VCFLIST[@]}"; do bgzip "$NAME"_hapmarked.vcf; bcftools index "$NA
 Reformatted genetic map into HapMap format and then ran SHAPEIT4.
 ```bash
 # Ran in UFRC queue system; see shapeit.job for more details.
-# Resources Used:
+# Resources Used: 330 Mb, 4 min
 
 module load shapeit4/4.2.2
 MAP_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/phase"
@@ -47,5 +47,61 @@ do
 done
 ```
 ## E. globulus LD
+Used [`emeraLD`](https://github.com/statgen/emeraLD/tree/master) to calculate LD in 100kb non-overlapping sliding windows across all chromosomes.
+
+Used `tabix` to index phased variants
+```bash
+module load htslib/1.15
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/phase"
+declare -a VCFLIST=(01 02 03 04 05 06 07 08 09 10 11)
+
+cd "$WDIR"
+for NUM in "${VCFLIST[@]}"
+do
+    bgzip chr"$NUM"_hapmarked.vcf
+    bgzip chr"$NUM"_phased.vcf
+    tabix chr"$NUM"_phased.vcf.gz
+done
+```
+
+Ran `emeraLD` across each chromosome for all pairwise SNPs less than 1Mbp apart.
+```bash
+# Ran on UFRC queue system; see genwide_ld_mac01.job for more details.
+# Resources used:
+
+
+```
+
+Generated jobs to run emeraLD across windows in each chromosome
+```bash
+module load python/3.8
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/phase"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob"
+
+python "$SCRIPT_DIR"/make_emerald_job.py "$VCF_DIR"/chr01_phased.vcf.gz Chr01 42219553 100000 1 "$LIST_DIR"/Eglobulus_MR.txt "$LIST_DIR"/emerald/chr01/mac01/chr01_ld_mac01.job
+
+python "$SCRIPT_DIR"/make_emerald_job.py "$VCF_DIR"/chr02_phased.vcf.gz Chr02 50828380 100000 1 "$LIST_DIR"/Eglobulus_MR.txt "$LIST_DIR"/emerald/chr02/mac01/chr02_ld_mac01.job
+
+python "$SCRIPT_DIR"/make_emerald_job.py "$VCF_DIR"/chr03_phased.vcf.gz Chr03 65547241 100000 1 "$LIST_DIR"/Eglobulus_MR.txt "$LIST_DIR"/emerald/chr03/mac01/chr03_ld_mac01.job
+
+python "$SCRIPT_DIR"/make_emerald_job.py "$VCF_DIR"/chr04_phased.vcf.gz Chr04 38599333 100000 1 "$LIST_DIR"/Eglobulus_MR.txt "$LIST_DIR"/emerald/chr04/mac01/chr04_ld_mac01.job
+
+python "$SCRIPT_DIR"/make_emerald_job.py "$VCF_DIR"/chr05_phased.vcf.gz Chr05 62919971 100000 1 "$LIST_DIR"/Eglobulus_MR.txt "$LIST_DIR"/emerald/chr05/mac01/chr05_ld_mac01.job
+
+python "$SCRIPT_DIR"/make_emerald_job.py "$VCF_DIR"/chr06_phased.vcf.gz Chr06 52140660 100000 1 "$LIST_DIR"/Eglobulus_MR.txt "$LIST_DIR"/emerald/chr06/mac01/chr06_ld_mac01.job
+
+python "$SCRIPT_DIR"/make_emerald_job.py "$VCF_DIR"/chr07_phased.vcf.gz Chr07 54252628 100000 1 "$LIST_DIR"/Eglobulus_MR.txt "$LIST_DIR"/emerald/chr07/mac01/chr07_ld_mac01.job
+
+python "$SCRIPT_DIR"/make_emerald_job.py "$VCF_DIR"/chr08_phased.vcf.gz Chr08 70214608 100000 1 "$LIST_DIR"/Eglobulus_MR.txt "$LIST_DIR"/emerald/chr08/mac01/chr08_ld_mac01.job
+
+python "$SCRIPT_DIR"/make_emerald_job.py "$VCF_DIR"/chr09_phased.vcf.gz Chr09 38300324 100000 1 "$LIST_DIR"/Eglobulus_MR.txt "$LIST_DIR"/emerald/chr09/mac01/chr09_ld_mac01.job
+
+python "$SCRIPT_DIR"/make_emerald_job.py "$VCF_DIR"/chr10_phased.vcf.gz Chr10 38722660 100000 1 "$LIST_DIR"/Eglobulus_MR.txt "$LIST_DIR"/emerald/chr10/mac01/chr10_ld_mac01.job
+
+python "$SCRIPT_DIR"/make_emerald_job.py "$VCF_DIR"/chr11_phased.vcf.gz Chr11 42056460 100000 1 "$LIST_DIR"/Eglobulus_MR.txt "$LIST_DIR"/emerald/chr11/mac01/chr11_ld_mac01.job
+```
+
+Not displaying example of jobfiles here since they are quite large; see chrXX_ld_mac01.job in the jobfiles directory.
 
 ## E. cordata LD
