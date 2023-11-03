@@ -1,0 +1,10 @@
+WA05	cord_MR
+WB01	cord_MR
+WD02	cord_MR
+WD05	cord_MR
+WE01	cord_MR
+WF02	cord_MR
+WF04	cord_MR
+WG01	cord_MR
+WG02	cord_MR
+WH05	cord_MR
