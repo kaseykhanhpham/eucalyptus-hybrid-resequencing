@@ -47,6 +47,7 @@ do
 done
 ```
 ## E. globulus LD
+### Whole-genome estimates
 Used [`emeraLD`](https://github.com/statgen/emeraLD/tree/master) to calculate LD in 100kb non-overlapping sliding windows across all chromosomes.
 
 Used `tabix` to index phased variants
@@ -67,11 +68,61 @@ done
 Ran `emeraLD` across each chromosome for all pairwise SNPs less than 1Mbp apart.
 ```bash
 # Ran on UFRC queue system; see genwide_ld_mac01.job for more details.
-# Resources used:
+# Resources used: 50 Mb, 1 hr
 
+module purge
+module load htslib/1.15
+module load emerald/0.1
+
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/phase"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob"
+
+emeraLD --in "$VCF_DIR"/chr01_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/glob_Chr01_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr02_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/glob_Chr02_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr03_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/glob_Chr03_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr04_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/glob_Chr04_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr05_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/glob_Chr05_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr06_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/glob_Chr06_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr07_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/glob_Chr07_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr08_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/glob_Chr08_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr09_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/glob_Chr09_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr10_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/glob_Chr10_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr11_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/glob_Chr11_ld.txt.gz
+```
+Averaged r2 values for each distance between variants using a custom `python` script.
+```
 
 ```
 
+Fitted LD curve to pairwise r2 values versus marker distance in `R` using equation from Hill and Weir 1988 and custom `R` script.
+
+```bash
+# Done in UFRC queue system; see genwide_mac01_fit.job for more details.
+# Resources used: 500 Mb, 5 min
+
+module purge
+module load R/4.2
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+TAB_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/avg_r2/genome_wide"
+
+Rscript "$SCRIPT_DIR"/fit_rsq_curve.r chr_r2_tab_list.txt genwide_ld.txt 100 0.2 TRUE
+```
+
+| Chromosome | LD r2 = 0.2 (bp) | C         |
+| ---------- | ---------------- | --------- |
+| Chr01      | 1925             | 0.001813  |
+| Chr02      | 1795             | 0.001945  |
+| Chr03      | 1363             | 0.002561  |
+| Chr04      | 1473             | 0.002369  |
+| Chr05      | 1184             | 0.002948  |
+| Chr06      | 1647             | 0.002120  |
+| Chr07      |                  |           |
+| Chr08      | 1659             | 0.002104  |
+| Chr09      | 2277             | 0.001533  |
+| Chr10      |                  |           |
+| Chr11      | 1250             | 0.002792  |
+
+### Sliding window estimates
 Generated jobs to run emeraLD across windows in each chromosome
 ```bash
 module load python/3.8
