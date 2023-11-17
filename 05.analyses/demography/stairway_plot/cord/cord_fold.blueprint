@@ -4,9 +4,9 @@ popid: cord_MR # id of the population (no white space)
 nseq: 20 # number of sequences
 L: 8651451 # total number of observed nucleic sites, including polymorphic and monomorphic
 whether_folded: true # whethr the SFS is folded (true or false)
-SFS: 8042123.83102855 68988.86866185084 82928.50464396321 95567.44375645061 94460.76160990764 91412.58431372567 88847.86425868594 103555.9126246994 64624.22910216718 0 # snp frequency spectrum: number of singleton, number of doubleton, etc. (separated by white space)
+SFS: 68988.86866185084 82928.50464396321 95567.44375645061 94460.76160990764 91412.58431372567 88847.86425868594 103555.9126246994 64624.22910216718 0 0 # snp frequency spectrum: number of singleton, number of doubleton, etc. (separated by white space)
 #smallest_size_of_SFS_bin_used_for_estimation: 1 # default is 1; to ignore singletons, uncomment this line and change this number to 2
-largest_size_of_SFS_bin_used_for_estimation: 9 # default is nseq/2 for folded SFS
+largest_size_of_SFS_bin_used_for_estimation: 8 # default is nseq/2 for folded SFS
 pct_training: 0.67 # percentage of sites for training
 nrand: 5 9 14 18 # number of random break points for each try (separated by white space)
 project_dir: cord_fold # project directory

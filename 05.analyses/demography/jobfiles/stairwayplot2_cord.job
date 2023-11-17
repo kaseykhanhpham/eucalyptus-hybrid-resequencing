@@ -1,17 +1,17 @@
 #!/bin/bash
 #SBATCH --account=soltis
 #SBATCH --qos=soltis
-#SBATCH --job-name=swp2_g
+#SBATCH --job-name=swp2_c
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=kasey.pham@ufl.edu
-#SBATCH --mem=2gb
+#SBATCH --mem=1gb
 #SBATCH --time=4-00:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --nodes=1
-#SBATCH --output=stairwayplot2_glob_%j.out
-#SBATCH --error=stairwayplot2_glob_%j.err
+#SBATCH --output=stairwayplot2_cord_%j.out
+#SBATCH --error=stairwayplot2_cord_%j.err
 
 module purge
 module load java/1.8.0_31
 
-bash glob_fold.blueprint.sh 
+bash cord_fold.blueprint.sh 
