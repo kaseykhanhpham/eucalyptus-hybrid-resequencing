@@ -116,10 +116,10 @@ Rscript "$SCRIPT_DIR"/fit_rsq_curve.r chr_r2_tab_list.txt genwide_ld.txt 100 0.2
 | Chr04      | 1473             | 0.002369  |
 | Chr05      | 1184             | 0.002948  |
 | Chr06      | 1647             | 0.002120  |
-| Chr07      |                  |           |
+| Chr07      | 931              | 0.003747  |
 | Chr08      | 1659             | 0.002104  |
 | Chr09      | 2277             | 0.001533  |
-| Chr10      |                  |           |
+| Chr10      | 2412             | 0.001447  |
 | Chr11      | 1250             | 0.002792  |
 
 ### Sliding window estimates

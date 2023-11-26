@@ -24,6 +24,6 @@ do
     cd "$BASE_DIR"/"$NAME"/mac01
     ls *.txt.gz | while read FILE
     do
-        python "$SCRIPT_DIR"/average_r2.py "$TAB_DIR"/"$NAME"/mac01/"$FILE" "$WDIR"/"$NAME"/mac01/"$FILE"_avg.csv
+        python "$SCRIPT_DIR"/average_r2.py "$BASE_DIR"/"$NAME"/mac01/"$FILE" "$WDIR"/"$NAME"/mac01/"$FILE"_avg.csv
     done
 done

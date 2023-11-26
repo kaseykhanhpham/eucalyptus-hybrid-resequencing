@@ -30,6 +30,7 @@ for(filename in tab_list){
     # Import file
     print(paste("doing", filename))
     rsq_tab <- read.csv(filename, header = TRUE)
+    rsq_tab <- rsq_tab[which(rsq_tab$r2 != -1),]
     # Check that it has enough observations to estimate LD
     if(nrow(rsq_tab) > min_comps){
         # Fit model
@@ -48,12 +49,12 @@ for(filename in tab_list){
         if(graph_bool){
             # Plot model against actual data points
             png(paste(stripped_filename, "_curve.png", sep = ""))
-            plot(rsq_tab$dist, rsq_tab$r2, main = paste(filename_stripped, "MAC = 1 LD"), xlab = "distance (bp)", ylab = "r2")
+            plot(rsq_tab$dist, rsq_tab$r2, main = paste(stripped_filename, "MAC = 1 LD"), xlab = "distance (bp)", ylab = "r2")
             lines(rsq_tab$dist, predict(rsq_model), col = "cyan")
             dev.off()
             # Plot residuals
             png(paste(stripped_filename, "_resid.png", sep = ""))
-            plot(rsq_tab$dist, residuals(rsq_model), main = paste(filename_stripped, "MAC = 1 LD residuals"))
+            plot(rsq_tab$dist, residuals(rsq_model), main = paste(stripped_filename, "MAC = 1 LD residuals"))
             dev.off()
         }
     } else {

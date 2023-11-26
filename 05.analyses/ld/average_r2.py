@@ -9,6 +9,9 @@ import gzip
 infile_name = sys.argv[1]
 outfile_name = sys.argv[2]
 
+infile_name_stripped = infile_name.split("/")[(len(infile_name.split("/")) - 1)]
+outfile_name_stripped = outfile_name.split("/")[(len(outfile_name.split("/")) - 1)]
+
 # initialize storage dictionary
 all_r2_dict = {}
 
@@ -35,21 +38,25 @@ for line in infile:
 # close infile
 infile.close()
 
-# initialize dictionary for storing mean r2s
-avg_r2_dict = {}
-# loop through dictionary of lists
-for snp_dist in range(1, (max(all_r2_dict.keys()) + 1)):
-    try:
-        # average r2 values and save to new dict
-        avg_r2_dict[snp_dist] = mean(all_r2_dict[snp_dist])
-    except KeyError:
-        avg_r2_dict[snp_dist] = -1 # represent NAs as an impossible value for processing later
+if len(all_r2_dict.keys()) == 0:
+    print("{INFILE} is empty".format(INFILE = infile_name_stripped))
+else:
+    # initialize dictionary for storing mean r2s
+    avg_r2_dict = {}
+    # loop through dictionary of lists
+    for snp_dist in range(1, (max(all_r2_dict.keys()) + 1)):
+        try:
+            # average r2 values and save to new dict
+            avg_r2_dict[snp_dist] = mean(all_r2_dict[snp_dist])
+        except KeyError:
+            avg_r2_dict[snp_dist] = -1 # represent NAs as an impossible value for processing later
 
-# convert averaged dictionary to pandas dataframe
-avg_r2_df = pd.DataFrame(list(avg_r2_dict.items()), columns = ["dist", "r2"])
+    # convert averaged dictionary to pandas dataframe
+    avg_r2_df = pd.DataFrame(list(avg_r2_dict.items()), columns = ["dist", "r2"])
 
-# sort dataframe by SNP distance
-avg_r2_df.sort_values(by=["dist"], inplace = True)
+    # sort dataframe by SNP distance
+    avg_r2_df.sort_values(by=["dist"], inplace = True)
 
-# export pandas dataframe
-avg_r2_df.to_csv(outfile_name, index = False)
+    # export pandas dataframe
+    avg_r2_df.to_csv(outfile_name, index = False)
+    print("{INFILE} averages written to {OUTFILE}.".format(INFILE = infile_name_stripped, OUTFILE = outfile_name_stripped))

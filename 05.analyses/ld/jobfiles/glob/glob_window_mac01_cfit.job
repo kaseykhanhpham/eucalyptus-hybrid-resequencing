@@ -1,0 +1,25 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=glob_win_cfit
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=1gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=glob_windows_cfit_%j.out
+#SBATCH --error=glob_windows_cfit_%j.err
+
+module purge
+module load Rscript/4.2
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/curve_fit"
+
+declare -a NAMELIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11)
+
+for NAME in "${NAMELIST[@]}"
+do
+    cd "$WDIR"/"$NAME"/mac01
+    Rscript "$SCRIPT_DIR"/fit_rsq_curve.r "$NAME"_win_ld_files.txt "$NAME"_windows_ld.txt 50 0.2 FALSE
+done
