@@ -35,8 +35,11 @@ for j in window_starts[1:]:
 window_ends.append(chr_size)
 
 # write to job
+header_template = "#!/bin/bash\n#SBATCH --account=soltis\n#SBATCH --qos=soltis-b\n#SBATCH --job-name=glob{CHR}m{MAC}_ld\n#SBATCH --mail-type=ALL\n#SBATCH --mail-user=kasey.pham@ufl.edu\n#SBATCH --mem=100mb\n#SBATCH --time=1:00:00\n#SBATCH --cpus-per-task=1\n#SBATCH --nodes=1\n#SBATCH --output=glob_windows_{CHR}_mac{MAC}_ld_%j.out\n#SBATCH --error=glob_windows_{CHR}_mac{MAC}_ld_%j.err\nmodule purge\nmodule load htslib/1.15\nmodule load emerald/0.1\n\n"
 command_template = "emeraLD --in {VCF} --phase --region {CHR}:{START}-{END} --mac {MAC} --include {INDS} --stdout | bgzip -c > {CHR}_{START}-{END}_ld.txt.gz\n"
+
 out_conn = open(out_name, "w")
+out_conn.write(header_template.format(CHR = chr_name, MAC = mac))
 for k in range(len(window_starts)):
     out_conn.write(command_template.format(VCF = vcf_loc, CHR = chr_name, START = window_starts[k], END = window_ends[k], MAC = mac, INDS = ind_file))
 

@@ -4,8 +4,8 @@
 #SBATCH --job-name=glob_window_avgrs
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=kasey.pham@ufl.edu
-#SBATCH --mem=10gb
-#SBATCH --time=4-00:00:00
+#SBATCH --mem=500mb
+#SBATCH --time=1-00:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --nodes=1
 #SBATCH --output=glob_windows_avg_rsq_%j.out

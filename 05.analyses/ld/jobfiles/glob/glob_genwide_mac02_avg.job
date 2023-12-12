@@ -1,0 +1,23 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=globm2_avgrs
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=15gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=glob_whole_mac02_avg_rsq_%j.out
+#SBATCH --error=glob_whole_mac02_avg_rsq_%j.err
+
+module purge
+module load python/3.8
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+TAB_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/emerald/genome_wide/mac02"
+declare -a NAMELIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
+
+for NAME in "${NAMELIST[@]}"
+do
+    python "$SCRIPT_DIR"/average_r2.py "$TAB_DIR"/glob_"$NAME"_ld.txt.gz glob_"$NAME"_ld_avg.csv
+done

@@ -187,7 +187,7 @@ SNP filtering parameters and code were based on several sources, including perso
 | QUAL/SMPL_SUM(AD) > 20                      | Remove gts with a ratio of QUAL to total allelic depth per sample < 20|
 | SP > 0.10                                   | Remove genotypes with phred-corrected P-value for strand bias < 0.10|
 | GQ > 40                                     | Remove genotypes with a genotype quality < 40                       |
-| max-missing = 0.875                         | Remove variants with a more than 15% missing genotypes              |
+| max-missing = 0.875                         | Remove variants with a more than 12.5% missing genotypes              |
 | sort                                        | Sort filtered variants by position                                  |
 
 **Programs used:**

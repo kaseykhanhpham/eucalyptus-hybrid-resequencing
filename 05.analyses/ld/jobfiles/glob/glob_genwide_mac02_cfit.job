@@ -1,0 +1,19 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=gw_mac2_cfit
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=1gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=glob_genwide_mac02_curvefit_%j.out
+#SBATCH --error=glob_genwide_mac02_curvefit_%j.err
+
+module purge
+module load R/4.2
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+TAB_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/avg_r2/genome_wide"
+
+Rscript "$SCRIPT_DIR"/fit_rsq_curve.r chr_r2_tab_list.txt genwide_ld_mac02.txt 100 0.2 TRUE
