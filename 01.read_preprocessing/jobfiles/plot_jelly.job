@@ -1,0 +1,59 @@
+#!/bin/bash
+#SBATCH --job-name=plot_jelly
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --ntasks=1	
+#SBATCH --cpus-per-task=10
+#SBATCH --mem=10G
+#SBATCH --time=24:00:00
+#SBATCH --output=plot_jelly_%j.out
+#SBATCH --error=plot_jelly_%j.err
+
+date;hostname;pwd
+
+module purge
+module load R/4.2
+INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/reads/jellyfish"
+
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S346_24mer.histo "$INDIR"/S27_24mer.histo 1043_24mer.png 3 1043
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S341_24mer.histo "$INDIR"/S22_24mer.histo 1051_24mer.png 3 1051
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S327_24mer.histo "$INDIR"/S8_24mer.histo 1056_24mer.png 3 1056
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S357_24mer.histo "$INDIR"/S38_24mer.histo 1059_24mer.png 3 1059
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S353_24mer.histo "$INDIR"/S34_24mer.histo 1081_24mer.png 3 1081
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S339_24mer.histo "$INDIR"/S20_24mer.histo 1116_24mer.png 3 1116
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S328_24mer.histo "$INDIR"/S9_24mer.histo 1119_24mer.png 3 1119
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S335_24mer.histo "$INDIR"/S16_24mer.histo 1128_24mer.png 3 1128
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S322_24mer.histo "$INDIR"/S3_24mer.histo 1129_24mer.png 3 1129
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S323_24mer.histo "$INDIR"/S4_24mer.histo 1130_24mer.png 3 1130
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S356_24mer.histo "$INDIR"/S37_24mer.histo 2003_24mer.png 3 2003
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S350_24mer.histo "$INDIR"/S31_24mer.histo 2025_24mer.png 3 2025
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S340_24mer.histo "$INDIR"/S21_24mer.histo 4110_24mer.png 3 4110
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S343_24mer.histo "$INDIR"/S24_24mer.histo 4112_24mer.png 3 4112
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S344_24mer.histo "$INDIR"/S25_24mer.histo 4118_24mer.png 3 4118
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S320_24mer.histo "$INDIR"/S1_24mer.histo 4190_24mer.png 3 4190
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S348_24mer.histo "$INDIR"/S29_24mer.histo 4207_24mer.png 3 4207
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S337_24mer.histo "$INDIR"/S18_24mer.histo 4216_24mer.png 3 4216
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S345_24mer.histo "$INDIR"/S26_24mer.histo 4220_24mer.png 3 4220
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S330_24mer.histo "$INDIR"/S11_24mer.histo 4223_24mer.png 3 4223
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S332_24mer.histo "$INDIR"/S13_24mer.histo 4224_24mer.png 3 4224
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S338_24mer.histo "$INDIR"/S19_24mer.histo 4229_24mer.png 3 4229
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S358_24mer.histo "$INDIR"/S39_24mer.histo 4241_24mer.png 3 4241
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S325_24mer.histo "$INDIR"/S6_24mer.histo 4246_24mer.png 3 4246
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S342_24mer.histo "$INDIR"/S23_24mer.histo 4505_24mer.png 3 4505
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S351_24mer.histo "$INDIR"/S32_24mer.histo 4507_24mer.png 3 4507
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S334_24mer.histo "$INDIR"/S15_24mer.histo 5500_24mer.png 3 5500
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S349_24mer.histo "$INDIR"/S30_24mer.histo 5504_24mer.png 3 5504
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S321_24mer.histo "$INDIR"/S2_24mer.histo 5506_24mer.png 3 5506
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S359_24mer.histo "$INDIR"/S40_24mer.histo 5509_24mer.png 3 5509
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S347_24mer.histo "$INDIR"/S28_24mer.histo 6012_24mer.png 3 6012
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S336_24mer.histo "$INDIR"/S17_24mer.histo 6015_24mer.png 3 6015
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S329_24mer.histo "$INDIR"/S10_24mer.histo 6024_24mer.png 3 6024
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S354_24mer.histo "$INDIR"/S35_24mer.histo 6029_24mer.png 3 6029
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S333_24mer.histo "$INDIR"/S14_24mer.histo 2897a_24mer.png 3 2897a
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S331_24mer.histo "$INDIR"/S12_24mer.histo 2899a_24mer.png 3 2899a
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S352_24mer.histo "$INDIR"/S33_24mer.histo 4376a_24mer.png 3 4376a
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S355_24mer.histo "$INDIR"/S36_24mer.histo 5502c_24mer.png 3 5502c
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S326_24mer.histo "$INDIR"/S7_24mer.histo cord3_24mer.png 3 cord3
+Rscript /blue/soltis/kasey.pham/euc_hyb_reseq/scripts/plot_kmer_histo.r "$INDIR"/S324_24mer.histo "$INDIR"/S5_24mer.histo cord5_24mer.png 3 cord5

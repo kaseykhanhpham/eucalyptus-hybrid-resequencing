@@ -1,0 +1,12 @@
+// Priors and rules file
+// *********************
+
+[PARAMETERS]
+//#isInt? #name   #dist.#min  #max
+//all Ns are in number of haploid individuals
+1  NMR		logunif	100	 100000	 output
+1  NMB		logunif	100	 100000	 output
+1  NANC	logunif	0.1	 100	 output
+0  TPROP	logunif 0.0001	 0.5	 output
+
+[COMPLEX PARAMETERS]

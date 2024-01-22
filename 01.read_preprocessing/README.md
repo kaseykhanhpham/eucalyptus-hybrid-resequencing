@@ -123,7 +123,7 @@ do
     jellyfish count -o "$NAME"_24mer -m 24 -s 5G -t 10 -C "$READS_DIR"/"$NAME"*trimmed.fq
     jellyfish histo -o "$NAME"_24mer.histo "$NAME"_24mer
     # plot k-mer distribution starting at index = 3
-    Rscript "$SCRIPT_DIR"/plot_kmer_histo.r "$NAME"_24mer.histo "$NAME"_24mer.png 3
+    Rscript "$SCRIPT_DIR"/plot_kmer_fast.r "$NAME"_24mer.histo "$NAME"_24mer.png 3
     rm "$NAME"_24mer
 done < "$LIST_DIR"/seq_ids.txt
 ```

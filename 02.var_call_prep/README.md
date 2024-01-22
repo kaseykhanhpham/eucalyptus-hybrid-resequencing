@@ -87,10 +87,11 @@ TukeyHSD(map_anova, conf.level = 0.95) # no significant difference between any p
 pair_anova <- aov(pair_rate ~ spp_ids, data = mapping_rate) # P = 0.0593
 
 # Tukey's pairwise comparisons
-mean(mapping_rate[which(mapping_rate$spp_ids == "glob_pure"),"pair_rate"]) # 0.9856
-mean(mapping_rate[which(mapping_rate$spp_ids == "glob_MR"),"pair_rate"]) # 0.9864
-mean(mapping_rate[which(mapping_rate$spp_ids == "cord_MR"),"pair_rate"]) # 0.9838
+mean(mapping_rate[which(mapping_rate$spp_ids == "glob_pure"),"pair_rate"]) #0.8989
+mean(mapping_rate[which(mapping_rate$spp_ids == "glob_MR"),"pair_rate"]) #0.9086
+mean(mapping_rate[which(mapping_rate$spp_ids == "cord_MR"),"pair_rate"]) #0.8939
 
+TukeyHSD(pair_anova, conf.level = 0.95)
 ```
 ### Mapping Rate Stats
 ANOVA results:
@@ -125,7 +126,6 @@ Tukey results:
 None of the differences in mapping or pairing rate was large or significant enough for me to be particularly concerned. Moved on with analysis.
 
 **Convert files to `BAM` format using [`samtools`](https://github.com/samtools/samtools):**
-NOTE (TO REMOVE LATER): can re-run this job as-is
 ```bash
 # Run via job on UFRC, see sam2bam.job for details
 # Resources used: 31 Mb, 1.5 hrs
@@ -273,7 +273,7 @@ samtools depth -o "$OUTDIR"/WA01_cover.txt "$INDIR"/S320_marked.bam "$INDIR"/S1_
 
 **Plot coverage and calculate average:**
 
-Used custom python script for this; it calculates the average fine, but the plotting looks a bit funny. I never quite worked out what the issue was.
+Used custom python script to calculate the average coverage along a sliding window.
 ```bash
 # Run via job on UFRC, see coverage.job for details
 # Resources used: 10 hrs, 70 Mb
@@ -285,7 +285,7 @@ LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
 # create blank file in which to dump average coverage calculations
 touch average_coverage.txt
 
-# calculate average from samtools output and plot average coverage across all chromosomes in sliding window
+# calculate average from samtools output and calculate average coverage across all chromosomes in sliding window
 while read NAME
 do 
     python "$SCRIPT_DIR"/plot_coverage.py "$NAME"_cover.txt "$NAME" average_coverage.txt

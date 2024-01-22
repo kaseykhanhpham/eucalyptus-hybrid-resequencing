@@ -1,0 +1,24 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=test
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=50gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=test_%j.out
+#SBATCH --error=test_%j.err
+
+module purge
+module load ldhat/2.2a
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/recomb"
+# declare -a NAMELIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
+
+# for NAME in "${NAMELIST[@]}"
+# do
+#     BLUH BLUH
+# done
+
+"$HPC_LDHAT_BIN"/pairwise -seq glob_ldhat_Chr01_0-8443909.sites -loc glob_ldhat_Chr01_0-8443909.locs -lk glob_lookup.txt -prefix glob_ldhat_Chr01_0-8443909_

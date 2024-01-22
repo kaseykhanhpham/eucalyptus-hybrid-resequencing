@@ -223,7 +223,7 @@ do
 done
 ```
 
-Filtered invariant calls based on same parameters.
+Filtered invariant calls based on stringent parameters.
 
 ```bash
 # Done via UFRC queue system; see filter_invars.job for more details.

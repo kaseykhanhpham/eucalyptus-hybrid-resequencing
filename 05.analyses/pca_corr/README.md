@@ -6,7 +6,7 @@ Referred to [this tutorial](https://bcm-uga.github.io/pcadapt/articles/pcadapt.h
 
 ## Get correlated SNPs
 
-Subsetted all-chromosome just-variants VCF to reference samples only using `bcftools`. Pruned linked variants, converted to BED file, and calculated PCs using `PLINK`.
+Subsetted all-chromosome just-variants VCF to reference samples only using `bcftools`. ~~Pruned linked variants~~, converted to BED file, and calculated PCs using `PLINK`.
 
 ```bash
 module load bcftools/1.15

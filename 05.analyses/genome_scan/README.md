@@ -361,7 +361,7 @@ Retrieved outlier windows using custom `R` script.
 module load R/4.2
 SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
 
-# get highest 5% of windows for each sliding window statistic
+# get highest 5% of windows for each sliding window statistic REDO PERCENTAGE IS WRONG?
 Rscript "$SCRIPT_DIR"/process_stat_windows.r localFstats_40_20.txt percent 1,2,3,-1,5 0.5 above 0 fD_40_20_outliers_p05.txt
 Rscript "$SCRIPT_DIR"/process_stat_windows.r localFstats_40_20.txt percent 1,2,3,-1,6 0.5 above 0 fDm_40_20_outliers_p05.txt
 Rscript "$SCRIPT_DIR"/process_stat_windows.r localFstats_40_20.txt percent 1,2,3,-1,5 0.5 above 0 df_40_20_outliers_p05.txt

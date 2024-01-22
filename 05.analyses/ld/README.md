@@ -263,15 +263,78 @@ done
 
 Plotted and curve fitted LD across each chromosome in `R`.
 ```R
+loess_graph <- function(chr_ld_tab, smoothing, plot_title){
+    chr_ld_tab <- chr_ld_tab[!is.na(chr_ld_tab$ld),]
+    temp <- unlist(lapply(strsplit(chr_ld_tab$file_name, "_"), function(x) x[2]))
+    chr_ld_tab$pos <- as.numeric(unlist(lapply(strsplit(temp, "-"), function(x) x[1])))
+    chr_ld_tab <- chr_ld_tab[order(chr_ld_tab$pos),]
+    chr_loess <- loess(ld ~ pos, data=chr_ld_tab, span=smoothing)
+    chr_pred <- predict(chr_loess)
+    plot(chr_ld_tab$pos, chr_ld_tab$ld, main = plot_title, xlab = "bp", ylab = "ld", pch = 19)
+    lines(chr_pred, x = chr_loess$x, col = "blue")
+    chr_ld_tab_sorted <- chr_ld_tab[order(chr_ld_tab$ld), ]
+    outlier_tab <- chr_ld_tab_sorted[c(round(nrow(chr_ld_tab_sorted) * 0.95):nrow(chr_ld_tab_sorted)),]
+    outlier_tab <- outlier_tab[order(outlier_tab$pos), ]
+    return(outlier_tab)
+}
+
 # Chr01
 chr01_ld_tab <- read.table("glob_chr01_windows_ld.txt", header = TRUE, sep = "\t")
-temp <- unlist(lapply(strsplit(chr01_ld_tab$file_name, "_"), function(x) x[2]))
-chr01_ld_tab$pos <- unlist(lapply(strsplit(temp, "-"), function(x) x[1]))
-chr01_loess <- loess(ld ~ pos, data=chr01_ld_tab, span=0.1)
-chr01_pred <- predict(chr01_loess)
-plot(chr01_ld_tab$pos, chr01_ld_tab$ld, main = "Chr01 LD MAC=1", xlab = "bp", ylab = "ld")
-lines(chr01_pred, x = chr01_ld_tab$pos, col = "blue")
+chr01_outliers <- loess_graph(chr01_ld_tab, 0.1, "Chr01 LD MAC = 0.1")
+# Chr02
+chr02_ld_tab <- read.table("glob_chr02_windows_ld.txt", header = TRUE, sep = "\t")
+chr02_outliers <- loess_graph(chr02_ld_tab, 0.1, "Chr02 LD MAC = 0.1")
+# Chr03
+chr03_ld_tab <- read.table("glob_chr03_windows_ld.txt", header = TRUE, sep = "\t")
+chr03_outliers <- loess_graph(chr03_ld_tab, 0.1, "Chr03 LD MAC = 0.1")
+# Chr04
+chr04_ld_tab <- read.table("glob_chr04_windows_ld.txt", header = TRUE, sep = "\t")
+chr04_outliers <- loess_graph(chr04_ld_tab, 0.1, "Chr04 LD MAC = 0.1")
+# Chr05
+chr05_ld_tab <- read.table("glob_chr05_windows_ld.txt", header = TRUE, sep = "\t")
+chr05_outliers <- loess_graph(chr05_ld_tab, 0.1, "Chr05 LD MAC = 0.1")
+# Chr06
+chr06_ld_tab <- read.table("glob_chr06_windows_ld.txt", header = TRUE, sep = "\t")
+chr06_outliers <- loess_graph(chr06_ld_tab, 0.1, "Chr06 LD MAC = 0.1")
+# Chr07
+chr07_ld_tab <- read.table("glob_chr07_windows_ld.txt", header = TRUE, sep = "\t")
+chr07_outliers <- loess_graph(chr07_ld_tab, 0.1, "Chr07 LD MAC = 0.1")
+# Chr08
+chr08_ld_tab <- read.table("glob_chr08_windows_ld.txt", header = TRUE, sep = "\t")
+chr08_outliers <- loess_graph(chr08_ld_tab, 0.1, "Chr08 LD MAC = 0.1")
+# Chr09
+chr09_ld_tab <- read.table("glob_chr09_windows_ld.txt", header = TRUE, sep = "\t")
+chr09_outliers <- loess_graph(chr09_ld_tab, 0.1, "Chr09 LD MAC = 0.1")
+# Chr10
+chr10_ld_tab <- read.table("glob_chr10_windows_ld.txt", header = TRUE, sep = "\t")
+chr10_outliers <- loess_graph(chr10_ld_tab, 0.1, "Chr10 LD MAC = 0.1")
+# Chr11
+chr11_ld_tab <- read.table("glob_chr11_windows_ld.txt", header = TRUE, sep = "\t")
+chr11_outliers <- loess_graph(chr11_ld_tab, 0.1, "Chr11 LD MAC = 0.1")
 ```
+
+Intervals of interest (LD outliers):
+| Chr   | Interval            | LD         |
+| ----- | ------------------- | ---------- |
+| Chr01 | 29500000 - 29699999 | 11430      |
+| Chr02 | 39600000 - 40099999 | 7841       |
+| Chr02 | 46700000 - 46999999 | 12732      |
+| Chr03 | 29800000 - 29999999 | 15773      |
+| Chr04 |  9700000 -  9899999 | 10338      |
+| Chr04 | 15100000 - 15899999 | 11680      |
+| Chr05 | 30100000 - 30399999 | 7708       |
+| Chr05 | 61800000 - 61999999 | 18512      |
+| Chr06 | 43500000 - 43699999 | 8773       |
+| Chr07 | 22500000 - 22799999 | 8116       |
+| Chr07 | 50400000 - 50699999 | 18108      |
+| Chr08 | 11200000 - 11399999 | 12763      |
+| Chr08 | 36000000 - 36699999 | 20992      |
+| Chr09 | 22600000 - 22799999 | 42340      |
+| Chr09 | 24300000 - 24999999 | 19976      |
+| Chr09 | 27700000 - 27999999 | 24911      |
+| Chr10 |  4000000 -  4299999 | 43987      |
+| Chr10 | 23800000 - 23999999 | 19112      |
+| Chr11 | 24900000 - 25499999 | 11549      |
 
 ## E. cordata LD
 ### Genome-wide MAC = 1
@@ -350,3 +413,44 @@ done
 | Chr10      | 15056            | 0.0002319 |
 | Chr11      | 16747            | 0.0002085 |
 | AVERAGE    | 17267            | 0.0002040 |
+
+## Recombination Rate
+### E. globulus
+Filtered biallelic SNPs to only Meehan Range E. globulus samples.
+```bash
+module load bcftools/1.15
+bcftools view --samples-file /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/Eglobulus_MR.txt -o globMR_fil_biallelic.vcf.gz -O z /blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/all_fil_biallelic.vcf.gz
+```
+Converted VCF file to LDhat format. Manually added chromosome lengths (in kb) and model (L = crossing over) to .locs files.
+```bash
+# Done in UFRC queue system; see glob_get_ldhat_in.job for more details.
+# Resources used: 35 Mb, 2 min
+
+module purge
+module load python/3.8
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/recomb"
+declare -a NAMELIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
+
+for NAME in "${NAMELIST[@]}"
+do
+    python "$SCRIPT_DIR"/get_ldhat_in.py "$VCF_DIR"/globMR_fil_biallelic.vcf.gz glob_ldhat "$NAME"
+done
+```
+
+Created lookup table to run LDhat. Theta was derived by taking the rate for mu estimated in Silva-Junior and Grattapaglia 2015 New Phytologist (4.8e-7) and multiplying by four times the estimated effective population size 100 years ago (4 * 4000 individuals) from `StairwayPlot2`.
+```bash
+# Done in UFRC queue system; see glob_lookup.job for more details.
+# Resources used: 6 Mb, 2 hrs
+
+module purge
+module load ldhat/2.2a
+
+"$HPC_LDHAT_BIN"/complete -n 40 -rhomax 100 -n_pts 101 -theta 0.00768
+```
+
+Ran LDhat.
+
+```bash
+
+```
