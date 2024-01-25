@@ -273,7 +273,7 @@ samtools depth -o "$OUTDIR"/WA01_cover.txt "$INDIR"/S320_marked.bam "$INDIR"/S1_
 
 **Plot coverage and calculate average:**
 
-Used custom python script to calculate the average coverage along a sliding window.
+Used custom python script to calculate the average coverage along a sliding window and genome-wide average coverage per sample.
 ```bash
 # Run via job on UFRC, see coverage.job for details
 # Resources used: 10 hrs, 70 Mb
@@ -290,6 +290,10 @@ while read NAME
 do 
     python "$SCRIPT_DIR"/plot_coverage.py "$NAME"_cover.txt "$NAME" average_coverage.txt
 done < "$LIST_DIR"/sample_ids.txt
+```
+
+Plotted coverage in windows using custom `R` script.
+```bash
 
 ```
 

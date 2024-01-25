@@ -1,0 +1,27 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=plt_cvg
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=50mb
+#SBATCH --time=1:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=plot_cvg_%j.out
+#SBATCH --error=plot_cvg_%j.err
+
+pwd; hostname; date
+echo Working directory is $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR
+
+module purge
+module load R/4.2
+SCRIPTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+LISTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
+INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/02.process_reads/05.depth"
+
+while read NAME
+do 
+    Rscript "$SCRIPTDIR"/plot_coverage.r -i "$INDIR"/"$NAME"_cvg_windows.txt -o "$NAME"_cvg_windows.png -n "$NAME" -c chr_list.txt -p chr_pos_list.txt
+done < "$LISTDIR"/accession_nums.txt

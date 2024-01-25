@@ -22,6 +22,6 @@ LISTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
 
 while read NAME
 do 
-    python "$SCRIPTDIR"/coverage_window_avgs.py -i "$NAME"_cover.txt -o "$NAME"_cvg_windows.txt -a average_coverage.txt -s 100000 -n "$NAME"
+    python "$SCRIPTDIR"/coverage_window_avgs.py -i "$NAME"_cover.txt -o "$NAME"_cvg_windows.txt -a average_coverage.txt -s 100000 -n "$NAME" -c 100000000
 done < "$LISTDIR"/accession_nums.txt
 
