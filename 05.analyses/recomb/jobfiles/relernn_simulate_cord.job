@@ -1,0 +1,27 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis
+#SBATCH --partition=gpu
+#SBATCH --gpus=1
+#SBATCH --job-name=rl_sim_c
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=15gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=8
+#SBATCH --nodes=1
+#SBATCH --output=relernn_simulate_cord_%j.out
+#SBATCH --error=relernn_simulate_cord_%j.err
+
+module load relernn/1.0.0
+module load cuda/12.2.2
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
+declare -a VCFLIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
+export XLA_FLAGS=--xla_gpu_cuda_data_dir=/apps/compilers/cuda/12.2.2
+
+# mutation rate and generation time from Silva-Junior and Grattapaglia 2015 New Phytol.
+
+for NAME in "${VCFLIST[@]}"
+do
+    ReLERNN_SIMULATE -v "$VCF_DIR"/all_fil_biallelic_cord.vcf -g ../"$NAME".bed -d "$NAME" -u "4.93e-8" -l 10 -t 8 --unphased
+done
