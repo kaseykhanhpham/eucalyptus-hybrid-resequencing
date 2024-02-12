@@ -1,0 +1,21 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=linkprunebi
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=1gb
+#SBATCH --time=1:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=link_prune_%j.out
+#SBATCH --error=link_prune_%j.err
+
+module load plink/1.90b3.39 
+
+INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
+
+# prune linked biallelic SNPs
+plink --vcf "$INDIR"/all_fil_biallelic.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.2 --vcf-half-call m --out all_fil_biallelic
+# extract VCF file from pruned SNPs
+plink --vcf "$INDIR"/all_fil_biallelic.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract all_fil_biallelic.prune.in --vcf-half-call m --recode vcf-iid --out "$INDIR"/all_fil_biallelic.prune

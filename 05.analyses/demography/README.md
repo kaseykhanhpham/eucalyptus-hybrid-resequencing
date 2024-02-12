@@ -1,7 +1,7 @@
 # Coalescent Demographic History 
 
-## Meehan Range E. globulus
-### Stairway Plot
+## Stairway Plot
+### _E. globulus_
 Generated Site Frequency Spectrum using [easySFS](https://github.com/isaacovercast/easySFS). Manually generated population list file.
 
 ```bash
@@ -27,8 +27,7 @@ java -cp "$PROG_DIR"/stairway_plot_es Stairbuilder glob_fold.blueprint
 bash glob_fold.blueprint.sh
 ```
 
-## E. cordata
-### Stairway Plot 2
+### _E. cordata_
 Used Site Frequency Spectrum generated during _E. globulus_ analysis to make blueprint file.
 
 ```bash
@@ -40,3 +39,19 @@ PROG_DIR="/blue/soltis/kasey.pham/bin/stairway_plot_v2.1.1"
 java -cp "$PROG_DIR"/stairway_plot_es Stairbuilder cord_fold.blueprint
 bash cord_fold.blueprint.sh
 ```
+
+## Demography model fitting
+Used [`dadi`](https://dadi.readthedocs.io/en/latest/) to fit different demography models to observed variant distribution.
+Models fitted:
+* Divergence, no migration, with size change
+* Divergence with asymmetric migration, isolation, with size change
+* Divergence in isolation, secondary contact, with size change
+* Divergence in isolation, secondary contact, isolation, with size change
+
+First created folded SFS for observed data and bootstrapped variants in `dadi`. Followed the manual's [2D demography example](https://dadi.readthedocs.io/en/latest/examples/basic_workflow/basic_workflow_2d_demographics/).
+```bash
+module load dadi
+python dadi_prep.py
+```
+
+Ran parameter optimization for all 2D demographic models as described in Portik et al. 2017 and the associated pipeline, [`dadi_pipeline`](https://github.com/dportik/dadi_pipeline/tree/master). See individual python files and `dadi_pipeline`'s documentation for more details. In short, ran suggested 4 round optimization, using the previous round's best replicate (judged by likelihood) as a seed for heuristic search starting points with decreasing amounts of perturbation.
