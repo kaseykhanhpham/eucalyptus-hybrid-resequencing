@@ -84,6 +84,7 @@ done
 Visualized recombination over windows and calculated genome-wide average.
 
 ```R
+source("../recomb_graph_funs.r")
 chr_list <- c("Chr01", "Chr02", "Chr03", "Chr04", "Chr05", "Chr06", "Chr07", "Chr08", "Chr09", "Chr10", "Chr11")
 
 # create storage vectors
@@ -94,10 +95,11 @@ recomb <- c()
 # loop through each chromosome-specific table and average the window size, number of sites per window, and recombination rate.
 for(chr in chr_list){
     chr_tab <- read.table(paste("all_fil_biallelic_globMR_", chr, ".PREDICT.BSCORRECTED.txt", sep = ""), header = TRUE)
-    table_winsize <- unlist(apply(chr_tab, 1, function(x) as.numeric(x["end"]) - as.numeric(x["start"])))
-    winsize <- c(winsize, mean(table_winsize))
-    nsites <- c(nsites, mean(chr_tab$nSites))
-    recomb <- c(recomb, mean(chr_tab$recombRate))
+    avgs <- get_avgs(chr_tab)
+    winsize <- c(winsize, avgs[["winsize"]])
+    nsites <- c(nsites, avgs[["nsites"]])
+    recomb <- c(recomb, avgs[["recomb"]])
+    graph_rwin(chr_tab, paste(chr, "_recomb_glob.png", sep = ""))
 }
 
 # append genome-wide averages
@@ -110,9 +112,23 @@ avg_recomb <- mean(recomb)
 recomb <- c(recomb, avg_recomb)
 
 out_tab <- data.frame(chr_list, winsize, nsites, recomb)
-write.table(out_tab, "recomb_avgs.tab", sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
+write.table(out_tab, "recomb_avgs_glob.tab", sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
 ```
 
+| Chromosome  | Window Size | Num Sites | Recombination (/bp*gen) |
+| ----------- | ----------- | --------- | ----------------------- |
+| Chr01       | 301492.88   | 729.29    | 1.717e-08               |
+| Chr02       | 276153.82   | 582.07    | 1.965e-08               |
+| Chr03       | 212000      | 472.61    | 1.641e-08               |
+| Chr04       | 364093.33   | 764.36    | 1.513e-08               |
+| Chr05       | 329000      | 610.26    | 2.222e-08               |
+| Chr06       | 152892.56   | 384.37    | 1.657e-08               |
+| Chr07       | 268452.74   | 548.43    | 2.271e-08               |
+| Chr08       | 378000      | 844.02    | 1.668e-08               |
+| Chr09       | 273530.11   | 670.81    | 1.597e-08               |
+| Chr10       | 304000      | 762.04    | 2.198e-08               |
+| Chr11       | 288000      | 645.63    | 2.014e-08               |
+| genome-wide | 286146.86   | 637.62    | 1.860e-08               |
 
 
 ## Estimate _E. cordata_ recombination
@@ -122,3 +138,51 @@ Repeated the above steps for _E. cordata_-only VCF file. Then renamed and re-org
 declare -a VCFLIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
 for NAME in "${VCFLIST[@]}"; do rename all_fil_biallelic_cord all_fil_biallelic_cord_"$NAME" "$NAME"/*; done
 ```
+
+Calculated chromosome-wide and genome-wide average recombination and plotted recombination windows.
+```bash
+source("../recomb_graph_funs.r")
+chr_list <- c("Chr01", "Chr02", "Chr03", "Chr04", "Chr05", "Chr06", "Chr07", "Chr08", "Chr09", "Chr10", "Chr11")
+
+# create storage vectors
+winsize <- c()
+nsites <- c()
+recomb <- c()
+
+# loop through each chromosome-specific table and average the window size, number of sites per window, and recombination rate.
+for(chr in chr_list){
+    chr_tab <- read.table(paste("all_fil_biallelic_cord_", chr, ".PREDICT.BSCORRECTED.txt", sep = ""), header = TRUE)
+    avgs <- get_avgs(chr_tab)
+    winsize <- c(winsize, avgs[["winsize"]])
+    nsites <- c(nsites, avgs[["nsites"]])
+    recomb <- c(recomb, avgs[["recomb"]])
+    graph_rwin(chr_tab, paste(chr, "_recomb_cord.png", sep = ""))
+}
+
+# append genome-wide averages
+chr_list <- c(chr_list, "genome-wide")
+avg_winsize <- mean(winsize)
+winsize <- c(winsize, avg_winsize)
+avg_nsites <- mean(nsites)
+nsites <- c(nsites, avg_nsites)
+avg_recomb <- mean(recomb)
+recomb <- c(recomb, avg_recomb)
+
+out_tab <- data.frame(chr_list, winsize, nsites, recomb)
+write.table(out_tab, "recomb_avgs_cord.tab", sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
+```
+
+| Chromosome  | Window Size | Num Sites | Recombination (/bp*gen) |
+| ----------- | ----------- | --------- | ----------------------- |
+| Chr01       | 301492.88   | 729.29    | 2.903e-08               |
+| Chr02       | 276153.82   | 582.07    | 2.855e-08               |
+| Chr03       | 212000      | 472.61    | 1.756e-08               |
+| Chr04       | 364093.33   | 764.36    | 3.412e-08               |
+| Chr05       | 329000      | 610.26    | 8.905e-09               |
+| Chr06       | 152892.56   | 384.37    | 2.293e-08               |
+| Chr07       | 268452.74   | 548.43    | 1.894e-08               |
+| Chr08       | 378000      | 844.02    | 2.802e-08               |
+| Chr09       | 273530.11   | 670.81    | 2.229e-08               |
+| Chr10       | 304000      | 762.04    | 2.380e-08               |
+| Chr11       | 288000      | 645.63    | 1.967e-08               |
+| genome-wide | 286146.86   | 637.62    | 2.307e-08               |
