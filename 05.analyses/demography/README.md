@@ -43,57 +43,7 @@ bash cord_fold.blueprint.sh
 ## Demography model fitting
 Used [`dadi`](https://dadi.readthedocs.io/en/latest/) to fit different demography models to observed variant distribution.
 
-### LD-pruned SNPs
-First performed linkage pruning on the set of _biallelic SNPs only_ in `PLINK` (as only biallelic SNPs can be used to estimate site frequency spectrum).
-```bash
-# Performed on UFRC queue system; see link_prune_biall.job for more details.
-# Resources used: 
-module load plink/1.90b3.39 
-
-INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
-
-# prune linked biallelic SNPs
-plink --vcf "$INDIR"/all_fil_biallelic.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --indep-pairwise 50 10 0.2 --vcf-half-call m --out all_fil_biallelic
-# extract VCF file from pruned SNPs
-plink --vcf "$INDIR"/all_fil_biallelic.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# --extract all_fil_biallelic.prune.in --vcf-half-call m --recode vcf-iid --out "$INDIR"/all_fil_biallelic.prune
-```
-
-Created folded SFS for observed data and bootstrapped variants in `dadi`. Followed the manual's [2D demography example](https://dadi.readthedocs.io/en/latest/examples/basic_workflow/basic_workflow_2d_demographics/).
-```bash
-module load dadi
-python dadi_prep.py
-```
-
-Ran parameter optimization for all 2D demographic models as described in Portik et al. 2017 and the associated pipeline, [`dadi_pipeline`](https://github.com/dportik/dadi_pipeline/tree/master). See individual python files and `dadi_pipeline`'s documentation for more details. In short, ran suggested 4 round optimization, using the previous round's best replicate (judged by likelihood) as a seed for heuristic search starting points with decreasing amounts of perturbation.
-
-I used the default pipeline suggested by Portik et al. -- replicates of [10, 20, 30, 40], max iterations of [3, 5, 10, 15], and perturbations of [3, 2, 2, 1] for each respective round. I ran this optimization process 5 times for each of the models tested to check that the same optima were being recovered consistently. For the best model, I ran the optimization process 10 total times.
-
-([Refer to `dadi_pipeline` for the full set of models coded by Portik et al.](https://github.com/dportik/dadi_pipeline/blob/master/Two_Population_Pipeline/Models_2D.pdf). I tested all the divergence models and none of the vicariance/island models.
-
-Models used:
-| Model                                          | Parameters         | python run file          |
-| ---------------------------------------------- | ------------------ | ------------------------ |
-| Divergence, no migration                       | nu1, nu2, T        | dadi_no_mig.py           |
-| Divergence with continuous symmetric migration  | nu1, nu2, m, T    | dadi_sym_mig.py          |
-| Divergence with continuous asymmetric migration | nu1, nu2, m12, m21, T | dadi_asym_mig.py     |
-| Divergence with no migration, size change      | nu1a, nu2a, nu1b, nu2b, T1, T2 | dadi_no_mig_size.py |
-| Divergence with continuous symmetric migration, size change | nu1a, nu2a, nu1b, nu2b, m, T1, T2 | dadi_sym_mig_size.py |
-| Divergence with continuous asymmetric migration, size change | nu1a, nu2a, nu1b, nu2b, m12, m21, T1, T2 | dadi_asym_mig_size.py |
-| Divergence in isolation, continuous symmetrical secondary contact | nu1, nu2, m, T1, T2 | dadi_sec_contact_sym_mig.py |
-| Divergence in isolation, continuous asymmetrical secondary contact | nu1, nu2, m12, m21, T1, T2 | dadi_sec_contact_asym_mig.job |
-| Divergence with ancient continuous symmetrical migration, isolation | nu1, nu2, m, T1, T2 | dadi_anc_sym_mig.py |
-| Divergence with ancient continuous asymmetrical migration, isolation | nu1, nu2, m12, m21, T1, T2 | dadi_anc_asym_mig.py |
-| Divergence in isolation, continuous symmetrical secondary contact, size change | nu1a, nu2a, nu1b, nu2b, m, T1, T2 | dadi_sec_contact_sym_mig_size.py |
-| Divergence in isolation, continuous asymmetrical secondary contact, size change | nu1a, nu2a, nu1b, nu2b, m12, m21, T1, T2 |
-| Divergence with ancient continuous symmetrical migration, isolation with size change | nu1a, nu2a, nu1b, nu2b, m, T1, T2 |
-| Divergence with ancient continuous asymmetrical migration, isolation with size change | nu1a, nu2a, nu1b, nu2b, m12, m21, T1, T2 |
-| Divergence in isolation, continuous symmetrical secondary contact, isolation | nu1, nu2, m, T1, T2, T3 | dadi_sec_contact_sym_mig_three_epoch.py |
-| Divergence in isolation, continuous asymmetrical secondary contact, isolation | nu1, nu2, m12, m21, T1, T2, T3 | dadi_sec_contact_asym_mig_three_epoch.py |
-| Divergence in isolation, continuous symmetrical secondary contact with size change, isolation | nu1a, nu2a, nu1b, nu2b, m, T1, T2, T3 |
-| Divergence in isolation, continuous asymmetrical secondary contact with size change, isolation | nu1a, nu2a, nu1b, nu2b, m12, m21, T1, T2, T3 |
-
-### All SNPs
-Created folded SFS for observed data and bootstrapped variants in `dadi`. Followed the manual's [2D demography example](https://dadi.readthedocs.io/en/latest/examples/basic_workflow/basic_workflow_2d_demographics/).
+Created folded SFS for observed data and bootstrapped variants in `dadi`. Followed the manual's [2D demography example](https://dadi.readthedocs.io/en/latest/examples/basic_workflow/basic_workflow_2d_demographics/). Masked central cells (8,16), (8,15), (7,16) as a precaution against [artifacts from mis-mapping](https://groups.google.com/g/dadi-user/c/thIHbLj5zHQ).
 ```python
 # dadi demography model fitting
 # step: site frequency spectrum construction and bootstrapping
@@ -107,7 +57,7 @@ import dadi
 # import os
 
 # names for output files
-wdir = "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/demography/dadi/all_snps"
+wdir = "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/demography/dadi/2D"
 name_stem = "globMR_cordMR_ns32-16"
 
 # Parse the VCF file to generate a data dictionary
@@ -119,6 +69,11 @@ dd = dadi.Misc.make_data_dict_vcf(datafile, "/blue/soltis/kasey.pham/euc_hyb_res
 # haplotype counts at which the number of segregating sites was maximized
 pop_ids, ns = ["glob_MR", "cord_MR"], [32, 16]
 fs = dadi.Spectrum.from_data_dict(dd, pop_ids, ns, polarized = False) # folded since ancestral alleles not known
+
+# Mask central cells
+fs.mask[8,16] = True
+fs.mask[8,15] = True
+fs.mask[7,16] = True
 
 # Make directory for saving data dictionaries
 # if not os.path.exists("{WDIR}/data/data_dicts".format(WDIR = wdir)):
@@ -145,4 +100,81 @@ fig.clear()
 dadi.Plotting.plot_single_2d_sfs(fs)
 fig.savefig("{WDIR}/data/fs/{NAME}.png".format(WDIR = wdir, NAME = name_stem))
 plt.close(fig)
+```
+
+Ran dadi using the `dadi_pipeline` implementation. 
+
+Run scheme:
+1. 15 replicates, 3 max iterations, 3-fold perturbation
+2. 30 replicates, 5 max iterations, 2-fold perturbation
+3. 50 replicates, 10 max iterations, 2-fold perturbation
+4. 80 replicates, 20 max iterations, 1-fold perturbation
+
+See python dadi python files under each model directory for more detail.
+
+Models run:
+| Model                                  | parameters                | python file           |
+| -------------------------------------- | ------------------------- | --------------------- |
+| Divergence, gradual size change        | nu1i, nu2i, nu1f, nu2f, T | dadi_schange.py       |
+| Divergence, instant size change and gradual size change | nu1i, nu2i, nu1m, nu2m, nu1f, nu2f, T1, T2 | dadi_bottle_schange.py |
+| Divergence, asymmetric secondary contact and gradual size change | nu1i, nu2i, nu1f, nu2f, m12, m21, T1, T2 |
+| Divergence, instant size change and asymmetric secondary contact and gradual size change | nu1i, nu2i, nu1m, nu2m, nu1f, nu2f, m12, m21, T1, T2 |
+
+Plot SFS fit and likelihood ratio test for selecting the best model:
+```python
+import dadi
+import numpy as np
+import nlopt
+import matplotlib.pyplot as plt
+import pylab
+import sys
+
+sys.path.append("/blue/soltis/kasey.pham/bin/dadi_pipeline")
+sys.path.append("/blue/soltis/kasey.pham/bin/dadi_pipeline/Two_Population_Pipeline")
+# location of model functions
+sys.path.append("/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/demography/dadi/all_snps")
+import all_snps_models
+
+wdir = "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/demography/dadi/all_snps"
+name_stem = "globMR_cordMR_ns32-16"
+
+# import SFS
+fs = dadi.Spectrum.from_file("{WDIR}/data/fs/{NAME}.fs".format(WDIR = wdir, NAME = name_stem))
+ns = fs.sample_sizes
+
+# establish grid size
+pts = [max(ns)+20, max(ns)+30, max(ns)+40]
+
+# import bootstraps
+boots = []
+for i in range(100):
+    boots.append(dadi.Spectrum.from_file("{WDIR}/data/fs/{NAME}.fs".format(WDIR = wdir, NAME = name_stem)))
+
+# record results from sec_contact_schange parameterization
+smodel_bfps = [10.8079, 0.2501, 0.01, 0.0164, 0.0185]
+cmodel_bfps = [0.4248, 17.0388, 0.0844, 0.0352, 8.1421, 1.9196, 4.9025, 0.1318]
+nested_ind = [4,5,6]
+
+# extrapolate function and make best fit model
+smodel_func_ex = dadi.Numerics.make_extrap_log_func(all_snps_models.schange)
+cmodel_func_ex = dadi.Numerics.make_extrap_log_func(all_snps_models.sec_contact_schange)
+
+smodel = smodel_func_ex(smodel_bfps, ns, pts)
+cmodel = cmodel_func_ex(cmodel_bfps, ns, pts)
+
+## PLOT FIT
+# simple model
+fig = plt.figure(1, figsize=(10,6))
+fig.clear()
+dadi.Plotting.plot_2d_comp_multinom(smodel, fs, vmin=1, resid_range=3, pop_ids =('glob_MR','cord'), show=False)
+pylab.savefig('schange_fit.png', dpi=250)
+
+# complex model
+fig = plt.figure(1, figsize=(10,6))
+fig.clear()
+dadi.Plotting.plot_2d_comp_multinom(cmodel, fs, vmin=1, resid_range=3, pop_ids =('glob_MR','cord'), show=False)
+pylab.savefig('sec_contact_schange_fit.png', dpi=250)
+
+## LIKELIHOOD RATIO TEST
+# adj = dadi.Godambe.LRT_adjust(func_ex=func_ex, grid_pts=pts, all_boot=boots, p0=cmodel_bfps, data=fs, nested_indices=nested_ind, multinom=True)
 ```
