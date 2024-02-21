@@ -74,8 +74,8 @@ mr_map <- mr_map + tm_shape(cord_points) + tm_symbols(shape = 24, col = "#FED976
 # no legend since I'll be placing this next to the zoomed-out map
 # add inset map of SW Tasmania with sample points plotted for context
 tas_inset_map <- tm_shape(tas_shape, bbox = tas_reg) + tm_fill("white") + tm_borders() + tm_layout(bg.color = "#79B9B4")
-tas_inset_map <- tas_inset_map + tm_shape(loc_points) + tm_symbols(size = 0.25, shape = "sp_pop", shapes = c("glob_pure" = 22, "glob_MR" = 21, "cord_MR" = 24), col = "sp_pop", palette = c("glob_pure" = "#1D91C0", "glob_MR" = "#454545", "cord_MR" = "#FED976"), legend.col.show = FALSE, legend.shape.show = FALSE)
-tas_inset_map <- tas_inset_map + tm_shape(st_as_sfc(mr_reg)) + tm_borders(col = "black", lwd = 3)
+tas_inset_map <- tas_inset_map + tm_shape(loc_points) + tm_symbols(size = 0.25, shape = "sp_pop", shapes = c("glob_pure" = 22, "glob_MR" = 21, "cord_MR" = 24), col = "sp_pop", palette = c("glob_pure" = "#1D91C0", "glob_MR" = "#999999", "cord_MR" = "#FED976"), legend.col.show = FALSE, legend.shape.show = FALSE)
+tas_inset_map <- tas_inset_map + tm_shape(st_as_sfc(mr_reg)) + tm_borders(col = "black", lwd = 2)
 # normalize aspect ratios
 mr_dim <- norm_dim(mr_reg)
 # create viewports
