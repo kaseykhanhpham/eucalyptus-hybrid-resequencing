@@ -146,14 +146,14 @@ def sec_contact_bottle_schange_thr_epoch(params, ns, pts):
     phi = Integration.two_pops(phi, xx, T1, nu1i, nu2i, m12=0, m21=0)
 
     # Integrate over period after instant size change
-    phi = Integration.two_pops(phi, xx, T2, nu1m, nu2m, m12=0, m21=0)
+    phi = Integration.two_pops(phi, xx, T2, nu1m, nu2m, m12=m12, m21=m21)
 
     # Define functions for exponential size change from nuXi to nuXf
     nu1_fun = lambda t: nu1m * (nu1f/nu1m) ** (t/T3)
     nu2_fun = lambda t: nu2m * (nu2f/nu2m) ** (t/T3)
     # Integrate over time T3 with exponential size change after a bottleneck
     # and asymmetric migration
-    phi = Integration.two_pops(phi, xx, T3, nu1 = nu1_fun, nu2 = nu2_fun, m12=m12, m21=m21)
+    phi = Integration.two_pops(phi, xx, T3, nu1 = nu1_fun, nu2 = nu2_fun, m12=0, m21=0)
     
     # Generate final expected SFS under model
     fs = Spectrum.from_phi(phi, ns, (xx,xx))

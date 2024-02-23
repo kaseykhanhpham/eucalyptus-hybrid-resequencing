@@ -43,7 +43,8 @@ bash cord_fold.blueprint.sh
 ## Demography model fitting
 Used [`dadi`](https://dadi.readthedocs.io/en/latest/) to fit different demography models to observed variant distribution.
 
-Created folded SFS for observed data and bootstrapped variants in `dadi`. Followed the manual's [2D demography example](https://dadi.readthedocs.io/en/latest/examples/basic_workflow/basic_workflow_2d_demographics/). Masked central cells (8,16), (8,15), (7,16) as a precaution against [artifacts from mis-mapping](https://groups.google.com/g/dadi-user/c/thIHbLj5zHQ).
+### 2D Models
+Created folded SFS for observed data and bootstrapped variants in `dadi`. Followed the manual's [2D demography example](https://dadi.readthedocs.io/en/latest/examples/basic_workflow/basic_workflow_2d_demographics/). Masked central cells (16,8), (15,8), (16,7) as a precaution against [artifacts from mis-mapping](https://groups.google.com/g/dadi-user/c/thIHbLj5zHQ).
 ```python
 # dadi demography model fitting
 # step: site frequency spectrum construction and bootstrapping
@@ -71,9 +72,9 @@ pop_ids, ns = ["glob_MR", "cord_MR"], [32, 16]
 fs = dadi.Spectrum.from_data_dict(dd, pop_ids, ns, polarized = False) # folded since ancestral alleles not known
 
 # Mask central cells
-fs.mask[8,16] = True
-fs.mask[8,15] = True
-fs.mask[7,16] = True
+fs.mask[16,8] = True
+fs.mask[15,8] = True
+fs.mask[16,7] = True
 
 # Make directory for saving data dictionaries
 # if not os.path.exists("{WDIR}/data/data_dicts".format(WDIR = wdir)):
@@ -108,7 +109,7 @@ Run scheme:
 1. 15 replicates, 3 max iterations, 3-fold perturbation
 2. 30 replicates, 5 max iterations, 2-fold perturbation
 3. 50 replicates, 10 max iterations, 2-fold perturbation
-4. 80 replicates, 20 max iterations, 1-fold perturbation
+4. 100 replicates, 20 max iterations, 1-fold perturbation
 
 See python dadi python files under each model directory for more detail.
 
@@ -117,8 +118,10 @@ Models run:
 | -------------------------------------- | ------------------------- | --------------------- |
 | Divergence, gradual size change        | nu1i, nu2i, nu1f, nu2f, T | dadi_schange.py       |
 | Divergence, instant size change and gradual size change | nu1i, nu2i, nu1m, nu2m, nu1f, nu2f, T1, T2 | dadi_bottle_schange.py |
-| Divergence, asymmetric secondary contact and gradual size change | nu1i, nu2i, nu1f, nu2f, m12, m21, T1, T2 |
-| Divergence, instant size change and asymmetric secondary contact and gradual size change | nu1i, nu2i, nu1m, nu2m, nu1f, nu2f, m12, m21, T1, T2 |
+| Divergence, instant size change, gradual size change | nu1i, nu2i, nu1m, nu2m, nu1f, nu2f, T1, T2, T3 | dadi_bottle_schange_thr_epoch.py |
+| Divergence, asymmetric secondary contact and gradual size change | nu1i, nu2i, nu1f, nu2f, m12, m21, T1, T2 | dadi_sec_contact_schange.py |
+| Divergence, instant size change and asymmetric secondary contact and gradual size change | nu1i, nu2i, nu1m, nu2m, nu1f, nu2f, m12, m21, T1, T2 | dadi_sec_contact_bottle_schange.py |
+| Divergence, instant size change and asymmetric secondary contact, gradual size change | nu1i, nu2i, nu1m, nu2m, nu1f, nu2f, m12, m21, T1, T2 | dadi_sec_contact_bottle_schange_thr_epoch.py |
 
 Plot SFS fit and likelihood ratio test for selecting the best model:
 ```python
@@ -177,4 +180,97 @@ pylab.savefig('sec_contact_schange_fit.png', dpi=250)
 
 ## LIKELIHOOD RATIO TEST
 # adj = dadi.Godambe.LRT_adjust(func_ex=func_ex, grid_pts=pts, all_boot=boots, p0=cmodel_bfps, data=fs, nested_indices=nested_ind, multinom=True)
+```
+
+### 1D Models
+Repeated SFS generation step for 1D SFS.
+```python
+# dadi demography model fitting
+# step: site frequency spectrum construction and bootstrapping
+# relies on code from dadi manual examples: https://dadi.readthedocs.io/en/latest/examples/fs_from_data/fs_from_data/
+
+# Pickle is used to save variables as files for future use
+import pickle
+# MatPlotLib is a libary dadi uses for plotting frequency spectrum
+import matplotlib.pyplot as plt
+import dadi
+
+# Parse the VCF file to generate a data dictionary
+datafile = "/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/all_fil_biallelic.vcf"
+dd = dadi.Misc.make_data_dict_vcf(datafile, "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/demography/stairway_plot/esfs_poplist.txt")
+
+## GLOBULUS
+# names for output files
+wdir = "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/demography/dadi/1D/glob"
+name_stem_g = "globMR_ns32"
+
+# Extract 1D spectrum for MR E. globulus from that dictionary, with 
+# E. globulus projected down to 32 of 40.
+# haplotype counts at which the number of segregating sites was maximized
+pop_id_g = ["glob_MR"]
+ns_g = [32]
+fs_g = dadi.Spectrum.from_data_dict(dd, pop_id_g, ns_g, polarized = False) # folded
+
+# Mask central cells
+fs_g.mask[16] = True
+fs_g.mask[15] = True
+
+# Saved data dictionary to disk
+pick = open("{WDIR}/data/data_dicts/{NAME}.bpkl".format(WDIR = wdir, NAME = name_stem_g), "wb")
+pickle.dump(dd, pick, 2)
+# Saved extracted spectrum
+fs_g.to_file("{WDIR}/data/fs/{NAME}.fs".format(WDIR = wdir, NAME = name_stem_g))
+
+# Generate 100 bootstrap datasets, by dividing the genome into 500kb chunks and
+# resampling from those chunks.
+Nboot, chunk_size = 100, 5e5
+chunks = dadi.Misc.fragment_data_dict(dd, chunk_size)
+boots = dadi.Misc.bootstraps_from_dd_chunks(chunks, Nboot, pop_id_g, ns_g, polarized = False)
+# Saved bootstraps
+for i in range(len(boots)):
+    boots[i].to_file("{WDIR}/data/fs/bootstraps/{NAME}.boot_{NUM}.fs".format(WDIR = wdir, NAME = name_stem_g, NUM = str(i)))
+
+# Plotted site frequency spectrum
+fig = plt.figure(1)
+fig.clear()
+dadi.Plotting.plot_1d_fs(fs_g)
+fig.savefig("{WDIR}/data/fs/{NAME}.png".format(WDIR = wdir, NAME = name_stem_g))
+plt.close(fig)
+
+## CORDATA
+wdir = "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/demography/dadi/1D/cord"
+name_stem_c = "cordMR_ns16"
+
+# Extract 1D spectrum for MR E. cordata from that dictionary, with 
+# E. globulus projected down to 16 of 20.
+# haplotype counts at which the number of segregating sites was maximized
+pop_id_c = ["cord_MR"]
+ns_c = [16]
+fs_c = dadi.Spectrum.from_data_dict(dd, pop_id_c, ns_c, polarized = False) # folded
+
+# Mask central cells
+fs_c.mask[8] = True
+fs_c.mask[7] = True
+
+# Saved data dictionary to disk
+pick = open("{WDIR}/data/data_dicts/{NAME}.bpkl".format(WDIR = wdir, NAME = name_stem_c), "wb")
+pickle.dump(dd, pick, 2)
+# Saved extracted spectrum
+fs_c.to_file("{WDIR}/data/fs/{NAME}.fs".format(WDIR = wdir, NAME = name_stem_c))
+
+# Generate 100 bootstrap datasets, by dividing the genome into 500kb chunks and
+# resampling from those chunks.
+Nboot, chunk_size = 100, 5e5
+chunks = dadi.Misc.fragment_data_dict(dd, chunk_size)
+boots = dadi.Misc.bootstraps_from_dd_chunks(chunks, Nboot, pop_id_c, ns_c, polarized = False)
+# Saved bootstraps
+for i in range(len(boots)):
+    boots[i].to_file("{WDIR}/data/fs/bootstraps/{NAME}.boot_{NUM}.fs".format(WDIR = wdir, NAME = name_stem_c, NUM = str(i)))
+
+# Plotted site frequency spectrum
+fig = plt.figure(2)
+fig.clear()
+dadi.Plotting.plot_1d_fs(fs_c)
+fig.savefig("{WDIR}/data/fs/{NAME}.png".format(WDIR = wdir, NAME = name_stem_c))
+plt.close(fig)
 ```
