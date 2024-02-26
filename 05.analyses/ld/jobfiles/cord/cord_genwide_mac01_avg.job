@@ -19,5 +19,5 @@ declare -a NAMELIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10
 
 for NAME in "${NAMELIST[@]}"
 do
-    python "$SCRIPT_DIR"/average_r2.py "$TAB_DIR"/cord_"$NAME"_ld.txt.gz cord_"$NAME"_ld_avg.csv
+    python "$SCRIPT_DIR"/average_r2.py -i "$TAB_DIR"/cord_"$NAME"_ld.txt.gz -o cord_"$NAME"_ld_avg.csv
 done

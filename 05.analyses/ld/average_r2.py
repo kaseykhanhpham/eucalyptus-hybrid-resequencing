@@ -5,18 +5,24 @@ from statistics import mean
 import sys
 import pandas as pd
 import gzip
+import argparse
 
-infile_name = sys.argv[1]
-outfile_name = sys.argv[2]
+# parse user-passed arguments
+parser = argparse.ArgumentParser()
 
-infile_name_stripped = infile_name.split("/")[(len(infile_name.split("/")) - 1)]
-outfile_name_stripped = outfile_name.split("/")[(len(outfile_name.split("/")) - 1)]
+parser.add_argument("-i", "--infile", help = "LD calculation file from emeraLD", type = str)
+parser.add_argument("-o", "--outfile", help = "Name of output average table", type = str)
+
+args = parser.parse_args()
+
+infile_name_stripped = args.infile.split("/")[(len(args.infile.split("/")) - 1)]
+outfile_name_stripped = args.outfile.split("/")[(len(args.outfile.split("/")) - 1)]
 
 # initialize storage dictionary
 all_r2_dict = {}
 
 # open input file
-infile = gzip.open(infile_name, "rb")
+infile = gzip.open(args.infile, "rb")
 # read header
 infile.readline()
 
