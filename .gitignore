@@ -21,6 +21,8 @@ the_shadow_realm
 *dxy*.tab
 *deta*.tab
 *pi*.tab
+*.sites.pi
+*.Tajima.D
 *scan_stats.tab
 *.pptx
 .Rdata
@@ -42,3 +44,6 @@ status_update_2023-06-16.pdf
 all_ahmm_in.tab
 Eglob_X46_liftoff_20230731.gff3_polished
 glob_mr.recode.geno.txt
+all_dxy.txt
+all_fst.txt
+all_pi.txt
