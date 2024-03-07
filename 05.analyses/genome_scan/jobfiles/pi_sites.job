@@ -1,0 +1,21 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=pisites
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=2gb
+#SBATCH --time=1-00:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=pi_sites_%j.out
+#SBATCH --error=pi_sites_%j.err
+
+module load vcftools/0.1.16
+
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/vcftools"
+
+vcftools --gzvcf "$VCF_DIR"/all_fil.vcf.gz --keep Ecordata.txt --site-pi --out cord
+vcftools --gzvcf "$VCF_DIR"/all_fil.vcf.gz --keep Eglobulus_ref.txt --site-pi --out globref
+vcftools --gzvcf "$VCF_DIR"/all_fil.vcf.gz --keep ref_samples.txt --site-pi --out refs
