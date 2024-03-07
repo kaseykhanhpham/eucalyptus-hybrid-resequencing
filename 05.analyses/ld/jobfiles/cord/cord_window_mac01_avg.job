@@ -1,29 +1,29 @@
 #!/bin/bash
 #SBATCH --account=soltis
 #SBATCH --qos=soltis-b
-#SBATCH --job-name=glob_window_avgrs
+#SBATCH --job-name=cord_window_avgrs
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=kasey.pham@ufl.edu
 #SBATCH --mem=500mb
 #SBATCH --time=1-00:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --nodes=1
-#SBATCH --output=glob_windows_avg_rsq_%j.out
-#SBATCH --error=glob_windows_avg_rsq_%j.err
+#SBATCH --output=cord_windows_avg_rsq_%j.out
+#SBATCH --error=cord_windows_avg_rsq_%j.err
 
 module purge
 module load python/3.8
 SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
-WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/avg_r2"
-BASE_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/emerald"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/cord/avg_r2"
+BASE_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/cord/emerald"
 
 declare -a NAMELIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11)
 
 for NAME in "${NAMELIST[@]}"
 do
-    cd "$BASE_DIR"/"$NAME"/mac01
+    cd "$BASE_DIR"/"$NAME"
     ls *.txt.gz | while read FILE
     do
-        python "$SCRIPT_DIR"/average_r2.py -i "$BASE_DIR"/"$NAME"/mac01/"$FILE" -o "$WDIR"/"$NAME"/mac01/"$FILE"_avg.csv
+        python "$SCRIPT_DIR"/average_r2.py -i "$BASE_DIR"/"$NAME"/"$FILE" -o "$WDIR"/"$NAME"/"$FILE"_avg.csv
     done
 done

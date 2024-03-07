@@ -1,5 +1,5 @@
 # R script to fit decay curve to SNP correlation values, to derive linkage disequilibrium from emeraLD output
-# Usage: Rscript fit_rsq_curve.r [rsq_table] [output_name] [min_comps] [r2_cutoff] [graph_bool]
+# Usage: Rscript fit_rsq_curve.r -f [lit of rsq_tables] -o [output_name] -m [min_comps] -r [r2_cutoff] -g [graph_bool]
 #        rsq_table: average r2 value per distance between variants from emeraLD with the columns dist,r2
 #        output_name: name of output table to print
 #        min_comps: minimum number of comparisons made in a window to include it in output
@@ -10,11 +10,16 @@
 # Uses LD decay model from Hill and Weiss 1988
 
 # Import libraries, get arguments
-file_list_name <- commandArgs(trailingOnly = TRUE)[1]
-out_name <- commandArgs(trailingOnly = TRUE)[2]
-min_comps <- as.numeric(commandArgs(trailingOnly = TRUE)[3])
-r2_cutoff <- as.numeric(commandArgs(trailingOnly = TRUE)[4])
-graph_bool <- as.logical(commandArgs(trailingOnly = TRUE)[5])
+library(argparser)
+parser <- arg_parser("A script to fit an LD decay curve to average LD per bp distance table")
+
+parser <- add_argument(parser, "-f", help = "file with list of average r2 tables to fit", default = "ld_files.txt", type = "character")
+parser <- add_argument(parser, "-o", help = "output table of bp distance at curve r2 = cutoff", default = "curvefit.txt", type = "character")
+parser <- add_argument(parser, "-m", help = "minimum number of comparisons to consider an input file", default = 40, type = "numeric")
+parser <- add_argument(parser, "-r", help = "r2 value considered maximum for linkage disequilibrium", default = 0.2, type = "numeric")
+parser <- add_argument(parser, "-g", help = "boolean for if a graph should be generated for each file", default = TRUE, type = "logical")
+
+args_list <- parse_args(parser, argv = commandArgs(trailingOnly = TRUE))
 
 # Define model
 exp_rsquare <- function(l, C) (((10+C*l)/((2+C*l)*(11+C*l)))*(1+(((3+C*l)*(12+12*C*l+(C*l)^2))/(30*(2+C*l)*(11+C*l)))))
@@ -35,7 +40,7 @@ fit_curve <- function(curve_fun, in_data){
 }
 
 # Import r-square tables
-tab_list <- read.table(file_list_name, header = FALSE)$V1
+tab_list <- read.table(args_list[["f"]], header = FALSE)$V1
 # Initialize output table
 out_tab <- data.frame(file_name = character(), ld = numeric(), C = numeric())
 
@@ -46,7 +51,7 @@ for(filename in tab_list){
     rsq_tab <- read.csv(filename, header = TRUE)
     rsq_tab <- rsq_tab[which(rsq_tab$r2 != -1),]
     # Check that it has enough observations to estimate LD
-    if(nrow(rsq_tab) < min_comps){
+    if(nrow(rsq_tab) < args_list[["m"]]){
         write(paste(filename, "did not have enough observations", "\n"), stdout())
         next
     }
@@ -63,14 +68,14 @@ for(filename in tab_list){
     est_C <- rsq_model$m$getPars()["estC"]
     pred_dists <- list(dist = seq(from = 1, to = max(rsq_tab$dist), by = 0.5))
     pred_curve <- predict(rsq_model, pred_dists)
-    above_cutoff <- pred_dists[["dist"]][max(which(pred_curve > r2_cutoff))] # returns a bp
-    below_cutoff <- pred_dists[["dist"]][min(which(pred_curve < r2_cutoff))] # returns a bp
+    above_cutoff <- pred_dists[["dist"]][max(which(pred_curve > args_list[["r"]]))] # returns a bp
+    below_cutoff <- pred_dists[["dist"]][min(which(pred_curve < args_list[["r"]]))] # returns a bp
     cutoff_ld <- round(mean(c(above_cutoff, below_cutoff)))
     # store estimated C and LD at r2 cutoff
     out_tab <- rbind(out_tab, list(file_name = stripped_filename, ld = cutoff_ld, C = est_C))
     
     # Only plot if switch is turned on
-    if(graph_bool){
+    if(args_list[["g"]]){
         # Plot model against actual data points
         png(paste(stripped_filename, "_curve.png", sep = ""))
         plot(rsq_tab$dist, rsq_tab$r2, main = paste(stripped_filename, "LD"), xlab = "distance (bp)", ylab = "r2")
@@ -83,5 +88,5 @@ for(filename in tab_list){
     }
 
     # Export output table
-    write.table(out_tab, out_name, quote = FALSE, sep = "\t", row.names = FALSE, col.names = TRUE)
+    write.table(out_tab, args_list[["o"]], quote = FALSE, sep = "\t", row.names = FALSE, col.names = TRUE)
 }

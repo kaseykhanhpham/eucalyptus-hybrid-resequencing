@@ -16,4 +16,4 @@ module load R/4.2
 SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
 TAB_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/avg_r2/genome_wide"
 
-Rscript "$SCRIPT_DIR"/fit_rsq_curve.r chr_r2_tab_list.txt genwide_ld_mac01.txt 100 0.2 TRUE
+Rscript "$SCRIPT_DIR"/fit_rsq_curve.r -f chr_r2_tab_list.txt -o genwide_ld_mac01.txt -m 100 -r 0.2 -g TRUE
