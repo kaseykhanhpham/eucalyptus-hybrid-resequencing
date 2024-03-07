@@ -130,6 +130,17 @@ write.table(out_tab, "recomb_avgs_glob.tab", sep = "\t", col.names = TRUE, row.n
 | Chr11       | 288000      | 645.63    | 2.014e-08               |
 | genome-wide | 286146.86   | 637.62    | 1.860e-08               |
 
+Consolidated window files into one.
+```bash
+declare -a CHRLIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
+head -n 1 Chr01/all_fil_biallelic_globMR_Chr01.PREDICT.BSCORRECTED.txt > all_fil_biallelic_globMR_all.PREDICT.BSCORRECTED.txt
+
+for NAME in "${CHRLIST[@]}"
+do
+    tail -n +2 "$NAME"/all_fil_biallelic_globMR_"$NAME".PREDICT.BSCORRECTED.txt >> all_fil_biallelic_globMR_all.PREDICT.BSCORRECTED.txt
+done
+```
+
 
 ## Estimate _E. cordata_ recombination
 Repeated the above steps for _E. cordata_-only VCF file. Then renamed and re-organized output tabs for processing.
@@ -186,3 +197,15 @@ write.table(out_tab, "recomb_avgs_cord.tab", sep = "\t", col.names = TRUE, row.n
 | Chr10       | 304000      | 762.04    | 2.380e-08               |
 | Chr11       | 288000      | 645.63    | 1.967e-08               |
 | genome-wide | 286146.86   | 637.62    | 2.307e-08               |
+
+Consolidated window files into one.
+```bash
+declare -a CHRLIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
+head -n 1 Chr01/all_fil_biallelic_cord_Chr01.PREDICT.BSCORRECTED.txt > all_fil_biallelic_cord_all.PREDICT.BSCORRECTED.txt
+
+for NAME in "${CHRLIST[@]}"
+do
+    tail -n +2 "$NAME"/all_fil_biallelic_cord_"$NAME".PREDICT.BSCORRECTED.txt >> all_fil_biallelic_cord_all.PREDICT.BSCORRECTED.txt
+done
+```
+
