@@ -1,8 +1,7 @@
 '''
-Usage: python dadi_sec_contact_bottle_schange_thr_epoch.py
-For running param optimization for demographic model of divergence in isolation,
-followed by instantaneous size change and then a period of asymmetric migration 
-and gradual exponential size change.
+Usage: python dadi_growth.py
+For running param optimization for demographic model for bottleneck and neutral evol,
+followed by exponential size change (population recovery)
 
 This is a modified version of the 'dadi_Run_Optimizations.py' script in which
 we run optimizations for 2D comparisons for a large set of models that have been
@@ -87,20 +86,13 @@ import numpy
 import dadi
 import pylab
 from datetime import datetime
-
-run_num = sys.argv[1]
-
 # add locations of dadi_pipeline functions
 sys.path.append("/blue/soltis/kasey.pham/bin/dadi_pipeline")
 sys.path.append("/blue/soltis/kasey.pham/bin/dadi_pipeline/Two_Population_Pipeline")
-# location of model functions
-sys.path.append("/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/demography/dadi/2D")
 import Optimize_Functions
-import all_snps_models
 
-
-wdir = "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/demography/dadi/2D"
-name_stem = "globMR_cordMR_ns32-16"
+wdir = "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/demography/dadi/1D/cord"
+name_stem = "cordMR_ns16"
 
 #===========================================================================
 # Import data to create joint-site frequency spectrum
@@ -114,11 +106,11 @@ snps = "/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/all_fil_b
 
 #**************
 #pop_ids is a list which should match the populations headers of your SNPs file columns
-pop_ids=["glob_MR", "cord_MR"]
+pop_ids=["cord_MR"]
 
 #**************
 #projection sizes, in ALLELES not individuals
-proj = [32, 16]
+proj = [16]
 
 #Convert this dictionary into folded AFS object
 #[polarized = False] creates folded spectrum object
@@ -173,7 +165,7 @@ print("\n=======================================================================
 #create a prefix based on the population names to label the output files
 #ex. Pop1_Pop2
 #prefix = "_".join(pop_ids)
-prefix = "globMR_cordMR"
+prefix = "cordMR"
 
 #**************
 # Define the grid points based on the sample size.
@@ -194,20 +186,7 @@ folds = [3,2,2,1]
 #Indicate whether your frequency spectrum object is folded (True) or unfolded (False)
 fs_folded = True
 
-
-'''
-Diversification Model Set
-
-This first set of models come from the following publication:
-
-    Portik, D.M., Leache, A.D., Rivera, D., Blackburn, D.C., Rodel, M.-O.,
-    Barej, M.F., Hirschfeld, M., Burger, M., and M.K.Fujita. 2017.
-    Evaluating mechanisms of diversification in a Guineo-Congolian forest
-    frog using demographic model selection. Molecular Ecology 26: 5245-5263.
-    doi: 10.1111/mec.14266
-
-'''
-
 # Run optimization for model
-# 06. Divergence in isolation, instantaneous size change with asymmetric secondary contact, exponential size change
-Optimize_Functions.Optimize_Routine(fs, pts, "{PREFIX}_run{NUM}".format(PREFIX = prefix, NUM = run_num), "sec_contact_bottle_schange_thr_epoch", all_snps_models.sec_contact_bottle_schange_thr_epoch, rounds, 11, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nu1i, nu2i, nu1m, nu2m, nu1f, nu2f, m12, m21, T1, T2, T3")
+# 05. Three epoch
+for i in range(1,6):
+   Optimize_Functions.Optimize_Routine(fs, pts, "{PREFIX}_run{NUM}".format(PREFIX = prefix, NUM = i), "three_epoch", dadi.Demographics1D.three_epoch, rounds, 4, fs_folded=fs_folded, reps=reps, maxiters=maxiters, folds=folds, param_labels = "nuB, nuF, TB, TF")

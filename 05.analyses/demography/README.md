@@ -114,14 +114,25 @@ Run scheme:
 See python dadi python files under each model directory for more detail.
 
 Models run:
-| Model                                  | parameters                | python file           |
-| -------------------------------------- | ------------------------- | --------------------- |
-| Divergence, gradual size change        | nu1i, nu2i, nu1f, nu2f, T | dadi_schange.py       |
-| Divergence, instant size change and gradual size change | nu1i, nu2i, nu1m, nu2m, nu1f, nu2f, T1, T2 | dadi_bottle_schange.py |
-| Divergence, instant size change, gradual size change | nu1i, nu2i, nu1m, nu2m, nu1f, nu2f, T1, T2, T3 | dadi_bottle_schange_thr_epoch.py |
-| Divergence, asymmetric secondary contact and gradual size change | nu1i, nu2i, nu1f, nu2f, m12, m21, T1, T2 | dadi_sec_contact_schange.py |
-| Divergence, instant size change and asymmetric secondary contact and gradual size change | nu1i, nu2i, nu1m, nu2m, nu1f, nu2f, m12, m21, T1, T2 | dadi_sec_contact_bottle_schange.py |
-| Divergence, instant size change and asymmetric secondary contact, gradual size change | nu1i, nu2i, nu1m, nu2m, nu1f, nu2f, m12, m21, T1, T2 | dadi_sec_contact_bottle_schange_thr_epoch.py |
+|Index | Model                                  | parameters                | python file           |
+| ---- | -------------------------------------- | ------------------------- | --------------------- |
+| 1    | Divergence, gradual size change        | nu1i, nu2i, nu1f, nu2f, T | dadi_schange.py       |
+| 2    | Divergence, instant size change and gradual size change | nu1i, nu2i, nu1m, nu2m, nu1f, nu2f, T1, T2 | dadi_bottle_schange.py |
+| 3    | Divergence, instant size change, gradual size change | nu1i, nu2i, nu1m, nu2m, nu1f, nu2f, T1, T2, T3 | dadi_bottle_schange_thr_epoch.py |
+| 4    | Divergence, asymmetric secondary contact and gradual size change | nu1i, nu2i, nu1f, nu2f, m12, m21, T1, T2 | dadi_sec_contact_schange.py |
+| 5    | Divergence, instant size change and asymmetric secondary contact and gradual size change | nu1i, nu2i, nu1m, nu2m, nu1f, nu2f, m12, m21, T1, T2 | dadi_sec_contact_bottle_schange.py |
+| 6    | Divergence, instant size change and asymmetric secondary contact, gradual size change | nu1i, nu2i, nu1m, nu2m, nu1f, nu2f, m12, m21, T1, T2 | dadi_sec_contact_bottle_schange_thr_epoch.py |
+
+Summary of results of best run for each model: 
+| Index | ID                                   | Log Likelihood | AIC      |
+| ----- | ------------------------------------ | -------------- | -------- |
+| 1     | schange                              | -100346.10     | 200702.2 |
+| 2     | bottle_schange                       | -118835.80     | 237687.7 |
+| 3     | bottle_schange_thr_epoch             | -228936.90     | 457891.8 |
+| 4     | sec_contact_schange                  |  -81001.60     | 162019.2 |
+| 5     | sec_contact_bottle_schange           |  -86270.55     | 172561.1 |
+| 6     | sec_contact_bottle_schange_thr_epoch |  -91732.12     | 183486.2 |
+More details and parameter values of each best run can be found in `dadi_2D_results_summary.xlxs`.
 
 Plot SFS fit and likelihood ratio test for selecting the best model:
 ```python
@@ -132,13 +143,11 @@ import matplotlib.pyplot as plt
 import pylab
 import sys
 
-sys.path.append("/blue/soltis/kasey.pham/bin/dadi_pipeline")
-sys.path.append("/blue/soltis/kasey.pham/bin/dadi_pipeline/Two_Population_Pipeline")
 # location of model functions
-sys.path.append("/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/demography/dadi/all_snps")
+sys.path.append("/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/demography/dadi/2D")
 import all_snps_models
 
-wdir = "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/demography/dadi/all_snps"
+wdir = "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/demography/dadi/2D"
 name_stem = "globMR_cordMR_ns32-16"
 
 # import SFS
@@ -153,10 +162,13 @@ boots = []
 for i in range(100):
     boots.append(dadi.Spectrum.from_file("{WDIR}/data/fs/{NAME}.fs".format(WDIR = wdir, NAME = name_stem)))
 
-# record results from sec_contact_schange parameterization
-smodel_bfps = [10.8079, 0.2501, 0.01, 0.0164, 0.0185]
-cmodel_bfps = [0.4248, 17.0388, 0.0844, 0.0352, 8.1421, 1.9196, 4.9025, 0.1318]
-nested_ind = [4,5,6]
+# record results from each model's parameterization
+# schange
+smodel_bfps = [0.1497, 3.7087, 0.0498, 0.0101, 0.0232]
+# sec_contact_bottle_schange
+cmodel_bfps = [3.1768, 9.5621, 0.1053, 0.0396, 3.0836, 5.4648, 5.3706, 0.1428]
+
+nested_ind = [4,5,7]
 
 # extrapolate function and make best fit model
 smodel_func_ex = dadi.Numerics.make_extrap_log_func(all_snps_models.schange)
@@ -170,16 +182,19 @@ cmodel = cmodel_func_ex(cmodel_bfps, ns, pts)
 fig = plt.figure(1, figsize=(10,6))
 fig.clear()
 dadi.Plotting.plot_2d_comp_multinom(smodel, fs, vmin=1, resid_range=3, pop_ids =('glob_MR','cord'), show=False)
-pylab.savefig('schange_fit.png', dpi=250)
+pylab.savefig('./01.schange/schange_fit.png', dpi=250)
 
 # complex model
-fig = plt.figure(1, figsize=(10,6))
+fig = plt.figure(2, figsize=(10,6))
 fig.clear()
 dadi.Plotting.plot_2d_comp_multinom(cmodel, fs, vmin=1, resid_range=3, pop_ids =('glob_MR','cord'), show=False)
-pylab.savefig('sec_contact_schange_fit.png', dpi=250)
+pylab.savefig('./04.sec_contact_schange/sec_contact_schange_fit.png', dpi=250)
 
 ## LIKELIHOOD RATIO TEST
-# adj = dadi.Godambe.LRT_adjust(func_ex=func_ex, grid_pts=pts, all_boot=boots, p0=cmodel_bfps, data=fs, nested_indices=nested_ind, multinom=True)
+adj = dadi.Godambe.LRT_adjust(func_ex=cmodel_func_ex, grid_pts=pts, all_boot=boots, p0=cmodel_bfps, data=fs, nested_indices=nested_ind, multinom=True)
+# 0.002596710378730069
+D = adj*2*(-81001.6 - (-100346.1))
+p_val = sum_chi2_ppf(D, weights)
 ```
 
 ### 1D Models
@@ -273,4 +288,194 @@ fig.clear()
 dadi.Plotting.plot_1d_fs(fs_c)
 fig.savefig("{WDIR}/data/fs/{NAME}.png".format(WDIR = wdir, NAME = name_stem_c))
 plt.close(fig)
+```
+
+Tested the same models for _E. globulus_ and _E. cordata_ from `dadi` 1D model set using Daniel Portik's `dadi_pipeline` scripts for multi-round parameter optimization.
+
+Run scheme:
+1. 15 replicates, 3 max iterations, 3-fold perturbation
+2. 30 replicates, 5 max iterations, 2-fold perturbation
+3. 50 replicates, 10 max iterations, 2-fold perturbation
+4. 100 replicates, 20 max iterations, 1-fold perturbation
+
+Models tested:
+| Index | Description                                | Parameters         | python file                  |
+| ----- | ------------------------------------------ | ------------------ | ---------------------------- |
+| 2     | Exponential size change                    | nu, T              | dadi_growth.job              |
+| 3     | Neutral evolution, then instantaneous size change | nu, T       | dadi_two_epoch.job           |
+| 4     | Instantaneous size change, then exponential size change | nuB, nuF, T | dadi_bottlegrowth.job  |
+| 5     | Exponential size change, neutral evolution, exponential size change | nuB, nuF, TB, TF | dadi_three_epoch.job |
+
+The optimal model for both _E. globulus_ and _E. cordata_ was the three epoch model.
+
+| Parameter | _E. globulus_ | _E. cordata_ |
+| --------- | ------------- | ------------ |
+| theta     | 58556.6       | 63254.2      |
+| nuB       | 23.747        | 27.6535      |
+| nuF       | 0.0659        | 0.014        |
+| TB        | 5.2131        | 24.8504      |
+| TF        | 0.0201        | 0.0213       |
+
+Calculated real-life parameters for optimal models, using L = 7626818.25 bp, generation time = 10 years, and mutation rate = 4.93e-09.
+
+| Parameter | _E. globulus_ | _E. cordata_  |
+| --------- | ------------- | ------------- |
+| Nref      | 38,933.69     | 42,057.07     |
+| nuB       | 924,558.29    | 1,163,025.31  |
+| nuF       | 2,565.73      | 588.80        |
+| TB        | 4,059,304.18  | 20,902,702.48 |
+| TF        | 15,651.34     | 17,916.31     |
+
+More details on calculations and values from other models can be found in the files `dadi_glob1D_results_summary.xlxs` and `dadi_cord1D_results_summary.xlsx`.
+
+Plotted best fit model to evaluate fit to actual dataset and performed Godambe likelihood ratio testing on more complicated versus more simple models in both taxa.
+
+For _E. globulus_:
+```python
+## ----------- ##
+## E. GLOBULUS ##
+## ----------- ##
+
+import dadi
+import numpy as np
+import nlopt
+import matplotlib.pyplot as plt
+import pylab
+import sys
+
+sys.path.append("/blue/soltis/kasey.pham/bin/dadi_pipeline")
+sys.path.append("/blue/soltis/kasey.pham/bin/dadi_pipeline/Two_Population_Pipeline")
+import Optimize_Functions
+
+wdir = "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/demography/dadi/1D/glob"
+name_stem = "globMR_ns32"
+
+# import SFS
+fs = dadi.Spectrum.from_file("{WDIR}/data/fs/{NAME}.fs".format(WDIR = wdir, NAME = name_stem))
+ns = fs.sample_sizes
+
+# establish grid size
+pts = [max(ns)+20, max(ns)+30, max(ns)+40]
+
+# import bootstraps
+boots = []
+for i in range(100):
+    boots.append(dadi.Spectrum.from_file("{WDIR}/data/fs/{NAME}.fs".format(WDIR = wdir, NAME = name_stem)))
+
+# record results from each model's parameterization
+# growth (AIC = 8467.06)
+g_bfps = [0.0224, 0.01]
+# bottlegrowth (AIC = 8440.84)
+bg_bfps = [0.8337, 0.023, 0.01]
+# three epoch (AIC = 2052.18)
+te_bfps = [23.747, 0.0659, 5.2131, 0.0201]
+
+g_bg_nested = [1] # nuF = nuB, interior
+bg_te_nested = [3] # TF = 0, boundary
+
+# extrapolate function and make best fit model
+g_func_ex = dadi.Numerics.make_extrap_log_func(dadi.Demographics1D.growth)
+bg_func_ex = dadi.Numerics.make_extrap_log_func(dadi.Demographics1D.bottlegrowth)
+te_func_ex = dadi.Numerics.make_extrap_log_func(dadi.Demographics1D.three_epoch)
+
+g_model = g_func_ex(g_bfps, ns, pts)
+bg_model = bg_func_ex(bg_bfps, ns, pts)
+te_model = te_func_ex(te_bfps, ns, pts)
+
+## PLOT FIT
+# growth
+fig = plt.figure(1, figsize=(10,6))
+fig.clear()
+dadi.Plotting.plot_1d_comp_multinom(g_model, fs)
+pylab.savefig('./02.growth/glob_growth_fit.png', dpi=250)
+
+# bottlegrowth
+fig = plt.figure(2, figsize=(10,6))
+fig.clear()
+dadi.Plotting.plot_1d_comp_multinom(bg_model, fs,)
+pylab.savefig('./04.bottlegrowth/glob_bottlegrowth_fit.png', dpi=250)
+
+# three epoch
+fig = plt.figure(3, figsize=(10,6))
+fig.clear()
+dadi.Plotting.plot_1d_comp_multinom(te_model, fs)
+pylab.savefig('./05.three_epoch/glob_three_epoch_fit.png', dpi=250)
+
+## LIKELIHOOD RATIO TEST
+# growth vs. bottlegrowth
+adj = dadi.Godambe.LRT_adjust(func_ex=bg_func_ex, grid_pts=pts, all_boot=boots, p0=bg_bfps, data=fs, nested_indices=g_bg_nested, multinom=True)
+D = adj*2*(4231.53 - 4217.42)
+p_val = dadi.Godambe.sum_chi2_ppf(D, weights=(0,1)) # Pval = 0.0; significantly different
+
+# bottlegrowth vs. three epoch
+adj = dadi.Godambe.LRT_adjust(func_ex=te_func_ex, grid_pts=pts, all_boot=boots, p0=te_bfps, data=fs, nested_indices=bg_te_nested, multinom=True)
+D = adj*2*(4231.53 - 1022.09)
+p_val = dadi.Godambe.sum_chi2_ppf(D, weights=(0.5,0.5)) # Pval = 0.0; significantly different
+```
+Conclusion: the three_epoch model is the best for _E. globulus_
+
+Did the same for _E. cordata_:
+```python
+## ----------- ##
+## E. CORDATA  ##
+## ----------- ##
+
+import dadi
+import numpy as np
+import nlopt
+import matplotlib.pyplot as plt
+import pylab
+import sys
+
+sys.path.append("/blue/soltis/kasey.pham/bin/dadi_pipeline")
+sys.path.append("/blue/soltis/kasey.pham/bin/dadi_pipeline/Two_Population_Pipeline")
+
+wdir = "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/demography/dadi/1D/cord"
+name_stem = "cordMR_ns16"
+
+# import SFS
+fs = dadi.Spectrum.from_file("{WDIR}/data/fs/{NAME}.fs".format(WDIR = wdir, NAME = name_stem))
+ns = fs.sample_sizes
+
+# establish grid size
+pts = [max(ns)+20, max(ns)+30, max(ns)+40]
+
+# import bootstraps
+boots = []
+for i in range(100):
+    boots.append(dadi.Spectrum.from_file("{WDIR}/data/fs/{NAME}.fs".format(WDIR = wdir, NAME = name_stem)))
+
+# record results from each model's parameterization
+# two epoch (AIC = 8343.58)
+twe_bfps = [0.01, 0.01]
+# three epoch (AIC = 6177.92)
+the_bfps = [27.6535, 0.014, 24.8504, 0.0213]
+
+twe_the_nested = [1,3] #nuF = nuB, TF = 0, 1 interior and 1 boundary 
+
+# extrapolate function and make best fit model
+twe_func_ex = dadi.Numerics.make_extrap_log_func(dadi.Demographics1D.two_epoch)
+the_func_ex = dadi.Numerics.make_extrap_log_func(dadi.Demographics1D.three_epoch)
+
+twe_model = twe_func_ex(twe_bfps, ns, pts)
+the_model = the_func_ex(the_bfps, ns, pts)
+
+## PLOT FIT
+# growth
+fig = plt.figure(1, figsize=(10,6))
+fig.clear()
+dadi.Plotting.plot_1d_comp_multinom(twe_model, fs)
+pylab.savefig('./03.two_epoch/cord_two_epoch_fit.png', dpi=250)
+
+# three epoch
+fig = plt.figure(2, figsize=(10,6))
+fig.clear()
+dadi.Plotting.plot_1d_comp_multinom(the_model, fs)
+pylab.savefig('./05.three_epoch/cord_three_epoch_fit.png', dpi=250)
+
+## LIKELIHOOD RATIO TEST
+# two epoch vs. three epoch
+adj = dadi.Godambe.LRT_adjust(func_ex=the_func_ex, grid_pts=pts, all_boot=boots, p0=the_bfps, data=fs, nested_indices=twe_the_nested, multinom=True) # why is this negative?? D can't be negative
+D = adj*2*(4169.79 - 3084.96)
+p_val = dadi.Godambe.sum_chi2_ppf(D, weights=(0, 0.5, 0.5)) # Pval = 1.0; not significantly different
 ```
