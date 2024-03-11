@@ -4,7 +4,7 @@ popid: glob_MR # id of the population (no white space)
 nseq: 40 # number of sequences
 L: 8651451 # total number of observed nucleic sites, including polymorphic and monomorphic
 whether_folded: true # whethr the SFS is folded (true or false)
-SFS: 98594.37961195961 97921.50636768408 90504.05773215053 79301.96093244592 69913.52278095922 61590.65948255232 54798.76242282223 48679.31081099142 43047.80102276652 39187.69243695011 36279.42685334988 34047.36525898243 32781.77769735361 33338.12338571141 36555.37434266807 19511.83718983706 0 0 0 0 # snp frequency spectrum: number of singleton, number of doubleton, etc. (separated by white space)
+SFS: 92561.45335770649 91909.42746993279 84987.2504982535 74276.58263620081 65373.85445545992 57580.20795794109 51198.5539268026 45495.05860438012 40231.59233138448 36637.58842640588 33956.10811245467 31860.07685388723 30707.37167475563 31301.02506590723 34347.51073462801 18295.83447183435 0 0 0 0 # snp frequency spectrum: number of singleton, number of doubleton, etc. (separated by white space)
 #smallest_size_of_SFS_bin_used_for_estimation: 1 # default is 1; to ignore singletons, uncomment this line and change this number to 2
 largest_size_of_SFS_bin_used_for_estimation: 16 # default is nseq/2 for folded SFS
 pct_training: 0.67 # percentage of sites for training
@@ -14,10 +14,10 @@ stairway_plot_dir: /blue/soltis/kasey.pham/bin/stairway_plot_v2.1.1/stairway_plo
 ninput: 200 # number of input files to be created for each estimation
 #random_seed: 6
 #output setting
-mu: 4.8e-7 # assumed mutation rate per site per generation from Silva-Junior and Grattapaglia 2015
+mu: 4.93e-8 # assumed mutation rate per site per generation from Silva-Junior and Grattapaglia 2015
 year_per_generation: 10 # assumed generation time (in years) from Silva-Junior and Grattapaglia 2015
 #plot setting
-plot_title: glob_fold # title of the plot
+plot_title: MR E. globulus # title of the plot
 xrange: 0,0 # Time (1k year) range; format: xmin,xmax; "0,0" for default
 yrange: 0,0 # Ne (1k individual) range; format: xmin,xmax; "0,0" for default
 xspacing: 3 # X axis spacing

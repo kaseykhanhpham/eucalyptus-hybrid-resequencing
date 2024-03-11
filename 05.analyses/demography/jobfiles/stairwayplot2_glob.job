@@ -13,5 +13,7 @@
 
 module purge
 module load java/1.8.0_31
+PROG_DIR="/blue/soltis/kasey.pham/bin/stairway_plot_v2.1.1"
 
-bash glob_fold.blueprint.sh 
+bash glob_fold.blueprint.sh
+bash glob_fold.blueprint.plot.sh

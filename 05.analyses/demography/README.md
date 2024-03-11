@@ -8,23 +8,31 @@ Generated Site Frequency Spectrum using [easySFS](https://github.com/isaacoverca
 module load python/3.8
 ESFS_DIR="/blue/soltis/kasey.pham/bin/easySFS"
 VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
-"$ESFS_DIR"/easySFS.py -i "$VCF_DIR"/all_fil.vcf.gz -a -p esfs_poplist.txt --preview
-# globulus segregating sites peaked (876054) at subsampling to 32 haplotypes
-# cordata segregating sites peaked (690386) at subsampling to 16 haplotypes
-"$ESFS_DIR"/easySFS.py -i "$VCF_DIR"/all_fil.vcf.gz -p esfs_poplist.txt -o esfs_outp -a -f --order glob_MR,cord_MR --proj 32,16 -v
+"$ESFS_DIR"/easySFS.py -i "$VCF_DIR"/all_fil_biallelic.vcf -a -p esfs_poplist.txt --preview
+# globulus segregating sites peaked (820719) at subsampling to 32 haplotypes
+# cordata segregating sites peaked (650658) at subsampling to 16 haplotypes
+"$ESFS_DIR"/easySFS.py -i "$VCF_DIR"/all_fil_biallelic.vcf -p esfs_poplist.txt -o esfs_outp -a -f --order glob_MR,cord_MR --proj 32,16 -v
 ```
 
-Created `Stairway Plot 2` input file and ran program.
+Created `Stairway Plot 2` run files.
 
 ```bash
-# Ran in UFRC queue system; see stairwayplot2_glob.job for more details.
-# Resources used:
-
 module load java/20
 PROG_DIR="/blue/soltis/kasey.pham/bin/stairway_plot_v2.1.1"
 
 java -cp "$PROG_DIR"/stairway_plot_es Stairbuilder glob_fold.blueprint
+java -cp "$PROG_DIR"/stairway_plot_es Stairbuilder cord_fold.blueprint
+```
+
+Ran `Stairway Plot 2` and graphed results.
+```bash
+# Ran in UFRC queue system; see stairwayplot2_glob.job for more details.
+# Resources used: 461 Mb, 50 min
+module load java/1.8.0_31
+PROG_DIR="/blue/soltis/kasey.pham/bin/stairway_plot_v2.1.1"
+
 bash glob_fold.blueprint.sh
+bash glob_fold.blueprint.plot.sh
 ```
 
 ### _E. cordata_
@@ -32,12 +40,12 @@ Used Site Frequency Spectrum generated during _E. globulus_ analysis to make blu
 
 ```bash
 # Ran in UFRC queue system; see stairwayplot2_cord.job for more details.
-# Resources used:
-module load java/20
+# Resources used: 320 Mb, 15 min
+module load java/1.8.0_31
 PROG_DIR="/blue/soltis/kasey.pham/bin/stairway_plot_v2.1.1"
 
-java -cp "$PROG_DIR"/stairway_plot_es Stairbuilder cord_fold.blueprint
 bash cord_fold.blueprint.sh
+bash cord_fold.blueprint.plot.sh
 ```
 
 ## Demography model fitting
@@ -195,7 +203,23 @@ adj = dadi.Godambe.LRT_adjust(func_ex=cmodel_func_ex, grid_pts=pts, all_boot=boo
 # 0.002596710378730069
 D = adj*2*(-81001.6 - (-100346.1))
 p_val = sum_chi2_ppf(D, weights)
+
+## PARAMETER UNCERTAINTY ESTIMATION
+uncert = dadi.Godambe.GIM_uncert(func_ex=cmodel_func_ex, grid_pts=pts, all_boot=boots, p0=cmodel_bfps, data=fs, log = True, multinom = True)
 ```
+
+Parameter uncertainty estimates for Model 4: Secondary Contact with gradual size change:
+| Parameter | Point Estimate | Uncertainty |
+| --------- | -------------- | ----------- |
+| nu1i      | 3.1768         | 0.0020299   |
+| nu2i      | 9.5621         | 0.00196699  |
+| nu1f      | 0.1053         | 0.00817611  |
+| nu2f      | 0.0396         | 0.01028575  |
+| m12       | 3.0836         | 0.00599889  |
+| m21       | 5.4648         | 0.01081344  |
+| T1        | 5.3706         | 0.00496855  |
+| T2        | 0.1428         | 0.00860765  |
+| theta     | 71968.69       | 0.00322536  |
 
 ### 1D Models
 Repeated SFS generation step for 1D SFS.
@@ -343,10 +367,6 @@ import matplotlib.pyplot as plt
 import pylab
 import sys
 
-sys.path.append("/blue/soltis/kasey.pham/bin/dadi_pipeline")
-sys.path.append("/blue/soltis/kasey.pham/bin/dadi_pipeline/Two_Population_Pipeline")
-import Optimize_Functions
-
 wdir = "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/demography/dadi/1D/glob"
 name_stem = "globMR_ns32"
 
@@ -411,8 +431,18 @@ p_val = dadi.Godambe.sum_chi2_ppf(D, weights=(0,1)) # Pval = 0.0; significantly 
 adj = dadi.Godambe.LRT_adjust(func_ex=te_func_ex, grid_pts=pts, all_boot=boots, p0=te_bfps, data=fs, nested_indices=bg_te_nested, multinom=True)
 D = adj*2*(4231.53 - 1022.09)
 p_val = dadi.Godambe.sum_chi2_ppf(D, weights=(0.5,0.5)) # Pval = 0.0; significantly different
+
+## PARAMETER UNCERTAINTY
+uncert = dadi.Godambe.GIM_uncert(func_ex=te_func_ex, grid_pts=pts, all_boot=boots, p0=te_bfps, data=fs, log = True, multinom = True)
 ```
-Conclusion: the three_epoch model is the best for _E. globulus_
+Conclusion: the three_epoch model is the best for _E. globulus_. Uncertainty estimates from Godambe Information Matrix:
+| Parameter | Point Estimate | Uncertainty |
+| --------- | -------------- | ----------- |
+| nuB       | 23.747         | 0.00385118  |
+| nuF       | 0.0659         | 0.00534308  |
+| TB        | 5.2131         | 0.00213894  |
+| TF        | 0.0201         | 0.00506429  |
+| theta     | 58556.6        | 0.00198105  |
 
 Did the same for _E. cordata_:
 ```python
@@ -426,9 +456,6 @@ import nlopt
 import matplotlib.pyplot as plt
 import pylab
 import sys
-
-sys.path.append("/blue/soltis/kasey.pham/bin/dadi_pipeline")
-sys.path.append("/blue/soltis/kasey.pham/bin/dadi_pipeline/Two_Population_Pipeline")
 
 wdir = "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/demography/dadi/1D/cord"
 name_stem = "cordMR_ns16"
@@ -478,4 +505,10 @@ pylab.savefig('./05.three_epoch/cord_three_epoch_fit.png', dpi=250)
 adj = dadi.Godambe.LRT_adjust(func_ex=the_func_ex, grid_pts=pts, all_boot=boots, p0=the_bfps, data=fs, nested_indices=twe_the_nested, multinom=True) # why is this negative?? D can't be negative
 D = adj*2*(4169.79 - 3084.96)
 p_val = dadi.Godambe.sum_chi2_ppf(D, weights=(0, 0.5, 0.5)) # Pval = 1.0; not significantly different
+
+# PARAMETER UNCERTAINTY
+uncert = dadi.Godambe.GIM_uncert(func_ex=twe_func_ex, grid_pts=pts, all_boot=boots, p0=twe_bfps, data=fs, log = True, multinom = True)
+# uncert was all NAs
 ```
+
+The Godambe adjustment factor was negative, which yields a not-possible D value. I think the fit is just very poor on all of these models and maybe there isn't enough information in the bootstraps as well.
