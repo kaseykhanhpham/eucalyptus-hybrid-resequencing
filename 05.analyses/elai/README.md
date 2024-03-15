@@ -65,21 +65,13 @@ done
 rm *.tmp
 ```
 
-<<<<<<< HEAD
 ## Run `ELAI`
-=======
-## Ran `ELAI`
->>>>>>> 4995d592cc72ddb1a98faa95c079d825149752c6
-
+### 100 generations since admixture
 For MAF = 0.00 and estimated generation time since admixture = 100 (based on discussion with Brad and Rene, re: 40k year chloroplast capture). Multiple runs performed and results averaged as per recommendations of the developer; example given below.
 
 ```bash
 # Run on UFRC queue system; see elai_maf00_g100_r1.job for more details.
-<<<<<<< HEAD
 # Resources used: 2 Gb, 6 hrs
-=======
-# Resources used:
->>>>>>> 4995d592cc72ddb1a98faa95c079d825149752c6
 
 module load gsl/2.6
 
@@ -97,11 +89,7 @@ For MAF = 0.05 and estimated generation time since admixture = 100. Multiple run
 
 ```bash
 # Run on UFRC queue system; see elai_maf05_g100_r1.job for more details.
-<<<<<<< HEAD
 # Resources used: 2 Gb, 6 hrs
-=======
-# Resources used:
->>>>>>> 4995d592cc72ddb1a98faa95c079d825149752c6
 
 module load gsl/2.6
 
@@ -115,11 +103,12 @@ do
 done
 ```
 
+### 800 generations since admixture
 For MAF = 0.00 and estimated generation time since admixture = 800 (based on initial estimate given by `AncestryHMM`). Multiple runs performed and results averaged as per recommendations of the developer; example given below.
 
 ```bash
 # Run on UFRC queue system; see elai_maf00_g800_r1.job for more details.
-# Resources used:
+# Resources used: 2 Gb, 6 hrs
 
 module load gsl/2.6
 
@@ -133,19 +122,11 @@ do
 done
 ```
 
-<<<<<<< HEAD
 For MAF = 0.05 and estimated generation time since admixture = 800.
 
 ```bash
 # Run on UFRC queue system; see elai_maf05_g800_r1.job for more details.
 # Resources used: 2 Gb, 6 hrs
-=======
-For MAF = 0.05 and estimated generation time since admixture = 800. Multiple runs performed and results averaged as per recommendations of the developer; example given below.
-
-```bash
-# Run on UFRC queue system; see elai_maf05_g800_r1.job for more details.
-# Resources used:
->>>>>>> 4995d592cc72ddb1a98faa95c079d825149752c6
 
 module load gsl/2.6
 
@@ -157,7 +138,25 @@ for CHR in "${CHRLIST[@]}"
 do
     "$BIN_DIR"/elai -g "$WDIR"/geno_by_chr/glob_ref_"$CHR"_geno.txt -p 10 -g "$WDIR"/geno_by_chr/cord_"$CHR"_geno.txt -p 11 -g "$WDIR"/geno_by_chr/glob_mr_"$CHR"_geno.txt -p 1 -pos "$WDIR"/geno_by_chr/pos_"$CHR".txt -s 30 -o "$CHR"_r1 -C 2 -c 10 -mg 800 -exclude-maf 0.05
 done
-<<<<<<< HEAD
+```
+
+### 4000 generations since admixture
+For MAF = 0.00 and estimated generation time since admixture = 4000 (based on estimate given by chloroplast tree). Multiple runs performed and results averaged as per recommendations of the developer; example given below.
+
+```bash
+# Run on UFRC queue system; see elai_maf00_g800_r1.job for more details.
+# Resources used: 
+
+module load gsl/2.6
+
+BIN_DIR="/blue/soltis/kasey.pham/bin/ELAI"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/elai"
+declare -a CHRLIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
+
+for CHR in "${CHRLIST[@]}"
+do
+    "$BIN_DIR"/elai -g "$WDIR"/geno_by_chr/glob_ref_"$CHR"_geno.txt -p 10 -g "$WDIR"/geno_by_chr/cord_"$CHR"_geno.txt -p 11 -g "$WDIR"/geno_by_chr/glob_mr_"$CHR"_geno.txt -p 1 -pos "$WDIR"/geno_by_chr/pos_"$CHR".txt -s 30 -o "$CHR"_r1 -C 2 -c 10 -mg 800
+done
 ```
 
 ## Process Results
@@ -253,6 +252,4 @@ cutoff_coarse <- ggplot(coarse_cutoff_mat_df, aes(window, acc, fill = dosage)) +
                      axis.text.x = element_text(size = 9),
                      axis.text.y = element_text(size = 14))
 cutoff_coarse
-=======
->>>>>>> 4995d592cc72ddb1a98faa95c079d825149752c6
 ```
