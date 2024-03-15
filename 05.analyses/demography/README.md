@@ -202,7 +202,8 @@ pylab.savefig('./04.sec_contact_schange/sec_contact_schange_fit.png', dpi=250)
 adj = dadi.Godambe.LRT_adjust(func_ex=cmodel_func_ex, grid_pts=pts, all_boot=boots, p0=cmodel_bfps, data=fs, nested_indices=nested_ind, multinom=True)
 # 0.002596710378730069
 D = adj*2*(-81001.6 - (-100346.1))
-p_val = sum_chi2_ppf(D, weights)
+p_val = dadi.Godambe.sum_chi2_ppf(D, weights=[0.125, 0.375, 0.375, 0.125])
+# P-value = 0.00, so Model 4 is significantly a better fit than Model 1.
 
 ## PARAMETER UNCERTAINTY ESTIMATION
 uncert = dadi.Godambe.GIM_uncert(func_ex=cmodel_func_ex, grid_pts=pts, all_boot=boots, p0=cmodel_bfps, data=fs, log = True, multinom = True)
