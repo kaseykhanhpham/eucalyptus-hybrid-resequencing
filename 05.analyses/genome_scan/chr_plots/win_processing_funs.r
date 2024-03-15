@@ -171,8 +171,10 @@ get_ld_windows <- function(filename, chr, cutoff, dir){
     # parse start and end of windows from file_name column
     chrs <- unlist(lapply(strsplit(infile$file_name, "_"), function(x) x[1]))
     inds <- unlist(lapply(strsplit(infile$file_name, "_"), function(x) x[2]))
-    start_inds <- unlist(lapply(strsplit(inds, "-"), function(x) x[1]))
-    end_inds <- unlist(lapply(strsplit(inds, "-"), function(x) x[2]))
+    # get start and end indices and shift by 1 to match position indexing 
+    # of other programs
+    start_inds <- as.numeric(unlist(lapply(strsplit(inds, "-"), function(x) x[1]))) + 1
+    end_inds <- as.numeric(unlist(lapply(strsplit(inds, "-"), function(x) x[2]))) + 1
     # calculate cutoff value
     cutoff_num <- sort(infile[, "ld"])[round(nrow(infile) * cutoff)]
     # get rows to include in output based on direction specified
@@ -205,7 +207,7 @@ get_recomb_windows <- function(filename, chr, cutoff, dir){
 
     infile <- read.table(filename, sep = "\t", header = TRUE)
     # calculate cutoff value for point est
-    cutoff_point <- order(infile[, "recombRate"])[round(nrow(infile) * cutoff)]
+    cutoff_point <- sort(infile[, "recombRate"])[round(nrow(infile) * cutoff)]
     # get rows to include in output based on direction specified
     if(dir == "above"){
         include_rows1 <- which(infile[, "recombRate"] > cutoff_point)
@@ -217,10 +219,10 @@ get_recomb_windows <- function(filename, chr, cutoff, dir){
     }
     # calculate cutoff value for confidence interval
     if(dir == "above"){
-        cutoff_ci <- order(infile[, "CI95LO"])[round(nrow(infile) * cutoff)]
+        cutoff_ci <- sort(infile[, "CI95LO"])[round(nrow(infile) * cutoff)]
         include_rows2 <- which(infile[, "CI95LO"] > cutoff_ci)
     } else if(dir == "below"){
-        cutoff_ci <- order(infile[, "CI95HI"])[round(nrow(infile) * cutoff)]
+        cutoff_ci <- sort(infile[, "CI95HI"])[round(nrow(infile) * cutoff)]
         include_rows2 <- which(infile[, "CI95HI"] < cutoff_ci)
     } else {
         include_rows2 <- c()
@@ -232,6 +234,85 @@ get_recomb_windows <- function(filename, chr, cutoff, dir){
     outtab <- infile[final_filter, c("chrom", "start", "end")]
     colnames(outtab) <- c("chr", "start", "end")
     return(outtab)
+}
+
+get_ahmm_windows <- function(infile_vec, chr, post_thresh, inds_thresh){
+    # Purpose: get positions above a given posterior value for E. cordata ancestry (0,2)
+    # Input: a vector of names of input files to process from AncestryHMM results, a
+    #        minimum posterior to consider a site, and a minimum number of individuals in
+    #        which the site is present 
+    # Returns: a table in BED format
+
+    # import input files
+    infile_list <- lapply(infile_vec, function(infile_name) read.table(infile_name, sep = "\t", skip = 1, header = FALSE, col.names = c("chrom", "position", "hom_glob", "het", "hom_cord")))
+    # subset to specified chromosome
+    infile_list <- lapply(infile_list, function(infile) infile[which(infile$chrom == chr),])
+    names(infile_list) <- infile_vec
+    # get rows with a posterior larger than or equal to the specified threshold for (0,2)
+    infile_filter <- lapply(infile_list, function(infile) which(infile$hom_cord > post_thresh))
+    names(infile_filter) <- infile_vec
+    
+    # filter sites by how many individuals possess them
+    final_sites_index <- c()
+    pass_sites_inds <- c()
+    for(i in c(1:nrow(infile_list[[1]]))){
+        ind_site_passes <- unlist(lapply(infile_filter, function(infile) i %in% infile))
+        # check that there are at least as many individuals with the site as the given threshold
+        if(length(which(ind_site_passes)) >= inds_thresh){
+            # add site to final site listing
+            final_sites_index <- c(final_sites_index, i)
+            # add inds to final ind list for each site
+            pass_sites_inds <- c(pass_sites_inds, paste(infile_vec[which(ind_site_passes)], collapse = ","))
+        }
+    }
+    # return BED of sites
+    final_chr <- infile_list[[1]][final_sites_index, "chrom"]
+    final_start <- infile_list[[1]][final_sites_index, "position"]
+    final_end <- final_start + 1
+    final_tab <- data.frame(chr = final_chr, start = final_start, end = final_end, inds = pass_sites_inds)
+    return(final_tab)
+}
+
+get_elai_windows <- function(dose_name, sites_name, chr, dose_thresh, inds_thresh, sample_vec){
+    # Purpose: get positions above a given posterior value for E. cordata ancestry dosage
+    # Input: a vector of names of input files to process from Easy Local Ancestry Inference
+    #        results, a minimum posterior to consider a site, a minimum number of 
+    #        individuals in which the site is present, and a vector with the name of
+    #        the samples
+    # Returns: a table in BED format
+
+    # import sites file
+    sites_tab <- read.table(sites_name, header = TRUE, sep = "\t")
+    # parse chromosomes
+    site_chrs <- unlist(strsplit(sites_tab$rs, ":"), function(x) x[1])
+    # import dosage file
+    dose_tab <- scan(dose_name)
+    dim(dose_tab) <- c(2,nrow(sites_tab),20) # 2 ancestral populations, num snps, 20 inds
+    dose_tab <- dose_tab[2,,] # subset to cordata dosage only
+    # subset by specified chromosome
+    chr_filter <- which(sites_chr == chr)
+    sites_tab <- sites_tab[chr_filter,]
+    dose_tab <- dose_tab[chr_filter,]
+
+    # get sites for each ind with dosage at least threshold
+    dose_fil <- apply(dose_tab, 2, function(site) site > dose_thresh)
+    
+    # get sites for which dosage passed the threshold for the threshold number of individuals
+    final_sites <- c()
+    final_inds <- c()
+    for(i in c(1:nrow(dose_tab))){
+        if(length(which(dose_fil[i,])) >= inds_thresh){
+            final_sites <- c(final_sites, i)
+            # record individuals that passed the threshold filters
+            final_inds <- paste(sample_vec[which(dose_fil[i])], sep = ",")
+        }
+    }
+    # return BED format table of passed sites
+    final_chrs <- rep(chr, length(final_sites))
+    final_start <- sites_tab[final_sites, "pos"]
+    final_end <- final_start + 1
+    final_tab <- data.frame(chr = final_chrs, start = final_start, end = final_end, inds = final_inds)
+    return(final_tab)
 }
 
 merge_windows <- function(wintab, thresh){
@@ -361,11 +442,85 @@ plot_recomb <- function(recomb_tabname, ld_tabname, chr, chr_size){
     # plot bars for hotspots
     rect(xleft = rep(4, nrow(recomb_high_wins_merged)), ybottom = recomb_high_wins_merged$start,
          xright = rep(6, nrow(recomb_high_wins_merged)), ytop = recomb_high_wins_merged$end,
-         density = -1, col = "#f3981a", border = NA)
+         density = -1, col = "#ea5a80", border = NA)
     # plot bars for protected regions
     rect(xleft = rep(4, nrow(protected_regions_merged)), ybottom = protected_regions_merged$start,
          xright = rep(6, nrow(protected_regions_merged)), ytop = protected_regions_merged$end,
-         density = -1, col = "#646464", border = NA)
+         density = -1, col = "#501392", border = NA)
+    # Draw outline of chromosome
+    rect(xleft = 4, ybottom = 1, xright = 6, ytop = chr_size, density = 0, 
+         border = "black")
+}
+
+plot_intr <- function(ahmm_filenames, ahmm_outname, elai_dose_file, elai_site_file, elai_samples, elai_outname, dxy_filename, dsuite_filename, chr, chr_size){
+    # Plot introgression windows
+    # Get windows of interest
+    # AHMM
+    ahmm_windows <- get_ahmm_windows(ahmm_filenames, chr, 0.95, 5)
+    write.table(ahmm_windows, ahmm_outname, quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
+    ahmm_windows_merged <- merge_windows(ahmm_windows, 100)
+    # ELAI
+    elai_windows <- get_elai_windows(elai_dose_file, elai_site_file, chr, 1.75, 5, elai_samples)
+    write.table(elai_windows, elai_outname, quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
+    elai_windows_merged <- merge_windows(elai_windows, 100)
+    # dXY
+    dxy_windows <- get_dxy_windows(dxy_filename, "glob_MR", "cord_MR", chr, 40, 0.50, "below")
+    # fdm
+    fdm_windows <- get_dsuite_windows(dsuite_filename, chr, "f_dM", 0.75, "above")
+
+    # Get overlap between windows
+    ahmm_intr_windows <- get_overlap(get_overlap(ahmm_windows_merged, dxy_windows, chr), fdm_windows, chr)
+    elai_intr_windows <- get_overlap(get_overlap(elai_windows_merged, dxy_windows, chr), fdm_windows, chr)
+
+    # merge windows for final plotting
+    ahmm_intr_windows_merged <- merge_windows(ahmm_intr_windows, 1000)
+    elai_intr_windows_merged <- merge_windows(elai_intr_windows, 1000)
+    both_intr_windows <- get_overlap(ahmm_intr_windows_merged, elai_intr_windows_merged, chr)
+
+    # make canvas of the correct size (adding 5% padding to either end of the y-axis)
+    plot(x = c(0, 10), y = c(round(-1*chr_size*0.05), round(chr_size + chr_size*0.05)), 
+         col = "white", xlab = "", ylab = "Position (bp)")
+    # plot bars for AHMM regions
+    rect(xleft = rep(4, nrow(ahmm_intr_windows_merged)), ybottom = ahmm_intr_windows_merged$start,
+         xright = rep(6, nrow(ahmm_intr_windows_merged)), ytop = ahmm_intr_windows_merged$end,
+         density = -1, col = "#ffb44a", border = NA)
+    # plot bars for ELAI regions
+    rect(xleft = rep(4, nrow(elai_intr_windows_merged)), ybottom = elai_intr_windows_merged$start,
+         xright = rep(6, nrow(elai_intr_windows_merged)), ytop = elai_intr_windows_merged$end,
+         density = -1, col = "#a85605", border = NA)
+    # plot bars for overlaps
+    rect(xleft = rep(4, nrow(both_intr_windows)), ybottom = both_intr_windows$start,
+         xright = rep(6, nrow(both_intr_windows)), ytop = both_intr_windows$end,
+         density = -1, col = "#000000", border = NA)
+    # Draw outline of chromosome
+    rect(xleft = 4, ybottom = 1, xright = 6, ytop = chr_size, density = 0, 
+         border = "black")
+}
+
+plot_sel <- function(tajima_filename, ld_infile, recomb_infile, chr, chr_size){
+    # Plot regions of selection (very high or low Tajima's D, increased LD, not low recombination rate)
+    tajd_windows_high <- get_tajimad_windows(tajima_filename, chr, 40, 0.95, "above", 50000)
+    tajd_windows_low <- get_tajimad_windows(tajima_filname, chr, 40, 0.05, "below", 50000)
+    ld_windows <- get_ld_windows(ld_infile, chr, 0.75, "above")
+    recomb_windows <- get_recomb_windows(recomb_infile, chr, 0.50, "above")
+
+    # Overlap and merge windows
+    recomb_windows_bal <- get_overlap(get_overlap(tajd_windows_high, ld_windows, chr), recomb_windows, chr)
+    recomb_windows_bal_merge <- merge_windows(recomb_windows_bal, 1000)
+    recomb_windows_dir <- get_overlap(get_overlap(tajd_windows_low, ld_windows, chr), recomb_windows, chr)
+    recomb_windows_dir_merge <- merge_windows(recomb_windows_dir, 1000)
+
+    # make canvas of the correct size (adding 5% padding to either end of the y-axis)
+    plot(x = c(0, 10), y = c(round(-1*chr_size*0.05), round(chr_size + chr_size*0.05)), 
+         col = "white", xlab = "", ylab = "Position (bp)")
+    # plot bars for balancing selection
+    rect(xleft = rep(4, nrow(recomb_windows_bal_merge)), ybottom = recomb_windows_bal_merge$start,
+         xright = rep(6, nrow(recomb_windows_bal_merge)), ytop = recomb_windows_bal_merge$end,
+         density = -1, col = "#1ddda3", border = NA)
+    # plot bars for directional selection
+    rect(xleft = rep(4, nrow(recomb_windows_dir_merge)), ybottom = recomb_windows_dir_merge$start,
+         xright = rep(6, nrow(recomb_windows_dir_merge)), ytop = recomb_windows__merge$end,
+         density = -1, col = "#008a60", border = NA)
     # Draw outline of chromosome
     rect(xleft = 4, ybottom = 1, xright = 6, ytop = chr_size, density = 0, 
          border = "black")
