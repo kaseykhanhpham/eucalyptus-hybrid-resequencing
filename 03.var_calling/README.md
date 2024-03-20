@@ -130,7 +130,7 @@ SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
 
 for NAME in "${VCFLIST[@]}"
 do
-    Rscript "$SCRIPT_DIR"/plot_snp_stats.r "$NAME"_variant_dp.tab "$NAME"_variant_gq.tab "$NAME"_variant_sp.tab "$NAME"_variant_info.tab "$NAME"
+    Rscript "$SCRIPT_DIR"/plot_snp_stats.r -d "$NAME"_variant_dp.tab -g "$NAME"_variant_gq.tab -s "$NAME"_variant_sp.tab -i "$NAME"_variant_info.tab -o "$NAME"
 done
 ```
 
