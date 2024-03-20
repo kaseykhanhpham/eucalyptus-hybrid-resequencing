@@ -30,7 +30,7 @@ get_dsuite_windows <- function(filename, chr, stat, cutoff, dir){
     chr_filter <- which(infile$chr == chr)
     # return output table
     outtab <- infile[intersect(include_rows, chr_filter) ,c("chr","windowStart","windowEnd")]
-    colnames(outtab) <- c("chr", "start", "end") # standardize headings for downstream
+    colnames(outtab) <- c("chrom", "start", "end") # standardize headings for downstream
     return(outtab)
 }
 
@@ -59,8 +59,8 @@ get_pi_windows <- function(filename, spp, chr, min_sites, cutoff, dir){
     # create chromosome filter
     chr_fil <- which(infile$chromosome == chr)
     # return output table
-    outtab <- infile[intersect(include_rows, chr_filter), c("chromosome", "window_pos_1", "window_pos_2")]
-    colnames(outtab) <- c("chr", "start", "end")
+    outtab <- infile[intersect(include_rows, chr_fil), c("chromosome", "window_pos_1", "window_pos_2")]
+    colnames(outtab) <- c("chrom", "start", "end")
     return(outtab)
 }
 
@@ -91,7 +91,7 @@ get_dxy_windows <- function(filename, spp1, spp2, chr, min_sites, cutoff, dir){
     chr_filter <- which(infile$chromosome == chr)
     # return output table
     outtab <- infile[intersect(include_rows, chr_filter), c("chromosome", "window_pos_1", "window_pos_2")]
-    colnames(outtab) <- c("chr", "start", "end")
+    colnames(outtab) <- c("chrom", "start", "end")
     return(outtab)
 }
 
@@ -119,10 +119,10 @@ get_fst_windows <- function(filename, spp1, spp2, chr, min_sites, cutoff, dir){
         include_rows <- c()
     }
     # create chromosome filter
-    chr_list <- which(infile$chromosome == chr)
+    chr_filter <- which(infile$chromosome == chr)
     # return output table
-    outtab <- infile[intersect(include_rows, chr_list), c("chromosome", "window_pos_1", "window_pos_2")]
-    colnames(outtab) <- c("chr", "start", "end")
+    outtab <- infile[intersect(include_rows, chr_filter), c("chromosome", "window_pos_1", "window_pos_2")]
+    colnames(outtab) <- c("chrom", "start", "end")
     return(outtab)
 }
 
@@ -156,7 +156,7 @@ get_tajimad_windows <- function(filename, chr, min_sites, cutoff, dir, bin_size)
     start_inds <- infile[final_rows, "BIN_START"] + 1
     end_inds <- infile[final_rows, "BIN_START"] + bin_size
     # return output table
-    outtab <- data.frame(chr = infile[final_rows, "CHROM"], start = start_inds, end = end_inds)
+    outtab <- data.frame(chrom = infile[final_rows, "CHROM"], start = start_inds, end = end_inds)
     return(outtab)
 }
 
@@ -190,7 +190,7 @@ get_ld_windows <- function(filename, chr, cutoff, dir){
     chr_filter <- which(chrs == chr)
     final_filter <- intersect(include_rows, chr_filter)
     # return output table
-    outtab <- data.frame(chr = chrs[final_filter], start = start_inds[final_filter], end = end_inds[final_filter])
+    outtab <- data.frame(chrom = chrs[final_filter], start = start_inds[final_filter], end = end_inds[final_filter])
     outtab <- outtab[order(outtab$start),]
     return(outtab)
 }
@@ -232,7 +232,7 @@ get_recomb_windows <- function(filename, chr, cutoff, dir){
     final_filter <- intersect(chr_filter, intersect(include_rows1, include_rows2))
     # return output table
     outtab <- infile[final_filter, c("chrom", "start", "end")]
-    colnames(outtab) <- c("chr", "start", "end")
+    colnames(outtab) <- c("chrom", "start", "end")
     return(outtab)
 }
 
@@ -266,10 +266,15 @@ get_ahmm_windows <- function(infile_vec, chr, post_thresh, inds_thresh){
         }
     }
     # return BED of sites
-    final_chr <- infile_list[[1]][final_sites_index, "chrom"]
-    final_start <- infile_list[[1]][final_sites_index, "position"]
-    final_end <- final_start + 1
-    final_tab <- data.frame(chr = final_chr, start = final_start, end = final_end, inds = pass_sites_inds)
+    if(length(final_sites_index) > 0){
+        final_chr <- infile_list[[1]][final_sites_index, "chrom"]
+        final_start <- infile_list[[1]][final_sites_index, "position"]
+        final_end <- final_start + 1
+        final_tab <- data.frame(chrom = final_chr, start = final_start, end = final_end, inds = pass_sites_inds)
+    } else {
+        final_tab <- data.frame()
+        message(paste("No sites on this chromosome have a posterior of >", post_thresh, "for", inds_thresh, "individuals."))
+    }
     return(final_tab)
 }
 
@@ -288,14 +293,15 @@ get_elai_windows <- function(dose_name, sites_name, chr, dose_thresh, inds_thres
     # import dosage file
     dose_tab <- scan(dose_name)
     dim(dose_tab) <- c(2,nrow(sites_tab),20) # 2 ancestral populations, num snps, 20 inds
-    dose_tab <- dose_tab[2,,] # subset to cordata dosage only
-    # subset by specified chromosome
-    chr_filter <- which(sites_chr == chr)
-    sites_tab <- sites_tab[chr_filter,]
-    dose_tab <- dose_tab[chr_filter,]
+    dose_tab <- as.matrix(dose_tab[2,,]) # subset to cordata dosage only
+    
+    # subset by specified chromosome -- not necessary because split by chromosome already.
+    # chr_filter <- which(site_chrs == chr)
+    # sites_tab <- sites_tab[chr_filter,]
+    # dose_tab <- dose_tab[chr_filter,]
 
     # get sites for each ind with dosage at least threshold
-    dose_fil <- apply(dose_tab, 2, function(site) site > dose_thresh)
+    dose_fil <- t(apply(dose_tab, 1, function(site) site > dose_thresh))
     
     # get sites for which dosage passed the threshold for the threshold number of individuals
     final_sites <- c()
@@ -304,82 +310,114 @@ get_elai_windows <- function(dose_name, sites_name, chr, dose_thresh, inds_thres
         if(length(which(dose_fil[i,])) >= inds_thresh){
             final_sites <- c(final_sites, i)
             # record individuals that passed the threshold filters
-            final_inds <- paste(sample_vec[which(dose_fil[i])], sep = ",")
+            final_inds <- c(final_inds, paste(sample_vec[which(dose_fil[i,])], sep = ",", collapse = ","))
         }
     }
     # return BED format table of passed sites
-    final_chrs <- rep(chr, length(final_sites))
-    final_start <- sites_tab[final_sites, "pos"]
-    final_end <- final_start + 1
-    final_tab <- data.frame(chr = final_chrs, start = final_start, end = final_end, inds = final_inds)
+    if(length(final_sites) > 0){
+        final_chrs <- rep(chr, length(final_sites))
+        final_start <- sites_tab[final_sites, "pos"]
+        final_end <- final_start + 1
+        final_tab <- data.frame(chrom = final_chrs, start = final_start, end = final_end, inds = final_inds)
+    } else {
+        final_tab <- data.frame()
+        message(paste("No sites on this chromosome have a dosage of >", dose_thresh, "for", inds_thresh, "individuals."))
+    }
     return(final_tab)
 }
 
-merge_windows <- function(wintab, thresh){
+merge_windows <- function(wintab, thresh, chr){
     # Purpose: merge adjacent windows into a single window entry for a BED table
     # Input: a dataframe in BED format, the maximum amount of base pairs apart
     #        that two windows can be to merge them
+    # Assumes that all entries are on a single chromosome
     # Returns: a table in BED format
 
-    # initialize cols for output dataframe
-    chr_new <- c()
-    start_new <- c()
-    end_new <- c()
+    if(nrow(wintab) > 0){ # only try to merge rows if there are rows to merge
+        # FIRST: merge overlapping windows
+        tab_sites <- unlist(c(apply(wintab, 1, function(x) c(x["start"]:x["end"]))))
+        tab_sites <- sort(unique(tab_sites))
+        # convert back into BED-like format
+        # get start positions (positions where the previous entry is not 1 less)
+        tab_starts_mask <- unlist(sapply(c(2:length(tab_sites)), function(i) tab_sites[i] != (tab_sites[(i - 1)] + 1)))
+        tab_starts_mask <- c(TRUE, tab_starts_mask)
+        tab_starts <- tab_sites[which(tab_starts_mask)]
+        # get end positions (positions where the next entry is not 1 more)
+        tab_ends_mask <- unlist(sapply(c(1:(length(tab_sites) - 1)), function(i) tab_sites[i] != (tab_sites[(i + 1)] - 1)))
+        tab_ends_mask <- c(tab_ends_mask, TRUE)
+        tab_ends <- tab_sites[which(tab_ends_mask)]
+        # construct output table
+        overl_tab <- data.frame(start = tab_starts, end = tab_ends)
+        
+        # SECOND: merge non-overlapping windows closer than given threshold
+        # initialize cols for output dataframe
+        start_new <- c()
+        end_new <- c()
 
-    # add dummy entry at bottom of input table to evaluate last real row in coming loop
-    new_row <- c("DUMMY_ROW", 1, 2)
-    wintab[(nrow(wintab) + 1),] <- new_row
+        # add dummy entry at bottom of input table to evaluate last real row in coming loop
+        new_row <- c(1, 2) # DUMMY ROW
+        overl_tab[(nrow(overl_tab) + 1),] <- new_row
+        overl_tab$start <- as.integer(overl_tab$start)
+        overl_tab$end <- as.integer(overl_tab$end)
 
-    # initialize storage variables for loop
-    curr_chr <- wintab[1, "chr"]
-    curr_start <- wintab[1, "start"]
-    curr_end <- wintab[1, "end"]
+        # initialize storage variables for loop
+        curr_start <- overl_tab[1, "start"]
+        curr_end <- overl_tab[1, "end"]
 
-    # loop through input dataframe
-    for(i in c(2:nrow(wintab))){
-        switch_chr <- wintab[i, "chr"] != curr_chr
-        bigger_thr <- wintab[i, "start"] - curr_end > thresh
-        if(switch_chr | bigger_thr){
-            # if switching chromosomes or regions are farther than threshold,
-            # write and update all variables
-            chr_new <- c(chr_new, curr_chr)
-            start_new <- c(start_new, curr_start)
-            end_new <- c(end_new, curr_end)
-            
-            curr_chr <- wintab[i, "chr"]
-            curr_start <- wintab[i, "start"]
-            curr_end <- wintab[i, "end"]
-        } else {
-            # if regions are closer than threshold, update endpoint 
-            curr_end <- wintab[i, "end"]
+        # loop through input dataframe
+        for(i in c(2:nrow(overl_tab))){
+            if((overl_tab[i, "start"] - curr_end) > thresh){
+                # if switching chromosomes or regions are farther than threshold,
+                # write and update all variables
+                start_new <- c(start_new, curr_start)
+                end_new <- c(end_new, curr_end)
+                
+                curr_start <- overl_tab[i, "start"]
+                curr_end <- overl_tab[i, "end"]
+            } else {
+                # if regions are closer than threshold, update endpoint 
+                curr_end <- overl_tab[i, "end"]
+            }
         }
-    }
 
-    # return output dataframe
-    outtab <- data.frame(chr = chr_new, start = start_new, end = end_new)
+        # return output dataframe
+        outtab <- data.frame(chrom = rep(chr, length(start_new)), start = start_new, end = end_new)
+    } else { # deal with empty inputs
+        outtab <- data.frame()
+    }
     return(outtab)
 }
 
 get_overlap <- function(tab1, tab2, chr){
     # get overlapping regions between two BED-like tables
-    # expand input tables into individual sites
-    tab1_sites <- unlist(apply(tab1, 1, function(x) c(x["start"]:x["end"])))
-    tab2_sites <- unlist(apply(tab2, 1, function(x) c(x["start"]:x["end"])))
+    if((nrow(tab1) > 0) & (nrow(tab2) > 0)){ # check that input tables aren't empty.
+        # expand input tables into individual sites
+        tab1_sites <- unlist(c(apply(tab1, 1, function(x) c(x["start"]:x["end"]))))
+        tab2_sites <- unlist(c(apply(tab2, 1, function(x) c(x["start"]:x["end"]))))
+        # get intersection of sites between tabs
+        int_sites <- intersect(tab1_sites, tab2_sites)
+    } else {
+        int_sites <- c()
+    }
 
-    # get intersection of sites between tabs
-    int_sites <- intersect(tab1_sites, tab2_sites)
-
-    # convert back into BED-like format
-    # get start positions (positions where the previous entry is not 1 less)
-    int_starts <- unlist(sapply(c(2:length(int_sites)), function(i) int_sites[i] != (int_sites[(i - 1)] + 1)))
-    int_starts <- c(int_sites[1], int_starts)
-    # get end positions (positions where the next entry is not 1 more)
-    int_ends <- unlist(sapply(c(1:(length(int_sites) - 1)), function(i) int_sites[i] != (int_sites[(i + 1)] - 1)))
-    int_ends <- c(int_ends, int_sites[length(int_sites)])
-    # make chromosome column
-    chrs <- rep(chr, length(int_starts))
-    # construct output table
-    outtab <- data.frame(chr = chrs, start = int_starts, end = int_ends)
+    if(length(int_sites) > 0){
+        # convert back into BED-like format
+        # get start positions (positions where the previous entry is not 1 less)
+        int_starts_mask <- unlist(sapply(c(2:length(int_sites)), function(i) int_sites[i] != (int_sites[(i - 1)] + 1)))
+        int_starts_mask <- c(TRUE, int_starts_mask)
+        int_starts <- int_sites[which(int_starts_mask)]
+        # get end positions (positions where the next entry is not 1 more)
+        int_ends_mask <- unlist(sapply(c(1:(length(int_sites) - 1)), function(i) int_sites[i] != (int_sites[(i + 1)] - 1)))
+        int_ends_mask <- c(int_ends_mask, TRUE)
+        int_ends <- int_sites[which(int_ends_mask)]
+        # make chromosome column
+        chrs <- rep(chr, length(int_starts))
+        # construct output table
+        outtab <- data.frame(chrom = chrs, start = int_starts, end = int_ends)
+    } else {
+        outtab <- data.frame()
+        message("Could not find shared intervals between tables for specified chromosome.")
+    }
     return(outtab)
 }
 
@@ -389,138 +427,245 @@ get_overlap <- function(tab1, tab2, chr){
 # Functions that graph blocks across chromosomes for a certain pattern
 # (e.g., putative introgression, putative selective sweep)
 
-plot_spp_diverge <- function(fdiff_tabname, fst_tabname, chr, chr_size){
+plot_spp_diverge <- function(fdiff_tabname, fst_tabname, chr, chr_size, outfile_name){
     # Plot chromosome differences between E. globulus (reference) and E. cordata
     # on a given chromosome
 
     # get windows to plot
     fdiff_tab <- read.table(fdiff_tabname, header = TRUE, sep = "\t")
-    fst_80_wins <- get_fst_windows(fst_tabname, "glob_ref", "cord_MR", chr, 15, 0.8, "above")
-    fst_95_wins <- get_fst_windows(fst_tabname, "glob_ref", "cord_MR", chr, 15, 0.95, "above")
+    fdiff_tab <- fdiff_tab[which(fdiff_tab$chr == chr),] # subset for the chromosome
+    fst_80_wins <- get_fst_windows(fst_tabname, "glob_pure", "cord_MR", chr, 15, 0.8, "above")
+    fst_95_wins <- get_fst_windows(fst_tabname, "glob_pure", "cord_MR", chr, 15, 0.95, "above")
     # (lower minimum site requirement because FST only considers variable sites)
 
     # merge windows that are close to each other (< 1000 bp)
-    fst_80_wins_merged <- merge_windows(fst_80_wins, 1000)
-    fst_95_wins_merged <- merge_windows(fst_95_wins, 1000)
+    fst_80_wins_merged <- merge_windows(fst_80_wins, 1000, chr)
+    fst_95_wins_merged <- merge_windows(fst_95_wins, 1000, chr)
+
+    # output 95th percentile FST table
+    if(nrow(fst_95_wins_merged) > 0){
+        write.table(fst_95_wins_merged, outfile_name, row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
+    }
 
     # make canvas of the correct size (adding 5% padding to either end of the y-axis)
     plot(x = c(0, 10), y = c(round(-1*chr_size*0.05), round(chr_size + chr_size*0.05)), 
-         col = "white", xlab = "", ylab = "Position (bp)")
+         col = "white", xlab = "", xaxt = "n", ylab = "Position (bp)")
     # Plot bars for FST > 0.80
-    rect(xleft = rep(4, nrow(fst_80_wins_merged)), ybottom = fst_80_wins_merged$start, 
-         xright = rep(6, nrow(fst_80_wins_merged)), ytop = fst_80_wins_merged$end,
-         density = -1, col = "#ababab", border = NA)
+    if(nrow(fst_80_wins_merged) > 0){ # check if table is populated for the chromosome
+        rect(xleft = rep(4, nrow(fst_80_wins_merged)), ybottom = fst_80_wins_merged$start, 
+            xright = rep(6, nrow(fst_80_wins_merged)), ytop = fst_80_wins_merged$end,
+            density = -1, col = "#cccccc", border = NA)
+    }
     # Plot bars for FST > 0.95
-    rect(xleft = rep(4, nrow(fst_95_wins_merged)), ybottom = fst_95_wins_merged$start, 
-         xright = rep(6, nrow(fst_95_wins_merged)), ytop = fst_95_wins_merged$end,
-         density = -1, col = "#494949", border = NA)
+    if(nrow(fst_95_wins_merged) > 0){
+        rect(xleft = rep(4, nrow(fst_95_wins_merged)), ybottom = fst_95_wins_merged$start, 
+            xright = rep(6, nrow(fst_95_wins_merged)), ytop = fst_95_wins_merged$end,
+            density = -1, col = "#494949", border = NA)
+    }
     # Plot fixed differences
-    rect(xleft = rep(4, nrow(fdiff_tab)), ybottom = fdiff_tab$pos, 
-         xright = rep(6, nrow(fdiff_tab)), ytop = fdiff_tab$pos,
-         density = -1, col = "#000000", border = NA)
+    if(nrow(fdiff_tab) > 0){ # check if fixed differences tab is empty for the chromosome.
+        rect(xleft = rep(4, nrow(fdiff_tab)), ybottom = fdiff_tab$pos, 
+            xright = rep(6, nrow(fdiff_tab)), ytop = fdiff_tab$pos,
+            density = -1, col = "#000000", border = NA)
+    }
     # Draw outline of chromosome
     rect(xleft = 4, ybottom = 1, xright = 6, ytop = chr_size, density = 0, 
          border = "black")
 }
 
-plot_recomb <- function(recomb_tabname, ld_tabname, chr, chr_size){
+plot_recomb <- function(recomb_tabname, ld_tabname, chr, chr_size, high_outname, low_outname){
     # Plot recombination hotspots and regions of recombination suppression
     # on a given chromosome
     
     # get hotspots and merge close windows (< 1kbp)
     recomb_high_wins <- get_recomb_windows(recomb_tabname, chr, 0.95, "above")
-    recomb_high_wins_merged <- merge_windows(recomb_high_wins, 1000)
+    recomb_high_wins_merged <- merge_windows(recomb_high_wins, 1000, chr)
+    if(nrow(recomb_high_wins_merged) > 0){
+        write.table(recomb_high_wins_merged, high_outname, row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
+    }
     # get protected regions and merge close windows (< 1 kbp)
     recomb_low_wins <- get_recomb_windows(recomb_tabname, chr, 0.05, "below")
-    ld_high_wins <- get_ld_windows(ld_tabname, chr, 0.75, "above")
+    ld_high_wins <- get_ld_windows(ld_tabname, chr, 0.80, "above")
     protected_regions <- get_overlap(recomb_low_wins, ld_high_wins, chr)
-    protected_regions_merged <- merge_windows(protected_regions, 1000)
+    protected_regions_merged <- merge_windows(protected_regions, 1000, chr)
+    if(nrow(protected_regions_merged) > 0){
+        write.table(protected_regions_merged, low_outname, row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
+    }
 
     # make canvas of the correct size (adding 5% padding to either end of the y-axis)
     plot(x = c(0, 10), y = c(round(-1*chr_size*0.05), round(chr_size + chr_size*0.05)), 
-         col = "white", xlab = "", ylab = "Position (bp)")
+         col = "white", xlab = "", xaxt = "n", ylab = "Position (bp)")
     # plot bars for hotspots
-    rect(xleft = rep(4, nrow(recomb_high_wins_merged)), ybottom = recomb_high_wins_merged$start,
-         xright = rep(6, nrow(recomb_high_wins_merged)), ytop = recomb_high_wins_merged$end,
-         density = -1, col = "#ea5a80", border = NA)
+    if(nrow(recomb_high_wins_merged) > 0){ # check if table is populated for the chromosome
+        rect(xleft = rep(4, nrow(recomb_high_wins_merged)), ybottom = recomb_high_wins_merged$start,
+            xright = rep(6, nrow(recomb_high_wins_merged)), ytop = recomb_high_wins_merged$end,
+            density = -1, col = "#ea5a80", border = NA)
+    }
     # plot bars for protected regions
-    rect(xleft = rep(4, nrow(protected_regions_merged)), ybottom = protected_regions_merged$start,
-         xright = rep(6, nrow(protected_regions_merged)), ytop = protected_regions_merged$end,
-         density = -1, col = "#501392", border = NA)
+    if(nrow(protected_regions_merged) > 0){
+        rect(xleft = rep(4, nrow(protected_regions_merged)), ybottom = protected_regions_merged$start,
+            xright = rep(6, nrow(protected_regions_merged)), ytop = protected_regions_merged$end,
+            density = -1, col = "#501392", border = NA)
+    }
     # Draw outline of chromosome
     rect(xleft = 4, ybottom = 1, xright = 6, ytop = chr_size, density = 0, 
          border = "black")
 }
 
-plot_intr <- function(ahmm_filenames, ahmm_outname, elai_dose_file, elai_site_file, elai_samples, elai_outname, dxy_filename, dsuite_filename, chr, chr_size){
-    # Plot introgression windows
+plot_ahmm <- function(ahmm_filenames, ahmm_outname, dxy_filename, dsuite_filename, scan_outname, chr, chr_size){
+    # Plot introgression windows for genome scan statistics and Ancestry_HMM
     # Get windows of interest
     # AHMM
     ahmm_windows <- get_ahmm_windows(ahmm_filenames, chr, 0.95, 5)
-    write.table(ahmm_windows, ahmm_outname, quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
-    ahmm_windows_merged <- merge_windows(ahmm_windows, 100)
-    # ELAI
-    elai_windows <- get_elai_windows(elai_dose_file, elai_site_file, chr, 1.75, 5, elai_samples)
-    write.table(elai_windows, elai_outname, quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
-    elai_windows_merged <- merge_windows(elai_windows, 100)
+    if(nrow(ahmm_windows) > 0){ # only output table if there are sites to output
+        write.table(ahmm_windows, ahmm_outname, quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
+    }
+    ahmm_windows_merged <- merge_windows(ahmm_windows[,c(1:3)], 100, chr)
+    if(nrow(ahmm_windows_merged) > 0){ # plot merged windows as well
+        write.table(ahmm_windows_merged, paste("merged", ahmm_outname, sep = "_"), row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
+    }
+
     # dXY
-    dxy_windows <- get_dxy_windows(dxy_filename, "glob_MR", "cord_MR", chr, 40, 0.50, "below")
-    # fdm
-    fdm_windows <- get_dsuite_windows(dsuite_filename, chr, "f_dM", 0.75, "above")
+    dxy_windows <- get_dxy_windows(dxy_filename, "glob_MR", "cord_MR", chr, 40, 0.10, "below")
+    dxy_windows_merged <- merge_windows(dxy_windows, 100, chr)
+    # fdM
+    fdm_windows <- get_dsuite_windows(dsuite_filename, chr, "f_dM", 0.90, "above")
+    fdm_windows_merged <- merge_windows(fdm_windows, 100, chr)
 
-    # Get overlap between windows
-    ahmm_intr_windows <- get_overlap(get_overlap(ahmm_windows_merged, dxy_windows, chr), fdm_windows, chr)
-    elai_intr_windows <- get_overlap(get_overlap(elai_windows_merged, dxy_windows, chr), fdm_windows, chr)
-
-    # merge windows for final plotting
-    ahmm_intr_windows_merged <- merge_windows(ahmm_intr_windows, 1000)
-    elai_intr_windows_merged <- merge_windows(elai_intr_windows, 1000)
-    both_intr_windows <- get_overlap(ahmm_intr_windows_merged, elai_intr_windows_merged, chr)
+    # Get overlap between genome scan windows
+    dxy_fdm_overl <- get_overlap(dxy_windows_merged, fdm_windows_merged, chr)
+    if(nrow(dxy_fdm_overl) > 0){ # plot overlap
+        write.table(dxy_fdm_overl, scan_outname, row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
+    }
 
     # make canvas of the correct size (adding 5% padding to either end of the y-axis)
     plot(x = c(0, 10), y = c(round(-1*chr_size*0.05), round(chr_size + chr_size*0.05)), 
-         col = "white", xlab = "", ylab = "Position (bp)")
-    # plot bars for AHMM regions
-    rect(xleft = rep(4, nrow(ahmm_intr_windows_merged)), ybottom = ahmm_intr_windows_merged$start,
-         xright = rep(6, nrow(ahmm_intr_windows_merged)), ytop = ahmm_intr_windows_merged$end,
-         density = -1, col = "#ffb44a", border = NA)
-    # plot bars for ELAI regions
-    rect(xleft = rep(4, nrow(elai_intr_windows_merged)), ybottom = elai_intr_windows_merged$start,
-         xright = rep(6, nrow(elai_intr_windows_merged)), ytop = elai_intr_windows_merged$end,
-         density = -1, col = "#a85605", border = NA)
+         col = "white", xlab = "", xaxt = "n", ylab = "Position (bp)")
+    # plot bars for dxy regions
+    if(nrow(dxy_windows_merged) > 0){
+        rect(xleft = rep(4, nrow(dxy_windows_merged)), ybottom = dxy_windows_merged$start,
+            xright = rep(6, nrow(dxy_windows_merged)), ytop = dxy_windows_merged$end,
+            density = -1, col = "#18CC3E", border = NA)
+    }
+    # plot bars for fdm regions
+    if(nrow(fdm_windows_merged) > 0){ # check that table is populated for this chromosome
+            rect(xleft = rep(4, nrow(fdm_windows_merged)), ybottom = fdm_windows_merged$start,
+                xright = rep(6, nrow(fdm_windows_merged)), ytop = fdm_windows_merged$end,
+                density = -1, col = "#FFF147", border = NA)
+    }
     # plot bars for overlaps
-    rect(xleft = rep(4, nrow(both_intr_windows)), ybottom = both_intr_windows$start,
-         xright = rep(6, nrow(both_intr_windows)), ytop = both_intr_windows$end,
-         density = -1, col = "#000000", border = NA)
+    if(nrow(dxy_fdm_overl) > 0){
+        rect(xleft = rep(4, nrow(dxy_fdm_overl)), ybottom = dxy_fdm_overl$start,
+            xright = rep(6, nrow(dxy_fdm_overl)), ytop = dxy_fdm_overl$end,
+            density = -1, col = "#b5d42a", border = NA)
+    }
+    # plot bars for AHMM regions
+    if(nrow(ahmm_windows_merged) > 0){ # check that table is populated for this chromosome
+        rect(xleft = rep(4, nrow(ahmm_windows_merged)), ybottom = ahmm_windows_merged$start,
+            xright = rep(6, nrow(ahmm_windows_merged)), ytop = ahmm_windows_merged$end,
+            density = -1, col = "#263CA9", border = NA)
+    }
+
     # Draw outline of chromosome
     rect(xleft = 4, ybottom = 1, xright = 6, ytop = chr_size, density = 0, 
          border = "black")
 }
 
-plot_sel <- function(tajima_filename, ld_infile, recomb_infile, chr, chr_size){
+# I would not worry too much about ELAI, there might not even be any sites to graph.
+plot_elai <- function(elai_dose_file, elai_site_file, elai_samples, elai_outname, dxy_filename, dsuite_filename, chr, chr_size){
+    # Plot introgression windows
+    # Get windows of interest
+    # ELAI
+    elai_windows <- get_elai_windows(elai_dose_file, elai_site_file, chr, 1.75, 5, elai_samples)
+    if(nrow(elai_windows) > 0){ # only output table if there are sites to output
+        write.table(elai_windows, elai_outname, quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
+    }
+    elai_windows_merged <- merge_windows(elai_windows[,c(1:3)], 100, chr)
+    if(nrow(elai_windows_merged) > 0){ # plot merged windows as well
+        write.table(elai_windows_merged, paste("merged", elai_outname, sep = "_"), row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
+    }
+    # dXY
+    dxy_windows <- get_dxy_windows(dxy_filename, "glob_MR", "cord_MR", chr, 40, 0.10, "below")
+    dxy_windows_merged <- merge_windows(dxy_windows, 100, chr)
+    # fdM
+    fdm_windows <- get_dsuite_windows(dsuite_filename, chr, "f_dM", 0.90, "above")
+    fdm_windows_merged <- merge_windows(fdm_windows, 100, chr)
+
+    # Get overlap between genome scan windows
+    dxy_fdm_overl <- get_overlap(dxy_windows_merged, fdm_windows_merged, chr)
+    # don't need to write output because already done in plot_ahmm
+
+    # make canvas of the correct size (adding 5% padding to either end of the y-axis)
+    plot(x = c(0, 10), y = c(round(-1*chr_size*0.05), round(chr_size + chr_size*0.05)), 
+         col = "white", xlab = "", xaxt = "n", ylab = "Position (bp)")
+    # plot bars for dxy regions
+    if(nrow(dxy_windows_merged) > 0){
+        rect(xleft = rep(4, nrow(dxy_windows_merged)), ybottom = dxy_windows_merged$start,
+            xright = rep(6, nrow(dxy_windows_merged)), ytop = dxy_windows_merged$end,
+            density = -1, col = "#18CC3E", border = NA)
+    }
+    # plot bars for fdm regions
+    if(nrow(fdm_windows_merged) > 0){ # check that table is populated for this chromosome
+            rect(xleft = rep(4, nrow(fdm_windows_merged)), ybottom = fdm_windows_merged$start,
+                xright = rep(6, nrow(fdm_windows_merged)), ytop = fdm_windows_merged$end,
+                density = -1, col = "#FFF147", border = NA)
+    }
+    # plot bars for overlaps
+    if(nrow(dxy_fdm_overl) > 0){
+        rect(xleft = rep(4, nrow(dxy_fdm_overl)), ybottom = dxy_fdm_overl$start,
+            xright = rep(6, nrow(dxy_fdm_overl)), ytop = dxy_fdm_overl$end,
+            density = -1, col = "#b5d42a", border = NA)
+    }
+    # plot bars for ELAI regions
+    if(nrow(elai_windows_merged) > 0){ # check that table is populated for this chromosome
+        rect(xleft = rep(4, nrow(elai_windows_merged)), ybottom = elai_windows_merged$start,
+            xright = rep(6, nrow(elai_windows_merged)), ytop = elai_windows_merged$end,
+            density = -1, col = "#263CA9", border = NA)
+    }
+
+    # Draw outline of chromosome
+    rect(xleft = 4, ybottom = 1, xright = 6, ytop = chr_size, density = 0, 
+         border = "black")
+}
+
+plot_sel <- function(tajima_filename, ld_infile, recomb_infile, chr, chr_size, bal_outname, dir_outname){
     # Plot regions of selection (very high or low Tajima's D, increased LD, not low recombination rate)
     tajd_windows_high <- get_tajimad_windows(tajima_filename, chr, 40, 0.95, "above", 50000)
-    tajd_windows_low <- get_tajimad_windows(tajima_filname, chr, 40, 0.05, "below", 50000)
+    tajd_windows_low <- get_tajimad_windows(tajima_filename, chr, 40, 0.05, "below", 50000)
     ld_windows <- get_ld_windows(ld_infile, chr, 0.75, "above")
     recomb_windows <- get_recomb_windows(recomb_infile, chr, 0.50, "above")
 
     # Overlap and merge windows
+    # balancing selection windows
     recomb_windows_bal <- get_overlap(get_overlap(tajd_windows_high, ld_windows, chr), recomb_windows, chr)
-    recomb_windows_bal_merge <- merge_windows(recomb_windows_bal, 1000)
+    recomb_windows_bal_merge <- merge_windows(recomb_windows_bal, 1000, chr)
+    # output table
+    if(nrow(recomb_windows_bal_merge) > 0){ # only output table if there are sites to output
+        write.table(recomb_windows_bal_merge, bal_outname, quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
+    }
+    # directional selection windows
     recomb_windows_dir <- get_overlap(get_overlap(tajd_windows_low, ld_windows, chr), recomb_windows, chr)
-    recomb_windows_dir_merge <- merge_windows(recomb_windows_dir, 1000)
+    recomb_windows_dir_merge <- merge_windows(recomb_windows_dir, 1000, chr)
+    # output table
+    if(nrow(recomb_windows_dir_merge) > 0){ # only output table if there are sites to output
+        write.table(recomb_windows_dir_merge, dir_outname, quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
+    }
 
     # make canvas of the correct size (adding 5% padding to either end of the y-axis)
     plot(x = c(0, 10), y = c(round(-1*chr_size*0.05), round(chr_size + chr_size*0.05)), 
-         col = "white", xlab = "", ylab = "Position (bp)")
+         col = "white", xlab = "", xaxt = "n", ylab = "Position (bp)")
     # plot bars for balancing selection
-    rect(xleft = rep(4, nrow(recomb_windows_bal_merge)), ybottom = recomb_windows_bal_merge$start,
-         xright = rep(6, nrow(recomb_windows_bal_merge)), ytop = recomb_windows_bal_merge$end,
-         density = -1, col = "#1ddda3", border = NA)
+    if(nrow(recomb_windows_bal_merge) > 0){
+        rect(xleft = rep(4, nrow(recomb_windows_bal_merge)), ybottom = recomb_windows_bal_merge$start,
+            xright = rep(6, nrow(recomb_windows_bal_merge)), ytop = recomb_windows_bal_merge$end,
+            density = -1, col = "#1ddda3", border = NA)
+    }
     # plot bars for directional selection
-    rect(xleft = rep(4, nrow(recomb_windows_dir_merge)), ybottom = recomb_windows_dir_merge$start,
-         xright = rep(6, nrow(recomb_windows_dir_merge)), ytop = recomb_windows__merge$end,
-         density = -1, col = "#008a60", border = NA)
+    if(nrow(recomb_windows_dir_merge) > 0){
+        rect(xleft = rep(4, nrow(recomb_windows_dir_merge)), ybottom = recomb_windows_dir_merge$start,
+            xright = rep(6, nrow(recomb_windows_dir_merge)), ytop = recomb_windows_dir_merge$end,
+            density = -1, col = "#008a60", border = NA)
+    }
     # Draw outline of chromosome
     rect(xleft = 4, ybottom = 1, xright = 6, ytop = chr_size, density = 0, 
          border = "black")
