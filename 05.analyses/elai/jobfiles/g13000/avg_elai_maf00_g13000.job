@@ -1,0 +1,24 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=avgm0g13000
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=5gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=avg_elai_maf00_g13000_%j.out
+#SBATCH --error=avg_elai_maf00_g13000_%j.err
+
+module purge
+module load R/4.2
+declare -a CHRLIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+OUTPUT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/elai/g13000/maf00/output"
+
+for CHR in "${CHRLIST[@]}"
+do
+    ls "$OUTPUT_DIR"/"$CHR"_*.ps21.txt > "$CHR"_infile_list.txt
+    Rscript "$SCRIPT_DIR"/avg_elai_doses.r "$CHR"_infile_list.txt "$OUTPUT_DIR"/avg/"$CHR"_avg.ps21.txt
+done

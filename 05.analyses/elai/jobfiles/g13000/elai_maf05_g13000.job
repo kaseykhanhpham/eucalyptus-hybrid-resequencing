@@ -1,0 +1,28 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=elaim5g13000
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=5gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=elai_maf05_g13000_%j.out
+#SBATCH --error=elai_maf05_g13000_%j.err
+
+module purge
+module load gsl/2.6
+
+BIN_DIR="/blue/soltis/kasey.pham/bin/ELAI"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/elai"
+declare -a CHRLIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
+
+for RUN in {1..10}
+do
+    for CHR in "${CHRLIST[@]}"
+    do
+        # 30 steps, 2 source populations, 10 subpopulations per source, 13000 generations since admixture, exclude maf < 0.05
+        "$BIN_DIR"/elai -g "$WDIR"/geno_by_chr/glob_ref_"$CHR"_geno.txt -p 10 -g "$WDIR"/geno_by_chr/cord_"$CHR"_geno.txt -p 11 -g "$WDIR"/geno_by_chr/glob_mr_"$CHR"_geno.txt -p 1 -pos "$WDIR"/geno_by_chr/pos_"$CHR".txt -s 30 -o "$CHR"_r"$RUN" -C 2 -c 10 -mg 13000 -exclude-maf 0.05
+    done
+done
