@@ -12,6 +12,7 @@ pi_samplewise
 admin
 admixture_output
 posteriors
+line_plots
 the_shadow_realm
 *.kml
 *.vcf
