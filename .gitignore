@@ -26,6 +26,7 @@ the_shadow_realm
 *.Tajima.D
 *scan_stats.tab
 *.pptx
+Eglob_Chr*_*.png
 .Rdata
 .Rhistory
 introgressednucmarkers.kmz

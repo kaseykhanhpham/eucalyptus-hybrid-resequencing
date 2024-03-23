@@ -512,24 +512,26 @@ plot_recomb <- function(recomb_tabname, ld_tabname, chr, chr_size, high_outname,
          border = "black")
 }
 
-plot_ahmm <- function(ahmm_filenames, ahmm_outname, dxy_filename, dsuite_filename, scan_outname, chr, chr_size){
+plot_ahmm <- function(ahmm_tabnames, ahmm_outname, dxy_tabname, dsuite_tabname, scan_outname, chr, chr_size){
     # Plot introgression windows for genome scan statistics and Ancestry_HMM
     # Get windows of interest
     # AHMM
-    ahmm_windows <- get_ahmm_windows(ahmm_filenames, chr, 0.95, 5)
+    ahmm_windows <- get_ahmm_windows(ahmm_tabnames, chr, 0.95, 5)
     if(nrow(ahmm_windows) > 0){ # only output table if there are sites to output
         write.table(ahmm_windows, ahmm_outname, quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
+        ahmm_windows_merged <- merge_windows(ahmm_windows[,c(1:3)], 100, chr)
+    } else {
+        ahmm_windows_merged <- data.frame()
     }
-    ahmm_windows_merged <- merge_windows(ahmm_windows[,c(1:3)], 100, chr)
-    if(nrow(ahmm_windows_merged) > 0){ # plot merged windows as well
+    if(nrow(ahmm_windows_merged) > 0){ # export merged windows as well
         write.table(ahmm_windows_merged, paste("merged", ahmm_outname, sep = "_"), row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
     }
 
     # dXY
-    dxy_windows <- get_dxy_windows(dxy_filename, "glob_MR", "cord_MR", chr, 40, 0.10, "below")
+    dxy_windows <- get_dxy_windows(dxy_tabname, "glob_MR", "cord_MR", chr, 40, 0.10, "below")
     dxy_windows_merged <- merge_windows(dxy_windows, 100, chr)
     # fdM
-    fdm_windows <- get_dsuite_windows(dsuite_filename, chr, "f_dM", 0.90, "above")
+    fdm_windows <- get_dsuite_windows(dsuite_tabname, chr, "f_dM", 0.90, "above")
     fdm_windows_merged <- merge_windows(fdm_windows, 100, chr)
 
     # Get overlap between genome scan windows
@@ -572,23 +574,25 @@ plot_ahmm <- function(ahmm_filenames, ahmm_outname, dxy_filename, dsuite_filenam
 }
 
 # I would not worry too much about ELAI, there might not even be any sites to graph.
-plot_elai <- function(elai_dose_file, elai_site_file, elai_samples, elai_outname, dxy_filename, dsuite_filename, chr, chr_size){
+plot_elai <- function(elai_dose_file, elai_site_file, elai_samples, elai_outname, dxy_tabname, dsuite_tabname, chr, chr_size){
     # Plot introgression windows
     # Get windows of interest
     # ELAI
     elai_windows <- get_elai_windows(elai_dose_file, elai_site_file, chr, 1.75, 5, elai_samples)
     if(nrow(elai_windows) > 0){ # only output table if there are sites to output
         write.table(elai_windows, elai_outname, quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
+        elai_windows_merged <- merge_windows(elai_windows[,c(1:3)], 100, chr)
+    } else {
+        elai_windows_merged <- data.frame()
     }
-    elai_windows_merged <- merge_windows(elai_windows[,c(1:3)], 100, chr)
-    if(nrow(elai_windows_merged) > 0){ # plot merged windows as well
+    if(nrow(elai_windows_merged) > 0){ # export merged windows as well
         write.table(elai_windows_merged, paste("merged", elai_outname, sep = "_"), row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
     }
     # dXY
-    dxy_windows <- get_dxy_windows(dxy_filename, "glob_MR", "cord_MR", chr, 40, 0.10, "below")
+    dxy_windows <- get_dxy_windows(dxy_tabname, "glob_MR", "cord_MR", chr, 40, 0.10, "below")
     dxy_windows_merged <- merge_windows(dxy_windows, 100, chr)
     # fdM
-    fdm_windows <- get_dsuite_windows(dsuite_filename, chr, "f_dM", 0.90, "above")
+    fdm_windows <- get_dsuite_windows(dsuite_tabname, chr, "f_dM", 0.90, "above")
     fdm_windows_merged <- merge_windows(fdm_windows, 100, chr)
 
     # Get overlap between genome scan windows
@@ -628,10 +632,10 @@ plot_elai <- function(elai_dose_file, elai_site_file, elai_samples, elai_outname
          border = "black")
 }
 
-plot_sel <- function(tajima_filename, ld_infile, recomb_infile, chr, chr_size, bal_outname, dir_outname){
+plot_sel <- function(tajima_tabname, ld_infile, recomb_infile, chr, chr_size, bal_outname, dir_outname){
     # Plot regions of selection (very high or low Tajima's D, increased LD, not low recombination rate)
-    tajd_windows_high <- get_tajimad_windows(tajima_filename, chr, 40, 0.95, "above", 50000)
-    tajd_windows_low <- get_tajimad_windows(tajima_filename, chr, 40, 0.05, "below", 50000)
+    tajd_windows_high <- get_tajimad_windows(tajima_tabname, chr, 40, 0.95, "above", 50000)
+    tajd_windows_low <- get_tajimad_windows(tajima_tabname, chr, 40, 0.05, "below", 50000)
     ld_windows <- get_ld_windows(ld_infile, chr, 0.75, "above")
     recomb_windows <- get_recomb_windows(recomb_infile, chr, 0.50, "above")
 
