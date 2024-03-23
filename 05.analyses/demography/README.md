@@ -429,9 +429,10 @@ D = adj*2*(4231.53 - 4217.42)
 p_val = dadi.Godambe.sum_chi2_ppf(D, weights=(0,1)) # Pval = 0.0; significantly different
 
 # bottlegrowth vs. three epoch
-adj = dadi.Godambe.LRT_adjust(func_ex=te_func_ex, grid_pts=pts, all_boot=boots, p0=te_bfps, data=fs, nested_indices=bg_te_nested, multinom=True)
-D = adj*2*(4231.53 - 1022.09)
-p_val = dadi.Godambe.sum_chi2_ppf(D, weights=(0.5,0.5)) # Pval = 0.0; significantly different
+# This isn't right, they're not actually nested models.
+# adj = dadi.Godambe.LRT_adjust(func_ex=te_func_ex, grid_pts=pts, all_boot=boots, p0=te_bfps, data=fs, nested_indices=bg_te_nested, multinom=True)
+# D = adj*2*(4231.53 - 1022.09)
+# p_val = dadi.Godambe.sum_chi2_ppf(D, weights=(0.5,0.5)) # Pval = 0.0; significantly different
 
 ## PARAMETER UNCERTAINTY
 uncert = dadi.Godambe.GIM_uncert(func_ex=te_func_ex, grid_pts=pts, all_boot=boots, p0=te_bfps, data=fs, log = True, multinom = True)
