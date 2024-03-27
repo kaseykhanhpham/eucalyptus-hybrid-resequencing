@@ -100,7 +100,7 @@ plot_heatmap <- function(heat_mat, names_from, names_to, chr_name, post_cutoff){
 
     dose_plot <- ggplot(heat_mat, aes(window, acc, fill = dosage)) + 
                 geom_tile(color = "#000000") + 
-                scale_fill_steps(high = "#888888", low = "#ffffff") + 
+                scale_fill_steps(high = "#616161", low = "#ffffff") + 
                 guides(fill = guide_coloursteps(title = NULL, show.limits = TRUE)) +
                 ggtitle(paste(chr_name, "maximum dosage of E. cordata ancestry per window")) + 
                 xlab(paste(chr_name, "Window")) + 
