@@ -56,30 +56,30 @@ elai_samples <- read.table(elai_samples_name, header = FALSE)$V1
 
 # Species fixed differences
 message("Plotting species differences...", stderr())
-png(paste(out_pref, chr, "fdiffs.png", sep = "_"), width = 1000, height = 3500)
+png(paste(out_pref, chr, "fdiffs.png", sep = "_"), width = 500, height = 3500)
     plot_spp_diverge(fdiff_tabname = spp_diffs_name, fst_tabname = fst_name, chr = chr, chr_size = chr_size, outfile_name = paste(out_pref, chr, "fdiffs.bed", sep = "_"))
 dev.off()
 
 # Recombination landscape
 message("Plotting recombination...", stderr())
-png(paste(out_pref, chr, "recomb.png", sep = "_"), width = 1000, height = 3500) 
+png(paste(out_pref, chr, "recomb.png", sep = "_"), width = 500, height = 3500) 
     plot_recomb(recomb_tabname = recomb_name, ld_tabname = ld_name, chr = chr, chr_size = chr_size, high_outname = paste(out_pref, chr, "recomb_hotspots.bed", sep = "_"), low_outname = paste(out_pref, chr, "recomb_suppr.bed", sep = "_"))
 dev.off()
 
 # Ancestry_HMM introgression
 message("Plotting Ancestry_HMM results...", stderr())
-png(paste(out_pref, chr, "ahmm.png", sep = "_"), width = 1000, height = 3500)
+png(paste(out_pref, chr, "ahmm.png", sep = "_"), width = 500, height = 3500)
     plot_ahmm(ahmm_tabnames = ahmm_list, ahmm_outname = paste(out_pref, chr, "ahmm.bed", sep = "_"), dxy_tabname = dxy_name, dsuite_tabname = dsuite_name, scan_outname = paste(out_pref, chr, "gscan_intr.bed", sep = "_"), chr = chr, chr_size = chr_size)
 dev.off()
 
 # ELAI introgression
 message("Plotting ELAI results...", stderr())
-png(paste(out_pref, chr, "elai.png", sep = "_"), width = 1000, height = 3500)
+png(paste(out_pref, chr, "elai.png", sep = "_"), width = 500, height = 3500)
     plot_elai(elai_dose_file = elai_dose_name, elai_site_file = elai_snpinfo_name, elai_samples = elai_samples, elai_outname = paste(out_pref, chr, "elai.bed", sep = "_"), dxy_tabname = dxy_name, dsuite_tabname = dsuite_name, chr = chr, chr_size = chr_size)
 dev.off()
 
 # Selection landscape
 message("Plotting selection...", stderr())
-png(paste(out_pref, chr, "sel.png", sep = "_"), width = 1000, height = 3500)
+png(paste(out_pref, chr, "sel.png", sep = "_"), width = 500, height = 3500)
     plot_sel(tajima_tabname = tajd_name, ld_infile = ld_name, recomb_infile = recomb_name, chr = chr, chr_size = chr_size, bal_outname = paste(out_pref, chr, "balance_sel.bed", sep = "_"), dir_outname = paste(out_pref, chr, "direction_sel.bed", sep = "_"))
 dev.off()

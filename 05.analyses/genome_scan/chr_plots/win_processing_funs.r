@@ -355,10 +355,10 @@ merge_windows <- function(wintab, thresh, chr){
         end_new <- c()
 
         # add dummy entry at bottom of input table to evaluate last real row in coming loop
-        new_row <- c(1, 2) # DUMMY ROW
+        new_row <- c(1999999999, 2000000000) # DUMMY ROW
         overl_tab[(nrow(overl_tab) + 1),] <- new_row
-        overl_tab$start <- as.integer(overl_tab$start)
-        overl_tab$end <- as.integer(overl_tab$end)
+        overl_tab$start <- as.numeric(overl_tab$start)
+        overl_tab$end <- as.numeric(overl_tab$end)
 
         # initialize storage variables for loop
         curr_start <- overl_tab[1, "start"]
@@ -367,7 +367,7 @@ merge_windows <- function(wintab, thresh, chr){
         # loop through input dataframe
         for(i in c(2:nrow(overl_tab))){
             if((overl_tab[i, "start"] - curr_end) > thresh){
-                # if switching chromosomes or regions are farther than threshold,
+                # if next region is farther than threshold,
                 # write and update all variables
                 start_new <- c(start_new, curr_start)
                 end_new <- c(end_new, curr_end)
@@ -438,9 +438,9 @@ plot_spp_diverge <- function(fdiff_tabname, fst_tabname, chr, chr_size, outfile_
     fst_95_wins <- get_fst_windows(fst_tabname, "glob_pure", "cord_MR", chr, 15, 0.95, "above")
     # (lower minimum site requirement because FST only considers variable sites)
 
-    # merge windows that are close to each other (< 1000 bp)
-    fst_80_wins_merged <- merge_windows(fst_80_wins, 1000, chr)
-    fst_95_wins_merged <- merge_windows(fst_95_wins, 1000, chr)
+    # merge windows that are close to each other (< 5001 bp)
+    fst_80_wins_merged <- merge_windows(fst_80_wins, 5001, chr)
+    fst_95_wins_merged <- merge_windows(fst_95_wins, 5001, chr)
 
     # output 95th percentile FST table
     if(nrow(fst_95_wins_merged) > 0){
@@ -516,23 +516,53 @@ plot_ahmm <- function(ahmm_tabnames, ahmm_outname, dxy_tabname, dsuite_tabname, 
     # Plot introgression windows for genome scan statistics and Ancestry_HMM
     # Get windows of interest
     # AHMM
-    ahmm_windows <- get_ahmm_windows(ahmm_tabnames, chr, 0.95, 5)
-    if(nrow(ahmm_windows) > 0){ # only output table if there are sites to output
-        write.table(ahmm_windows, ahmm_outname, quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
-        ahmm_windows_merged <- merge_windows(ahmm_windows[,c(1:3)], 100, chr)
+    ahmm_seeds <- get_ahmm_windows(ahmm_tabnames, chr, 0.95, 5)
+    if(nrow(ahmm_seeds) > 0){ # only output and merge table if there are sites to output
+        write.table(ahmm_seeds, paste("seeds", ahmm_outname, sep = "_"), quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
+        ahmm_seeds_merged <- merge_windows(ahmm_seeds[,c(1:3)], 500, chr)
+        # write.table(ahmm_seeds_merged, paste("seeds", "merged", ahmm_outname, sep = "_"), row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t") # feels redundant since we're printing the expanded windows later.
     } else {
-        ahmm_windows_merged <- data.frame()
+        ahmm_seeds_merged <- data.frame()
     }
-    if(nrow(ahmm_windows_merged) > 0){ # export merged windows as well
-        write.table(ahmm_windows_merged, paste("merged", ahmm_outname, sep = "_"), row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
+    # Expand AHMM regions
+    # get areas where posterior > 0.89
+    ahmm_surr <- get_ahmm_windows(ahmm_tabnames, chr, 0.89, 5)
+    if(nrow(ahmm_surr) > 0){
+        ahmm_surr_merged <- merge_windows(ahmm_surr[,c(1:3)], 500, chr)
+    } else { 
+        ahmm_surr_merged <- data.frame()
+    }
+    # subset to areas where posterior > 0.89 AND contains at least one region where posterior > 0.95
+    final_start <- c()
+    final_end <- c()
+    if(nrow(ahmm_seeds_merged) > 0){
+        for(i in c(1:nrow(ahmm_seeds_merged))){
+            lower <- ahmm_surr_merged$start <= ahmm_seeds_merged[i, "start"]
+            higher <- ahmm_surr_merged$end >= ahmm_seeds_merged[i, "end"]
+            if(any(lower & higher)){ # check if there are any regions with posterior > 0.89 that contain a seed
+                # if there are, add that region to the final set
+                final_start <- c(final_start, ahmm_surr_merged[which(lower & higher), "start"])
+                final_end <- c(final_end, ahmm_surr_merged[which(lower & higher), "end"])
+            } else {
+                # if not, add original seed location
+                final_start <- c(final_start, ahmm_seeds_merged[i, "start"])
+                final_end <- c(final_end, ahmm_seeds_merged[i, "end"])
+            }
+        }
+    }
+    # construct final AHMM table of 0.95 posterior regions and surrounding 0.89 posterior regions
+    ahmm_windows <- data.frame(chr = rep(chr, length(final_start)), start = final_start, end = final_end)
+    ahmm_windows_merged <- merge_windows(ahmm_windows, 5001, chr)
+    if(nrow(ahmm_windows) > 0){
+        write.table(ahmm_windows_merged, paste("merged", ahmm_outname, sep = "_"), quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
     }
 
     # dXY
     dxy_windows <- get_dxy_windows(dxy_tabname, "glob_MR", "cord_MR", chr, 40, 0.10, "below")
-    dxy_windows_merged <- merge_windows(dxy_windows, 100, chr)
+    dxy_windows_merged <- merge_windows(dxy_windows, 5001, chr)
     # fdM
     fdm_windows <- get_dsuite_windows(dsuite_tabname, chr, "f_dM", 0.90, "above")
-    fdm_windows_merged <- merge_windows(fdm_windows, 100, chr)
+    fdm_windows_merged <- merge_windows(fdm_windows, 5001, chr)
 
     # Get overlap between genome scan windows
     dxy_fdm_overl <- get_overlap(dxy_windows_merged, fdm_windows_merged, chr)
@@ -573,27 +603,57 @@ plot_ahmm <- function(ahmm_tabnames, ahmm_outname, dxy_tabname, dsuite_tabname, 
          border = "black")
 }
 
-# I would not worry too much about ELAI, there might not even be any sites to graph.
 plot_elai <- function(elai_dose_file, elai_site_file, elai_samples, elai_outname, dxy_tabname, dsuite_tabname, chr, chr_size){
     # Plot introgression windows
     # Get windows of interest
     # ELAI
-    elai_windows <- get_elai_windows(elai_dose_file, elai_site_file, chr, 1.75, 5, elai_samples)
-    if(nrow(elai_windows) > 0){ # only output table if there are sites to output
-        write.table(elai_windows, elai_outname, quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
-        elai_windows_merged <- merge_windows(elai_windows[,c(1:3)], 100, chr)
+    elai_seeds <- get_elai_windows(elai_dose_file, elai_site_file, chr, 1.75, 5, elai_samples)
+    if(nrow(elai_seeds) > 0){ # only output table if there are sites to output
+        write.table(elai_seeds, paste("seed", elai_outname, sep = "_"), quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
+        elai_seeds_merged <- merge_windows(elai_seeds[,c(1:3)], 500, chr)
     } else {
-        elai_windows_merged <- data.frame()
+        elai_seeds_merged <- data.frame()
     }
-    if(nrow(elai_windows_merged) > 0){ # export merged windows as well
-        write.table(elai_windows_merged, paste("merged", elai_outname, sep = "_"), row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
+    # Expand ELAI regions
+    # get areas where dose > 1.5
+    elai_surr <- get_elai_windows(elai_dose_file, elai_site_file, chr, 1.5, 5, elai_samples)
+    if(nrow(elai_surr) > 0){
+        elai_surr_merged <- merge_windows(elai_surr[,c(1:3)], 500, chr)
+    } else { 
+        elai_surr_merged <- data.frame()
     }
+    # subset to areas where dosage > 1.5 AND contains at least one region where dosage > 1.75
+    final_start <- c()
+    final_end <- c()
+    if(nrow(elai_seeds_merged) > 0){
+        for(i in c(1:nrow(elai_seeds_merged))){
+            lower <- elai_surr_merged$start <= elai_seeds_merged[i, "start"]
+            higher <- elai_surr_merged$end >= elai_seeds_merged[i, "end"]
+            if(any(lower & higher)){ # check if there are any regions with dosage > 1.5 that contain
+                                      # a seed
+                # if there are, add that region to the final set
+                final_start <- c(final_start, elai_surr_merged[which(lower & higher), "start"])
+                final_end <- c(final_end, elai_surr_merged[which(lower & higher), "end"])
+            } else {
+                # if not, add original seed location
+                final_start <- c(final_start, elai_seeds_merged[i, "start"])
+                final_end <- c(final_end, elai_seeds_merged[i, "end"])
+            }
+        }
+    }
+    # construct final ELAI table of 1.75 dosage regions and surrounding 1.5 dosage regions
+    elai_windows <- data.frame(chr = rep(chr, length(final_start)), start = final_start, end = final_end)
+    elai_windows_merged <- merge_windows(elai_windows, 5001, chr)
+    if(nrow(elai_windows) > 0){
+        write.table(elai_windows_merged, paste("merged", elai_outname, sep = "_"), quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
+    }
+
     # dXY
     dxy_windows <- get_dxy_windows(dxy_tabname, "glob_MR", "cord_MR", chr, 40, 0.10, "below")
-    dxy_windows_merged <- merge_windows(dxy_windows, 100, chr)
+    dxy_windows_merged <- merge_windows(dxy_windows, 5001, chr)
     # fdM
     fdm_windows <- get_dsuite_windows(dsuite_tabname, chr, "f_dM", 0.90, "above")
-    fdm_windows_merged <- merge_windows(fdm_windows, 100, chr)
+    fdm_windows_merged <- merge_windows(fdm_windows, 5001, chr)
 
     # Get overlap between genome scan windows
     dxy_fdm_overl <- get_overlap(dxy_windows_merged, fdm_windows_merged, chr)
