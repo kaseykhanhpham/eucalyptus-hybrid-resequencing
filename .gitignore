@@ -27,6 +27,9 @@ the_shadow_realm
 *scan_stats.tab
 *.pptx
 Eglob_Chr*_*.png
+*.ps21.txt
+*.snpinfo.txt
+*.bed
 .Rdata
 .Rhistory
 introgressednucmarkers.kmz
