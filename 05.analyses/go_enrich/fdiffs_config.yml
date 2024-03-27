@@ -1,0 +1,18 @@
+#Input section 
+input:
+  #input fasta file name
+  fasta: Eglob_all_fdiffs_genes.fas
+  # output file basename
+  basename: fdiffs
+  #input NCBI taxonomy id
+  taxon: "34317"
+  # Name of the species
+  species: "Eucalyptus globulus"
+  # Email is mandatory
+  email: kasey.pham@ufl.edu
+  #Number of CPUs used for tools
+  cpus: 8
+  #Whether openmpi should be used
+  mpi: False
+  #what the name of the temporary directory is
+  tmpdir: "/tmpdir"
