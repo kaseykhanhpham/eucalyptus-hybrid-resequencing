@@ -311,3 +311,5 @@ for(chr in chr_list){
 fdiffs_tab <- data.frame(chr = chr_full, pos = sites_full)
 write.table(fdiffs_tab, "fixed_diffs_globref_cord.tab", row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
 ```
+
+See `chr_plots` README for synthesis of the results and plotting notes.
