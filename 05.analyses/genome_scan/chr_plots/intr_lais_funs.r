@@ -3,6 +3,7 @@
 
 plot_ahmm_low <- function(ahmm_tabnames, ahmm_outname, dxy_tabname, dsuite_tabname, scan_outname, chr, chr_size){
     # Plot introgression windows for genome scan statistics and Ancestry_HMM
+    max_chr_size <- 70214608
     # Get windows of interest
     # AHMM
     ahmm_seeds <- get_ahmm_windows(ahmm_tabnames, chr, 0.95, 4)
@@ -60,41 +61,42 @@ plot_ahmm_low <- function(ahmm_tabnames, ahmm_outname, dxy_tabname, dsuite_tabna
     }
 
     # make canvas of the correct size (adding 5% padding to either end of the y-axis)
-    plot(x = c(0, 10), y = c(round(-1*chr_size*0.05), round(chr_size + chr_size*0.05)), 
+    plot(x = c(0, 10), y = c(round(-1*max_chr_size*0.05), round(max_chr_size + max_chr_size*0.05)), 
          col = "white", xlab = "", xaxt = "n", ylab = "Position (bp)")
     # plot bars for dxy regions
     if(nrow(dxy_windows_merged) > 0){
         rect(xleft = rep(4, nrow(dxy_windows_merged)), ybottom = dxy_windows_merged$start,
             xright = rep(6, nrow(dxy_windows_merged)), ytop = dxy_windows_merged$end,
-            density = -1, col = "#18CC3E", border = NA)
+            density = -1, col = "#18CC3E", border = "#18CC3E", lwd = 1.5)
     }
     # plot bars for fdm regions
     if(nrow(fdm_windows_merged) > 0){ # check that table is populated for this chromosome
             rect(xleft = rep(4, nrow(fdm_windows_merged)), ybottom = fdm_windows_merged$start,
                 xright = rep(6, nrow(fdm_windows_merged)), ytop = fdm_windows_merged$end,
-                density = -1, col = "#FFF147", border = NA)
+                density = -1, col = "#FFF147", border = "#FFF147", lwd = 1.5)
     }
     # plot bars for overlaps
     if(nrow(dxy_fdm_overl) > 0){
         rect(xleft = rep(4, nrow(dxy_fdm_overl)), ybottom = dxy_fdm_overl$start,
             xright = rep(6, nrow(dxy_fdm_overl)), ytop = dxy_fdm_overl$end,
-            density = -1, col = "#b5d42a", border = NA)
+            density = -1, col = "#b5d42a", border = "#b5d42a", lwd = 1.5)
     }
     # plot bars for AHMM regions
     if(nrow(ahmm_windows_merged) > 0){ # check that table is populated for this chromosome
         rect(xleft = rep(4, nrow(ahmm_windows_merged)), ybottom = ahmm_windows_merged$start,
             xright = rep(6, nrow(ahmm_windows_merged)), ytop = ahmm_windows_merged$end,
-            density = -1, col = "#263CA9", border = NA)
+            density = -1, col = "#263CA9", border = "#263CA9", lwd = 1.5)
     }
 
     # Draw outline of chromosome
     rect(xleft = 4, ybottom = 1, xright = 6, ytop = chr_size, density = 0, 
-         border = "black")
+         border = "black", lwd = 4)
 }
 
 # I would not worry too much about ELAI, there might not even be any sites to graph.
 plot_elai_low <- function(elai_dose_file, elai_site_file, elai_samples, elai_outname, dxy_tabname, dsuite_tabname, chr, chr_size){
     # Plot introgression windows
+    max_chr_size <- 70214608
     # Get windows of interest
     # ELAI
     elai_seeds <- get_elai_windows(elai_dose_file, elai_site_file, chr, 1.75, 4, elai_samples)
@@ -150,34 +152,34 @@ plot_elai_low <- function(elai_dose_file, elai_site_file, elai_samples, elai_out
     # don't need to write output because already done in plot_ahmm
 
     # make canvas of the correct size (adding 5% padding to either end of the y-axis)
-    plot(x = c(0, 10), y = c(round(-1*chr_size*0.05), round(chr_size + chr_size*0.05)), 
+    plot(x = c(0, 10), y = c(round(-1*max_chr_size*0.05), round(max_chr_size + max_chr_size*0.05)), 
          col = "white", xlab = "", xaxt = "n", ylab = "Position (bp)")
     # plot bars for dxy regions
     if(nrow(dxy_windows_merged) > 0){
         rect(xleft = rep(4, nrow(dxy_windows_merged)), ybottom = dxy_windows_merged$start,
             xright = rep(6, nrow(dxy_windows_merged)), ytop = dxy_windows_merged$end,
-            density = -1, col = "#18CC3E", border = NA)
+            density = -1, col = "#18CC3E", border = "#18CC3E", lwd = 1.5)
     }
     # plot bars for fdm regions
     if(nrow(fdm_windows_merged) > 0){ # check that table is populated for this chromosome
             rect(xleft = rep(4, nrow(fdm_windows_merged)), ybottom = fdm_windows_merged$start,
                 xright = rep(6, nrow(fdm_windows_merged)), ytop = fdm_windows_merged$end,
-                density = -1, col = "#FFF147", border = NA)
+                density = -1, col = "#FFF147", border = "#FFF147", lwd = 1.5)
     }
     # plot bars for overlaps
     if(nrow(dxy_fdm_overl) > 0){
         rect(xleft = rep(4, nrow(dxy_fdm_overl)), ybottom = dxy_fdm_overl$start,
             xright = rep(6, nrow(dxy_fdm_overl)), ytop = dxy_fdm_overl$end,
-            density = -1, col = "#b5d42a", border = NA)
+            density = -1, col = "#b5d42a", border = "#b5d42a", lwd = 1.5)
     }
     # plot bars for ELAI regions
     if(nrow(elai_windows_merged) > 0){ # check that table is populated for this chromosome
         rect(xleft = rep(4, nrow(elai_windows_merged)), ybottom = elai_windows_merged$start,
             xright = rep(6, nrow(elai_windows_merged)), ytop = elai_windows_merged$end,
-            density = -1, col = "#263CA9", border = NA)
+            density = -1, col = "#263CA9", border = "#263CA9", lwd = 1.5)
     }
 
     # Draw outline of chromosome
     rect(xleft = 4, ybottom = 1, xright = 6, ytop = chr_size, density = 0, 
-         border = "black")
+         border = "black", lwd = 4)
 }

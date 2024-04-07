@@ -436,6 +436,7 @@ plot_spp_diverge <- function(fdiff_tabname, fst_tabname, chr, chr_size, outfile_
     fdiff_tab <- fdiff_tab[which(fdiff_tab$chr == chr),] # subset for the chromosome
     fst_80_wins <- get_fst_windows(fst_tabname, "glob_pure", "cord_MR", chr, 15, 0.8, "above")
     fst_95_wins <- get_fst_windows(fst_tabname, "glob_pure", "cord_MR", chr, 15, 0.95, "above")
+    max_chr_size <- 70214608
     # (lower minimum site requirement because FST only considers variable sites)
 
     # merge windows that are close to each other (< 5001 bp)
@@ -448,29 +449,30 @@ plot_spp_diverge <- function(fdiff_tabname, fst_tabname, chr, chr_size, outfile_
     }
 
     # make canvas of the correct size (adding 5% padding to either end of the y-axis)
-    plot(x = c(0, 10), y = c(round(-1*chr_size*0.05), round(chr_size + chr_size*0.05)), 
+    plot(x = c(0, 10), y = c(round(-1*max_chr_size*0.05), round(max_chr_size + max_chr_size*0.05)), 
          col = "white", xlab = "", xaxt = "n", ylab = "Position (bp)")
     # Plot bars for FST > 0.80
     if(nrow(fst_80_wins_merged) > 0){ # check if table is populated for the chromosome
         rect(xleft = rep(4, nrow(fst_80_wins_merged)), ybottom = fst_80_wins_merged$start, 
             xright = rep(6, nrow(fst_80_wins_merged)), ytop = fst_80_wins_merged$end,
-            density = -1, col = "#cccccc", border = NA)
+            density = -1, col = "#cccccc", border = "#cccccc", lwd = 1.5)
     }
     # Plot bars for FST > 0.95
     if(nrow(fst_95_wins_merged) > 0){
         rect(xleft = rep(4, nrow(fst_95_wins_merged)), ybottom = fst_95_wins_merged$start, 
             xright = rep(6, nrow(fst_95_wins_merged)), ytop = fst_95_wins_merged$end,
-            density = -1, col = "#494949", border = NA)
+            density = -1, col = "#494949", border = "#494949", lwd = 1.5)
     }
     # Plot fixed differences
     if(nrow(fdiff_tab) > 0){ # check if fixed differences tab is empty for the chromosome.
         rect(xleft = rep(4, nrow(fdiff_tab)), ybottom = fdiff_tab$pos, 
             xright = rep(6, nrow(fdiff_tab)), ytop = fdiff_tab$pos,
-            density = -1, col = "#000000", border = NA)
-    }
+            density = -1, col = "#000000", border = "#000000", lwd = 1.5)
+    
     # Draw outline of chromosome
     rect(xleft = 4, ybottom = 1, xright = 6, ytop = chr_size, density = 0, 
-         border = "black")
+         border = "black", lwd = 4)
+    }
 }
 
 plot_recomb <- function(recomb_tabname, ld_tabname, chr, chr_size, high_outname, low_outname){
@@ -491,29 +493,31 @@ plot_recomb <- function(recomb_tabname, ld_tabname, chr, chr_size, high_outname,
     if(nrow(protected_regions_merged) > 0){
         write.table(protected_regions_merged, low_outname, row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
     }
+    max_chr_size <- 70214608
 
     # make canvas of the correct size (adding 5% padding to either end of the y-axis)
-    plot(x = c(0, 10), y = c(round(-1*chr_size*0.05), round(chr_size + chr_size*0.05)), 
+    plot(x = c(0, 10), y = c(round(-1*max_chr_size*0.05), round(max_chr_size + max_chr_size*0.05)), 
          col = "white", xlab = "", xaxt = "n", ylab = "Position (bp)")
     # plot bars for hotspots
     if(nrow(recomb_high_wins_merged) > 0){ # check if table is populated for the chromosome
         rect(xleft = rep(4, nrow(recomb_high_wins_merged)), ybottom = recomb_high_wins_merged$start,
             xright = rep(6, nrow(recomb_high_wins_merged)), ytop = recomb_high_wins_merged$end,
-            density = -1, col = "#ea5a80", border = NA)
+            density = -1, col = "#ea5a80", border = "#ea5a80", lwd = 1.5)
     }
     # plot bars for protected regions
     if(nrow(protected_regions_merged) > 0){
         rect(xleft = rep(4, nrow(protected_regions_merged)), ybottom = protected_regions_merged$start,
             xright = rep(6, nrow(protected_regions_merged)), ytop = protected_regions_merged$end,
-            density = -1, col = "#501392", border = NA)
+            density = -1, col = "#501392", border = "#501392", lwd = 1.5)
     }
     # Draw outline of chromosome
     rect(xleft = 4, ybottom = 1, xright = 6, ytop = chr_size, density = 0, 
-         border = "black")
+         border = "black", lwd = 4)
 }
 
 plot_ahmm <- function(ahmm_tabnames, ahmm_outname, dxy_tabname, dsuite_tabname, scan_outname, chr, chr_size){
     # Plot introgression windows for genome scan statistics and Ancestry_HMM
+    max_chr_size <- 70214608
     # Get windows of interest
     # AHMM
     ahmm_seeds <- get_ahmm_windows(ahmm_tabnames, chr, 0.95, 5)
@@ -571,40 +575,41 @@ plot_ahmm <- function(ahmm_tabnames, ahmm_outname, dxy_tabname, dsuite_tabname, 
     }
 
     # make canvas of the correct size (adding 5% padding to either end of the y-axis)
-    plot(x = c(0, 10), y = c(round(-1*chr_size*0.05), round(chr_size + chr_size*0.05)), 
+    plot(x = c(0, 10), y = c(round(-1*max_chr_size*0.05), round(max_chr_size + max_chr_size*0.05)), 
          col = "white", xlab = "", xaxt = "n", ylab = "Position (bp)")
     # plot bars for dxy regions
     if(nrow(dxy_windows_merged) > 0){
         rect(xleft = rep(4, nrow(dxy_windows_merged)), ybottom = dxy_windows_merged$start,
             xright = rep(6, nrow(dxy_windows_merged)), ytop = dxy_windows_merged$end,
-            density = -1, col = "#18CC3E", border = NA)
+            density = -1, col = "#18CC3E", border = "#18CC3E", lwd = 1.5)
     }
     # plot bars for fdm regions
     if(nrow(fdm_windows_merged) > 0){ # check that table is populated for this chromosome
             rect(xleft = rep(4, nrow(fdm_windows_merged)), ybottom = fdm_windows_merged$start,
                 xright = rep(6, nrow(fdm_windows_merged)), ytop = fdm_windows_merged$end,
-                density = -1, col = "#FFF147", border = NA)
+                density = -1, col = "#FFF147", border = "#FFF147", lwd = 1.5)
     }
     # plot bars for overlaps
     if(nrow(dxy_fdm_overl) > 0){
         rect(xleft = rep(4, nrow(dxy_fdm_overl)), ybottom = dxy_fdm_overl$start,
             xright = rep(6, nrow(dxy_fdm_overl)), ytop = dxy_fdm_overl$end,
-            density = -1, col = "#b5d42a", border = NA)
+            density = -1, col = "#b5d42a", border = "#b5d42a", lwd = 1.5)
     }
     # plot bars for AHMM regions
     if(nrow(ahmm_windows_merged) > 0){ # check that table is populated for this chromosome
         rect(xleft = rep(4, nrow(ahmm_windows_merged)), ybottom = ahmm_windows_merged$start,
             xright = rep(6, nrow(ahmm_windows_merged)), ytop = ahmm_windows_merged$end,
-            density = -1, col = "#263CA9", border = NA)
+            density = -1, col = "#263CA9", border = "#263CA9", lwd = 1.5)
     }
 
     # Draw outline of chromosome
     rect(xleft = 4, ybottom = 1, xright = 6, ytop = chr_size, density = 0, 
-         border = "black")
+         border = "black", lwd = 4)
 }
 
 plot_elai <- function(elai_dose_file, elai_site_file, elai_samples, elai_outname, dxy_tabname, dsuite_tabname, chr, chr_size){
     # Plot introgression windows
+    max_chr_size <- 70214608
     # Get windows of interest
     # ELAI
     elai_seeds <- get_elai_windows(elai_dose_file, elai_site_file, chr, 1.75, 5, elai_samples)
@@ -660,40 +665,41 @@ plot_elai <- function(elai_dose_file, elai_site_file, elai_samples, elai_outname
     # don't need to write output because already done in plot_ahmm
 
     # make canvas of the correct size (adding 5% padding to either end of the y-axis)
-    plot(x = c(0, 10), y = c(round(-1*chr_size*0.05), round(chr_size + chr_size*0.05)), 
+    plot(x = c(0, 10), y = c(round(-1*max_chr_size*0.05), round(max_chr_size + max_chr_size*0.05)), 
          col = "white", xlab = "", xaxt = "n", ylab = "Position (bp)")
     # plot bars for dxy regions
     if(nrow(dxy_windows_merged) > 0){
         rect(xleft = rep(4, nrow(dxy_windows_merged)), ybottom = dxy_windows_merged$start,
             xright = rep(6, nrow(dxy_windows_merged)), ytop = dxy_windows_merged$end,
-            density = -1, col = "#18CC3E", border = NA)
+            density = -1, col = "#18CC3E", border = "#18CC3E", lwd = 1.5)
     }
     # plot bars for fdm regions
     if(nrow(fdm_windows_merged) > 0){ # check that table is populated for this chromosome
             rect(xleft = rep(4, nrow(fdm_windows_merged)), ybottom = fdm_windows_merged$start,
                 xright = rep(6, nrow(fdm_windows_merged)), ytop = fdm_windows_merged$end,
-                density = -1, col = "#FFF147", border = NA)
+                density = -1, col = "#FFF147", border = "#FFF147", lwd = 1.5)
     }
     # plot bars for overlaps
     if(nrow(dxy_fdm_overl) > 0){
         rect(xleft = rep(4, nrow(dxy_fdm_overl)), ybottom = dxy_fdm_overl$start,
             xright = rep(6, nrow(dxy_fdm_overl)), ytop = dxy_fdm_overl$end,
-            density = -1, col = "#b5d42a", border = NA)
+            density = -1, col = "#b5d42a", border = "#b5d42a", lwd = 1.5)
     }
     # plot bars for ELAI regions
     if(nrow(elai_windows_merged) > 0){ # check that table is populated for this chromosome
         rect(xleft = rep(4, nrow(elai_windows_merged)), ybottom = elai_windows_merged$start,
             xright = rep(6, nrow(elai_windows_merged)), ytop = elai_windows_merged$end,
-            density = -1, col = "#263CA9", border = NA)
+            density = -1, col = "#263CA9", border = "#263CA9", lwd = 1.5)
     }
 
     # Draw outline of chromosome
     rect(xleft = 4, ybottom = 1, xright = 6, ytop = chr_size, density = 0, 
-         border = "black")
+         border = "black", lwd = 4)
 }
 
 plot_sel <- function(tajima_tabname, ld_infile, recomb_infile, chr, chr_size, bal_outname, dir_outname){
     # Plot regions of selection (very high or low Tajima's D, increased LD, not low recombination rate)
+    max_chr_size <- 70214608
     tajd_windows_high <- get_tajimad_windows(tajima_tabname, chr, 40, 0.95, "above", 50000)
     tajd_windows_low <- get_tajimad_windows(tajima_tabname, chr, 40, 0.05, "below", 50000)
     ld_windows <- get_ld_windows(ld_infile, chr, 0.75, "above")
@@ -716,21 +722,21 @@ plot_sel <- function(tajima_tabname, ld_infile, recomb_infile, chr, chr_size, ba
     }
 
     # make canvas of the correct size (adding 5% padding to either end of the y-axis)
-    plot(x = c(0, 10), y = c(round(-1*chr_size*0.05), round(chr_size + chr_size*0.05)), 
+    plot(x = c(0, 10), y = c(round(-1*max_chr_size*0.05), round(max_chr_size + max_chr_size*0.05)), 
          col = "white", xlab = "", xaxt = "n", ylab = "Position (bp)")
     # plot bars for balancing selection
     if(nrow(recomb_windows_bal_merge) > 0){
         rect(xleft = rep(4, nrow(recomb_windows_bal_merge)), ybottom = recomb_windows_bal_merge$start,
             xright = rep(6, nrow(recomb_windows_bal_merge)), ytop = recomb_windows_bal_merge$end,
-            density = -1, col = "#1ddda3", border = NA)
+            density = -1, col = "#1ddda3", border = "#1ddda3", lwd = 1.5)
     }
     # plot bars for directional selection
     if(nrow(recomb_windows_dir_merge) > 0){
         rect(xleft = rep(4, nrow(recomb_windows_dir_merge)), ybottom = recomb_windows_dir_merge$start,
             xright = rep(6, nrow(recomb_windows_dir_merge)), ytop = recomb_windows_dir_merge$end,
-            density = -1, col = "#008a60", border = NA)
+            density = -1, col = "#008a60", border = "#008a60", lwd = 1.5)
     }
     # Draw outline of chromosome
     rect(xleft = 4, ybottom = 1, xright = 6, ytop = chr_size, density = 0, 
-         border = "black")
+         border = "black", lwd = 4)
 }
