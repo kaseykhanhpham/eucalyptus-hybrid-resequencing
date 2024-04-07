@@ -59,11 +59,22 @@ blastn -query "$FDIFFS_DIR"/Eglob_all_fdiffs_genes.fas -db Egrandis_297_v2.0.cds
 blastn -query "$REFS_DIR"/Egrandis_297_v2.0.cds.fa -db Eglob_all_fdiffs_genes.fas -outfmt 6 -evalue 0.01 -num_threads 8 -out AUSX01_cds_to_Eglob_fdiffs_BLAST.tab
 ```
 
-Retrieved reciprocal BLAST hits from the two searches.
+Retrieved reciprocal BLAST hits from the two searches. Extracted corresponding homologous protein sequence in _E. grandis_ reference genome annotation using `R` script.
 
 ```bash
-Rscript get_rblast_matches.r -i Eglob_fdiffs_to_AUSX01_cds_BLAST.tab -j AUSX01_cds_to_Eglob_fdiffs_BLAST.tab -o Eglob_fdiffs_AUSX01_homol_list.txt -n 2
+module load R/4.2
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+REF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/AUSX01_v2/annotation"
+
+# Get homologous E. grandis transcripts from reciprocal best matches
+Rscript "$SCRIPT_DIR"/get_rblast_matches.r -i Eglob_fdiffs_to_AUSX01_cds_BLAST.tab -j AUSX01_cds_to_Eglob_fdiffs_BLAST.tab -l ../Eglob_fdiffs_AUSX01_homol_prot_list.txt -t ../Eglob_fdiffs_AUSX01_homol_tab.txt -n 2
+
+# Get E. grandis protein seqs
+cd ..
+Rscript "$SCRIPT_DIR"/extract_fas.r -i "$REF_DIR"/Egrandis_297_v2.0.protein.fa -l Eglob_fdiffs_AUSX01_homol_prot_list.txt -o Eglob_fdiffs_AUSX01_homol_prot.fas
 ```
+
+Ran `GO-MAP` on _E. grandis_ homologous protein sequences for approximate GO enrichment.
 
 ## Recombination
 Checked how much overlap there was with genes to begin with.

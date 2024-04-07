@@ -1,13 +1,13 @@
 #Input section 
 input:
   #input fasta file name
-  fasta: Eglob_all_fdiffs_genes.fas
+  fasta: Eglob_fdiffs_AUSX01_homol_prot.fas
   # output file basename
   basename: fdiffs
   #input NCBI taxonomy id
-  taxon: "34317"
+  taxon: "71139 "
   # Name of the species
-  species: "Eucalyptus globulus"
+  species: "Eucalyptus grandis"
   # Email is mandatory
   email: kasey.pham@ufl.edu
   #Number of CPUs used for tools

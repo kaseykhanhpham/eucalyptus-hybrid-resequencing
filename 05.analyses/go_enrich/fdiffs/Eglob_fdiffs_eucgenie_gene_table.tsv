@@ -1,0 +1,366 @@
+ID	transcript_id	description	kegg_description
+Eucgr.A00595	Eucgr.A00595.1	(M=1) K06910 - MFS transporter, UMF1 family;AT5G01300-NA|PEBP (phosphatidylethanolamine-binding protein) family protein|cytosol	K06910-.
+Eucgr.A00637	Eucgr.A00637.1	(M=76) KOG0725 - Reductases with broad range of substrate specificities;AT3G51680-NA|NAD(P)-binding Rossmann-fold superfamily protein|cytosol	
+Eucgr.A00861	Eucgr.A00861.1	;AT1G15780-NA|NA|nucleus	
+Eucgr.A00904	Eucgr.A00904.2	;AT2G32240-NA|NA|cytosol	
+Eucgr.A00904	Eucgr.A00904.1	;AT2G32240-NA|NA|cytosol	
+Eucgr.A01041	Eucgr.A01041.1		
+Eucgr.A01061	Eucgr.A01061.1	(M=8) KOG4293 - Predicted membrane protein, contains DoH and Cytochrome b-561/ferric reductase transmembrane domains;AT5G35735-NA|Auxin-responsive family protein|plasma membrane	
+Eucgr.A01118	Eucgr.A01118.1	(M=7) PTHR11709:SF11 - PECTINESTERASE;AT1G76160-sks5|SKU5 similar 5|extracellular	
+Eucgr.A01134	Eucgr.A01134.1	(M=41) 1.3.1.74 - 2-alkenal reductase.;AT5G16990-NA|Zinc-binding dehydrogenase family protein|cytosol	
+Eucgr.A01218	Eucgr.A01218.2	;AT3G55140-NA|Pectin lyase-like superfamily protein|extracellular	K01728-Metabolism|Carbohydrate metabolism|00040 Pentose and glucuronate interconversions [PATH:ko00040]|pel; pectate lyase [EC:4.2.2.2]
+Eucgr.A01218	Eucgr.A01218.1	(M=19) 4.2.2.2 - Pectate lyase.;AT3G55140-NA|Pectin lyase-like superfamily protein|extracellular	K01728-Metabolism|Carbohydrate metabolism|00040 Pentose and glucuronate interconversions [PATH:ko00040]|pel; pectate lyase [EC:4.2.2.2]
+Eucgr.A01319	Eucgr.A01319.1	(M=74) PTHR10795:SF17 - SUBTILISIN-LIKE PROTEASE (PLANT);AT1G04110-SDD1|Subtilase family protein|extracellular	
+Eucgr.A01433	Eucgr.A01433.1	(M=214) PF00646 - F-box domain	
+Eucgr.A01593	Eucgr.A01593.1	(M=1) PTHR13678 - WILLIAMS-BEUREN SYNDROME CRITICAL REGION PROTEIN-RELATED;AT2G36680-NA|Modifier of rudimentary (Mod(r)) protein|multiple	
+Eucgr.A01858	Eucgr.A01858.1	(M=10) KOG0714 - Molecular chaperone (DnaJ superfamily);AT2G20560-NA|DNAJ heat shock family protein|cytosol	
+Eucgr.A01928	Eucgr.A01928.1	(M=8) PTHR23421//PTHR23421:SF33 - BETA-GALACTOSIDASE RELATED // SUBFAMILY NOT NAMED;AT4G26140-BGAL12|beta-galactosidase 12|extracellular	
+Eucgr.A02381	Eucgr.A02381.1	(M=4) PTHR12632:SF5 - TRANSCRIPTIONAL ACTIVATOR PHP2-RELATED;AT5G12840-ATHAP2A,EMB2220,HAP2A,NF-YA1|nuclear factor Y, subunit A1|nucleus	
+Eucgr.A02420	Eucgr.A02420.1	(M=261) KOG0156 - Cytochrome P450 CYP2 subfamily;AT5G06905-CYP712A2|cytochrome P450, family 712, subfamily A, polypeptide 2|endoplasmic reticulum	
+Eucgr.A02560	Eucgr.A02560.1	(M=4) K11835 - ubiquitin carboxyl-terminal hydrolase 4/11/15 [EC:3.1.2.15];AT5G22030-UBP8|ubiquitin-specific protease 8|nucleus	
+Eucgr.A02615	Eucgr.A02615.1	(M=76) KOG0725 - Reductases with broad range of substrate specificities;AT3G51680-NA|NAD(P)-binding Rossmann-fold superfamily protein|cytosol	
+Eucgr.A02624	Eucgr.A02624.1	(M=18) 3.4.16.2 - Lysosomal Pro-Xaa carboxypeptidase.;AT2G24280-NA|alpha/beta-Hydrolases superfamily protein|extracellular	
+Eucgr.A02624	Eucgr.A02624.2	;AT2G24280-NA|alpha/beta-Hydrolases superfamily protein|extracellular	
+Eucgr.A02706	Eucgr.A02706.1	(M=43) 2.4.1.237 - Flavonol 7-O-beta-glucosyltransferase.;AT3G16520-UGT88A1|UDP-glucosyl transferase 88A1|cytosol	
+Eucgr.A02763	Eucgr.A02763.1	(M=29) KOG1208 - Dehydrogenases with different specificities (related to short-chain alcohol dehydrogenases);AT4G23420-NA|NAD(P)-binding Rossmann-fold superfamily protein|multiple	
+Eucgr.A02763	Eucgr.A02763.2	;AT4G23420-NA|NAD(P)-binding Rossmann-fold superfamily protein|multiple	
+Eucgr.A02763	Eucgr.A02763.3	;AT4G23420-NA|NAD(P)-binding Rossmann-fold superfamily protein|multiple	
+Eucgr.A02764	Eucgr.A02764.1	;AT5G52420-NA|NA|endoplasmic reticulum	
+Eucgr.B00086	Eucgr.B00086.1	(M=180) PF02458 - Transferase family;AT5G41040-NA|HXXXD-type acyl-transferase family protein|cytosol	
+Eucgr.B00158	Eucgr.B00158.1	(M=123) PTHR22835:SF39 - LATERAL SIGNALING TARGET PROTEIN 2;AT3G48460-NA|GDSL-like Lipase/Acylhydrolase superfamily protein|extracellular	
+Eucgr.B00222	Eucgr.B00222.1	(M=2) PTHR23257:SF83 - PROTEIN KINASE ATN1;AT5G50180-NA|Protein kinase superfamily protein|multiple	
+Eucgr.B00577	Eucgr.B00577.1	(M=382) PTHR11926:SF15 - UDP-GLUCOSYLTRANSFERASE;AT3G02100-NA|UDP-Glycosyltransferase superfamily protein|cytosol	
+Eucgr.B00736	Eucgr.B00736.3	;AT1G48790-AMSH1|associated molecule with the SH3 domain of STAM 1|nucleus	K11866-Cellular Processes|Transport and catabolism|04144 Endocytosis [PATH:ko04144]|STAMBP, AMSH; STAM-binding protein [EC:3.4.19.12]
+Eucgr.B00736	Eucgr.B00736.1	(M=2) PTHR12947//PTHR12947:SF4 - AMSH // SUBFAMILY NOT NAMED;AT1G48790-AMSH1|associated molecule with the SH3 domain of STAM 1|nucleus	K11866-Cellular Processes|Transport and catabolism|04144 Endocytosis [PATH:ko04144]|STAMBP, AMSH; STAM-binding protein [EC:3.4.19.12]
+Eucgr.B00736	Eucgr.B00736.5	;AT1G48790-AMSH1|associated molecule with the SH3 domain of STAM 1|nucleus	K11866-Cellular Processes|Transport and catabolism|04144 Endocytosis [PATH:ko04144]|STAMBP, AMSH; STAM-binding protein [EC:3.4.19.12]
+Eucgr.B00736	Eucgr.B00736.4	;AT1G48790-AMSH1|associated molecule with the SH3 domain of STAM 1|nucleus	K11866-Cellular Processes|Transport and catabolism|04144 Endocytosis [PATH:ko04144]|STAMBP, AMSH; STAM-binding protein [EC:3.4.19.12]
+Eucgr.B00736	Eucgr.B00736.2	;AT1G48790-AMSH1|associated molecule with the SH3 domain of STAM 1|nucleus	K11866-Cellular Processes|Transport and catabolism|04144 Endocytosis [PATH:ko04144]|STAMBP, AMSH; STAM-binding protein [EC:3.4.19.12]
+Eucgr.B00966	Eucgr.B00966.1	(M=6) PF00075 - RNase H;AT5G61090-NA|Polynucleotidyl transferase, ribonuclease H-like superfamily protein|plastid	
+Eucgr.B01188	Eucgr.B01188.2	;AT5G18920-NA|Cox19-like CHCH family protein|nucleus	
+Eucgr.B01188	Eucgr.B01188.1	;AT5G18920-NA|Cox19-like CHCH family protein|nucleus	
+Eucgr.B01305	Eucgr.B01305.2	;AT4G15780-ATVAMP724,VAMP724|vesicle-associated membrane protein 724|cytosol	K08511-.
+Eucgr.B01305	Eucgr.B01305.1	(M=12) K08511 - vesicle-associated membrane protein 72;AT4G15780-ATVAMP724,VAMP724|vesicle-associated membrane protein 724|cytosol	K08511-.
+Eucgr.B01458	Eucgr.B01458.1	(M=6) PTHR11362 - PHOSPHATIDYLETHANOLAMINE-BINDING PROTEIN;AT1G65480-FT|PEBP (phosphatidylethanolamine-binding protein) family protein|multiple	
+Eucgr.B01471	Eucgr.B01471.1	(M=5) KOG3576 - Ovo and related transcription factors;AT4G02670-AtIDD12,IDD12|indeterminate(ID)-domain 12|plastid	
+Eucgr.B01487	Eucgr.B01487.2	;AT4G02590-UNE12|basic helix-loop-helix (bHLH) DNA-binding superfamily protein|nucleus	
+Eucgr.B01487	Eucgr.B01487.1	(M=127) PF00010 - Helix-loop-helix DNA-binding domain;AT4G02590-UNE12|basic helix-loop-helix (bHLH) DNA-binding superfamily protein|nucleus	
+Eucgr.B01534	Eucgr.B01534.2	;AT4G25340-ATFKBP53,FKBP53|FK506 BINDING PROTEIN 53|nucleus	K01802-.
+Eucgr.B01534	Eucgr.B01534.1	(M=17) K01802 - peptidylprolyl isomerase [EC:5.2.1.8];AT4G25340-ATFKBP53,FKBP53|FK506 BINDING PROTEIN 53|nucleus	K01802-.
+Eucgr.B01595	Eucgr.B01595.1	(M=2) PF09320 - Domain of unknown function (DUF1977);AT5G49060-NA|Heat shock protein DnaJ, N-terminal with domain of unknown function (DUF1977)|cytosol	
+Eucgr.B01596	Eucgr.B01596.1	(M=40) 2.4.1.207 - Xyloglucan:xyloglucosyl transferase.;AT4G25810-XTH23,XTR6|xyloglucan endotransglycosylase 6|extracellular	
+Eucgr.B01600	Eucgr.B01600.2	;AT3G05560-NA|Ribosomal L22e protein family|cytosol	
+Eucgr.B01600	Eucgr.B01600.1	(M=3) PTHR10064 - 60S RIBOSOMAL PROTEIN L22;AT3G05560-NA|Ribosomal L22e protein family|cytosol	
+Eucgr.B02274	Eucgr.B02274.1	(M=1) PTHR23076:SF6 - FTSH HOMOLOG;AT5G58870-ftsh9|FTSH protease 9|plastid	K03798-.
+Eucgr.B02337	Eucgr.B02337.1	(M=85) PF03514 - GRAS domain family;AT1G07530-ATGRAS2,GRAS2,SCL14|SCARECROW-like 14|multiple	
+Eucgr.B02344	Eucgr.B02344.1	(M=85) PF03514 - GRAS domain family;AT1G07530-ATGRAS2,GRAS2,SCL14|SCARECROW-like 14|multiple	
+Eucgr.B02667	Eucgr.B02667.1	(M=203) PTHR10209:SF55 - OXIDOREDUCTASE, 2OG-FE(II) OXYGENASE FAMILY PROTEIN;AT1G03410-2A6|2-oxoglutarate (2OG) and Fe(II)-dependent oxygenase superfamily protein|multiple	
+Eucgr.B02701	Eucgr.B02701.1	(M=10) PTHR24420//PTHR24420:SF467 - LEUCINE-RICH REPEAT RECEPTOR-LIKE PROTEIN KINASE // SUBFAMILY NOT NAMED;AT1G66150-TMK1|transmembrane kinase 1|plasma membrane	
+Eucgr.B02802	Eucgr.B02802.2	;AT3G08910-NA|DNAJ heat shock family protein|nucleus	
+Eucgr.B02802	Eucgr.B02802.1	(M=10) KOG0714 - Molecular chaperone (DnaJ superfamily);AT3G08910-NA|DNAJ heat shock family protein|nucleus	
+Eucgr.B02889	Eucgr.B02889.1	;AT1G71110-NA|NA|plasma membrane	
+Eucgr.B03148	Eucgr.B03148.1	(M=12) KOG2662 - Magnesium transporters: CorA family;AT2G03620-MGT3,MRS2-5|magnesium transporter 3|cytosol	
+Eucgr.B03234	Eucgr.B03234.1	(M=11) 1.1.1.36 - Acetoacetyl-CoA reductase.;AT1G67730-ATKCR1,KCR1,YBR159|beta-ketoacyl reductase 1|endoplasmic reticulum	
+Eucgr.B03303	Eucgr.B03303.1	(M=29) PF03080 - Domain of unknown function (DUF239);AT1G10750-NA|Protein of Unknown Function (DUF239)|multiple	
+Eucgr.B03305	Eucgr.B03305.4	;AT1G70530-CRK3|cysteine-rich RLK (RECEPTOR-like protein kinase) 3|plasma membrane	
+Eucgr.B03305	Eucgr.B03305.3	;AT1G70530-CRK3|cysteine-rich RLK (RECEPTOR-like protein kinase) 3|plasma membrane	
+Eucgr.B03305	Eucgr.B03305.1	(M=48) PTHR24420//PTHR24420:SF433 - LEUCINE-RICH REPEAT RECEPTOR-LIKE PROTEIN KINASE // SUBFAMILY NOT NAMED;AT1G70530-CRK3|cysteine-rich RLK (RECEPTOR-like protein kinase) 3|plasma membrane	
+Eucgr.B03305	Eucgr.B03305.2	;AT1G70530-CRK3|cysteine-rich RLK (RECEPTOR-like protein kinase) 3|plasma membrane	
+Eucgr.B03379	Eucgr.B03379.1	(M=1) PTHR11516:SF4 - PYRUVATE DEHYDROGENASE E1 COMPONENT ALPHA SUBUNIT, MITOCHONDRIAL;AT1G59900-AT-E1 ALPHA,E1 ALPHA|pyruvate dehydrogenase complex E1 alpha subunit|mitochondrion	K00161-Human Diseases|Cancers|05230 Central carbon metabolism in cancer [PATH:ko05230]|PDHA, pdhA; pyruvate dehydrogenase E1 component alpha subunit [EC:1.2.4.1]
+Eucgr.B03461	Eucgr.B03461.1	(M=1) KOG3212 - Uncharacterized conserved protein related to IojAP;AT1G67620-NA|Lojap-related protein|mitochondrion	
+Eucgr.B03544	Eucgr.B03544.2	;AT5G13190-NA|NA|plasma membrane	
+Eucgr.B03544	Eucgr.B03544.1	(M=1) PF10601 - LITAF-like zinc ribbon domain;AT5G13190-NA|NA|plasma membrane	
+Eucgr.B03593	Eucgr.B03593.2	;AT3G13470-NA|TCP-1/cpn60 chaperonin family protein|plastid	
+Eucgr.B03593	Eucgr.B03593.1	(M=2) PTHR11353:SF8 - RUBISCO SUBUNIT BINDING-PROTEIN BETA SUBUNIT, RUBB;AT3G13470-NA|TCP-1/cpn60 chaperonin family protein|plastid	
+Eucgr.B03630	Eucgr.B03630.1	(M=590) PF01535 - PPR repeat;AT5G66520-NA|Tetratricopeptide repeat (TPR)-like superfamily protein|cytosol	
+Eucgr.B03752	Eucgr.B03752.1	(M=2) 4.1.3.4 - Hydroxymethylglutaryl-CoA lyase.;AT2G26800-NA|Aldolase superfamily protein|multiple	K01640-Cellular Processes|Transport and catabolism|04146 Peroxisome [PATH:ko04146]|E4.1.3.4, HMGCL, hmgL; hydroxymethylglutaryl-CoA lyase [EC:4.1.3.4]
+Eucgr.B03932	Eucgr.B03932.1	(M=6) PF07795 - Protein of unknown function (DUF1635);AT5G22930-NA|Protein of unknown function (DUF1635)|nucleus	
+Eucgr.C00178	Eucgr.C00178.1	(M=40) 2.4.1.207 - Xyloglucan:xyloglucosyl transferase.;AT4G25810-XTH23,XTR6|xyloglucan endotransglycosylase 6|extracellular	K08235-.
+Eucgr.C00180	Eucgr.C00180.2	;AT4G25810-XTH23,XTR6|xyloglucan endotransglycosylase 6|extracellular	K08235-.
+Eucgr.C00180	Eucgr.C00180.1	(M=40) 2.4.1.207 - Xyloglucan:xyloglucosyl transferase.;AT4G25810-XTH23,XTR6|xyloglucan endotransglycosylase 6|extracellular	K08235-.
+Eucgr.C00183	Eucgr.C00183.2	;AT5G24165-NA|NA|mitochondrion	
+Eucgr.C00183	Eucgr.C00183.1	;AT5G24165-NA|NA|mitochondrion	
+Eucgr.C00183	Eucgr.C00183.3	;AT5G24165-NA|NA|mitochondrion	
+Eucgr.C00662	Eucgr.C00662.1	(M=7) K05863 - solute carrier family 25 (mitochondrial adenine nucleotide translocator), member 4/5/6/31;AT5G56450-NA|Mitochondrial substrate carrier family protein|peroxisome	K05863-Human Diseases|Infectious diseases|05166 HTLV-I infection [PATH:ko05166]|SLC25A4S, ANT; solute carrier family 25 (mitochondrial adenine nucleotide translocator), member 4/5/6/31
+Eucgr.C00899	Eucgr.C00899.1	(M=18) PTHR10071 - TRANSCRIPTION FACTOR GATA (GATA BINDING FACTOR);AT4G26150-CGA1,GATA22|cytokinin-responsive gata factor 1|nucleus	
+Eucgr.C00932	Eucgr.C00932.1	;AT4G26240-NA|NA|plasma membrane	
+Eucgr.C01011	Eucgr.C01011.2	;AT2G44970-NA|alpha/beta-Hydrolases superfamily protein|cytosol	
+Eucgr.C01011	Eucgr.C01011.1	;AT2G44970-NA|alpha/beta-Hydrolases superfamily protein|cytosol	
+Eucgr.C01130	Eucgr.C01130.1	(M=6) PF03386 - Early nodulin 93 ENOD93 protein;AT5G25940-NA|early nodulin-related|mitochondrion	
+Eucgr.C01170	Eucgr.C01170.1	(M=41) 1.3.1.74 - 2-alkenal reductase.;AT5G16970-AER,AT-AER|alkenal reductase|cytosol	
+Eucgr.C01334	Eucgr.C01334.1	(M=4) K14515 - EIN3-binding F-box protein;AT5G25350-EBF2|EIN3-binding F box protein 2|nucleus	
+Eucgr.C01577	Eucgr.C01577.1	(M=14) PF01426 - BAH domain;AT5G11470-NA|bromo-adjacent homology (BAH) domain-containing protein|nucleus	
+Eucgr.C01577	Eucgr.C01577.3	;AT5G11470-NA|bromo-adjacent homology (BAH) domain-containing protein|nucleus	
+Eucgr.C01577	Eucgr.C01577.2	;AT5G11470-NA|bromo-adjacent homology (BAH) domain-containing protein|nucleus	
+Eucgr.C02245	Eucgr.C02245.1	(M=2) 3.6.3.3 - Cadmium-exporting ATPase.;AT4G30110-ATHMA2,HMA2|heavy metal atpase 2|plasma membrane	
+Eucgr.C02282	Eucgr.C02282.1	(M=50) PF00560//PF07714 - Leucine Rich Repeat // Protein tyrosine kinase;AT5G46330-FLS2|Leucine-rich receptor-like protein kinase family protein|plasma membrane	
+Eucgr.C02332	Eucgr.C02332.1	(M=2) K10739 - replication factor A2;AT3G02920-ATRPA32B,RPA32B|Replication protein A, subunit RPA32|nucleus	K10739-Genetic Information Processing|Replication and repair|03460 Fanconi anemia pathway [PATH:ko03460]|RFA2, RPA2; replication factor A2
+Eucgr.C02587	Eucgr.C02587.1	(M=1) KOG0323 - TFIIF-interacting CTD phosphatases, including NLI-interacting factor;AT5G58003-CPL4|C-terminal domain phosphatase-like 4|nucleus	
+Eucgr.C02587	Eucgr.C02587.2	;AT5G58003-CPL4|C-terminal domain phosphatase-like 4|nucleus	
+Eucgr.C02854	Eucgr.C02854.1	(M=2) PF09762 - Coiled-coil domain-containing protein (DUF2037);AT4G32560-NA|paramyosin-related|nucleus	
+Eucgr.C02896	Eucgr.C02896.1	;AT2G20740-NA|Tetraspanin family protein|multiple	
+Eucgr.C02896	Eucgr.C02896.2	;AT2G20740-NA|Tetraspanin family protein|multiple	
+Eucgr.C03299	Eucgr.C03299.3	;AT1G17370-UBP1B|oligouridylate binding protein 1B|multiple	
+Eucgr.C03299	Eucgr.C03299.2	;AT1G17370-UBP1B|oligouridylate binding protein 1B|multiple	
+Eucgr.C03299	Eucgr.C03299.1	(M=14) KOG0148 - Apoptosis-promoting RNA-binding protein TIA-1/TIAR (RRM superfamily);AT1G17370-UBP1B|oligouridylate binding protein 1B|multiple	
+Eucgr.C03299	Eucgr.C03299.4	;AT1G17370-UBP1B|oligouridylate binding protein 1B|multiple	
+Eucgr.C03301	Eucgr.C03301.1	(M=10) K13464 - jasmonate ZIM domain-containing protein;AT1G19180-JAZ1,TIFY10A|jasmonate-zim-domain protein 1|nucleus	
+Eucgr.C03460	Eucgr.C03460.1	(M=195) PF00931//PF01582 - NB-ARC domain // TIR domain;AT5G17680-NA|disease resistance protein (TIR-NBS-LRR class), putative|plastid	
+Eucgr.C03721	Eucgr.C03721.1	(M=9) K01051 - pectinesterase;AT5G19730-NA|Pectin lyase-like superfamily protein|extracellular	K01051-Metabolism|Carbohydrate metabolism|00500 Starch and sucrose metabolism [PATH:ko00500]|E3.1.1.11; pectinesterase [EC:3.1.1.11]
+Eucgr.C03897	Eucgr.C03897.1	(M=4) K01190 - beta-galactosidase;AT4G26140-BGAL12|beta-galactosidase 12|extracellular	K01190-Metabolism|Glycan biosynthesis and metabolism|00511 Other glycan degradation [PATH:ko00511]|lacZ; beta-galactosidase [EC:3.2.1.23]
+Eucgr.D00307	Eucgr.D00307.3		
+Eucgr.D00307	Eucgr.D00307.1	(M=1) PF04481 - Protein of unknown function (DUF561)	
+Eucgr.D00307	Eucgr.D00307.4		
+Eucgr.D00307	Eucgr.D00307.2		
+Eucgr.D00608	Eucgr.D00608.1	(M=9) PTHR23241 - LATE EMBRYOGENESIS ABUNDANT (PLANTS) LEA-RELATED;AT5G44310-NA|Late embryogenesis abundant protein (LEA) family protein|multiple	
+Eucgr.D00653	Eucgr.D00653.1	(M=17) PF06749 - Protein of unknown function (DUF1218);AT1G61065-NA|Protein of unknown function (DUF1218)|extracellular	
+Eucgr.D00696	Eucgr.D00696.1	(M=3) PF02265 - S1/P1 Nuclease;AT4G21585-ENDO4|endonuclease 4|extracellular	
+Eucgr.D00696	Eucgr.D00696.4	;AT4G21585-ENDO4|endonuclease 4|extracellular	
+Eucgr.D00696	Eucgr.D00696.3	;AT4G21585-ENDO4|endonuclease 4|extracellular	
+Eucgr.D00696	Eucgr.D00696.2	;AT4G21585-ENDO4|endonuclease 4|extracellular	
+Eucgr.D00848	Eucgr.D00848.1	(M=67) PF01657//PF07714 - Salt stress response/antifungal // Protein tyrosine kinase;AT4G05200-CRK25|cysteine-rich RLK (RECEPTOR-like protein kinase) 25|plasma membrane	
+Eucgr.D00850	Eucgr.D00850.1	(M=67) PF01657//PF07714 - Salt stress response/antifungal // Protein tyrosine kinase;AT4G23180-CRK10,RLK4|cysteine-rich RLK (RECEPTOR-like protein kinase) 10|plasma membrane	
+Eucgr.D00876	Eucgr.D00876.1	(M=590) PF01535 - PPR repeat;AT3G13160-NA|Tetratricopeptide repeat (TPR)-like superfamily protein|mitochondrion	
+Eucgr.D01038	Eucgr.D01038.1	;AT3G06880-NA|Transducin/WD40 repeat-like superfamily protein|nucleus	
+Eucgr.D01038	Eucgr.D01038.2	;AT3G06880-NA|Transducin/WD40 repeat-like superfamily protein|nucleus	
+Eucgr.D01216	Eucgr.D01216.1	(M=590) PF01535 - PPR repeat;AT1G02150-NA|Tetratricopeptide repeat (TPR)-like superfamily protein|plastid	
+Eucgr.D01951	Eucgr.D01951.1	(M=74) PTHR10795:SF17 - SUBTILISIN-LIKE PROTEASE (PLANT);AT1G04110-SDD1|Subtilase family protein|extracellular	
+Eucgr.D01953	Eucgr.D01953.1		
+Eucgr.D02012	Eucgr.D02012.1	(M=261) KOG0156 - Cytochrome P450 CYP2 subfamily;AT4G12300-CYP706A4|cytochrome P450, family 706, subfamily A, polypeptide 4|endoplasmic reticulum	
+Eucgr.D02225	Eucgr.D02225.1	(M=267) PF00249 - Myb-like DNA-binding domain;AT1G32240-KAN2|Homeodomain-like superfamily protein|nucleus	
+Eucgr.D02378	Eucgr.D02378.1	(M=3) PF00240//PF00454 - Ubiquitin family // Phosphatidylinositol 3- and 4-kinase;AT2G46500-ATPI4K GAMMA 4,PI4K GAMMA 4,UBDK GAMMA 4|phosphoinositide 4-kinase gamma 4|multiple	
+Eucgr.D02444	Eucgr.D02444.1	(M=12) PF09335 - SNARE associated Golgi protein;AT1G12450-NA|SNARE associated Golgi protein family|plasma membrane	
+Eucgr.D02560	Eucgr.D02560.2	;AT4G19190-NA|zinc knuckle (CCHC-type) family protein|nucleus	
+Eucgr.D02560	Eucgr.D02560.1	(M=1) KOG3794 - CBF1-interacting corepressor CIR and related proteins;AT4G19190-NA|zinc knuckle (CCHC-type) family protein|nucleus	
+Eucgr.E00286	Eucgr.E00286.1	(M=25) PF03479 - Domain of unknown function (DUF296);AT4G17950-NA|AT hook motif DNA-binding family protein|nucleus	
+Eucgr.E00331	Eucgr.E00331.3	;AT5G47070-NA|Protein kinase superfamily protein|nucleus	K00924-.
+Eucgr.E00331	Eucgr.E00331.1	(M=2) PTHR24420//PTHR24420:SF793 - LEUCINE-RICH REPEAT RECEPTOR-LIKE PROTEIN KINASE;AT5G47070-NA|Protein kinase superfamily protein|nucleus	K00924-.
+Eucgr.E00331	Eucgr.E00331.2	;AT5G47070-NA|Protein kinase superfamily protein|nucleus	K00924-.
+Eucgr.E00844	Eucgr.E00844.1	(M=8) KOG0978 - E3 ubiquitin ligase involved in syntaxin degradation;AT5G41790-CIP1|COP1-interactive protein 1|multiple	
+Eucgr.E01169	Eucgr.E01169.1	(M=10) PTHR21562 - NOTUM-RELATED;AT4G19420-NA|Pectinacetylesterase family protein|multiple	
+Eucgr.E01169	Eucgr.E01169.3	;AT4G19420-NA|Pectinacetylesterase family protein|multiple	
+Eucgr.E01169	Eucgr.E01169.2	;AT4G19420-NA|Pectinacetylesterase family protein|multiple	
+Eucgr.E01169	Eucgr.E01169.5	;AT4G19420-NA|Pectinacetylesterase family protein|multiple	
+Eucgr.E01169	Eucgr.E01169.4	;AT4G19420-NA|Pectinacetylesterase family protein|multiple	
+Eucgr.E01188	Eucgr.E01188.1	(M=10) K10355 - actin, other eukaryote;AT3G12110-ACT11|actin-11|cytosol	
+Eucgr.E02710	Eucgr.E02710.1	(M=28) 3.1.1.3 - Triacylglycerol lipase.;AT4G18550-NA|alpha/beta-Hydrolases superfamily protein|cytosol	
+Eucgr.E03938	Eucgr.E03938.1	(M=17) PF03062 - MBOAT, membrane-bound O-acyltransferase family;AT3G51970-ASAT1,ATASAT1,ATSAT1|acyl-CoA sterol acyl transferase 1|plasma membrane	
+Eucgr.F00083	Eucgr.F00083.2	;AT1G27840-ATCSA-1|Transducin/WD40 repeat-like superfamily protein|nucleus	K10570-Genetic Information Processing|Replication and repair|03420 Nucleotide excision repair [PATH:ko03420]|ERCC8, CKN1, CSA; DNA excision repair protein ERCC-8
+Eucgr.F00083	Eucgr.F00083.1	(M=1) K10570 - DNA excision repair protein ERCC-8;AT1G27840-ATCSA-1|Transducin/WD40 repeat-like superfamily protein|nucleus	K10570-Genetic Information Processing|Replication and repair|03420 Nucleotide excision repair [PATH:ko03420]|ERCC8, CKN1, CSA; DNA excision repair protein ERCC-8
+Eucgr.F00226	Eucgr.F00226.4	;AT1G07700-NA|Thioredoxin superfamily protein|multiple	
+Eucgr.F00226	Eucgr.F00226.5	;AT1G07700-NA|Thioredoxin superfamily protein|multiple	
+Eucgr.F00226	Eucgr.F00226.1	(M=1) PTHR10438:SF16 - THIOREDOXIN H-TYPE-RELATED;AT1G07700-NA|Thioredoxin superfamily protein|multiple	
+Eucgr.F00226	Eucgr.F00226.2	;AT1G07700-NA|Thioredoxin superfamily protein|multiple	
+Eucgr.F00226	Eucgr.F00226.6	;AT1G07700-NA|Thioredoxin superfamily protein|multiple	
+Eucgr.F00226	Eucgr.F00226.3	;AT1G07700-NA|Thioredoxin superfamily protein|multiple	
+Eucgr.F00494	Eucgr.F00494.1	(M=4) PTHR22847:SF188 - WD-40 REPEAT FAMILY PROTEIN;AT1G78070-NA|Transducin/WD40 repeat-like superfamily protein|nucleus	
+Eucgr.F00494	Eucgr.F00494.2	;AT1G78070-NA|Transducin/WD40 repeat-like superfamily protein|nucleus	
+Eucgr.F00494	Eucgr.F00494.3	;AT1G78070-NA|Transducin/WD40 repeat-like superfamily protein|nucleus	
+Eucgr.F00600	Eucgr.F00600.1	(M=3) PTHR12300:SF20 - HVA22-LIKE PROTEIN;AT5G42560-NA|Abscisic acid-responsive (TB2/DP1, HVA22) family protein|multiple	
+Eucgr.F00600	Eucgr.F00600.2	;AT5G42560-NA|Abscisic acid-responsive (TB2/DP1, HVA22) family protein|multiple	
+Eucgr.F00972	Eucgr.F00972.2	;AT1G50940-ETFALPHA|electron transfer flavoprotein alpha|mitochondrion	K03522-.
+Eucgr.F00972	Eucgr.F00972.1	(M=1) K03522 - electron transfer flavoprotein alpha subunit;AT1G50940-ETFALPHA|electron transfer flavoprotein alpha|mitochondrion	K03522-.
+Eucgr.F01406	Eucgr.F01406.1	(M=8) PTHR11220:SF4 - HEME-BINDING PROTEIN-RELATED;AT1G17100-NA|SOUL heme-binding family protein|extracellular	
+Eucgr.F01406	Eucgr.F01406.2	;AT1G17100-NA|SOUL heme-binding family protein|extracellular	
+Eucgr.F01407	Eucgr.F01407.1	(M=27) PF05678 - VQ motif;AT1G78410-NA|VQ motif-containing protein|multiple	
+Eucgr.F01547	Eucgr.F01547.1	(M=4) PTHR10994//PTHR10994:SF3 - RETICULON // UNCHARACTERIZED;AT1G19360-NA|Nucleotide-diphospho-sugar transferase family protein|golgi	
+Eucgr.F01563	Eucgr.F01563.3	;AT4G34480-NA|O-Glycosyl hydrolases family 17 protein|extracellular	
+Eucgr.F01563	Eucgr.F01563.1	(M=27) PF00332//PF07983 - Glycosyl hydrolases family 17 // X8 domain;AT4G34480-NA|O-Glycosyl hydrolases family 17 protein|extracellular	
+Eucgr.F01563	Eucgr.F01563.2	;AT4G34480-NA|O-Glycosyl hydrolases family 17 protein|extracellular	
+Eucgr.F01604	Eucgr.F01604.2	;AT3G51030-ATTRX H1,ATTRX1,TRX1|thioredoxin H-type 1|cytosol	
+Eucgr.F01604	Eucgr.F01604.3	;AT3G51030-ATTRX H1,ATTRX1,TRX1|thioredoxin H-type 1|cytosol	
+Eucgr.F01604	Eucgr.F01604.1	(M=34) PTHR10438 - THIOREDOXIN;AT3G51030-ATTRX H1,ATTRX1,TRX1|thioredoxin H-type 1|cytosol	
+Eucgr.F01604	Eucgr.F01604.4	;AT3G51030-ATTRX H1,ATTRX1,TRX1|thioredoxin H-type 1|cytosol	
+Eucgr.F01992	Eucgr.F01992.3	;AT5G56180-ARP8,ATARP8|actin-related protein 8|mitochondrion	
+Eucgr.F01992	Eucgr.F01992.1	(M=1) PTHR11937:SF18 - ACTIN-RELATED PROTEIN;AT5G56180-ARP8,ATARP8|actin-related protein 8|mitochondrion	
+Eucgr.F01992	Eucgr.F01992.2	;AT5G56180-ARP8,ATARP8|actin-related protein 8|mitochondrion	
+Eucgr.F02375	Eucgr.F02375.1	(M=64) PF02298 - Plastocyanin-like domain;AT2G15780-NA|Cupredoxin superfamily protein|extracellular	
+Eucgr.F02568	Eucgr.F02568.1	(M=6) 1.14.11.15 - Gibberellin 3-beta-dioxygenase.;AT1G15550-ATGA3OX1,GA3OX1,GA4|gibberellin 3-oxidase 1|cytosol	K04124-Metabolism|Metabolism of terpenoids and polyketides|00904 Diterpenoid biosynthesis [PATH:ko00904]|E1.14.11.15; gibberellin 3-beta-dioxygenase [EC:1.14.11.15]
+Eucgr.F02618	Eucgr.F02618.1	(M=40) PF01357//PF03330 - Pollen allergen // Rare lipoprotein A (RlpA)-like double-psi beta-barrel;AT5G39270-ATEXP22,ATEXPA22,ATHEXP ALPHA 1.15,EXP22,EXPA22|expansin A22|extracellular	
+Eucgr.F02619	Eucgr.F02619.1	(M=38) PF02704 - Gibberellin regulated protein;AT1G22690-NA|Gibberellin-regulated family protein|extracellular	
+Eucgr.F02641	Eucgr.F02641.1	(M=84) PTHR11709:SF9 - LACCASE;AT5G09360-LAC14|laccase 14|extracellular	
+Eucgr.F02773	Eucgr.F02773.1	(M=2) PTHR13856:SF3 - GB DEF: SEED PROTEIN B32E (FRAGMENT);AT1G21380-NA|Target of Myb protein 1|nucleus	
+Eucgr.F02899	Eucgr.F02899.1	(M=43) PF00582 - Universal stress protein family;AT3G03270-NA|Adenine nucleotide alpha hydrolases-like superfamily protein|multiple	
+Eucgr.F03081	Eucgr.F03081.1	(M=16) PTHR10699 - NEUROMODULIN;AT3G16490-IQD26|IQ-domain 26|nucleus	
+Eucgr.F03082	Eucgr.F03082.1	;AT2G16270-NA|NA|nucleus	
+Eucgr.F03149	Eucgr.F03149.1	(M=15) 3.6.3.1 - Phospholipid-translocating ATPase.;AT1G17500-NA|ATPase E1-E2 type family protein / haloacid dehalogenase-like hydrolase family protein|plasma membrane	K01530-.
+Eucgr.F03235	Eucgr.F03235.1	(M=56) PF03005 - Arabidopsis proteins of unknown function;AT1G29050-TBL38|TRICHOME BIREFRINGENCE-LIKE 38|extracellular	
+Eucgr.F03253	Eucgr.F03253.1	(M=13) KOG4205 - RNA-binding protein musashi/mRNA cleavage and polyadenylation factor I complex, subunit HRP1;AT3G15010-NA|RNA-binding (RRM/RBD/RNP motifs) family protein|nucleus	
+Eucgr.F03490	Eucgr.F03490.2	;AT3G21610-NA|Acid phosphatase/vanadium-dependent haloperoxidase-related protein|multiple	
+Eucgr.F03490	Eucgr.F03490.1	(M=5) PF02681 - Divergent PAP2 family;AT3G21610-NA|Acid phosphatase/vanadium-dependent haloperoxidase-related protein|multiple	
+Eucgr.F03490	Eucgr.F03490.3	;AT3G21610-NA|Acid phosphatase/vanadium-dependent haloperoxidase-related protein|multiple	
+Eucgr.F03743	Eucgr.F03743.1	(M=15) K13414 - mitogen-activated protein kinase kinase kinase 1, plant;AT4G08500-ARAKIN,ATMEKK1,MAPKKK8,MEKK1|MAPK/ERK kinase kinase 1|nucleus	K13414-Organismal Systems|Environmental adaptation|04626 Plant-pathogen interaction [PATH:ko04626]|MEKK1P; mitogen-activated protein kinase kinase kinase 1, plant [EC:2.7.11.25]
+Eucgr.F03869	Eucgr.F03869.1	(M=4) PTHR23083//PTHR23083:SF102 - TETRATRICOPEPTIDE REPEAT PROTEIN, TPR // SUBFAMILY NOT NAMED;AT5G20190-NA|Tetratricopeptide repeat (TPR)-like superfamily protein|plastid	
+Eucgr.F03869	Eucgr.F03869.2	;AT5G20190-NA|Tetratricopeptide repeat (TPR)-like superfamily protein|plastid	
+Eucgr.F03870	Eucgr.F03870.1	(M=2) PF00024//PF00069//PF01453 - PAN domain // Protein kinase domain // D-mannose binding lectin;AT4G32300-SD2-5|S-domain-2 5|plasma membrane	
+Eucgr.F04020	Eucgr.F04020.1	(M=1) PTHR13414 - HUEL-CATION TRANSPORTER;AT1G51610-NA|Cation efflux family protein|mitochondrion	
+Eucgr.F04020	Eucgr.F04020.2	;AT1G51610-NA|Cation efflux family protein|mitochondrion	
+Eucgr.F04020	Eucgr.F04020.3	;AT1G51610-NA|Cation efflux family protein|mitochondrion	
+Eucgr.F04021	Eucgr.F04021.2	;AT1G51590-MANIB,MNS1|alpha-mannosidase 1|multiple	K01230-Genetic Information Processing|Folding, sorting and degradation|04141 Protein processing in endoplasmic reticulum [PATH:ko04141]|MAN1; mannosyl-oligosaccharide alpha-1,2-mannosidase [EC:3.2.1.113]
+Eucgr.F04021	Eucgr.F04021.3	;AT1G51590-MANIB,MNS1|alpha-mannosidase 1|multiple	K01230-Genetic Information Processing|Folding, sorting and degradation|04141 Protein processing in endoplasmic reticulum [PATH:ko04141]|MAN1; mannosyl-oligosaccharide alpha-1,2-mannosidase [EC:3.2.1.113]
+Eucgr.F04021	Eucgr.F04021.1	(M=3) 3.2.1.113 - Mannosyl-oligosaccharide 1,2-alpha-mannosidase.;AT1G51590-MANIB,MNS1|alpha-mannosidase 1|multiple	K01230-Genetic Information Processing|Folding, sorting and degradation|04141 Protein processing in endoplasmic reticulum [PATH:ko04141]|MAN1; mannosyl-oligosaccharide alpha-1,2-mannosidase [EC:3.2.1.113]
+Eucgr.F04203	Eucgr.F04203.1	(M=156) PF00847 - AP2 domain;AT2G33710-NA|Integrase-type DNA-binding superfamily protein|nucleus	
+Eucgr.G00341	Eucgr.G00341.1	(M=84) KOG0254 - Predicted transporter (major facilitator superfamily);AT3G18830-ATPLT5,ATPMT5,PMT5|polyol/monosaccharide transporter 5|plasma membrane	
+Eucgr.G01714	Eucgr.G01714.1		
+Eucgr.G02186	Eucgr.G02186.1	(M=36) K09338 - homeobox-leucine zipper protein;AT2G01430-ATHB-17,ATHB17,HB17|homeobox-leucine zipper protein 17|plasma membrane	K09338-.
+Eucgr.G02320	Eucgr.G02320.1	(M=17) PF06749 - Protein of unknown function (DUF1218);AT1G13380-NA|Protein of unknown function (DUF1218)|plasma membrane	
+Eucgr.G02374	Eucgr.G02374.1		
+Eucgr.G02452	Eucgr.G02452.1	(M=40) PF07983 - X8 domain;AT1G18650-PDCB3|plasmodesmata callose-binding protein 3|extracellular	
+Eucgr.G02598	Eucgr.G02598.1	;AT3G19990-NA|NA|cytosol	
+Eucgr.G03062	Eucgr.G03062.2	;AT3G55960-NA|Haloacid dehalogenase-like hydrolase (HAD) superfamily protein|plasma membrane	
+Eucgr.G03062	Eucgr.G03062.1	(M=2) PTHR12210:SF5 - GB DEF: HYPOTHETICAL PROTEIN F27K19_140 (HYPOTHETICAL PROTEIN AT3G55960);AT3G55960-NA|Haloacid dehalogenase-like hydrolase (HAD) superfamily protein|plasma membrane	
+Eucgr.G03110	Eucgr.G03110.2	;AT3G56210-NA|ARM repeat superfamily protein|mitochondrion	
+Eucgr.G03110	Eucgr.G03110.1	;AT3G56210-NA|ARM repeat superfamily protein|mitochondrion	
+Eucgr.G03248	Eucgr.G03248.1	(M=16) PTHR10502:SF10 - ANNEXIN;AT2G38760-ANN3,ANNAT3|annexin 3|multiple	
+Eucgr.G03248	Eucgr.G03248.2	;AT2G38760-ANN3,ANNAT3|annexin 3|multiple	
+Eucgr.G03276	Eucgr.G03276.2	;AT5G13800-CRN1,PPH|pheophytinase|plastid	
+Eucgr.G03276	Eucgr.G03276.1	(M=1) PTHR10992//PTHR10992:SF121 - ALPHA/BETA HYDROLASE FOLD-CONTAINING PROTEIN // SUBFAMILY NOT NAMED;AT5G13800-CRN1,PPH|pheophytinase|plastid	
+Eucgr.G03276	Eucgr.G03276.3	;AT5G13800-CRN1,PPH|pheophytinase|plastid	
+Eucgr.H00108	Eucgr.H00108.1	(M=6) PTHR10383 - SERINE INCORPORATOR;AT2G33205-NA|Serinc-domain containing serine and sphingolipid biosynthesis protein|plasma membrane	
+Eucgr.H00535	Eucgr.H00535.1	(M=6) PTHR19241//PTHR19241:SF102 - ATP-BINDING CASSETTE TRANSPORTER;AT2G37360-NA|ABC-2 type transporter family protein|plasma membrane	
+Eucgr.H00666	Eucgr.H00666.1	(M=13) PF06830 - Root cap;AT5G54370-NA|Late embryogenesis abundant (LEA) protein-related|extracellular	
+Eucgr.H00809	Eucgr.H00809.1	(M=1) PTHR12052:SF4 - THIOREDOXIN-LIKE PROTEN 4A, 4B;AT3G24730-NA|mRNA splicing factor, thioredoxin-like U5 snRNP|cytosol	
+Eucgr.H00829	Eucgr.H00829.1	(M=2) PF11998 - Protein of unknown function (DUF3493);AT4G28740-NA|NA|peroxisome	
+Eucgr.H00885	Eucgr.H00885.1	(M=5) PTHR11731//PTHR11731:SF44 - PROTEASE FAMILY S9B,C DIPEPTIDYL-PEPTIDASE IV-RELATED // SUBFAMILY NOT NAMED;AT4G01870-NA|tolB protein-related|cytosol	
+Eucgr.H01056	Eucgr.H01056.1	(M=2) PTHR22904:SF7 - SGT-1-RELATED;AT4G02100-NA|Heat shock protein DnaJ with tetratricopeptide repeat|nucleus	
+Eucgr.H01080	Eucgr.H01080.1	(M=118) PF00407 - Pathogenesis-related protein Bet v I family;AT1G24020-MLP423|MLP-like protein 423|cytosol	
+Eucgr.H01101	Eucgr.H01101.1	(M=28) PF04398 - Protein of unknown function, DUF538;AT1G02816-NA|Protein of unknown function, DUF538|extracellular	
+Eucgr.H02264	Eucgr.H02264.1	(M=9) K14487 - auxin responsive GH3 gene family;AT2G14960-GH3.1|Auxin-responsive GH3 family protein|cytosol	K14487-Environmental Information Processing|Signal transduction|04075 Plant hormone signal transduction [PATH:ko04075]|GH3; auxin responsive GH3 gene family
+Eucgr.H02385	Eucgr.H02385.1	(M=22) PTHR12565:SF7 - BASIC HELIX-LOOP-HELIX (BHLH) FAMILY PROTEIN;AT4G37850-NA|basic helix-loop-helix (bHLH) DNA-binding superfamily protein|nucleus	
+Eucgr.H02544	Eucgr.H02544.1	(M=2) PTHR11850:SF49 - PRE-B-CELL LEUKEMIA TRANSCRIPTION FACTOR 4;AT1G23380-KNAT6,KNAT6L,KNAT6S|KNOTTED1-like homeobox gene 6|nucleus	
+Eucgr.H02644	Eucgr.H02644.1	(M=382) PTHR11926:SF15 - UDP-GLUCOSYLTRANSFERASE;AT4G15550-IAGLU|indole-3-acetate beta-D-glucosyltransferase|plastid	
+Eucgr.H02671	Eucgr.H02671.1	(M=34) 5.99.1.2 - DNA topoisomerase.	
+Eucgr.H02915	Eucgr.H02915.1	(M=111) PF00168 - C2 domain;AT1G04540-NA|Calcium-dependent lipid-binding (CaLB domain) family protein|plasma membrane	
+Eucgr.H02997	Eucgr.H02997.2	;AT1G27460-NPGR1|no pollen germination related 1|plasma membrane	
+Eucgr.H02997	Eucgr.H02997.1	(M=2) PTHR23083//PTHR23083:SF174 - TETRATRICOPEPTIDE REPEAT PROTEIN, TPR // SUBFAMILY NOT NAMED;AT1G27460-NPGR1|no pollen germination related 1|plasma membrane	
+Eucgr.H03060	Eucgr.H03060.1	(M=41) PTHR24349 - SERINE/THREONINE-PROTEIN KINASE;AT1G08650-ATPPCK1,PPCK1|phosphoenolpyruvate carboxylase kinase 1|cytosol	
+Eucgr.H03062	Eucgr.H03062.1	(M=21) K08176 - MFS transporter, PHS family, inorganic phosphate transporter;AT3G54700-PHT1;7|phosphate transporter 1;7|plasma membrane	
+Eucgr.H03294	Eucgr.H03294.1	(M=6) PTHR23244//PTHR23244:SF103 - KELCH REPEAT DOMAIN // SUBFAMILY NOT NAMED;AT1G74150-NA|Galactose oxidase/kelch repeat superfamily protein|cytosol	
+Eucgr.H03307	Eucgr.H03307.1	(M=590) PF01535 - PPR repeat;AT1G56570-NA|Tetratricopeptide repeat (TPR)-like superfamily protein|mitochondrion	
+Eucgr.H04315	Eucgr.H04315.1	(M=7) PF01918 - Alba;AT3G04620-NA|Alba DNA/RNA-binding protein|nucleus	
+Eucgr.H04380	Eucgr.H04380.1	(M=5) 5.3.1.6 - Ribose-5-phosphate isomerase.;AT3G04790-NA|Ribose 5-phosphate isomerase, type A protein|plastid	
+Eucgr.H04666	Eucgr.H04666.1	(M=2) KOG1200 - Mitochondrial/plastidial beta-ketoacyl-ACP reductase;AT1G24360-NA|NAD(P)-binding Rossmann-fold superfamily protein|plastid	
+Eucgr.H04708	Eucgr.H04708.1	(M=11) 1.1.1.36 - Acetoacetyl-CoA reductase.;AT1G67730-ATKCR1,KCR1,YBR159|beta-ketoacyl reductase 1|endoplasmic reticulum	
+Eucgr.H04823	Eucgr.H04823.1	(M=40) PF07983 - X8 domain;AT4G05430-NA|Carbohydrate-binding X8 domain superfamily protein|plasma membrane	
+Eucgr.I00258	Eucgr.I00258.1	(M=89) PF00892 - EamA-like transporter family;AT5G64700-NA|nodulin MtN21 /EamA-like transporter family protein|plasma membrane	
+Eucgr.I00319	Eucgr.I00319.2	;AT5G64840-ATGCN5,GCN5|general control non-repressible 5|plastid	
+Eucgr.I00319	Eucgr.I00319.1	(M=1) PTHR19211:SF11 - ABC TRANSPORTER (ATP-BINDING PROTEIN);AT5G64840-ATGCN5,GCN5|general control non-repressible 5|plastid	
+Eucgr.I00570	Eucgr.I00570.2	;AT4G37980-ATCAD7,CAD7,ELI3,ELI3-1|elicitor-activated gene 3-1|cytosol	
+Eucgr.I00570	Eucgr.I00570.1	(M=52) PTHR11695:SF285 - L-THREONINE 3-DEHYDROGENASE;AT4G37980-ATCAD7,CAD7,ELI3,ELI3-1|elicitor-activated gene 3-1|cytosol	
+Eucgr.I00658	Eucgr.I00658.1	;AT4G37810-NA|NA|extracellular	
+Eucgr.I01458	Eucgr.I01458.1	(M=5) PTHR24003//PTHR24003:SF15 - MAJOR FACILITATOR SUPERFAMILY DOMAIN-CONTAINING PROTEIN-RELATED;AT2G16990-NA|Major facilitator superfamily protein|plasma membrane	
+Eucgr.I01783	Eucgr.I01783.1	(M=5) 1.2.1.44 - Cinnamoyl-CoA reductase.;AT5G14700-NA|NAD(P)-binding Rossmann-fold superfamily protein|cytosol	
+Eucgr.I01995	Eucgr.I01995.1	(M=64) PF02298 - Plastocyanin-like domain;AT5G15350-AtENODL17,ENODL17|early nodulin-like protein 17|plasma membrane	
+Eucgr.I02088	Eucgr.I02088.1	(M=23) PTHR22763 - RING ZINC FINGER PROTEIN;AT3G02340-NA|RING/U-box superfamily protein|nucleus	
+Eucgr.I02156	Eucgr.I02156.1	(M=74) PTHR10795:SF17 - SUBTILISIN-LIKE PROTEASE (PLANT);AT3G14240-NA|Subtilase family protein|extracellular	
+Eucgr.I02328	Eucgr.I02328.1	;AT4G35940-NA|NA|nucleus	
+Eucgr.I02333	Eucgr.I02333.1	(M=1) K06662 - cell cycle checkpoint protein;AT5G66130-ATRAD17,RAD17|RADIATION SENSITIVE 17|nucleus	K06662-Cellular Processes|Cell growth and death|04113 Meiosis - yeast [PATH:ko04113]|HRAD17, RAD24; cell cycle checkpoint protein
+Eucgr.I02334	Eucgr.I02334.1	(M=1) K02731 - 20S proteasome subunit alpha 4;AT5G66140-PAD2|proteasome alpha subunit D2|multiple	K02731-Genetic Information Processing|Folding, sorting and degradation|03050 Proteasome [PATH:ko03050]|PSMA7; 20S proteasome subunit alpha 4 [EC:3.4.25.1]
+Eucgr.I02334	Eucgr.I02334.2	;AT5G66140-PAD2|proteasome alpha subunit D2|multiple	K02731-Genetic Information Processing|Folding, sorting and degradation|03050 Proteasome [PATH:ko03050]|PSMA7; 20S proteasome subunit alpha 4 [EC:3.4.25.1]
+Eucgr.I02337	Eucgr.I02337.2	;AT5G66180-NA|S-adenosyl-L-methionine-dependent methyltransferases superfamily protein|cytosol	
+Eucgr.I02337	Eucgr.I02337.3	;AT5G66180-NA|S-adenosyl-L-methionine-dependent methyltransferases superfamily protein|cytosol	
+Eucgr.I02337	Eucgr.I02337.1	(M=1) PTHR22807//PTHR22807:SF18 - NOP2(YEAST)-RELATED NOL1/NOP2/FMU(SUN) DOMAIN-CONTAINING // SUBFAMILY NOT NAMED;AT5G66180-NA|S-adenosyl-L-methionine-dependent methyltransferases superfamily protein|cytosol	
+Eucgr.I02338	Eucgr.I02338.1	(M=2) KOG3201 - Uncharacterized conserved protein;AT4G35987-NA|S-adenosyl-L-methionine-dependent methyltransferases superfamily protein|plastid	
+Eucgr.I02340	Eucgr.I02340.3	;AT5G66190-ATLFNR1,FNR1|ferredoxin-NADP(+)-oxidoreductase 1|multiple	K02641-Metabolism|Energy metabolism|00195 Photosynthesis [PATH:ko00195]|petH; ferredoxin--NADP+ reductase [EC:1.18.1.2]
+Eucgr.I02340	Eucgr.I02340.4	;AT5G66190-ATLFNR1,FNR1|ferredoxin-NADP(+)-oxidoreductase 1|multiple	K02641-Metabolism|Energy metabolism|00195 Photosynthesis [PATH:ko00195]|petH; ferredoxin--NADP+ reductase [EC:1.18.1.2]
+Eucgr.I02340	Eucgr.I02340.1	(M=2) K02641 - ferredoxin--NADP+ reductase;AT5G66190-ATLFNR1,FNR1|ferredoxin-NADP(+)-oxidoreductase 1|multiple	K02641-Metabolism|Energy metabolism|00195 Photosynthesis [PATH:ko00195]|petH; ferredoxin--NADP+ reductase [EC:1.18.1.2]
+Eucgr.I02340	Eucgr.I02340.2	;AT5G66190-ATLFNR1,FNR1|ferredoxin-NADP(+)-oxidoreductase 1|multiple	K02641-Metabolism|Energy metabolism|00195 Photosynthesis [PATH:ko00195]|petH; ferredoxin--NADP+ reductase [EC:1.18.1.2]
+Eucgr.I02354	Eucgr.I02354.1	(M=2) PTHR19861 - WD40 REPEAT PROTEIN SWD2;AT5G66240-NA|Transducin/WD40 repeat-like superfamily protein|cytosol	
+Eucgr.I02354	Eucgr.I02354.3	;AT5G66240-NA|Transducin/WD40 repeat-like superfamily protein|cytosol	
+Eucgr.I02354	Eucgr.I02354.5	;AT5G66240-NA|Transducin/WD40 repeat-like superfamily protein|cytosol	
+Eucgr.I02354	Eucgr.I02354.4	;AT5G66240-NA|Transducin/WD40 repeat-like superfamily protein|cytosol	
+Eucgr.I02354	Eucgr.I02354.2	;AT5G66240-NA|Transducin/WD40 repeat-like superfamily protein|cytosol	
+Eucgr.I02385	Eucgr.I02385.1	(M=92) 1.11.1.7 - Peroxidase.;AT4G17690-NA|Peroxidase superfamily protein|extracellular	K00430-Metabolism|Biosynthesis of other secondary metabolites|00940 Phenylpropanoid biosynthesis [PATH:ko00940]|E1.11.1.7; peroxidase [EC:1.11.1.7]
+Eucgr.I02387	Eucgr.I02387.1	(M=1) KOG2492 - CDK5 activator-binding protein;AT4G36390-NA|Methylthiotransferase|plastid	
+Eucgr.I02678	Eucgr.I02678.1	(M=4) PTHR12320 - PROTEIN PHOSPHATASE 2C;AT4G33500-NA|Protein phosphatase 2C family protein|plastid	
+Eucgr.I02697	Eucgr.I02697.2		
+Eucgr.I02697	Eucgr.I02697.1		
+Eucgr.J00157	Eucgr.J00157.1	(M=5) PF00565 - Staphylococcal nuclease homologue;AT3G56170-CAN|Ca-2+ dependent nuclease|mitochondrion	
+Eucgr.J00233	Eucgr.J00233.1	(M=3) PTHR10639 - CLATHRIN LIGHT CHAIN;AT2G40060-NA|Clathrin light chain protein|plasma membrane	
+Eucgr.J00478	Eucgr.J00478.1	(M=3) PF11977 - Zc3h12a-like Ribonuclease NYN domain;AT4G21900-PRORP3|proteinaceous RNase P 3|plastid	
+Eucgr.J00666	Eucgr.J00666.3	;AT3G12490-ATCYS6,ATCYSB,CYSB|cystatin B|multiple	
+Eucgr.J00666	Eucgr.J00666.1	(M=9) PTHR11413//PTHR11413:SF28 - CYSTATIN FAMILY MEMBER // SUBFAMILY NOT NAMED;AT3G12490-ATCYS6,ATCYSB,CYSB|cystatin B|multiple	
+Eucgr.J00666	Eucgr.J00666.4	;AT3G12490-ATCYS6,ATCYSB,CYSB|cystatin B|multiple	
+Eucgr.J00666	Eucgr.J00666.2	;AT3G12490-ATCYS6,ATCYSB,CYSB|cystatin B|multiple	
+Eucgr.J00742	Eucgr.J00742.1		
+Eucgr.J00763	Eucgr.J00763.1	(M=1) PTHR23125:SF53 - GB DEF: F20N2.2 (AT1G55590/F20N2_18);AT1G55590-NA|RNI-like superfamily protein|nucleus	
+Eucgr.J00890	Eucgr.J00890.1	(M=4) PTHR10887:SF165 - HELICASE MOV-10-RELATED;AT1G05460-SDE3|P-loop containing nucleoside triphosphate hydrolases superfamily protein|cytosol	
+Eucgr.J00905	Eucgr.J00905.2	;AT1G72650-TRFL6|TRF-like 6|nucleus	
+Eucgr.J00905	Eucgr.J00905.4	;AT1G72650-TRFL6|TRF-like 6|nucleus	
+Eucgr.J00905	Eucgr.J00905.3	;AT1G72650-TRFL6|TRF-like 6|nucleus	
+Eucgr.J00905	Eucgr.J00905.1	(M=4) PTHR21717:SF9 - TELOMERIC REPEAT BINDING PROTEIN 1;AT1G72650-TRFL6|TRF-like 6|nucleus	
+Eucgr.J01042	Eucgr.J01042.1	(M=31) K09286 - EREBP-like factor;AT5G19790-RAP2.11|related to AP2 11|nucleus	
+Eucgr.J01194	Eucgr.J01194.2	;AT2G38780-NA|NA|plastid	
+Eucgr.J01194	Eucgr.J01194.1	;AT2G38780-NA|NA|plastid	
+Eucgr.J01593	Eucgr.J01593.1	;AT1G70780-NA|NA|mitochondrion	
+Eucgr.J01814	Eucgr.J01814.1	(M=9) PTHR23147 - SERINE/ARGININE RICH SPLICING FACTOR;AT1G55310-ATSCL33,SCL33,SR33|SC35-like splicing factor 33|nucleus	
+Eucgr.J01860	Eucgr.J01860.1		
+Eucgr.J01877	Eucgr.J01877.1	(M=23) 2.4.1.203 - Trans-zeatin O-beta-D-glucosyltransferase.;AT2G30150-NA|UDP-Glycosyltransferase superfamily protein|mitochondrion	
+Eucgr.J01995	Eucgr.J01995.1	;AT5G59050-NA|NA|nucleus	
+Eucgr.J02158	Eucgr.J02158.1	(M=10) PTHR11200:SF29 - TYPE I INOSITOL POLYPHOSPHATE 5-PHOSPHATASE, ARATH;AT3G63240-NA|DNAse I-like superfamily protein|nucleus	
+Eucgr.J02232	Eucgr.J02232.1	(M=1) PF01903 - CbiX;AT1G50170-ATSIRB,SIRB|sirohydrochlorin ferrochelatase B|plastid	
+Eucgr.J02241	Eucgr.J02241.1	(M=1) PTHR11945:SF63 - MADS-BOX PROTEIN (AGL45);AT5G55690-NA|MADS-box transcription factor family protein|nucleus	
+Eucgr.J02265	Eucgr.J02265.1	(M=1) 1.1.1.8 - Glycerol-3-phosphate dehydrogenase (NAD(+)).;AT5G40610-NA|NAD-dependent glycerol-3-phosphate dehydrogenase family protein|mitochondrion	K00006-Metabolism|Lipid metabolism|00564 Glycerophospholipid metabolism [PATH:ko00564]|GPD1; glycerol-3-phosphate dehydrogenase (NAD+) [EC:1.1.1.8]
+Eucgr.J02304	Eucgr.J02304.1	(M=14) PF03798 - TLC domain;AT5G14280-NA|DNA-binding storekeeper protein-related|nucleus	
+Eucgr.J02352	Eucgr.J02352.1	(M=92) 1.11.1.7 - Peroxidase.;AT5G14130-NA|Peroxidase superfamily protein|extracellular	K00430-Metabolism|Biosynthesis of other secondary metabolites|00940 Phenylpropanoid biosynthesis [PATH:ko00940]|E1.11.1.7; peroxidase [EC:1.11.1.7]
+Eucgr.J02397	Eucgr.J02397.1	(M=9) K01051 - pectinesterase;AT5G19730-NA|Pectin lyase-like superfamily protein|extracellular	
+Eucgr.J02428	Eucgr.J02428.2	;AT2G17970-NA|2-oxoglutarate (2OG) and Fe(II)-dependent oxygenase superfamily protein|nucleus	
+Eucgr.J02428	Eucgr.J02428.3	;AT2G17970-NA|2-oxoglutarate (2OG) and Fe(II)-dependent oxygenase superfamily protein|nucleus	
+Eucgr.J02428	Eucgr.J02428.1	(M=3) KOG4176 - Uncharacterized conserved protein;AT2G17970-NA|2-oxoglutarate (2OG) and Fe(II)-dependent oxygenase superfamily protein|nucleus	
+Eucgr.J02434	Eucgr.J02434.2	;AT2G17520-ATIRE1-2,IRE1-2,IRE1A|Endoribonuclease/protein kinase IRE1-like|endoplasmic reticulum	
+Eucgr.J02434	Eucgr.J02434.1	(M=23) PTHR13954 - IRE1-RELATED;AT2G17520-ATIRE1-2,IRE1-2,IRE1A|Endoribonuclease/protein kinase IRE1-like|endoplasmic reticulum	
+Eucgr.J02480	Eucgr.J02480.1	;AT4G35905-NA|NA|cytosol	
+Eucgr.J02481	Eucgr.J02481.1		
+Eucgr.J02600	Eucgr.J02600.1	(M=19) PF04570 - Protein of unknown function (DUF581);AT1G53903-NA|Protein of unknown function (DUF581)|cytosol	
+Eucgr.J02846	Eucgr.J02846.1		
+Eucgr.J02848	Eucgr.J02848.1	(M=4) 3.1.3.5 - 5'-nucleotidase.;AT1G72880-NA|Survival protein SurE-like phosphatase/nucleotidase|cytosol	K03787-Metabolism|Metabolism of cofactors and vitamins|00760 Nicotinate and nicotinamide metabolism [PATH:ko00760]|surE; 5'-nucleotidase [EC:3.1.3.5]
+Eucgr.J02852	Eucgr.J02852.1	(M=2) K12309 - beta-galactosidase;AT1G72990-BGAL17|beta-galactosidase 17|multiple	K12309-Cellular Processes|Transport and catabolism|04142 Lysosome [PATH:ko04142]|GLB1, ELNR1; beta-galactosidase [EC:3.2.1.23]
+Eucgr.J02952	Eucgr.J02952.1	;AT3G27750-NA|NA|plastid	
+Eucgr.J02988	Eucgr.J02988.1	(M=11) PF04783 - Protein of unknown function (DUF630);AT1G52320-NA|NA|nucleus	
+Eucgr.J03148	Eucgr.J03148.1	(M=1) 4.1.2.10 - (R)-mandelonitrile lyase.;AT1G73050-NA|Glucose-methanol-choline (GMC) oxidoreductase family protein|multiple	K08248-Metabolism|Metabolism of other amino acids|00460 Cyanoamino acid metabolism [PATH:ko00460]|E4.1.2.10; mandelonitrile lyase [EC:4.1.2.10]
+Eucgr.K00291	Eucgr.K00291.1	(M=212) PF00076 - RNA recognition motif. (a.k.a. RRM, RBD, or RNP domain);AT5G52545-NA|NA|nucleus	
+Eucgr.K00371	Eucgr.K00371.1	(M=6) PF03007//PF06974 - Wax ester synthase-like Acyl-CoA acyltransferase domain // Protein of unknown function (DUF1298);AT3G49210-NA|O-acyltransferase (WSD1-like) family protein|multiple	
+Eucgr.K01291	Eucgr.K01291.1	(M=1) 4.1.1.36 - Phosphopantothenoylcysteine decarboxylase.;AT3G18030-ATHAL3,ATHAL3A,HAL3,HAL3A|HAL3-like protein A|cytosol	K01598-Metabolism|Metabolism of cofactors and vitamins|00770 Pantothenate and CoA biosynthesis [PATH:ko00770]|PPCDC, coaC; phosphopantothenoylcysteine decarboxylase [EC:4.1.1.36]
+Eucgr.K01292	Eucgr.K01292.2	;AT2G38570-NA|NA|plastid	
+Eucgr.K01292	Eucgr.K01292.3	;AT2G38570-NA|NA|plastid	
+Eucgr.K01292	Eucgr.K01292.4	;AT2G38570-NA|NA|plastid	
+Eucgr.K01292	Eucgr.K01292.1	;AT2G38570-NA|NA|plastid	
+Eucgr.K01293	Eucgr.K01293.1	(M=1) PTHR24362//PTHR24362:SF157 - SERINE/THREONINE-PROTEIN KINASE NEK;AT5G01920-STN8|Protein kinase superfamily protein|plastid	
+Eucgr.K01294	Eucgr.K01294.2	;AT3G08710-ATH9,TH9,TRX H9|thioredoxin H-type 9|multiple	
+Eucgr.K01294	Eucgr.K01294.1	(M=34) PTHR10438 - THIOREDOXIN;AT3G08710-ATH9,TH9,TRX H9|thioredoxin H-type 9|multiple	
+Eucgr.K01348	Eucgr.K01348.1	(M=16) PTHR11040:SF1 - ZINC/IRON TRANSPORTER, PLANT AND YEAST;AT3G12750-ZIP1|zinc transporter 1 precursor|plasma membrane	
+Eucgr.K01349	Eucgr.K01349.1	(M=16) PTHR11040:SF1 - ZINC/IRON TRANSPORTER, PLANT AND YEAST;AT1G31260-ZIP10|zinc transporter 10 precursor|plasma membrane	
+Eucgr.K01350	Eucgr.K01350.1	(M=101) 2.4.1.91 - Flavonol 3-O-glucosyltransferase.;AT3G21760-HYR1|UDP-Glycosyltransferase superfamily protein|cytosol	
+Eucgr.K01436	Eucgr.K01436.1	(M=36) PTHR11654:SF37 - OLIGOPEPTIDE TRANSPORTER-RELATED;AT5G46040-NA|Major facilitator superfamily protein|vacuole	
+Eucgr.K01917	Eucgr.K01917.1	(M=3) PTHR11306 - NIEMANN PICK TYPE C2 PROTEIN NPC2-RELATED;AT3G11780-NA|MD-2-related lipid recognition domain-containing protein / ML domain-containing protein|extracellular	
+Eucgr.K01917	Eucgr.K01917.2	;AT3G11780-NA|MD-2-related lipid recognition domain-containing protein / ML domain-containing protein|extracellular	
+Eucgr.K02125	Eucgr.K02125.1	(M=17) PTHR11695:SF34 - ALCOHOL DEHYDROGENASE, ZINC-CONTAINING;AT4G13010-NA|Oxidoreductase, zinc-binding dehydrogenase family protein|cytosol	
+Eucgr.K02166	Eucgr.K02166.1	(M=14) PTHR22595:SF7 - CLASS IV CHITINASE;AT3G54420-ATCHITIV,ATEP3,CHIV,EP3|homolog of carrot EP3-3 chitinase|extracellular	
+Eucgr.K02166	Eucgr.K02166.2	;AT3G54420-ATCHITIV,ATEP3,CHIV,EP3|homolog of carrot EP3-3 chitinase|extracellular	
+Eucgr.K02336	Eucgr.K02336.1	(M=19) 4.2.2.2 - Pectate lyase.;AT5G09280-NA|Pectin lyase-like superfamily protein|extracellular	K01728-Metabolism|Carbohydrate metabolism|00040 Pentose and glucuronate interconversions [PATH:ko00040]|pel; pectate lyase [EC:4.2.2.2]
+Eucgr.K02337	Eucgr.K02337.2	;AT5G58210-NA|hydroxyproline-rich glycoprotein family protein|mitochondrion	
+Eucgr.K02337	Eucgr.K02337.3	;AT5G58210-NA|hydroxyproline-rich glycoprotein family protein|mitochondrion	
+Eucgr.K02337	Eucgr.K02337.1	;AT5G58210-NA|hydroxyproline-rich glycoprotein family protein|mitochondrion	
+Eucgr.K02446	Eucgr.K02446.1	(M=76) KOG0725 - Reductases with broad range of substrate specificities;AT2G47120-NA|NAD(P)-binding Rossmann-fold superfamily protein|peroxisome	
+Eucgr.K02446	Eucgr.K02446.2	;AT2G47120-NA|NAD(P)-binding Rossmann-fold superfamily protein|peroxisome	
+Eucgr.K02450	Eucgr.K02450.4	;AT5G62740-ATHIR1,HIR1|SPFH/Band 7/PHB domain-containing membrane-associated protein family|plasma membrane	
+Eucgr.K02450	Eucgr.K02450.1	(M=12) PTHR10264:SF25 - BAND 7 FAMILY PROTEIN;AT5G62740-ATHIR1,HIR1|SPFH/Band 7/PHB domain-containing membrane-associated protein family|plasma membrane	
+Eucgr.K02450	Eucgr.K02450.3	;AT5G62740-ATHIR1,HIR1|SPFH/Band 7/PHB domain-containing membrane-associated protein family|plasma membrane	
+Eucgr.K02450	Eucgr.K02450.2	;AT5G62740-ATHIR1,HIR1|SPFH/Band 7/PHB domain-containing membrane-associated protein family|plasma membrane	
+Eucgr.K02561	Eucgr.K02561.1	(M=3) PTHR10992:SF81 - ABHYDROLASE DOMAIN-CONTAINING PROTEIN 11-RELATED;AT3G52570-NA|alpha/beta-Hydrolases superfamily protein|mitochondrion	
+Eucgr.K02654	Eucgr.K02654.1	(M=16) PF03634 - TCP family transcription factor;AT1G67260-TCP1|TCP family transcription factor |nucleus	
+Eucgr.K02815	Eucgr.K02815.1	(M=29) KOG1208 - Dehydrogenases with different specificities (related to short-chain alcohol dehydrogenases);AT5G50130-NA|NAD(P)-binding Rossmann-fold superfamily protein|mitochondrion	
+Eucgr.K02886	Eucgr.K02886.1	(M=79) PF01764 - Lipase (class 3);AT3G48090-ATEDS1,EDS1|alpha/beta-Hydrolases superfamily protein|multiple	
+Eucgr.K02886	Eucgr.K02886.2	;AT3G48090-ATEDS1,EDS1|alpha/beta-Hydrolases superfamily protein|multiple	
+Eucgr.K03043	Eucgr.K03043.1	(M=1) K06700 - proteasome inhibitor subunit 1 (PI31);AT3G53970-NA|proteasome inhibitor-related|mitochondrion	K06700-Genetic Information Processing|Folding, sorting and degradation|03050 Proteasome [PATH:ko03050]|PSMF1; proteasome inhibitor subunit 1 (PI31)
+Eucgr.K03050	Eucgr.K03050.1	(M=38) PTHR11732:SF34 - ALDO-KETO REDUCTASE;AT2G37770-NA|NAD(P)-linked oxidoreductase superfamily protein|multiple	
+Eucgr.K03105	Eucgr.K03105.1		
+Eucgr.K03486	Eucgr.K03486.1	(M=590) PF01535 - PPR repeat;AT3G62890-NA|Pentatricopeptide repeat (PPR) superfamily protein|mitochondrion	
+Eucgr.K03540	Eucgr.K03540.1	;AT4G02090-NA|NA|nucleus	
+Eucgr.L01328	Eucgr.L01328.1	(M=391) PTHR11017//PTHR11017:SF20 - LEUCINE-RICH REPEAT-CONTAINING PROTEIN // SUBFAMILY NOT NAMED;AT5G45200-NA|Disease resistance protein (TIR-NBS-LRR class) family|cytosol	
+Eucgr.L01328	Eucgr.L01328.2	;AT5G45200-NA|Disease resistance protein (TIR-NBS-LRR class) family|cytosol	
+Eucgr.L02237	Eucgr.L02237.1	(M=201) PF01657 - Salt stress response/antifungal;AT5G37660-PDLP7|plasmodesmata-located protein 7|plasma membrane	
+Eucgr.L02381	Eucgr.L02381.1	(M=212) PF00076 - RNA recognition motif. (a.k.a. RRM, RBD, or RNP domain);AT5G19960-NA|RNA-binding (RRM/RBD/RNP motifs) family protein|nucleus	
+Eucgr.L02999	Eucgr.L02999.1	(M=4) K02985 - small subunit ribosomal protein S3e;AT5G35530-NA|Ribosomal protein S3 family protein|cytosol	
+Eucgr.L03261	Eucgr.L03261.1	(M=11) K13993 - HSP20 family protein;AT1G53540-NA|HSP20-like chaperones superfamily protein|cytosol	
+Eucgr.L03369	Eucgr.L03369.1	(M=9) PTHR13844 - BRG-1 ASSOCIATED FACTOR 60 (BAF60);AT4G22360-NA|SWIB complex BAF60b domain-containing protein|nucleus	
+Eucgr.L03611	Eucgr.L03611.1	;AT5G07020-NA|proline-rich family protein|plastid	

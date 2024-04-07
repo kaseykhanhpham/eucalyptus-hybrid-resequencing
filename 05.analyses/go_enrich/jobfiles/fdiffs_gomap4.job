@@ -1,0 +1,22 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=fdgm4
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=10gb
+#SBATCH --time=4-00:00:00
+#SBATCH --cpus-per-task=9
+#SBATCH --nodes=1
+#SBATCH --output=fdiffs_gomap4_%j.out
+#SBATCH --error=fdiffs_gomap4_%j.err
+
+pwd; hostname; date
+echo Working directory is $SLURM_SUBMIT_DIR
+cd $SLURM_SUBMIT_DIR
+
+module load gomap/1.3
+
+export GOMAP_LOC="/apps/gomap/1.3/GOMAP-singularity"
+
+$GOMAP_LOC/run-GOMAP-SINGLE.sh --step=mixmeth-blast --config=fdiffs_config.yml
