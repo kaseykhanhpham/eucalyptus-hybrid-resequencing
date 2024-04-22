@@ -1,4 +1,5 @@
 # python script to generate HiperGator job for FastPlast
+# everything is hardcoded in since it's specific to my local specs
 
 import pandas as pd
 
