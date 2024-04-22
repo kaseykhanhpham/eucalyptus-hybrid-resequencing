@@ -1,0 +1,87 @@
+
+-------------------------------------------------------------------
+                            p o n g
+      by A. Behr, K. Liu, T. Devlin, G. Liu-Fang, and S. Ramachandran
+                       Version 1.5 (2021)
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+
+
+Results summary
+===============
+
+____________________________________________K=2
+Number of runs: 10
+Major mode: k2r6
+
+Representative runs: k2r6
+	k2r6 represents 10 runs: runs k2r6, k2r5, k2r4, k2r3, k2r2, k2r1, k2r7, k2r8, k2r9, k2r10. Avg sim within = 1.000000
+
+____________________________________________K=3
+Number of runs: 10
+Major mode: k3r1
+
+Representative runs: k3r1, k3r5, k3r8, k3r10, k3r2, k3r7, k3r9, k3r6, k3r3, k3r4
+	k3r1 represents 1 run: run k3r1
+	k3r5 represents 1 run: run k3r5
+	k3r8 represents 1 run: run k3r8
+	k3r10 represents 1 run: run k3r10
+	k3r2 represents 1 run: run k3r2
+	k3r7 represents 1 run: run k3r7
+	k3r9 represents 1 run: run k3r9
+	k3r6 represents 1 run: run k3r6
+	k3r3 represents 1 run: run k3r3
+	k3r4 represents 1 run: run k3r4
+Avg sim between modes = 0.825881
+
+____________________________________________K=4
+Number of runs: 10
+Major mode: k4r2
+
+Representative runs: k4r2, k4r1, k4r4, k4r5, k4r10, k4r8, k4r7, k4r3, k4r6, k4r9
+	k4r2 represents 1 run: run k4r2
+	k4r1 represents 1 run: run k4r1
+	k4r4 represents 1 run: run k4r4
+	k4r5 represents 1 run: run k4r5
+	k4r10 represents 1 run: run k4r10
+	k4r8 represents 1 run: run k4r8
+	k4r7 represents 1 run: run k4r7
+	k4r3 represents 1 run: run k4r3
+	k4r6 represents 1 run: run k4r6
+	k4r9 represents 1 run: run k4r9
+Avg sim between modes = 0.672610
+
+____________________________________________K=5
+Number of runs: 10
+Major mode: k5r2
+
+Representative runs: k5r2, k5r10, k5r3, k5r1, k5r4, k5r6, k5r7, k5r8, k5r5, k5r9
+	k5r2 represents 1 run: run k5r2
+	k5r10 represents 1 run: run k5r10
+	k5r3 represents 1 run: run k5r3
+	k5r1 represents 1 run: run k5r1
+	k5r4 represents 1 run: run k5r4
+	k5r6 represents 1 run: run k5r6
+	k5r7 represents 1 run: run k5r7
+	k5r8 represents 1 run: run k5r8
+	k5r5 represents 1 run: run k5r5
+	k5r9 represents 1 run: run k5r9
+Avg sim between modes = 0.602485
+
+____________________________________________K=6
+Number of runs: 10
+Major mode: k6r7
+
+Representative runs: k6r7, k6r6, k6r4, k6r3, k6r2, k6r1, k6r8, k6r9, k6r5, k6r10
+	k6r7 represents 1 run: run k6r7
+	k6r6 represents 1 run: run k6r6
+	k6r4 represents 1 run: run k6r4
+	k6r3 represents 1 run: run k6r3
+	k6r2 represents 1 run: run k6r2
+	k6r1 represents 1 run: run k6r1
+	k6r8 represents 1 run: run k6r8
+	k6r9 represents 1 run: run k6r9
+	k6r5 represents 1 run: run k6r5
+	k6r10 represents 1 run: run k6r10
+Avg sim between modes = 0.626181
+
