@@ -1,10 +1,10 @@
-#example blueprint file
+#Eglob blueprint file
 #input setting
 popid: glob_MR # id of the population (no white space)
 nseq: 40 # number of sequences
-L: 8651451 # total number of observed nucleic sites, including polymorphic and monomorphic
+L: 15752854 # total number of observed nucleic sites, including polymorphic and monomorphic
 whether_folded: true # whethr the SFS is folded (true or false)
-SFS: 92561.45335770649 91909.42746993279 84987.2504982535 74276.58263620081 65373.85445545992 57580.20795794109 51198.5539268026 45495.05860438012 40231.59233138448 36637.58842640588 33956.10811245467 31860.07685388723 30707.37167475563 31301.02506590723 34347.51073462801 18295.83447183435 0 0 0 0 # snp frequency spectrum: number of singleton, number of doubleton, etc. (separated by white space)
+SFS: 150720.2660535347 149704.1333331226 138528.5552475863 120754.5050957728 106197.5229067253 93712.27048029556 83316.25583310747 73960.8358039187 65172.14064693877 59158.41872999133 54850.43365601913 51473.79357392833 49497.51698651399 49987.6716989067 54399.83560117622 29120.30070290052 0 0 0 0 # snp frequency spectrum: number of singleton, number of doubleton, etc. (separated by white space)
 #smallest_size_of_SFS_bin_used_for_estimation: 1 # default is 1; to ignore singletons, uncomment this line and change this number to 2
 largest_size_of_SFS_bin_used_for_estimation: 16 # default is nseq/2 for folded SFS
 pct_training: 0.67 # percentage of sites for training
@@ -15,7 +15,7 @@ ninput: 200 # number of input files to be created for each estimation
 #random_seed: 6
 #output setting
 mu: 4.93e-8 # assumed mutation rate per site per generation from Silva-Junior and Grattapaglia 2015
-year_per_generation: 10 # assumed generation time (in years) from Silva-Junior and Grattapaglia 2015
+year_per_generation: 50 # assumed generation time (in years) from discussion with Brad and Rene
 #plot setting
 plot_title: MR E. globulus # title of the plot
 xrange: 0,0 # Time (1k year) range; format: xmin,xmax; "0,0" for default

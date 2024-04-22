@@ -8,10 +8,19 @@ Generated Site Frequency Spectrum using [easySFS](https://github.com/isaacoverca
 module load python/3.8
 ESFS_DIR="/blue/soltis/kasey.pham/bin/easySFS"
 VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
-"$ESFS_DIR"/easySFS.py -i "$VCF_DIR"/all_fil_biallelic.vcf -a -p esfs_poplist.txt --preview
-# globulus segregating sites peaked (820719) at subsampling to 32 haplotypes
+"$ESFS_DIR"/easySFS.py -i "$VCF_DIR"/all_fil_biallelic.vcf.gz -a -p esfs_poplist.txt --preview
+# globulus segregating sites peaked (1330554) at subsampling to 32 haplotypes
 # cordata segregating sites peaked (650658) at subsampling to 16 haplotypes
-"$ESFS_DIR"/easySFS.py -i "$VCF_DIR"/all_fil_biallelic.vcf -p esfs_poplist.txt -o esfs_outp -a -f --order glob_MR,cord_MR --proj 32,16 -v
+"$ESFS_DIR"/easySFS.py -i "$VCF_DIR"/all_fil_biallelic.vcf.gz -p esfs_poplist.txt -o esfs_outp -a -f --order glob_MR,cord_MR --proj 32,16 -v
+```
+
+Plotted 1D SFS and 2D SFS calculated by `EasySFS` in `R`.
+```R
+glob_sfs <- data.frame(num_shared = c(1:20), freq = c(150720.2660535347, 149704.1333331226, 138528.5552475863, 120754.5050957728, 106197.5229067253, 93712.27048029556, 83316.25583310747, 73960.8358039187, 65172.14064693877, 59158.41872999133, 54850.43365601913, 51473.79357392833, 49497.51698651399, 49987.6716989067, 54399.83560117622, 29120.30070290052, 0, 0, 0, 0))
+cord_sfs <- data.frame(num_shared = c(1:10), freq = c(101696.2171998626, 122582.5098039221, 144140.6759545933, 142122.6738906096, 136740.7892672861, 131559.7115927073, 150248.7395940837, 94617.52012383903, 0, 0))
+
+plot(glob_sfs, type = "l", main = "E. globulus folded SFS projected down to 32", xlab = "Number of Alleles Shared", ylab = "Frequency")
+plot(cord_sfs, type = "l", main = "E. cordata folded SFS projected down to 16", xlab = "Number of Alleles Shared", ylab = "Frequency")
 ```
 
 Created `Stairway Plot 2` run files.
@@ -27,7 +36,7 @@ java -cp "$PROG_DIR"/stairway_plot_es Stairbuilder cord_fold.blueprint
 Ran `Stairway Plot 2` and graphed results.
 ```bash
 # Ran in UFRC queue system; see stairwayplot2_glob.job for more details.
-# Resources used: 461 Mb, 50 min
+# Resources used: 310 Mb, 1 hr
 module load java/1.8.0_31
 PROG_DIR="/blue/soltis/kasey.pham/bin/stairway_plot_v2.1.1"
 
@@ -40,7 +49,7 @@ Used Site Frequency Spectrum generated during _E. globulus_ analysis to make blu
 
 ```bash
 # Ran in UFRC queue system; see stairwayplot2_cord.job for more details.
-# Resources used: 320 Mb, 15 min
+# Resources used: 230 Mb, 15 min
 module load java/1.8.0_31
 PROG_DIR="/blue/soltis/kasey.pham/bin/stairway_plot_v2.1.1"
 
@@ -52,7 +61,7 @@ bash cord_fold.blueprint.plot.sh
 Used [`dadi`](https://dadi.readthedocs.io/en/latest/) to fit different demography models to observed variant distribution.
 
 ### 2D Models
-Created folded SFS for observed data and bootstrapped variants in `dadi`. Followed the manual's [2D demography example](https://dadi.readthedocs.io/en/latest/examples/basic_workflow/basic_workflow_2d_demographics/). Masked central cells (16,8), (15,8), (16,7) as a precaution against [artifacts from mis-mapping](https://groups.google.com/g/dadi-user/c/thIHbLj5zHQ).
+Created folded SFS for observed data and bootstrapped variants in `dadi`. Followed the manual's [2D demography example](https://dadi.readthedocs.io/en/latest/examples/basic_workflow/basic_workflow_2d_demographics/). Masked central cells (16,8) and (15,8) as a precaution against [artifacts from mis-mapping](https://groups.google.com/g/dadi-user/c/thIHbLj5zHQ).
 ```python
 # dadi demography model fitting
 # step: site frequency spectrum construction and bootstrapping
@@ -70,7 +79,7 @@ wdir = "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/demography/dadi/2D"
 name_stem = "globMR_cordMR_ns32-16"
 
 # Parse the VCF file to generate a data dictionary
-datafile = "/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/all_fil_biallelic.vcf"
+datafile = "/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/all_fil_biallelic.vcf.gz"
 dd = dadi.Misc.make_data_dict_vcf(datafile, "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/demography/stairway_plot/esfs_poplist.txt")
 
 # Extract the spectrum for MR E. globulus and MR E. cordata from that dictionary, with 
@@ -82,7 +91,6 @@ fs = dadi.Spectrum.from_data_dict(dd, pop_ids, ns, polarized = False) # folded s
 # Mask central cells
 fs.mask[16,8] = True
 fs.mask[15,8] = True
-fs.mask[16,7] = True
 
 # Make directory for saving data dictionaries
 # if not os.path.exists("{WDIR}/data/data_dicts".format(WDIR = wdir)):

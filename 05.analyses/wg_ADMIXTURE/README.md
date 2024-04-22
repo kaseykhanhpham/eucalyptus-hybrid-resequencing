@@ -12,24 +12,23 @@ This analysis needs a set of unlinked SNPs as input. I already generated a set o
 ```bash
 module load plink/1.90b3.39
 # maf=0.00
-WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/maf0.00"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/maf00"
 VCF_FILE="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/all_fil.vcf.gz"
-PRUNED_VARS="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.00/all_maf00.prune.in"
-OUTNAME="all_fil_maf0.00"
-INGROUP="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/ingroup.fam"
+PRUNED_VARS="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf00/all_maf00.prune.in"
+OUTNAME="all_fil_maf00"
 
 cd "$WDIR"
-plink --vcf "$VCF_FILE" --extract "$PRUNED_VARS" --set-missing-var-ids @:# --allow-extra-chr --vcf-half-call m --keep "$INGROUP" --make-bed --out "$OUTNAME"
+plink --vcf "$VCF_FILE" --extract "$PRUNED_VARS" --set-missing-var-ids @:# --allow-extra-chr --vcf-half-call m --make-bed --out "$OUTNAME"
 awk '{$1="0";print $0}' "$OUTNAME".bim > "$OUTNAME".bim.tmp
 mv "$OUTNAME".bim.tmp "$OUTNAME".bim
 
 # maf=0.05
-WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/maf0.05"
-PRUNED_VARS="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.05/all_maf05.prune.in"
-OUTNAME="all_fil_maf0.05"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_admixture/maf05"
+PRUNED_VARS="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf05/all_maf05.prune.in"
+OUTNAME="all_fil_maf05"
 
 cd "$WDIR"
-plink --vcf "$VCF_FILE" --extract "$PRUNED_VARS" --set-missing-var-ids @:# --allow-extra-chr --vcf-half-call m --keep "$INGROUP" --make-bed --out "$OUTNAME"
+plink --vcf "$VCF_FILE" --extract "$PRUNED_VARS" --set-missing-var-ids @:# --allow-extra-chr --vcf-half-call m --make-bed --out "$OUTNAME"
 awk '{$1="0";print $0}' "$OUTNAME".bim > "$OUTNAME".bim.tmp
 mv "$OUTNAME".bim.tmp "$OUTNAME".bim
 ```
@@ -38,7 +37,7 @@ Ran `ADMIXTURE` for K=2 through K=6 with 10 replicate runs for cross-validation.
 
 ```bash
 # Run via job on UFRC, see admixture_maf0.0X.job for details. Example from admixture_maf0.00.job below.
-# Maximum resources used: 420 Mb, 4 hrs
+# Maximum resources used: 1 Gb, 9 hrs
 
 module load admixture/1.23
 
