@@ -4,7 +4,7 @@
 #SBATCH --job-name=filtervars
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=kasey.pham@ufl.edu
-#SBATCH --mem=3gb
+#SBATCH --mem=5gb
 #SBATCH --time=1-00:00:00
 #SBATCH --cpus-per-task=12
 #SBATCH --nodes=1
@@ -19,7 +19,7 @@ INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/raw_split"
 declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
 
 export MAF=0.00
-export MISS=0.875
+export MISS=0.85
 export QUAL=50
 export MIN_DP=20
 export MAX_DP=60
@@ -30,5 +30,5 @@ export MAX_DP=60
 for NAME in "${VCFLIST[@]}"
 do
     echo doing "$NAME" variants
-    vcftools --gzvcf "$INDIR"/"$NAME"_snps.vcf.gz --maf $MAF --minQ $QUAL --min-meanDP $MIN_DP --max-meanDP $MAX_DP --minDP $MIN_DP --maxDP $MAX_DP --recode --stdout | bcftools view -i 'QUAL/SMPL_SUM(FORMAT/AD)>20 & FORMAT/SP > 0.10 & FORMAT/GQ > 40' --threads 12 -O v - | vcftools --vcf - --max-missing $MISS --recode --stdout | bcftools sort -m 3500 -O z - > "$NAME"_snps_fil.vcf.gz
+    vcftools --gzvcf "$INDIR"/"$NAME"_snps.vcf.gz --maf $MAF --minQ $QUAL --min-meanDP $MIN_DP --max-meanDP $MAX_DP --minDP $MIN_DP --maxDP $MAX_DP --recode --stdout | bcftools view -i 'QUAL/SMPL_SUM(FORMAT/AD)>20 & FORMAT/SP > 0.10 & FORMAT/GQ > 40' --threads 12 -O v - | vcftools --vcf - --max-missing $MISS --recode --stdout | bcftools sort -m 4500 -O z - > "$NAME"_snps_fil.vcf.gz
 done

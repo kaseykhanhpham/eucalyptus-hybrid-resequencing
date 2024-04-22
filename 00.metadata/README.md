@@ -88,6 +88,8 @@ pushViewport(mr_view)
 print(tas_inset_map, vp = tas_inset_view)
 ```
 
+Atlas of Living Australia Euc occurrence map session: https://spatial.ala.org.au/?ss=1713500431205
+
 
 ## RAPiD Sequencing
 

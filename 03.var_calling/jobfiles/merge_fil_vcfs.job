@@ -4,7 +4,7 @@
 #SBATCH --job-name=mergevcfs
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=kasey.pham@ufl.edu
-#SBATCH --mem=5gb
+#SBATCH --mem=20gb
 #SBATCH --time=4-00:00:00
 #SBATCH --cpus-per-task=12
 #SBATCH --nodes=1
@@ -22,5 +22,5 @@ for NAME in "${VCFLIST[@]}"
 do
     tabix "$VAR_DIR"/"$NAME"_snps_fil.vcf.gz
     tabix "$INVAR_DIR"/"$NAME"_invar_fil.vcf.gz
-    bcftools concat --allow-overlaps -O z --threads 12 "$VAR_DIR"/"$NAME"_snps_fil.vcf.gz "$INVAR_DIR"/"$NAME"_invar_fil.vcf.gz | bcftools sort -m 4500 -O z - > "$NAME"_fil.vcf.gz
+    bcftools concat --allow-overlaps -O z --threads 12 "$VAR_DIR"/"$NAME"_snps_fil.vcf.gz "$INVAR_DIR"/"$NAME"_invar_fil.vcf.gz | bcftools sort -m 19500 -O z - > "$NAME"_fil.vcf.gz
 done

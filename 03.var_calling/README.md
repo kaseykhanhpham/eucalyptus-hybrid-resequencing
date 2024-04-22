@@ -72,11 +72,11 @@ done
 
 ### Evaluate distributions of annotations for raw SNPs before setting filtering cutoffs
 
-Split raw variant calls into invariant SNPs, variant SNPs, and indels using `vcftools` to assess which filtering parameters to use. Ignoring indels in analysis for now to focus on SNPs.
+Split raw variant calls into invariant SNPs, variant SNPs, and indels using `vcftools`. Assessed which filtering parameters to use. Ignoring indels in analysis for now to focus on SNPs. **LEFT OFF HERE 4/18/2024**
 
 ```bash
 # Done in UFRC queue system. See split_vcfs.job for more detail.
-# Resources used: 10 Mb, 24 hrs
+# Resources used: 15 Mb, 20 hrs
 
 module load vcftools/0.1.16 
 VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/03.mpileup"
@@ -99,22 +99,22 @@ module load bcftools/1.15
 VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/raw_split"
 declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
 
-SAMPLE_HEADER="WB02\tWC02\tWD02\tWE02\tWF02\tWG02\tWH02\tWA03\tWB03\tWC03\tWA01\tWD03\tWE03\tWF03\tWG03\tWH03\tWA04\tWB04\tWC04\tWD04\tWE04\tWB01\tWF04\tWG04\tWC01\tWD01\tWE01\tWF01\tWG01\tWH01\tWA02\tWH04\tWA05\tWB05\tWC05\tWD05\tWE05\tWF05\tWG05\tWH05\tSRR10339635\n"
+SAMPLE_HEADER="WB02\tWC02\tWD02\tWE02\tWF02\tWG02\tWH02\tWA03\tWB03\tWC03\tWA01\tWD03\tWE03\tWF03\tWG03\tWH03\tWA04\tWB04\tWC04\tWD04\tWE04\tWB01\tWF04\tWG04\tWC01\tWD01\tWE01\tWF01\tWG01\tWH01\tWA02\tWH04\tWA05\tWB05\tWC05\tWD05\tWE05\tWF05\tWG05\tWH05\n"
 
 for NAME in "${VCFLIST[@]}"
 do
     # INFO fields
     printf 'CHROM\tPOS\tQUAL\tMQ\tMQBZ\tBQBZ\n' > "$NAME"_variant_info.tab
-    bcftools query --format '%CHROM\t%POS\t%QUAL\t%MQ\t%MQBZ\t%BQBZ\n' "$VCF_DIR"/"$NAME"_snp_var.vcf.gz >> "$NAME"_variant_info.tab
+    bcftools query --format '%CHROM\t%POS\t%QUAL\t%MQ\t%MQBZ\t%BQBZ\n' "$VCF_DIR"/"$NAME"_snps.vcf.gz >> "$NAME"_variant_info.tab
     # DP
     printf "$SAMPLE_HEADER" > "$NAME"_variant_dp.tab
-    bcftools query --format '[ %DP]\n' "$VCF_DIR"/"$NAME"_snp_var.vcf.gz >> "$NAME"_variant_dp.tab
+    bcftools query --format '[ %DP]\n' "$VCF_DIR"/"$NAME"_snps.vcf.gz >> "$NAME"_variant_dp.tab
     # SP
     printf "$SAMPLE_HEADER" > "$NAME"_variant_sp.tab
-    bcftools query --format '[ %SP]\n' "$VCF_DIR"/"$NAME"_snp_var.vcf.gz >> "$NAME"_variant_sp.tab
+    bcftools query --format '[ %SP]\n' "$VCF_DIR"/"$NAME"_snps.vcf.gz >> "$NAME"_variant_sp.tab
     # GQ
     printf "$SAMPLE_HEADER" > "$NAME"_variant_gq.tab
-    bcftools query --format '[ %GQ]\n' "$VCF_DIR"/"$NAME"_snp_var.vcf.gz >> "$NAME"_variant_gq.tab
+    bcftools query --format '[ %GQ]\n' "$VCF_DIR"/"$NAME"_snps.vcf.gz >> "$NAME"_variant_gq.tab
 done
 ```
 
@@ -173,22 +173,22 @@ dev.off()
 
 SNP filtering parameters and code were based on several sources, including personal consultation with Zhe Cai (University of British Columbia), Robin Buell's Fall 2018 Plant Genomics course at Michigan State University, [Hübner et al. 2019](https://doi.org/10.1038/s41477-018-0329-0), and Ravinet and Meier's [Speciation and Population Genomics](https://speciationgenomics.github.io/) tutorial.
 
-**Filtering Parameters used:**
+**Filtering Parameters used for Variants:**
 
-| Filter / Command                            | Meaning                                                             |
-| ------------------------------------------- | ------------------------------------------------------------------- |
-| maf = 0.00                                  | No filtering based on minor allele frequency at this time.          |
-| minQ = 50                                   | Remove variants with a quality (QUAL) score < 50                    |
-| min-meanDP = 10,                            | Remove variants with an average per-sample depth (DP) < 10          |
-| max-meanDP = 40                             | Remove variants with an average per-sample depth (DP) > 40          |
-| minDP = 10                                  | Remove sample genotypes with a depth (DP) < 10                      |
-| maxDP = 40                                  | Remove sample genotypes with a depth (DP) > 40                      |
-| recode                                      | Write header in VCF format                                          |
+| Filter / Command                            | Meaning                                                               |
+| ------------------------------------------- | --------------------------------------------------------------------- |
+| maf = 0.00                                  | No filtering based on minor allele frequency at this time.            |
+| minQ = 50                                   | Remove variants with a quality (QUAL) score < 50                      |
+| min-meanDP = 20,                            | Remove variants with an average per-sample depth (DP) < 20            |
+| max-meanDP = 60                             | Remove variants with an average per-sample depth (DP) > 60            |
+| minDP = 20                                  | Remove sample genotypes with a depth (DP) < 10                        |
+| maxDP = 60                                  | Remove sample genotypes with a depth (DP) > 50                        |
+| recode                                      | Write header in VCF format                                            |
 | QUAL/SMPL_SUM(AD) > 20                      | Remove gts with a ratio of QUAL to total allelic depth per sample < 20|
-| SP > 0.10                                   | Remove genotypes with phred-corrected P-value for strand bias < 0.10|
-| GQ > 40                                     | Remove genotypes with a genotype quality < 40                       |
+| SP > 0.10                                   | Remove genotypes with phred-corrected P-value for strand bias < 0.10  |
+| GQ > 40                                     | Remove genotypes with a genotype quality < 40                         |
 | max-missing = 0.875                         | Remove variants with a more than 12.5% missing genotypes              |
-| sort                                        | Sort filtered variants by position                                  |
+| sort                                        | Sort filtered variants by position                                    |
 
 **Programs used:**
 
@@ -199,7 +199,7 @@ Filtered variants first to adjust parameters to get enough SNPs to use later.
 
 ```bash
 # Done via UFRC queue system; see filter_vars.job for more details.
-# Resources used: 20 Mb, 1 hr
+# Resources used: 525 Mb, 40 min
 
 module load vcftools/0.1.16
 module load bcftools/1.15
@@ -212,14 +212,14 @@ export MISS=0.875
 export QUAL=50
 export MIN_DP=20
 export MAX_DP=60
-# QUAL/Total DP > 0.50
+# QUAL/Total DP > 20
 # SP > 0.10
 # GQ > 40
 
 for NAME in "${VCFLIST[@]}"
 do
     echo doing "$NAME" variants
-    vcftools --gzvcf "$INDIR"/"$NAME"_snps.vcf.gz --maf $MAF --minQ $QUAL --min-meanDP $MIN_DP --max-meanDP $MAX_DP --minDP $MIN_DP --maxDP $MAX_DP --recode --stdout | bcftools view -i 'QUAL/SMPL_SUM(FORMAT/AD)>20 & FORMAT/SP > 0.10 & FORMAT/GQ > 40' --threads 12 -O v - | vcftools --vcf - --max-missing $MISS --recode --stdout | bcftools sort -m 3500 -O z - > "$NAME"_snps_fil.vcf.gz
+    vcftools --gzvcf "$INDIR"/"$NAME"_snps.vcf.gz --maf $MAF --minQ $QUAL --min-meanDP $MIN_DP --max-meanDP $MAX_DP --minDP $MIN_DP --maxDP $MAX_DP --recode --stdout | bcftools view -i 'QUAL/SMPL_SUM(FORMAT/AD)>20 & FORMAT/SP > 0.10 & FORMAT/GQ > 40' --threads 12 -O v - | vcftools --vcf - --max-missing $MISS --recode --stdout | bcftools sort -m 9500 -O z - > "$NAME"_snps_fil.vcf.gz
 done
 ```
 
@@ -227,23 +227,23 @@ Filtered invariant calls based on stringent parameters.
 
 ```bash
 # Done via UFRC queue system; see filter_invars.job for more details.
-# Resources used: 1 Gb, 2 hrs
+# Resources used: 800 Mb, 2 hrs
 module load vcftools/0.1.16
 module load bcftools/1.15
 
 INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/raw_split"
 declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
 
-export MISS=0.875
+export MISS=0.90
 export QUAL=50
 export MIN_DP=20
 export MAX_DP=60
-# QUAL/Total DP > 0.50
+# QUAL/Total DP > 20
 
 for NAME in "${VCFLIST[@]}"
 do
     echo doing "$NAME" invariants
-    vcftools --gzvcf "$INDIR"/"$NAME"_invar.vcf.gz --minQ $QUAL --min-meanDP $MIN_DP --max-meanDP $MAX_DP --minDP $MIN_DP --maxDP $MAX_DP --remove-indels --recode --stdout | bcftools view -i 'QUAL/SMPL_SUM(FORMAT/AD)>20' --threads 12 -O v - | vcftools --vcf - --max-missing $MISS --recode --stdout | bcftools sort -m 3500 -O z - > "$NAME"_invar_fil.vcf.gz
+    vcftools --gzvcf "$INDIR"/"$NAME"_invar.vcf.gz --minQ $QUAL --min-meanDP $MIN_DP --max-meanDP $MAX_DP --minDP $MIN_DP --maxDP $MAX_DP --remove-indels --recode --stdout | bcftools view -i 'QUAL/SMPL_SUM(FORMAT/AD)>20' --threads 16 -O v - | vcftools --vcf - --max-missing $MISS --recode --stdout | bcftools sort -m 19500 -O z - > "$NAME"_invar_fil.vcf.gz
 done
 ```
 
@@ -308,7 +308,7 @@ Moved files to `/orange` drive long-term storage and created symlinks to `/blue`
 
 module load bcftools/1.15
 
-WDIR="/orange/soltis/kasey.pham/eucalyptus_hyb_reseq/06.snp_filtering/"
+WDIR="/orange/soltis/kasey.pham/eucalyptus_hyb_reseq/06.snp_filtering"
 declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
 
 for NAME in "${VCFLIST[@]}"
@@ -318,23 +318,34 @@ done
 
 ls "$WDIR"/*_fil.vcf.gz > "$WDIR"/vcf_list.txt
 bcftools concat -O z --threads 12 -f "$WDIR"/vcf_list.txt -o "$WDIR"/all_fil.vcf.gz
-
 ```
 
 Variant/Invariant Counts:
 
 | Chromosome | Num Variants | Num Invariants | **TOTAL**   |
 | ---------- | ------------ | -------------- | ----------- |
-| Chr01      | 104,205      | 683,440        | 794,966     |
-| Chr02      | 103,032      | 736,948        | 846,913     |
-| Chr03      | 109,859      | 626,870        | 745,095     |
-| Chr04      | 82,132       | 538,119        | 626,022     |
-| Chr05      | 97,517       | 523,321        | 628,402     |
-| Chr06      | 123,970      | 955,746        | 1,087,907   |
-| Chr07      | 92,452       | 569,203        | 668,477     |
-| Chr08      | 146,604      | 891,241        | 1,048,448   |
-| Chr09      | 91,501       | 597,460        | 695,308     |
-| Chr10      | 96,478       | 683,749        | 786,802     |
-| Chr11      | 93,288       | 681,067        | 780,487     |
-| ChrUn      | 4,181        | 19,068         | 23,683      |
-| **TOTAL**  | 1,145,219    | 7,506,232      | 8,732,510   |
+| Chr01      | 165,262      | 1,259,181      | 1,433,859   |
+| Chr02      | 167,481      | 1,368,061      | 1,544,773   |
+| Chr03      | 178,061      | 1,180,563      | 1,370,079   |
+| Chr04      | 130,871      | 1,002,216      | 1,140,499   |
+| Chr05      | 160,414      |   981,011      | 1,151,868   |
+| Chr06      | 196,142      | 1,748,766      | 1,955,226   |
+| Chr07      | 150,019      | 1,058,566      | 1,217,894   |
+| Chr08      | 236,520      | 1,654,303      | 1,904,945   |
+| Chr09      | 144,600      | 1,104,510      | 1,257,095   |
+| Chr10      | 153,849      | 1,258,706      | 1,420,981   |
+| Chr11      | 149,538      | 1,262,938      | 1,420,617   |
+| ChrUn      | 7,082        | 34,194         | 41,933      |
+| **TOTAL**  | 1,839,839    | 13,913,015     | 15,859,769  |
+
+Filtered SNP set to biallelic SNPs (needed for several analyses) using `vcftools`.
+
+```bash
+# Run on UFRC queue system; see get_biallelic.job for more details.
+# Resources used: 15 Mb, 7 min
+
+module load vcftools/0.1.16
+VCFDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
+
+vcftools --gzvcf "$VCFDIR"/all_fil.vcf.gz --min-alleles 2 --max-alleles 2 --recode --stdout | bgzip -c > "$VCFDIR"/all_fil_biallelic.vcf.gz # unzipped this file later for another analysis, so name will be different in files.
+```
