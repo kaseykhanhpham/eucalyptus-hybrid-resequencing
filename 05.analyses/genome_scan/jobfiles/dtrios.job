@@ -1,0 +1,20 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=dtrios
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=5gb
+#SBATCH --time=1:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=dtrios_%j.out
+#SBATCH --error=dtrios_%j.err
+
+module purge
+
+DSUITE_DIR="/blue/soltis/kasey.pham/bin/Dsuite_v0.5r53/Build"
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/dsuite"
+
+"$DSUITE_DIR"/Dsuite Dtrios -k 100 --ABBAclustering "$VCF_DIR"/all_fil_biallelic.vcf SETS.txt

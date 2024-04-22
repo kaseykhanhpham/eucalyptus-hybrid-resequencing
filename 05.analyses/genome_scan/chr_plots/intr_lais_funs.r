@@ -183,3 +183,95 @@ plot_elai_low <- function(elai_dose_file, elai_site_file, elai_samples, elai_out
     rect(xleft = 4, ybottom = 1, xright = 6, ytop = chr_size, density = 0, 
          border = "black", lwd = 4)
 }
+
+plot_intr_alt <- function(ahmm_tabnames, ahmm_outname, dxy_tabname, dsuite_tabname, scan_outname, chr, chr_size){
+    # Plot introgression windows for genome scan statistics and Ancestry_HMM
+    max_chr_size <- 70214608
+    # Get windows of interest
+    # AHMM
+    ahmm_seeds <- get_ahmm_windows(ahmm_tabnames, chr, 0.95, 5)
+    if(nrow(ahmm_seeds) > 0){ # only output and merge table if there are sites to output
+        write.table(ahmm_seeds, paste("seeds", ahmm_outname, sep = "_"), quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
+        ahmm_seeds_merged <- merge_windows(ahmm_seeds[,c(1:3)], 500, chr)
+        # write.table(ahmm_seeds_merged, paste("seeds", "merged", ahmm_outname, sep = "_"), row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t") # feels redundant since we're printing the expanded windows later.
+    } else {
+        ahmm_seeds_merged <- data.frame()
+    }
+    # Expand AHMM regions
+    # get areas where posterior > 0.89
+    ahmm_surr <- get_ahmm_windows(ahmm_tabnames, chr, 0.89, 5)
+    if(nrow(ahmm_surr) > 0){
+        ahmm_surr_merged <- merge_windows(ahmm_surr[,c(1:3)], 500, chr)
+    } else { 
+        ahmm_surr_merged <- data.frame()
+    }
+    # subset to areas where posterior > 0.89 AND contains at least one region where posterior > 0.95
+    final_start <- c()
+    final_end <- c()
+    if(nrow(ahmm_seeds_merged) > 0){
+        for(i in c(1:nrow(ahmm_seeds_merged))){
+            lower <- ahmm_surr_merged$start <= ahmm_seeds_merged[i, "start"]
+            higher <- ahmm_surr_merged$end >= ahmm_seeds_merged[i, "end"]
+            if(any(lower & higher)){ # check if there are any regions with posterior > 0.89 that contain a seed
+                # if there are, add that region to the final set
+                final_start <- c(final_start, ahmm_surr_merged[which(lower & higher), "start"])
+                final_end <- c(final_end, ahmm_surr_merged[which(lower & higher), "end"])
+            } else {
+                # if not, add original seed location
+                final_start <- c(final_start, ahmm_seeds_merged[i, "start"])
+                final_end <- c(final_end, ahmm_seeds_merged[i, "end"])
+            }
+        }
+    }
+    # construct final AHMM table of 0.95 posterior regions and surrounding 0.89 posterior regions
+    ahmm_windows <- data.frame(chr = rep(chr, length(final_start)), start = final_start, end = final_end)
+    ahmm_windows_merged <- merge_windows(ahmm_windows, 5001, chr)
+    if(nrow(ahmm_windows) > 0){
+        write.table(ahmm_windows_merged, paste("merged", ahmm_outname, sep = "_"), quote = FALSE, row.names = FALSE, col.names = TRUE, sep = "\t")
+    }
+
+    # dXY
+    dxy_windows <- get_dxy_windows(dxy_tabname, "glob_MR", "glob_pure", chr, 40, 0.10, "above")
+    dxy_windows_merged <- merge_windows(dxy_windows, 5001, chr)
+    # df
+    df_windows <- get_dsuite_windows(dsuite_tabname, chr, "d_f", 0.90, "above")
+    df_windows_merged <- merge_windows(df_windows, 5001, chr)
+
+    # Get overlap between genome scan windows
+    dxy_df_overl <- get_overlap(dxy_windows_merged, df_windows_merged, chr)
+    if(nrow(dxy_df_overl) > 0){ # plot overlap
+        write.table(dxy_df_overl, scan_outname, row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
+    }
+
+    # make canvas of the correct size (adding 5% padding to either end of the y-axis)
+    plot(x = c(0, 10), y = c(round(-1*max_chr_size*0.05), round(max_chr_size + max_chr_size*0.05)), 
+         col = "white", xlab = "", xaxt = "n", ylab = "Position (bp)")
+    # plot bars for dxy regions
+    if(nrow(dxy_windows_merged) > 0){
+        rect(xleft = rep(4, nrow(dxy_windows_merged)), ybottom = dxy_windows_merged$start,
+            xright = rep(6, nrow(dxy_windows_merged)), ytop = dxy_windows_merged$end,
+            density = -1, col = "#f53b3b", border = "#f53b3b", lwd = 1.5)
+    }
+    # plot bars for fdm regions
+    if(nrow(df_windows_merged) > 0){ # check that table is populated for this chromosome
+            rect(xleft = rep(4, nrow(df_windows_merged)), ybottom = df_windows_merged$start,
+                xright = rep(6, nrow(df_windows_merged)), ytop = df_windows_merged$end,
+                density = -1, col = "#ffb464", border = "#ffb464", lwd = 1.5)
+    }
+    # plot bars for overlaps
+    if(nrow(dxy_df_overl) > 0){
+        rect(xleft = rep(4, nrow(dxy_df_overl)), ybottom = dxy_df_overl$start,
+            xright = rep(6, nrow(dxy_df_overl)), ytop = dxy_df_overl$end,
+            density = -1, col = "#f58055", border = "#f58055", lwd = 1.5)
+    }
+    # plot bars for AHMM regions
+    if(nrow(ahmm_windows_merged) > 0){ # check that table is populated for this chromosome
+        rect(xleft = rep(4, nrow(ahmm_windows_merged)), ybottom = ahmm_windows_merged$start,
+            xright = rep(6, nrow(ahmm_windows_merged)), ytop = ahmm_windows_merged$end,
+            density = -1, col = "#263CA9", border = "#263CA9", lwd = 1.5)
+    }
+
+    # Draw outline of chromosome
+    rect(xleft = 4, ybottom = 1, xright = 6, ytop = chr_size, density = 0, 
+         border = "black", lwd = 4)
+}

@@ -45,13 +45,7 @@ elai_samples <- read.table(elai_samples_name, header = FALSE)$V1
 # NOTE: LEGENDS AREN'T CURRENTLY GENERATED, YOU'LL HAVE TO ADD THAT SEPARATELY AFTER COMBINING THE PLOTS.
 
 # Ancestry_HMM introgression
-message("Plotting Ancestry_HMM results...", stderr())
-png(paste(out_pref, chr, "ahmm.png", sep = "_"), width = 1000, height = 3500)
-    plot_ahmm_low(ahmm_tabnames = ahmm_list, ahmm_outname = paste(out_pref, chr, "ahmm.bed", sep = "_"), dxy_tabname = dxy_name, dsuite_tabname = dsuite_name, scan_outname = paste(out_pref, chr, "gscan_intr.bed", sep = "_"), chr = chr, chr_size = chr_size)
-dev.off()
-
-# ELAI introgression
-message("Plotting ELAI results...", stderr())
-png(paste(out_pref, chr, "elai.png", sep = "_"), width = 1000, height = 3500)
-    plot_elai_low(elai_dose_file = elai_dose_name, elai_site_file = elai_snpinfo_name, elai_samples = elai_samples, elai_outname = paste(out_pref, chr, "elai.bed", sep = "_"), dxy_tabname = dxy_name, dsuite_tabname = dsuite_name, chr = chr, chr_size = chr_size)
+message("Plotting dxy peaks and df...", stderr())
+png(paste(out_pref, chr, "intr_alt.png", sep = "_"), width = 1000, height = 3500)
+    plot_intr_alt(ahmm_tabnames = ahmm_list, ahmm_outname = paste(out_pref, chr, "ahmm.bed", sep = "_"), dxy_tabname = dxy_name, dsuite_tabname = dsuite_name, scan_outname = paste(out_pref, chr, "gscan_alt.bed", sep = "_"), chr = chr, chr_size = chr_size)
 dev.off()

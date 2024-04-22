@@ -177,18 +177,6 @@ hist(log(all_dxy[which(all_dxy$pop1 == "glob_pure" & all_dxy$pop2 == "cord_MR" &
 
 ## Patterson's D and associated statistics
 
-Filtered SNP set to biallelic SNPs only using `vcftools`.
-
-```bash
-# Run on UFRC queue system; see get_biallelic.job for more details.
-# Resources used: 10 Mb, 2 min
-
-module load vcftools/0.1.16
-VCFDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
-
-vcftools --gzvcf "$VCFDIR"/all_fil.vcf.gz --min-alleles 2 --max-alleles 2 --recode --stdout | bgzip -c > "$VCFDIR"/all_fil_biallelic.vcf.gz # unzipped this file later for another analysis, so name will be different in files.
-```
-
 Calculated fD and fDM in sliding windows of 40 viable SNPs at a time using [`Dsuite`](https://github.com/millanek/Dsuite).
 
 ```bash

@@ -1,0 +1,33 @@
+#!/bin/bash
+#SBATCH --account=soltis
+#SBATCH --qos=soltis-b
+#SBATCH --job-name=plotalt
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=kasey.pham@ufl.edu
+#SBATCH --mem=5gb
+#SBATCH --time=5:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --nodes=1
+#SBATCH --output=plot_intr_alt_%j.out
+#SBATCH --error=plot_intr_alt_%j.err
+
+module purge
+module load R/4.2
+
+# LOCATIONS OF FILES
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/chr_plots"
+PIXY_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy"
+DSUITE_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/dsuite"
+AHMM_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/01.all_vars/maf00/posteriors"
+ELAI_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/elai/g4000/maf00/output/avg"
+
+declare -a CHR_LIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
+declare -a CHR_SIZE=(42219553 50828380 65547241 38599333 62919971 52140660 54252628 70214608 38300324 38722660 42056460)
+
+# real loop
+for i in {0..10}
+do
+    >&2 echo doing ${CHR_LIST[$i]}
+    Rscript "$SCRIPT_DIR"/plot_intr_alt.r -c ${CHR_LIST[$i]} -s ${CHR_SIZE[$i]} -o Eglob_intr_alt -y "$PIXY_DIR"/all_dxy.txt -d "$DSUITE_DIR"/localFstats_40_20.txt -a "$WDIR"/ahmm_filelist.txt -e "$ELAI_DIR"/"${CHR_LIST[$i]}"_avg.ps21.txt -i "$ELAI_DIR"/"${CHR_LIST[$i]}"_avg.snpinfo.txt -g "$ELAI_DIR"/../../../../Eglobulus_MR_inds.txt
+done
