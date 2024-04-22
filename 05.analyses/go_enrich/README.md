@@ -74,7 +74,7 @@ cd ..
 Rscript "$SCRIPT_DIR"/extract_fas.r -i "$REF_DIR"/Egrandis_297_v2.0.protein.fa -l Eglob_fdiffs_AUSX01_homol_prot_list.txt -o Eglob_fdiffs_AUSX01_homol_prot.fas
 ```
 
-Ran `GO-MAP` on _E. grandis_ homologous protein sequences for approximate GO enrichment.
+Ran `GOMAP` on _E. grandis_ homologous protein sequences for approximate GO enrichment.
 
 ## Recombination
 Checked how much overlap there was with genes to begin with.
