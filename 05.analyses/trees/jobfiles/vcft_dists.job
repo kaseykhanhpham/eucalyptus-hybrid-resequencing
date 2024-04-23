@@ -19,6 +19,8 @@ WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/trees/nucl_upgma"
 
 # maf = 0.00
 vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out "$WDIR"/maf00/globMR_maf00 --keep "$POPLIST_DIR"/Eglobulus_MR.txt --min-alleles 1 --max-alleles 2 --relatedness2
+vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out "$WDIR"/maf00/cord_maf00 --keep "$POPLIST_DIR"/Ecordata.txt --min-alleles 1 --max-alleles 2 --relatedness2
 
 # maf = 0.05
 vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out "$WDIR"/maf05/globMR_maf05 --keep "$POPLIST_DIR"/Eglobulus_MR.txt --min-alleles 1 --max-alleles 2 --relatedness2
+vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out "$WDIR"/maf05/cord_maf05 --keep "$POPLIST_DIR"/Ecordata.txt --min-alleles 1 --max-alleles 2 --relatedness2

@@ -238,12 +238,12 @@ Created a pairwise distance matrix for number of allele differences between samp
 module load plink/1.90b3.39 
 
 VCF="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/all_fil.vcf.gz"
-LD_DIR_00="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.00"
-LD_DIR_05="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf0.05"
-OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/trees/nucl_upgma'
+LD_DIR_00="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf00"
+LD_DIR_05="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/wg_pca/maf05"
+OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/trees/nucl_upgma"
 
-plink --vcf "$VCF" --double-id --allow-extra-chr --set-missing-var-ids @:# --extract "$LD_DIR_00"/all_maf00.prune.in --vcf-half-call m --make-bed --distance --out "$OUTDIR"/maf00
-plink --vcf "$VCF" --double-id --allow-extra-chr --set-missing-var-ids @:# --extract "$LD_DIR_05"/all_maf05.prune.in --vcf-half-call m --maf 0.05 --make-bed --distance --out "$OUTDIR"/maf05
+plink --vcf "$VCF" --double-id --allow-extra-chr --set-missing-var-ids @:# --extract "$LD_DIR_00"/all_maf00.prune.in --vcf-half-call m --make-bed --distance --out "$OUTDIR"/maf00/maf00
+plink --vcf "$VCF" --double-id --allow-extra-chr --set-missing-var-ids @:# --extract "$LD_DIR_05"/all_maf05.prune.in --vcf-half-call m --maf 0.05 --make-bed --distance --out "$OUTDIR"/maf05/maf05
 ```
 
 Calculated relatedness between individuals using relatedness statistic from [Manichaikul et al. 2010 _Bioinformatics_](https://doi.org/10.1093/bioinformatics/btq559), calculated in `vcftools`.
@@ -260,9 +260,11 @@ WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/trees/nucl_upgma"
 
 # maf = 0.00
 vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out "$WDIR"/maf00/globMR_maf00 --keep "$POPLIST_DIR"/Eglobulus_MR.txt --min-alleles 1 --max-alleles 2 --relatedness2
+vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out "$WDIR"/maf00/cord_maf00 --keep "$POPLIST_DIR"/Ecordata.txt --min-alleles 1 --max-alleles 2 --relatedness2
 
 # maf = 0.05
-vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out "$WDIR"/maf05/globMR_maf05 --keep "$POPLIST_DIR"/Eglobulus_MR.txt --min-alleles 1 --max-alleles 2 --maf 0.05 --relatedness2
+vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out "$WDIR"/maf05/globMR_maf05 --keep "$POPLIST_DIR"/Eglobulus_MR.txt --min-alleles 1 --max-alleles 2 --relatedness2
+vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out "$WDIR"/maf05/cord_maf05 --keep "$POPLIST_DIR"/Ecordata.txt --min-alleles 1 --max-alleles 2 --relatedness2
 ```
 
 Generated UPGMA tree from distance matrix in the `R` package `phangorn`.
@@ -271,29 +273,46 @@ Generated UPGMA tree from distance matrix in the `R` package `phangorn`.
 library(phangorn)
 library(ape)
 
-wdir <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/trees/nucl_upgma/"
-infile_name <- "globMR_maf00.relatedness2"
-
+wdir <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/trees/nucl_upgma"
 setwd(wdir)
 
-# create distance matrix
-dist_df <- read.table(infile_name, header = TRUE, sep = "\t")
-non_diag_rows <- which(dist_df[,1] != dist_df[,2])
-dist_df_pruned <- dist_df[non_diag_rows,]
-# https://stackoverflow.com/questions/22492767/converting-pairwise-distances-into-a-distance-matrix-in-r 
-dist_mat <- as.dist(xtabs(dist_df_pruned[, 7] ~ dist_df_pruned[, 2] + dist_df_pruned[, 1])) 
-
-# create upgma object
-nucl_upgma <- upgma(dist_mat, method = "average")
-# rename tips
+# import conversion table
 meta_name <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/00.metadata/03.seq_analysis/sample_spp_table.csv"
 meta_table <- read.csv(meta_name, header = TRUE, as.is = TRUE)
-label_order <- match(nucl_upgma$tip.label, meta_table$RAPiD_ID)
-nucl_upgma_renamed <- nucl_upgma
-nucl_upgma_renamed$tip.label <- meta_table$Accession[label_order]
 
-# plot in ape
-plot(nucl_upgma_renamed, cex = 1.75, use.edge.length = FALSE)
+plot_upgma_tree <- function(infile_name, title_text){
+    # create distance matrix
+    dist_df <- read.table(infile_name, header = TRUE, sep = "\t")
+    non_diag_rows <- which(dist_df[,1] != dist_df[,2])
+    dist_df_pruned <- dist_df[non_diag_rows,]
+    # https://stackoverflow.com/questions/22492767/converting-pairwise-distances-into-a-distance-matrix-in-r 
+    dist_mat <- as.dist(xtabs(dist_df_pruned[, 7] ~ dist_df_pruned[, 2] + dist_df_pruned[, 1])) 
+
+    # create upgma object
+    nucl_upgma <- upgma(dist_mat, method = "average")
+    # rename tips
+    label_order <- match(nucl_upgma$tip.label, meta_table$RAPiD_ID)
+    nucl_upgma_renamed <- nucl_upgma
+    nucl_upgma_renamed$tip.label <- meta_table$Accession[label_order]
+
+    # plot in ape
+    plot(nucl_upgma_renamed, cex = 1.75, use.edge.length = TRUE, main = title_text)
+}
+
+# GLOBULUS
+# MAF=0.00
+plot_upgma_tree("globMR_maf00.relatedness2", "MR E. globulus, MAF = 0.00")
+# MAF=0.05
+plot_upgma_tree("globMR_maf05.relatedness2", "MR E. globulus, MAF = 0.05")
+# CORDATA
+# MAF=0.00
+plot_upgma_tree("cord_maf00.relatedness2", "E. cordata, MAF = 0.00")
+# MAF=0.05
+plot_upgma_tree("cord_maf05.relatedness2", "E. cordata, MAF = 0.05")
 ```
 
-![nuclear UPGMA tree of Meehan Range _E. globulus_ by relatedness score, tips labeled by accession](nucl_upgma/upgma_tree_no_brlen_rough.png "Nuclear UPGMA Tree")
+MAF = 0.05 trees were identical to MAF = 0.00 trees so they are not shown.
+
+![nuclear UPGMA tree of Meehan Range _E. globulus_ by relatedness score, tips labeled by accession](nucl_upgma/upgma_glob_maf00.png "E. glob Nuclear UPGMA Tree")
+
+![nuclear UPGMA tree of Meehan Range _E. cordata_ by relatedness score, tips labeled by accession](nucl_upgma/upgma_cord_maf00.png "E. cord Nuclear UPGMA Tree")
