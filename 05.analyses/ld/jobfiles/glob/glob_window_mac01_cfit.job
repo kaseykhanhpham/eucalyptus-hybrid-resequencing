@@ -16,9 +16,9 @@ module load R/4.2
 SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/curve_fit"
 
-declare -a NAMELIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11)
+declare -a CHRLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11)
 
-for NAME in "${NAMELIST[@]}"
+for CHR in "${CHRLIST[@]}"
 do
-    Rscript "$SCRIPT_DIR"/fit_rsq_curve.r -f "$NAME"_win_ld_files.txt -o glob_"$NAME"_windows_ld.txt -m 40 -r 0.2 -g FALSE
+    Rscript "$SCRIPT_DIR"/fit_rsq_curve.r -f glob_"$CHR"_win_ld_files.txt -o glob_"$CHR"_windows_ld.txt -m 40 -r 0.2 -g FALSE
 done

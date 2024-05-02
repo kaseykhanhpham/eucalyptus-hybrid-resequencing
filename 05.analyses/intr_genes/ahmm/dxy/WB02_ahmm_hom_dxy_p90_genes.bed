@@ -1,8 +1,0 @@
-Chr07	7100039	7100138	Chr07	Liftoff	exon	7100040	7100138	.	-	.	ID=ANN05322-RA:exon:1062;Parent=ANN05322-RA;extra_copy_number=0
-Chr07	7100039	7100138	Chr07	Liftoff	CDS	7100040	7100138	.	-	.	ID=ANN05322-RA:cds;Parent=ANN05322-RA;extra_copy_number=0
-Chr07	7100001	7100623	Chr07	Liftoff	gene	7093886	7122235	.	-	.	ID=ANN05322;Note=Similar to At1g58060: DExH-box ATP-dependent RNA helicase DExH7, chloroplastic (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.997;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN05322_0
-Chr07	7100001	7100623	Chr07	Liftoff	mRNA	7093886	7122235	.	-	.	ID=ANN05322-RA;Parent=ANN05322;Note=Similar to At1g58060: DExH-box ATP-dependent RNA helicase DExH7, chloroplastic (Arabidopsis thaliana OX=3702);_AED=0.18;_eAED=0.21;matches_ref_protein=False;valid_ORF=False;inframe_stop_codon=True;extra_copy_number=0
-Chr07	7102138	7102160	Chr07	Liftoff	exon	7102139	7102243	.	-	.	ID=ANN05322-RA:exon:1058;Parent=ANN05322-RA;extra_copy_number=0
-Chr07	7102138	7102160	Chr07	Liftoff	CDS	7102139	7102243	.	-	.	ID=ANN05322-RA:cds;Parent=ANN05322-RA;extra_copy_number=0
-Chr07	7101970	7102160	Chr07	Liftoff	gene	7093886	7122235	.	-	.	ID=ANN05322;Note=Similar to At1g58060: DExH-box ATP-dependent RNA helicase DExH7, chloroplastic (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.997;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN05322_0
-Chr07	7101970	7102160	Chr07	Liftoff	mRNA	7093886	7122235	.	-	.	ID=ANN05322-RA;Parent=ANN05322;Note=Similar to At1g58060: DExH-box ATP-dependent RNA helicase DExH7, chloroplastic (Arabidopsis thaliana OX=3702);_AED=0.18;_eAED=0.21;matches_ref_protein=False;valid_ORF=False;inframe_stop_codon=True;extra_copy_number=0

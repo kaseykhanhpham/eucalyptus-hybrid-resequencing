@@ -1,0 +1,11 @@
+/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/avg_r2/genome_wide/mac01/glob_Chr01_ld_avg.csv
+/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/avg_r2/genome_wide/mac01/glob_Chr02_ld_avg.csv
+/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/avg_r2/genome_wide/mac01/glob_Chr03_ld_avg.csv
+/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/avg_r2/genome_wide/mac01/glob_Chr04_ld_avg.csv
+/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/avg_r2/genome_wide/mac01/glob_Chr05_ld_avg.csv
+/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/avg_r2/genome_wide/mac01/glob_Chr06_ld_avg.csv
+/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/avg_r2/genome_wide/mac01/glob_Chr07_ld_avg.csv
+/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/avg_r2/genome_wide/mac01/glob_Chr08_ld_avg.csv
+/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/avg_r2/genome_wide/mac01/glob_Chr09_ld_avg.csv
+/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/avg_r2/genome_wide/mac01/glob_Chr10_ld_avg.csv
+/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/avg_r2/genome_wide/mac01/glob_Chr11_ld_avg.csv

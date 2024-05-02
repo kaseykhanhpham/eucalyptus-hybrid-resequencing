@@ -15,15 +15,8 @@ module load vcftools/0.1.16
 
 VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/vcftools"
-# declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/"
 
-# for NAME in "${VCFLIST[@]}"
-# do
-#     vcftools --gzvcf "$VCF_DIR"/"$NAME"_fil.vcf.gz --keep Ecordata.txt --TajimaD 50000 --out cord_"$NAME"
-#     vcftools --gzvcf "$VCF_DIR"/"$NAME"_fil.vcf.gz --keep Eglobulus_MR.txt --TajimaD 50000 --out globMR_"$NAME"
-#     vcftools --gzvcf "$VCF_DIR"/"$NAME"_fil.vcf.gz --keep Eglobulus_ref.txt --TajimaD 50000 --out globref_"$NAME"
-# done
-
-vcftools --gzvcf "$VCF_DIR"/all_fil.vcf.gz --keep Ecordata.txt --TajimaD 50000 --out cord_"$NAME"
-vcftools --gzvcf "$VCF_DIR"/all_fil.vcf.gz --keep Eglobulus_MR.txt --TajimaD 50000 --out globMR_"$NAME"
-vcftools --gzvcf "$VCF_DIR"/all_fil.vcf.gz --keep Eglobulus_ref.txt --TajimaD 50000 --out globref_"$NAME"
+vcftools --gzvcf "$VCF_DIR"/all_fil.vcf.gz --keep "$LIST_DIR"/Ecordata.txt --TajimaD 50000 --out cord
+vcftools --gzvcf "$VCF_DIR"/all_fil.vcf.gz --keep "$LIST_DIR"/Eglobulus_MR.txt --TajimaD 50000 --out globMR
+vcftools --gzvcf "$VCF_DIR"/all_fil.vcf.gz --keep "$LIST_DIR"/Eglobulus_ref.txt --TajimaD 50000 --out globref

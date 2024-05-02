@@ -64,5 +64,5 @@ else:
     avg_r2_df.sort_values(by=["dist"], inplace = True)
 
     # export pandas dataframe
-    avg_r2_df.to_csv(outfile_name, index = False)
+    avg_r2_df.to_csv(args.outfile, index = False)
     print("{INFILE} averages written to {OUTFILE}.".format(INFILE = infile_name_stripped, OUTFILE = outfile_name_stripped))

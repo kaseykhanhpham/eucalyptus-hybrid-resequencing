@@ -4,7 +4,7 @@
 #SBATCH --job-name=globm2_avgrs
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=kasey.pham@ufl.edu
-#SBATCH --mem=15gb
+#SBATCH --mem=30gb
 #SBATCH --time=4-00:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --nodes=1

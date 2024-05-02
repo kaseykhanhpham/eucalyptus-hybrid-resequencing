@@ -1,6 +1,0 @@
-Chr06	3420338	3420406	Chr06	Liftoff	gene	3417292	3422991	.	+	.	ID=ANN14417;Note=Similar to OPT4: Oligopeptide transporter 4 (Arabidopsis thaliana OX=3702);coverage=0.999;sequence_ID=0.995;valid_ORFs=0;extra_copy_number=0;copy_num_ID=ANN14417_0
-Chr06	3420338	3420406	Chr06	Liftoff	mRNA	3417292	3422991	.	+	.	ID=ANN14417-RA;Parent=ANN14417;Note=Similar to OPT4: Oligopeptide transporter 4 (Arabidopsis thaliana OX=3702);_AED=0.46;_eAED=0.37;matches_ref_protein=False;valid_ORF=False;missing_stop_codon=True;extra_copy_number=0
-Chr06	3420338	3420406	Chr06	Liftoff	exon	3420226	3420408	.	+	.	ID=ANN14417-RA:exon:16;Parent=ANN14417-RA;extra_copy_number=0
-Chr06	3420338	3420406	Chr06	Liftoff	CDS	3420226	3420408	.	+	.	ID=ANN14417-RA:cds;Parent=ANN14417-RA;extra_copy_number=0
-Chr07	21705001	21705096	Chr07	Liftoff	gene	21701399	21705365	.	-	.	ID=ANN04607;Note=Similar to NAC014: NAC domain-containing protein 14 (Arabidopsis thaliana OX=3702);coverage=1.0;sequence_ID=0.999;valid_ORFs=1;extra_copy_number=0;copy_num_ID=ANN04607_0
-Chr07	21705001	21705096	Chr07	Liftoff	mRNA	21701399	21705365	.	-	.	ID=ANN04607-RA;Parent=ANN04607;Note=Similar to NAC014: NAC domain-containing protein 14 (Arabidopsis thaliana OX=3702);_AED=0.49;_eAED=0.47;matches_ref_protein=False;valid_ORF=True;extra_copy_number=0

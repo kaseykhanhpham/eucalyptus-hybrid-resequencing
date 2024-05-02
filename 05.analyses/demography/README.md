@@ -127,7 +127,7 @@ Run scheme:
 3. 50 replicates, 10 max iterations, 2-fold perturbation
 4. 100 replicates, 20 max iterations, 1-fold perturbation
 
-See python dadi python files under each model directory for more detail.
+Each model ran using ~80 Mb RAM and between 2 hrs and 2.5 days. See python dadi python files under each model directory for more detail.
 
 Models run:
 |Index | Model                                  | parameters                | python file           |
@@ -139,15 +139,25 @@ Models run:
 | 5    | Divergence, instant size change and asymmetric secondary contact and gradual size change | nu1i, nu2i, nu1m, nu2m, nu1f, nu2f, m12, m21, T1, T2 | dadi_sec_contact_bottle_schange.py |
 | 6    | Divergence, instant size change and asymmetric secondary contact, gradual size change | nu1i, nu2i, nu1m, nu2m, nu1f, nu2f, m12, m21, T1, T2 | dadi_sec_contact_bottle_schange_thr_epoch.py |
 
+Extracted best scores from each run in `R`. Example code given below:
+```R
+name_pref <- "globMR_cordMR_run"
+i_list <- c(1,2,3,4,5)
+name_suff <- ".schange.optimized.txt"
+
+tab_list <- lapply(i_list, function(i) read.table(paste(name_pref, i, name_suff, sep = ""), header = TRUE, sep = "\t")[c(96:195),])
+best_scores <- lapply(tab_list, function(tab) tab[which(tab$AIC == min(tab$AIC)),])
+```
+
 Summary of results of best run for each model: 
 | Index | ID                                   | Log Likelihood | AIC      |
 | ----- | ------------------------------------ | -------------- | -------- |
-| 1     | schange                              | -100346.10     | 200702.2 |
-| 2     | bottle_schange                       | -118835.80     | 237687.7 |
-| 3     | bottle_schange_thr_epoch             | -228936.90     | 457891.8 |
-| 4     | sec_contact_schange                  |  -81001.60     | 162019.2 |
-| 5     | sec_contact_bottle_schange           |  -86270.55     | 172561.1 |
-| 6     | sec_contact_bottle_schange_thr_epoch |  -91732.12     | 183486.2 |
+| 1     | schange                              | -155089.2      | 310188.3 |
+| 2     | bottle_schange                       | -168961.8      | 337939.6 |
+| 3     | bottle_schange_thr_epoch             | -227180.9      | 454379.8 |
+| 4     | sec_contact_schange                  | -140382.2      | 280780.4 |
+| 5     | sec_contact_bottle_schange           | -225817.0      | 451654.0 |
+| 6     | sec_contact_bottle_schange_thr_epoch | -158301.2      | 316624.3 |
 More details and parameter values of each best run can be found in `dadi_2D_results_summary.xlxs`.
 
 Plot SFS fit and likelihood ratio test for selecting the best model:
@@ -176,13 +186,13 @@ pts = [max(ns)+20, max(ns)+30, max(ns)+40]
 # import bootstraps
 boots = []
 for i in range(100):
-    boots.append(dadi.Spectrum.from_file("{WDIR}/data/fs/{NAME}.fs".format(WDIR = wdir, NAME = name_stem)))
+    boots.append(dadi.Spectrum.from_file("{WDIR}/data/fs/bootstraps/{NAME}.boot_{IND}.fs".format(WDIR = wdir, NAME = name_stem, IND = i)))
 
 # record results from each model's parameterization
 # schange
-smodel_bfps = [0.1497, 3.7087, 0.0498, 0.0101, 0.0232]
+smodel_bfps = [3.5617, 27.1096, 0.0256, 0.011, 0.0339]
 # sec_contact_bottle_schange
-cmodel_bfps = [3.1768, 9.5621, 0.1053, 0.0396, 3.0836, 5.4648, 5.3706, 0.1428]
+cmodel_bfps = [4.3525, 26.3731, 0.0356, 0.0248, 10.7472, 1.0565, 0.3154, 0.0899]
 
 nested_ind = [4,5,7]
 
@@ -198,37 +208,39 @@ cmodel = cmodel_func_ex(cmodel_bfps, ns, pts)
 fig = plt.figure(1, figsize=(10,6))
 fig.clear()
 dadi.Plotting.plot_2d_comp_multinom(smodel, fs, vmin=1, resid_range=3, pop_ids =('glob_MR','cord'), show=False)
-pylab.savefig('./01.schange/schange_fit.png', dpi=250)
+pylab.savefig('schange_fit.png', dpi=250)
 
 # complex model
 fig = plt.figure(2, figsize=(10,6))
 fig.clear()
 dadi.Plotting.plot_2d_comp_multinom(cmodel, fs, vmin=1, resid_range=3, pop_ids =('glob_MR','cord'), show=False)
-pylab.savefig('./04.sec_contact_schange/sec_contact_schange_fit.png', dpi=250)
+pylab.savefig('sec_contact_schange_fit.png', dpi=250)
 
 ## LIKELIHOOD RATIO TEST
 adj = dadi.Godambe.LRT_adjust(func_ex=cmodel_func_ex, grid_pts=pts, all_boot=boots, p0=cmodel_bfps, data=fs, nested_indices=nested_ind, multinom=True)
-# 0.002596710378730069
-D = adj*2*(-81001.6 - (-100346.1))
+# 0.0006056
+D = adj*2*(-140382.2 - (-155089.2)) # 17.813
 p_val = dadi.Godambe.sum_chi2_ppf(D, weights=[0.125, 0.375, 0.375, 0.125])
-# P-value = 0.00, so Model 4 is significantly a better fit than Model 1.
+# P-value = 0.0001200, so Model 4 is significantly a better fit than Model 1.
 
 ## PARAMETER UNCERTAINTY ESTIMATION
-uncert = dadi.Godambe.GIM_uncert(func_ex=cmodel_func_ex, grid_pts=pts, all_boot=boots, p0=cmodel_bfps, data=fs, log = True, multinom = True)
+uncert = dadi.Godambe.GIM_uncert(func_ex=cmodel_func_ex, grid_pts=pts, all_boot=boots, p0=cmodel_bfps, data=fs, log=True, multinom=True)
 ```
+
+Using the Godambe Likelihood Adjustment, the P-value for Model 4 over Model 1 was 0.0001200, so Model 4 was significantly better of a fit.
 
 Parameter uncertainty estimates for Model 4: Secondary Contact with gradual size change:
 | Parameter | Point Estimate | Uncertainty |
 | --------- | -------------- | ----------- |
-| nu1i      | 3.1768         | 0.0020299   |
-| nu2i      | 9.5621         | 0.00196699  |
-| nu1f      | 0.1053         | 0.00817611  |
-| nu2f      | 0.0396         | 0.01028575  |
-| m12       | 3.0836         | 0.00599889  |
-| m21       | 5.4648         | 0.01081344  |
-| T1        | 5.3706         | 0.00496855  |
-| T2        | 0.1428         | 0.00860765  |
-| theta     | 71968.69       | 0.00322536  |
+| nu1i      | 4.3525         | 1.33653495  |
+| nu2i      | 26.3731        | 1.57506129  |
+| nu1f      | 0.0356         | 3.65428061  |
+| nu2f      | 0.0248         | 3.22294423  |
+| m12       | 10.7472        | 3.22662747  |
+| m21       | 1.0565         | 4.17443425  |
+| T1        | 0.3154         | 0.69228957  |
+| T2        | 0.0899         | 3.03299481  |
+| theta     | 404517.5       | 0.11088168  |
 
 ### 1D Models
 Repeated SFS generation step for 1D SFS.
@@ -244,7 +256,7 @@ import matplotlib.pyplot as plt
 import dadi
 
 # Parse the VCF file to generate a data dictionary
-datafile = "/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/all_fil_biallelic.vcf"
+datafile = "/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/all_fil_biallelic.vcf.gz"
 dd = dadi.Misc.make_data_dict_vcf(datafile, "/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/demography/stairway_plot/esfs_poplist.txt")
 
 ## GLOBULUS
@@ -331,6 +343,8 @@ Run scheme:
 3. 50 replicates, 10 max iterations, 2-fold perturbation
 4. 100 replicates, 20 max iterations, 1-fold perturbation
 
+Models ran using ~80 Mb RAM and a maximum of 10 min.
+
 Models tested:
 | Index | Description                                | Parameters         | python file                  |
 | ----- | ------------------------------------------ | ------------------ | ---------------------------- |
@@ -339,25 +353,35 @@ Models tested:
 | 4     | Instantaneous size change, then exponential size change | nuB, nuF, T | dadi_bottlegrowth.job  |
 | 5     | Exponential size change, neutral evolution, exponential size change | nuB, nuF, TB, TF | dadi_three_epoch.job |
 
+Extracted best scores from each run in `R`. Example code given below:
+```R
+name_pref <- "globMR_run"
+i_list <- c(1,2,3,4,5)
+name_suff <- ".growth.optimized.txt"
+
+tab_list <- lapply(i_list, function(i) read.table(paste(name_pref, i, name_suff, sep = ""), header = TRUE, sep = "\t")[c(96:195),])
+best_scores <- lapply(tab_list, function(tab) tab[which(tab$AIC == min(tab$AIC)),])
+```
+
 The optimal model for both _E. globulus_ and _E. cordata_ was the three epoch model.
 
 | Parameter | _E. globulus_ | _E. cordata_ |
 | --------- | ------------- | ------------ |
-| theta     | 58556.6       | 63254.2      |
-| nuB       | 23.747        | 27.6535      |
-| nuF       | 0.0659        | 0.014        |
-| TB        | 5.2131        | 24.8504      |
-| TF        | 0.0201        | 0.0213       |
+| theta     | 94640.24      | 91424.01     |
+| nuB       | 23.9132       | 26.5665      |
+| nuF       | 0.0462        | 0.0101       |
+| TB        | 5.1996        | 23.9653      |
+| TF        | 0.0140        | 0.0141       |
 
-Calculated real-life parameters for optimal models, using L = 7626818.25 bp, generation time = 10 years, and mutation rate = 4.93e-09.
+Calculated real-life parameters for optimal models, using L = 14,226,796.71 bp, generation time = 50 years, and mutation rate = 4.93e-09.
 
 | Parameter | _E. globulus_ | _E. cordata_  |
 | --------- | ------------- | ------------- |
-| Nref      | 38,933.69     | 42,057.07     |
-| nuB       | 924,558.29    | 1,163,025.31  |
-| nuF       | 2,565.73      | 588.80        |
-| TB        | 4,059,304.18  | 20,902,702.48 |
-| TF        | 15,651.34     | 17,916.31     |
+| Nref      | 6746.71       | 6517.43       |
+| nuB       | 161335.33     | 173145.24     |
+| nuF       | 311.70        | 65.83         |
+| TB        | 3508017.31    | 15619211.13   |
+| TF        | 9445.39       | 9189.57       |
 
 More details on calculations and values from other models can be found in the files `dadi_glob1D_results_summary.xlxs` and `dadi_cord1D_results_summary.xlsx`.
 

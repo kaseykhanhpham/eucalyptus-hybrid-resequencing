@@ -18,9 +18,9 @@ module load cuda/12.2.2
 VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
 declare -a VCFLIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
 
-# mutation rate and generation time from Silva-Junior and Grattapaglia 2015 New Phytol.
+# mutation rate (4.93e-8 per base pair per generation) from Silva-Junior and Grattapaglia 2015 New Phytol. generation time (50 yrs per generation) from discussion with Potts/Vaillancourt lab.
 
 for NAME in "${VCFLIST[@]}"
 do
-    ReLERNN_SIMULATE -v "$VCF_DIR"/all_fil_biallelic_globMR.vcf -g ../"$NAME".bed -d "$NAME" -u "4.93e-8" -l 10 -t 8 --unphased
+    ReLERNN_SIMULATE -v "$VCF_DIR"/all_fil_biallelic_globMR.vcf -g ../"$NAME".bed -d "$NAME" -u "4.93e-8" -l 50 -t 8 --unphased
 done

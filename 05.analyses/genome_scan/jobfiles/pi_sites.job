@@ -15,7 +15,8 @@ module load vcftools/0.1.16
 
 VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/vcftools"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
 
-vcftools --gzvcf "$VCF_DIR"/all_fil.vcf.gz --keep Ecordata.txt --site-pi --out cord
-vcftools --gzvcf "$VCF_DIR"/all_fil.vcf.gz --keep Eglobulus_ref.txt --site-pi --out globref
-vcftools --gzvcf "$VCF_DIR"/all_fil.vcf.gz --keep ref_samples.txt --site-pi --out refs
+vcftools --gzvcf "$VCF_DIR"/all_fil.vcf.gz --keep "$LIST_DIR"/Ecordata.txt --site-pi --out cord
+vcftools --gzvcf "$VCF_DIR"/all_fil.vcf.gz --keep "$LIST_DIR"/Eglobulus_ref.txt --site-pi --out globref
+vcftools --gzvcf "$VCF_DIR"/all_fil.vcf.gz --keep "$LIST_DIR"/ref_samples.txt --site-pi --out refs

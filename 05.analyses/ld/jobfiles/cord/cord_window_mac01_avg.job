@@ -12,18 +12,7 @@
 #SBATCH --error=cord_windows_avg_rsq_%j.err
 
 module purge
-module load python/3.8
+module load R/4.2
 SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
-WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/cord/avg_r2"
-BASE_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/cord/emerald"
 
-declare -a NAMELIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11)
-
-for NAME in "${NAMELIST[@]}"
-do
-    cd "$BASE_DIR"/"$NAME"
-    ls *.txt.gz | while read FILE
-    do
-        python "$SCRIPT_DIR"/average_r2.py -i "$BASE_DIR"/"$NAME"/"$FILE" -o "$WDIR"/"$NAME"/"$FILE"_avg.csv
-    done
-done
+Rscript "$SCRIPT_DIR"/fit_rsq_curve.r -f chr_r2_tab_list.txt -o genwide_ld_mac01.txt -m 100 -r 0.2 -g TRUE

@@ -12,7 +12,7 @@ done
 Ran WhatsHap
 ```bash
 # Ran in UFRC queue system; see whatshap.job for more details.
-# Resources Used: ??
+# Resources Used: 11 Gb, 2 days
 
 module load whatshap/1.1
 REF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/Eglobulus_genome_X46"
@@ -29,13 +29,14 @@ done
 Compressed and indexed WhatsHap output.
 ```bash
 module load bcftools
+declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11)
 for NAME in "${VCFLIST[@]}"; do bgzip "$NAME"_hapmarked.vcf; bcftools index "$NAME"_hapmarked.vcf.gz; done
 ```
 
 Reformatted genetic map into HapMap format and then ran SHAPEIT4.
 ```bash
 # Ran in UFRC queue system; see shapeit.job for more details.
-# Resources Used: 330 Mb, 4 min
+# Resources Used: 350 Mb, 5 min
 
 module load shapeit4/4.2.2
 MAP_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/phase"
@@ -46,6 +47,7 @@ do
     shapeit4 --input chr"$NUM"_hapmarked.vcf.gz --map "$MAP_DIR"/1060_LH_F2_manual_copy_Chr"$NUM".gmap --region Chr"$NUM" --output chr"$NUM"_phased.vcf --thread 12
 done
 ```
+
 ## E. globulus LD
 ### Whole-genome estimates
 ### Minor Allele Count = 1
@@ -60,7 +62,7 @@ declare -a VCFLIST=(01 02 03 04 05 06 07 08 09 10 11)
 cd "$WDIR"
 for NUM in "${VCFLIST[@]}"
 do
-    bgzip chr"$NUM"_hapmarked.vcf
+    # bgzip chr"$NUM"_hapmarked.vcf
     bgzip chr"$NUM"_phased.vcf
     tabix chr"$NUM"_phased.vcf.gz
 done
@@ -69,42 +71,48 @@ done
 Ran `emeraLD` across each chromosome for all pairwise SNPs less than 1Mbp apart.
 ```bash
 # Ran on UFRC queue system; see glob_genwide_ld_mac01.job for more details.
-# Resources used: 50 Mb, 1 hr
+# Resources used: 70 Mb, 2 hrs
 
-module purge
 module load htslib/1.15
 module load emerald/0.1
 
 VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/phase"
-LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/emerald/genome_wide/mac01"
 
-emeraLD --in "$VCF_DIR"/chr01_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/glob_Chr01_ld.txt.gz
-emeraLD --in "$VCF_DIR"/chr02_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/glob_Chr02_ld.txt.gz
-emeraLD --in "$VCF_DIR"/chr03_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/glob_Chr03_ld.txt.gz
-emeraLD --in "$VCF_DIR"/chr04_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/glob_Chr04_ld.txt.gz
-emeraLD --in "$VCF_DIR"/chr05_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/glob_Chr05_ld.txt.gz
-emeraLD --in "$VCF_DIR"/chr06_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/glob_Chr06_ld.txt.gz
-emeraLD --in "$VCF_DIR"/chr07_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/glob_Chr07_ld.txt.gz
-emeraLD --in "$VCF_DIR"/chr08_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/glob_Chr08_ld.txt.gz
-emeraLD --in "$VCF_DIR"/chr09_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/glob_Chr09_ld.txt.gz
-emeraLD --in "$VCF_DIR"/chr10_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/glob_Chr10_ld.txt.gz
-emeraLD --in "$VCF_DIR"/chr11_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/glob_Chr11_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr01_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$WDIR"/glob_Chr01_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr02_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$WDIR"/glob_Chr02_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr03_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$WDIR"/glob_Chr03_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr04_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$WDIR"/glob_Chr04_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr05_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$WDIR"/glob_Chr05_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr06_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$WDIR"/glob_Chr06_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr07_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$WDIR"/glob_Chr07_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr08_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$WDIR"/glob_Chr08_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr09_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$WDIR"/glob_Chr09_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr10_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$WDIR"/glob_Chr10_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr11_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$WDIR"/glob_Chr11_ld.txt.gz
 ```
 Averaged r2 values for each distance between variants using a custom `python` script.
 ```bash
-module purge
+# Done in UFRC queue system; see glob_genwide_mac01_avg.job
+# Resources used: 21 Gb, 4 hrs
+
 module load python/3.8
 SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
-TAB_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/emerald/genome_wide"
+TAB_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/emerald/genome_wide/mac01"
+declare -a NAMELIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
 
-python "$SCRIPT_DIR"/average_r2.py -i "$TAB_DIR"/glob_Chr01_ld.txt.gz -o glob_Chr01_ld_avg.csv
+for NAME in "${NAMELIST[@]}"
+do
+    python "$SCRIPT_DIR"/average_r2.py -i "$TAB_DIR"/glob_"$NAME"_ld.txt.gz -o glob_"$NAME"_ld_avg.csv
+done
 ```
 
 Fitted LD curve to pairwise r2 values versus marker distance in `R` using equation from Hill and Weir 1988 and custom `R` script.
 
 ```bash
 # Done in UFRC queue system; see genwide_mac01_fit.job for more details.
-# Resources used: 500 Mb, 5 min
+# Resources used: 630 Mb, 7 min
 
 module purge
 module load R/4.2
@@ -114,27 +122,27 @@ TAB_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/avg_r2/genome_wi
 Rscript "$SCRIPT_DIR"/fit_rsq_curve.r -f chr_r2_tab_list.txt -o genwide_ld.txt -m 100 -r 0.2 -g TRUE
 ```
 
-| Chromosome | LD r2 = 0.2 (bp) | C         |
-| ---------- | ---------------- | --------- |
-| Chr01      | 1926             | 0.001813  |
-| Chr02      | 1795             | 0.001945  |
-| Chr03      | 1363             | 0.002562  |
-| Chr04      | 1474             | 0.002369  |
-| Chr05      | 1184             | 0.002948  |
-| Chr06      | 1647             | 0.002119  |
-| Chr07      | 932              | 0.003747  |
-| Chr08      | 1659             | 0.002104  |
-| Chr09      | 2278             | 0.001533  |
-| Chr10      | 2412             | 0.001447  |
-| Chr11      | 1251             | 0.002792  |
-| AVERAGE    | 1629             | 0.002307  |
+| Chromosome | LD r2 = 0.2 (bp) | C        |
+| ---------- | ---------------- | -------- |
+| Chr01      | 1983             | 0.001761 |
+| Chr02      | 1912             | 0.001826 |
+| Chr03      | 1552             | 0.002249 |
+| Chr04      | 1572             | 0.002221 |
+| Chr05      | 1207             | 0.002893 |
+| Chr06      | 1814             | 0.001924 |
+| Chr07      | 902              | 0.003870 |
+| Chr08      | 1832             | 0.001906 |
+| Chr09      | 2504             | 0.001394 |
+| Chr10      | 2689             | 0.001299 |
+| Chr11      | 1332             | 0.002621 |
+| AVERAGE    | 1754.45          | 0.001977 |
 
 ### Minor Allele Count = 2
 Equivalent to minor allele frequency = 0.05. Ran `emeraLD` across each chromosome for all pairwise SNPs less than 1Mbp apart.
 
 ```bash
 # Done in UFRC queue system; see glob_genwide_mac02_ld.job for more details.
-# Resources used: 45 Mb, 30 min
+# Resources used: 65 Mb, 1.5 hrs
 
 module purge
 module load htslib/1.15
@@ -159,7 +167,7 @@ emeraLD --in "$VCF_DIR"/chr11_phased.vcf.gz --phase --mac 2 --include "$LIST_DIR
 Averaged r2 values for each distance between variants using a custom `python` script.
 ```bash
 # Done in UFRC queue system; see glob_genwide_mac02_avg.job for more details.
-# Resources used: 7 Gb, 2 hrs
+# Resources used: 17 Gb, 3 hrs
 
 module purge
 module load python/3.8
@@ -177,7 +185,7 @@ Fitted LD curve to pairwise r2 values versus marker distance in `R` using equati
 
 ```bash
 # Done in UFRC queue system; see glob_genwide_mac02_fit.job for more details.
-# Resources used: 700 Mb, 7 min
+# Resources used: 700 Mb, 5 min
 
 module purge
 module load R/4.2
@@ -187,20 +195,20 @@ TAB_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/avg_r2/genome_wi
 Rscript "$SCRIPT_DIR"/fit_rsq_curve.r -f chr_r2_tab_list.txt -o genwide_ld.txt -m 100 -r 0.2 -g TRUE
 ```
 
-| Chromosome | LD r2 = 0.2 (bp) | C         |
-| ---------- | ---------------- | --------- |
-| Chr01      | 2228             | 0.001567  |
-| Chr02      | 2331             | 0.001498  |
-| Chr03      | 1748             | 0.001997  |
-| Chr04      | 1864             | 0.001873  |
-| Chr05      | 1430             | 0.002441  |
-| Chr06      | 1982             | 0.001761  |
-| Chr07      | 1173             | 0.002978  |
-| Chr08      | 2024             | 0.001725  |
-| Chr09      | 2844             | 0.001228  |
-| Chr10      | 3011             | 0.001159  |
-| Chr11      | 1582             | 0.002207  |
-| AVERAGE    | 2020             | 0.001858  |
+| Chromosome | LD r2 = 0.2 (bp) | C        |
+| ---------- | ---------------- | -------- |
+| Chr01      | 2261             | 0.001544 |
+| Chr02      | 2450             | 0.001425 |
+| Chr03      | 1964             | 0.001778 |
+| Chr04      | 1964             | 0.001778 |
+| Chr05      | 1449             | 0.002409 |
+| Chr06      | 2220             | 0.001573 |
+| Chr07      | 1125             | 0.003104 |
+| Chr08      | 2224             | 0.001570 |
+| Chr09      | 3120             | 0.001119 |
+| Chr10      | 3331             | 0.001048 |
+| Chr11      | 1674             | 0.002086 |
+| AVERAGE    | 2162             | 0.001767 |
 
 ### Sliding window estimates
 Generated jobs to run emeraLD across sliding windows, using MAC = 1 filtering and a window size of 100,000 bp (default values for job-making script).
@@ -209,38 +217,38 @@ Generated jobs to run emeraLD across sliding windows, using MAC = 1 filtering an
 module load python/3.8
 SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
 VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/phase"
-LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/emerald/windows"
 
-python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr01_phased.vcf.gz -c Chr01 -s 42219553 -i "$LIST_DIR"/Eglobulus_MR.txt -o "$LIST_DIR"/emerald/chr01/chr01_ld_mac01.job
-python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr02_phased.vcf.gz -c Chr02 -s 50828380 -i "$LIST_DIR"/Eglobulus_MR.txt -o "$LIST_DIR"/emerald/chr02/chr02_ld_mac01.job
-python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr03_phased.vcf.gz -c Chr03 -s 65547241 -i "$LIST_DIR"/Eglobulus_MR.txt -o "$LIST_DIR"/emerald/chr03/chr03_ld_mac01.job
-python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr04_phased.vcf.gz -c Chr04 -s 38599333 -i "$LIST_DIR"/Eglobulus_MR.txt -o "$LIST_DIR"/emerald/chr04/chr04_ld_mac01.job
-python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr05_phased.vcf.gz -c Chr05 -s 62919971 -i "$LIST_DIR"/Eglobulus_MR.txt -o "$LIST_DIR"/emerald/chr05/chr05_ld_mac01.job
-python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr06_phased.vcf.gz -c Chr06 -s 52140660 -i "$LIST_DIR"/Eglobulus_MR.txt -o "$LIST_DIR"/emerald/chr06/chr06_ld_mac01.job
-python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr07_phased.vcf.gz -c Chr07 -s 54252628 -i "$LIST_DIR"/Eglobulus_MR.txt -o "$LIST_DIR"/emerald/chr07/chr07_ld_mac01.job
-python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr08_phased.vcf.gz -c Chr08 -s 70214608 -i "$LIST_DIR"/Eglobulus_MR.txt -o "$LIST_DIR"/emerald/chr08/chr08_ld_mac01.job
-python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr09_phased.vcf.gz -c Chr09 -s 38300324 -i "$LIST_DIR"/Eglobulus_MR.txt -o "$LIST_DIR"/emerald/chr09/chr09_ld_mac01.job
-python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr10_phased.vcf.gz -c Chr10 -s 38722660 -i "$LIST_DIR"/Eglobulus_MR.txt -o "$LIST_DIR"/emerald/chr10/chr10_ld_mac01.job
-python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr11_phased.vcf.gz -c Chr11 -s 42056460 -i "$LIST_DIR"/Eglobulus_MR.txt -o "$LIST_DIR"/emerald/chr11/chr11_ld_mac01.job
+python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr01_phased.vcf.gz -c Chr01 -s 42219553 -i "$LIST_DIR"/Eglobulus_MR.txt -o "$WDIR"/chr01/glob_chr01_wins_ld.job -t glob
+python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr02_phased.vcf.gz -c Chr02 -s 50828380 -i "$LIST_DIR"/Eglobulus_MR.txt -o "$WDIR"/chr02/glob_chr02_wins_ld.job -t glob
+python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr03_phased.vcf.gz -c Chr03 -s 65547241 -i "$LIST_DIR"/Eglobulus_MR.txt -o "$WDIR"/chr03/glob_chr03_wins_ld.job -t glob
+python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr04_phased.vcf.gz -c Chr04 -s 38599333 -i "$LIST_DIR"/Eglobulus_MR.txt -o "$WDIR"/chr04/glob_chr04_wins_ld.job -t glob
+python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr05_phased.vcf.gz -c Chr05 -s 62919971 -i "$LIST_DIR"/Eglobulus_MR.txt -o "$WDIR"/chr05/glob_chr05_wins_ld.job -t glob
+python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr06_phased.vcf.gz -c Chr06 -s 52140660 -i "$LIST_DIR"/Eglobulus_MR.txt -o "$WDIR"/chr06/glob_chr06_wins_ld.job -t glob
+python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr07_phased.vcf.gz -c Chr07 -s 54252628 -i "$LIST_DIR"/Eglobulus_MR.txt -o "$WDIR"/chr07/glob_chr07_wins_ld.job -t glob
+python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr08_phased.vcf.gz -c Chr08 -s 70214608 -i "$LIST_DIR"/Eglobulus_MR.txt -o "$WDIR"/chr08/glob_chr08_wins_ld.job -t glob
+python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr09_phased.vcf.gz -c Chr09 -s 38300324 -i "$LIST_DIR"/Eglobulus_MR.txt -o "$WDIR"/chr09/glob_chr09_wins_ld.job -t glob
+python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr10_phased.vcf.gz -c Chr10 -s 38722660 -i "$LIST_DIR"/Eglobulus_MR.txt -o "$WDIR"/chr10/glob_chr10_wins_ld.job -t glob
+python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr11_phased.vcf.gz -c Chr11 -s 42056460 -i "$LIST_DIR"/Eglobulus_MR.txt -o "$WDIR"/chr11/glob_chr11_wins_ld.job -t glob
 ```
 
-Not displaying example of jobfiles here since they are quite large; see chrXX_ld_mac01.job in the jobfiles directory. Ran emeraLD on each window separately and then averaged r2 for each distance class within individual windows.
+Not displaying example of jobfiles here since they are quite large; see chrXX_ld_mac01.job in the jobfiles directory. Ran emeraLD on each window separately and then averaged r2 for each distance class within individual windows. Each job used about 15 Mb RAM and took ~2 minutes.
 
 ```bash
 # Done in UFRC queue system; see glob_window_mac01_avg.job for more details.
-# Resources used: 
+# Resources used: 130 Mb, 2 hrs
 
-module purge
 module load python/3.8
 SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
-WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/avg_r2"
-BASE_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/emerald"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/avg_r2/windows"
+BASE_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/emerald/windows"
 
 declare -a NAMELIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11)
 
 for NAME in "${NAMELIST[@]}"
 do
-    cd "$BASE_DIR"/"$NAME"/mac01
+    cd "$BASE_DIR"/"$NAME"
     ls *.txt.gz | while read FILE
     do
         python "$SCRIPT_DIR"/average_r2.py -i "$BASE_DIR"/"$NAME"/"$FILE" -o "$WDIR"/"$NAME"/"$FILE"_avg.csv
@@ -248,11 +256,17 @@ do
 done
 ```
 
+Created file lists for curve fitting.
+```bash
+declare -a NAMELIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11)
+for NAME in "${NAMELIST[@]}"; do ls /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/avg_r2/windows/"$NAME"/*.csv > glob_"$NAME"_win_ld_files.txt; done
+```
+
 Fit LD decay curves for each window and interpolated distance at which r^2 = 0.2 using a custom `R` script.
 
 ```bash
 # Done in UFRC queue system; see glob_window_mac01_cfit.job for more details.
-# Resources used: 200 Mb, 15 min
+# Resources used: 320 Mb, 20 min
 
 module purge
 module load R/4.2
@@ -286,37 +300,37 @@ loess_graph <- function(chr_ld_tab, smoothing, plot_title){
 
 # Chr01
 chr01_ld_tab <- read.table("glob_chr01_windows_ld.txt", header = TRUE, sep = "\t")
-chr01_outliers <- loess_graph(chr01_ld_tab, 0.1, "Chr01 LD MAC = 0.1")
+chr01_outliers <- loess_graph(chr01_ld_tab, 0.1, "E.glob Chr01 LD MAC = 0.1")
 # Chr02
 chr02_ld_tab <- read.table("glob_chr02_windows_ld.txt", header = TRUE, sep = "\t")
-chr02_outliers <- loess_graph(chr02_ld_tab, 0.1, "Chr02 LD MAC = 0.1")
+chr02_outliers <- loess_graph(chr02_ld_tab, 0.1, "E.glob Chr02 LD MAC = 0.1")
 # Chr03
 chr03_ld_tab <- read.table("glob_chr03_windows_ld.txt", header = TRUE, sep = "\t")
-chr03_outliers <- loess_graph(chr03_ld_tab, 0.1, "Chr03 LD MAC = 0.1")
+chr03_outliers <- loess_graph(chr03_ld_tab, 0.1, "E.glob Chr03 LD MAC = 0.1")
 # Chr04
 chr04_ld_tab <- read.table("glob_chr04_windows_ld.txt", header = TRUE, sep = "\t")
-chr04_outliers <- loess_graph(chr04_ld_tab, 0.1, "Chr04 LD MAC = 0.1")
+chr04_outliers <- loess_graph(chr04_ld_tab, 0.1, "E.glob Chr04 LD MAC = 0.1")
 # Chr05
 chr05_ld_tab <- read.table("glob_chr05_windows_ld.txt", header = TRUE, sep = "\t")
-chr05_outliers <- loess_graph(chr05_ld_tab, 0.1, "Chr05 LD MAC = 0.1")
+chr05_outliers <- loess_graph(chr05_ld_tab, 0.1, "E.glob Chr05 LD MAC = 0.1")
 # Chr06
 chr06_ld_tab <- read.table("glob_chr06_windows_ld.txt", header = TRUE, sep = "\t")
-chr06_outliers <- loess_graph(chr06_ld_tab, 0.1, "Chr06 LD MAC = 0.1")
+chr06_outliers <- loess_graph(chr06_ld_tab, 0.1, "E.glob Chr06 LD MAC = 0.1")
 # Chr07
 chr07_ld_tab <- read.table("glob_chr07_windows_ld.txt", header = TRUE, sep = "\t")
-chr07_outliers <- loess_graph(chr07_ld_tab, 0.1, "Chr07 LD MAC = 0.1")
+chr07_outliers <- loess_graph(chr07_ld_tab, 0.1, "E.glob Chr07 LD MAC = 0.1")
 # Chr08
 chr08_ld_tab <- read.table("glob_chr08_windows_ld.txt", header = TRUE, sep = "\t")
-chr08_outliers <- loess_graph(chr08_ld_tab, 0.1, "Chr08 LD MAC = 0.1")
+chr08_outliers <- loess_graph(chr08_ld_tab, 0.1, "E.glob Chr08 LD MAC = 0.1")
 # Chr09
 chr09_ld_tab <- read.table("glob_chr09_windows_ld.txt", header = TRUE, sep = "\t")
-chr09_outliers <- loess_graph(chr09_ld_tab, 0.1, "Chr09 LD MAC = 0.1")
+chr09_outliers <- loess_graph(chr09_ld_tab, 0.1, "E.glob Chr09 LD MAC = 0.1")
 # Chr10
 chr10_ld_tab <- read.table("glob_chr10_windows_ld.txt", header = TRUE, sep = "\t")
-chr10_outliers <- loess_graph(chr10_ld_tab, 0.1, "Chr10 LD MAC = 0.1")
+chr10_outliers <- loess_graph(chr10_ld_tab, 0.1, "E.glob Chr10 LD MAC = 0.1")
 # Chr11
 chr11_ld_tab <- read.table("glob_chr11_windows_ld.txt", header = TRUE, sep = "\t")
-chr11_outliers <- loess_graph(chr11_ld_tab, 0.1, "Chr11 LD MAC = 0.1")
+chr11_outliers <- loess_graph(chr11_ld_tab, 0.1, "E.glob Chr11 LD MAC = 0.1")
 ```
 
 Intervals of interest (LD outliers):
@@ -359,32 +373,33 @@ Equivalent to minor allele frequency = 0.05. Ran `emeraLD` across each chromosom
 
 ```bash
 # Done in UFRC queue system; see cord_genwide_mac01_ld.job for more details.
-# Resources used: 41 Mb, 30 min
+# Resources used: 60 Mb, 1.5 hrs
 
 module purge
 module load htslib/1.15
 module load emerald/0.1
 
 VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/phase"
-LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/cord"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/cord/emerald/genome_wide"
 
-emeraLD --in "$VCF_DIR"/chr01_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/cord_Chr01_ld.txt.gz
-emeraLD --in "$VCF_DIR"/chr02_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/cord_Chr02_ld.txt.gz
-emeraLD --in "$VCF_DIR"/chr03_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/cord_Chr03_ld.txt.gz
-emeraLD --in "$VCF_DIR"/chr04_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/cord_Chr04_ld.txt.gz
-emeraLD --in "$VCF_DIR"/chr05_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/cord_Chr05_ld.txt.gz
-emeraLD --in "$VCF_DIR"/chr06_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/cord_Chr06_ld.txt.gz
-emeraLD --in "$VCF_DIR"/chr07_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/cord_Chr07_ld.txt.gz
-emeraLD --in "$VCF_DIR"/chr08_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/cord_Chr08_ld.txt.gz
-emeraLD --in "$VCF_DIR"/chr09_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/cord_Chr09_ld.txt.gz
-emeraLD --in "$VCF_DIR"/chr10_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/cord_Chr10_ld.txt.gz
-emeraLD --in "$VCF_DIR"/chr11_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/cord_Chr11_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr01_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$WDIR"/cord_Chr01_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr02_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$WDIR"/cord_Chr02_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr03_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$WDIR"/cord_Chr03_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr04_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$WDIR"/cord_Chr04_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr05_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$WDIR"/cord_Chr05_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr06_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$WDIR"/cord_Chr06_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr07_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$WDIR"/cord_Chr07_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr08_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$WDIR"/cord_Chr08_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr09_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$WDIR"/cord_Chr09_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr10_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$WDIR"/cord_Chr10_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr11_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$WDIR"/cord_Chr11_ld.txt.gz
 ```
 
 Averaged r2 values for each distance between variants using a custom `python` script.
 ```bash
 # Done in UFRC queue system; see cord_genwide_mac01_avg.job for more details.
-# Resources used: 6 Gb, 1 hr
+# Resources used: 13 Gb, 2 hrs
 
 module purge
 module load python/3.8
@@ -402,7 +417,7 @@ Fitted LD curve to pairwise r2 values versus marker distance in `R` using equati
 
 ```bash
 # Done in UFRC queue system; see cord_genwide_mac01_fit.job for more details.
-# Resources used: 600 Mb, 6 min
+# Resources used: 620 Mb, 5 min
 
 module purge
 module load python/3.8
@@ -418,18 +433,18 @@ done
 
 | Chromosome | LD r2 = 0.2 (bp) | C         |
 | ---------- | ---------------- | --------- |
-| Chr01      | 19457            | 0.0001794 |
-| Chr02      | 19248            | 0.0001814 |
-| Chr03      | 18195            | 0.0001919 |
-| Chr04      | 15220            | 0.0002294 |
-| Chr05      | 17203            | 0.0002030 |
-| Chr06      | 15763            | 0.0002215 |
-| Chr07      | 19716            | 0.0001771 |
-| Chr08      | 15657            | 0.0002230 |
-| Chr09      | 17680            | 0.0001975 |
-| Chr10      | 15056            | 0.0002319 |
-| Chr11      | 16747            | 0.0002085 |
-| AVERAGE    | 17267            | 0.0002040 |
+| Chr01      | 20501            | 0.0001703 |
+| Chr02      | 18654            | 0.0001871 |
+| Chr03      | 17819            | 0.0001959 |
+| Chr04      | 15812            | 0.0002208 |
+| Chr05      | 16466            | 0.0002120 |
+| Chr06      | 16314            | 0.0002140 |
+| Chr07      | 19961            | 0.0001749 |
+| Chr08      | 14610            | 0.0002390 |
+| Chr09      | 17393            | 0.0002007 |
+| Chr10      | 15322            | 0.0002278 |
+| Chr11      | 16905            | 0.0002065 |
+| AVERAGE    | 17,250.63        | 0.0002203 |
 
 ### Sliding window estimates
 Generated jobs to run emeraLD across sliding windows, using MAC = 1 filtering and sliding window size = 100kb (defaults for script).
@@ -437,25 +452,26 @@ Generated jobs to run emeraLD across sliding windows, using MAC = 1 filtering an
 module load python/3.8
 SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
 VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/phase"
-LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/cord"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/cord/emerald/windows"
 
-python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr01_phased.vcf.gz -c Chr01 -s 42219553 -i "$LIST_DIR"/Ecordata.txt -o "$LIST_DIR"/emerald/chr01/cord_chr01_ld.job
-python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr02_phased.vcf.gz -c Chr02 -s 50828380 -i "$LIST_DIR"/Ecordata.txt -o "$LIST_DIR"/emerald/chr02/cord_chr02_ld.job
-python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr03_phased.vcf.gz -c Chr03 -s 65547241 -i "$LIST_DIR"/Ecordata.txt -o "$LIST_DIR"/emerald/chr03/cord_chr03_ld.job
-python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr04_phased.vcf.gz -c Chr04 -s 38599333 -i "$LIST_DIR"/Ecordata.txt -o "$LIST_DIR"/emerald/chr04/cord_chr04_ld.job
-python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr05_phased.vcf.gz -c Chr05 -s 62919971 -i "$LIST_DIR"/Ecordata.txt -o "$LIST_DIR"/emerald/chr05/cord_chr05_ld.job
-python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr06_phased.vcf.gz -c Chr06 -s 52140660 -i "$LIST_DIR"/Ecordata.txt -o "$LIST_DIR"/emerald/chr06/cord_chr06_ld.job
-python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr07_phased.vcf.gz -c Chr07 -s 54252628 -i "$LIST_DIR"/Ecordata.txt -o "$LIST_DIR"/emerald/chr07/cord_chr07_ld.job
-python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr08_phased.vcf.gz -c Chr08 -s 70214608 -i "$LIST_DIR"/Ecordata.txt -o "$LIST_DIR"/emerald/chr08/cord_chr08_ld.job
-python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr09_phased.vcf.gz -c Chr09 -s 38300324 -i "$LIST_DIR"/Ecordata.txt -o "$LIST_DIR"/emerald/chr09/cord_chr09_ld.job
-python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr10_phased.vcf.gz -c Chr10 -s 38722660 -i "$LIST_DIR"/Ecordata.txt -o "$LIST_DIR"/emerald/chr10/cord_chr10_ld.job
-python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr11_phased.vcf.gz -c Chr11 -s 42056460 -i "$LIST_DIR"/Ecordata.txt -o "$LIST_DIR"/emerald/chr11/cord_chr11_ld.job
+python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr01_phased.vcf.gz -c Chr01 -s 42219553 -i "$LIST_DIR"/Ecordata.txt -o "$WDIR"/chr01/cord_chr01_wins_ld.job -t cord
+python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr02_phased.vcf.gz -c Chr02 -s 50828380 -i "$LIST_DIR"/Ecordata.txt -o "$WDIR"/chr02/cord_chr02_wins_ld.job -t cord
+python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr03_phased.vcf.gz -c Chr03 -s 65547241 -i "$LIST_DIR"/Ecordata.txt -o "$WDIR"/chr03/cord_chr03_wins_ld.job -t cord
+python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr04_phased.vcf.gz -c Chr04 -s 38599333 -i "$LIST_DIR"/Ecordata.txt -o "$WDIR"/chr04/cord_chr04_wins_ld.job -t cord
+python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr05_phased.vcf.gz -c Chr05 -s 62919971 -i "$LIST_DIR"/Ecordata.txt -o "$WDIR"/chr05/cord_chr05_wins_ld.job -t cord
+python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr06_phased.vcf.gz -c Chr06 -s 52140660 -i "$LIST_DIR"/Ecordata.txt -o "$WDIR"/chr06/cord_chr06_wins_ld.job -t cord
+python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr07_phased.vcf.gz -c Chr07 -s 54252628 -i "$LIST_DIR"/Ecordata.txt -o "$WDIR"/chr07/cord_chr07_wins_ld.job -t cord
+python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr08_phased.vcf.gz -c Chr08 -s 70214608 -i "$LIST_DIR"/Ecordata.txt -o "$WDIR"/chr08/cord_chr08_wins_ld.job -t cord
+python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr09_phased.vcf.gz -c Chr09 -s 38300324 -i "$LIST_DIR"/Ecordata.txt -o "$WDIR"/chr09/cord_chr09_wins_ld.job -t cord
+python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr10_phased.vcf.gz -c Chr10 -s 38722660 -i "$LIST_DIR"/Ecordata.txt -o "$WDIR"/chr10/cord_chr10_wins_ld.job -t cord
+python "$SCRIPT_DIR"/make_emerald_job.py -v "$VCF_DIR"/chr11_phased.vcf.gz -c Chr11 -s 42056460 -i "$LIST_DIR"/Ecordata.txt -o "$WDIR"/chr11/cord_chr11_wins_ld.job -t cord
 ```
-Not displaying example of jobfiles here since they are quite large; see chrXX_ld_mac01.job in the jobfiles directory. Ran emeraLD on each window separately and then averaged r2 for each distance class within individual windows.
+Not displaying example of jobfiles here since they are quite large; see chrXX_ld_mac01.job in the jobfiles directory. Ran emeraLD on each window separately and then averaged r2 for each distance class within individual windows. All jobs ran with a maximum of 15 Mb RAM and 2 minutes.
 
 ```bash
-# Done in UFRC queue system; see glob_window_mac01_avg.job for more details.
-# Resources used: 
+# Done in UFRC queue system; see cord_window_mac01_avg.job for more details.
+# Resources used: 95 Mb, 2 hrs
 
 module purge
 module load python/3.8
@@ -475,6 +491,12 @@ do
 done
 ```
 
+Created file lists for curve fitting.
+```bash
+declare -a CHRLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11)
+for CHR in "${CHRLIST[@]}"; do ls /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/cord/avg_r2/windows/"$CHR"/*.csv > cord_"$CHR"_win_ld_files.txt; done
+```
+
 Fit LD decay curves for each window and interpolated distance at which r^2 = 0.2 using a custom `R` script.
 
 ```bash
@@ -490,7 +512,7 @@ declare -a NAMELIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10
 
 for NAME in "${NAMELIST[@]}"
 do
-    Rscript "$SCRIPT_DIR"/fit_rsq_curve.r -f "$NAME"_win_ld_files.txt -o glob_"$NAME"_windows_ld.txt -m 40 -r 0.2 -g FALSE
+    Rscript "$SCRIPT_DIR"/fit_rsq_curve.r -f cord_"$NAME"_win_ld_files.txt -o cord_"$NAME"_windows_ld.txt -m 40 -r 0.2 -g FALSE
 done
 ```
 
@@ -513,37 +535,37 @@ loess_graph <- function(chr_ld_tab, smoothing, plot_title){
 
 # Chr01
 chr01_ld_tab <- read.table("cord_chr01_windows_ld.txt", header = TRUE, sep = "\t")
-chr01_outliers <- loess_graph(chr01_ld_tab, 0.1, "Chr01 LD MAC = 0.1")
+chr01_outliers <- loess_graph(chr01_ld_tab, 0.1, "E.cord Chr01 LD MAC = 0.1")
 # Chr02
 chr02_ld_tab <- read.table("cord_chr02_windows_ld.txt", header = TRUE, sep = "\t")
-chr02_outliers <- loess_graph(chr02_ld_tab, 0.1, "Chr02 LD MAC = 0.1")
+chr02_outliers <- loess_graph(chr02_ld_tab, 0.1, "E.cord Chr02 LD MAC = 0.1")
 # Chr03
 chr03_ld_tab <- read.table("cord_chr03_windows_ld.txt", header = TRUE, sep = "\t")
-chr03_outliers <- loess_graph(chr03_ld_tab, 0.1, "Chr03 LD MAC = 0.1")
+chr03_outliers <- loess_graph(chr03_ld_tab, 0.1, "E.cord Chr03 LD MAC = 0.1")
 # Chr04
 chr04_ld_tab <- read.table("cord_chr04_windows_ld.txt", header = TRUE, sep = "\t")
-chr04_outliers <- loess_graph(chr04_ld_tab, 0.1, "Chr04 LD MAC = 0.1")
+chr04_outliers <- loess_graph(chr04_ld_tab, 0.1, "E.cord Chr04 LD MAC = 0.1")
 # Chr05
 chr05_ld_tab <- read.table("cord_chr05_windows_ld.txt", header = TRUE, sep = "\t")
-chr05_outliers <- loess_graph(chr05_ld_tab, 0.1, "Chr05 LD MAC = 0.1")
+chr05_outliers <- loess_graph(chr05_ld_tab, 0.1, "E.cord Chr05 LD MAC = 0.1")
 # Chr06
 chr06_ld_tab <- read.table("cord_chr06_windows_ld.txt", header = TRUE, sep = "\t")
-chr06_outliers <- loess_graph(chr06_ld_tab, 0.1, "Chr06 LD MAC = 0.1")
+chr06_outliers <- loess_graph(chr06_ld_tab, 0.1, "E.cord Chr06 LD MAC = 0.1")
 # Chr07
 chr07_ld_tab <- read.table("cord_chr07_windows_ld.txt", header = TRUE, sep = "\t")
-chr07_outliers <- loess_graph(chr07_ld_tab, 0.1, "Chr07 LD MAC = 0.1")
+chr07_outliers <- loess_graph(chr07_ld_tab, 0.1, "E.cord Chr07 LD MAC = 0.1")
 # Chr08
 chr08_ld_tab <- read.table("cord_chr08_windows_ld.txt", header = TRUE, sep = "\t")
-chr08_outliers <- loess_graph(chr08_ld_tab, 0.1, "Chr08 LD MAC = 0.1")
+chr08_outliers <- loess_graph(chr08_ld_tab, 0.1, "E.cord Chr08 LD MAC = 0.1")
 # Chr09
 chr09_ld_tab <- read.table("cord_chr09_windows_ld.txt", header = TRUE, sep = "\t")
-chr09_outliers <- loess_graph(chr09_ld_tab, 0.1, "Chr09 LD MAC = 0.1")
+chr09_outliers <- loess_graph(chr09_ld_tab, 0.1, "E.cord Chr09 LD MAC = 0.1")
 # Chr10
 chr10_ld_tab <- read.table("cord_chr10_windows_ld.txt", header = TRUE, sep = "\t")
-chr10_outliers <- loess_graph(chr10_ld_tab, 0.1, "Chr10 LD MAC = 0.1")
+chr10_outliers <- loess_graph(chr10_ld_tab, 0.1, "E.cord Chr10 LD MAC = 0.1")
 # Chr11
 chr11_ld_tab <- read.table("cord_chr11_windows_ld.txt", header = TRUE, sep = "\t")
-chr11_outliers <- loess_graph(chr11_ld_tab, 0.1, "Chr11 LD MAC = 0.1")
+chr11_outliers <- loess_graph(chr11_ld_tab, 0.1, "E.cord Chr11 LD MAC = 0.1")
 ```
 
 Consolidated window output files per chromosome into one genome-wide.

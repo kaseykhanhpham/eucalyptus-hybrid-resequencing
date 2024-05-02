@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --account=soltis
 #SBATCH --qos=soltis-b
-#SBATCH --job-name=cordallm1_ld
+#SBATCH --job-name=cord_all_ld
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=kasey.pham@ufl.edu
 #SBATCH --mem=1gb
@@ -16,26 +16,27 @@ module load htslib/1.15
 module load emerald/0.1
 
 VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/phase"
-LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/cord"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/cord/emerald/genome_wide"
 
-emeraLD --in "$VCF_DIR"/chr01_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/mac01/cord_Chr01_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr01_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$WDIR"/cord_Chr01_ld.txt.gz
 
-emeraLD --in "$VCF_DIR"/chr02_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/mac01/cord_Chr02_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr02_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$WDIR"/cord_Chr02_ld.txt.gz
 
-emeraLD --in "$VCF_DIR"/chr03_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/mac01/cord_Chr03_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr03_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$WDIR"/cord_Chr03_ld.txt.gz
 
-emeraLD --in "$VCF_DIR"/chr04_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/mac01/cord_Chr04_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr04_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$WDIR"/cord_Chr04_ld.txt.gz
 
-emeraLD --in "$VCF_DIR"/chr05_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/mac01/cord_Chr05_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr05_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$WDIR"/cord_Chr05_ld.txt.gz
 
-emeraLD --in "$VCF_DIR"/chr06_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/mac01/cord_Chr06_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr06_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$WDIR"/cord_Chr06_ld.txt.gz
 
-emeraLD --in "$VCF_DIR"/chr07_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/mac01/cord_Chr07_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr07_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$WDIR"/cord_Chr07_ld.txt.gz
 
-emeraLD --in "$VCF_DIR"/chr08_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/mac01/cord_Chr08_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr08_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$WDIR"/cord_Chr08_ld.txt.gz
 
-emeraLD --in "$VCF_DIR"/chr09_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/mac01/cord_Chr09_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr09_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$WDIR"/cord_Chr09_ld.txt.gz
 
-emeraLD --in "$VCF_DIR"/chr10_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/mac01/cord_Chr10_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr10_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$WDIR"/cord_Chr10_ld.txt.gz
 
-emeraLD --in "$VCF_DIR"/chr11_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/cord_Chr11_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr11_phased.vcf.gz --phase --mac 1 --include "$LIST_DIR"/Ecordata.txt --stdout | bgzip -c > "$WDIR"/cord_Chr11_ld.txt.gz

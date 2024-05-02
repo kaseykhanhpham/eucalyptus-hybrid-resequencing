@@ -6,35 +6,36 @@ Filtered VCF to biallelic SNPs for one sample group.
 module load bcftools/1.15
 VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
 cd "$VCF_DIR"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
 
-bcftools view -O v -o all_fil_biallelic_globMR.vcf --samples-file /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/recomb/glob/Eglobulus_MR_samples.txt --threads 16 all_fil_biallelic.vcf.gz
+bcftools view -O v -o all_fil_biallelic_globMR.vcf --samples-file "$LIST_DIR"/Eglobulus_MR.txt --threads 16 all_fil_biallelic.vcf.gz
 
-bcftools view -O v -o all_fil_biallelic_cord.vcf --samples-file /blue/soltis/kasey.pham/euc_hyb_reseq/analyses/recomb/cord/Ecordata_samples.txt --threads 16 all_fil_biallelic.vcf.gz
+bcftools view -O v -o all_fil_biallelic_cord.vcf --samples-file "$LIST_DIR"/Ecordata.txt --threads 16 all_fil_biallelic.vcf.gz
 ```
 ## Estimating _E. globulus_ recombination
 Created training set using `ReLERNN_SIMULATE`, sticking to defaults for the number of sets made for each step of training. The manual of `ReLERNN` also recommended not using information from a demographic plot unless very confident in the results, so I abstained from doing that.
 
 ```bash
 # Run in UFRC's job queue system; see relernn_simulate_glob.job for more details.
-# Resources used: 7 Gb, 1 min
+# Resources used: 
 
 module load relernn/1.0.0
 module load cuda/12.2.2
 VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
 declare -a VCFLIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
 
-# mutation rate and generation time from Silva-Junior and Grattapaglia 2015 New Phytol.
+# mutation rate (4.93e-8 per base pair per generation) from Silva-Junior and Grattapaglia 2015 New Phytol. generation time (50 yrs per generation) from discussion with Potts/Vaillancourt lab.
 
 for NAME in "${VCFLIST[@]}"
 do
-    ReLERNN_SIMULATE -v "$VCF_DIR"/all_fil_biallelic_globMR.vcf -g ../"$NAME".bed -d "$NAME" -u "4.93e-8" -l 10 -t 8 --unphased
+    ReLERNN_SIMULATE -v "$VCF_DIR"/all_fil_biallelic_globMR.vcf -g ../"$NAME".bed -d "$NAME" -u "4.93e-8" -l 50 -t 8 --unphased
 done
 ```
 
 Trained recurrent network using simulated datasets. Used defaults for training periods.
 ```bash
 # Run in UFRC's job queue system; see relernn_train_glob.job for more details.
-# Resources used: 76 Gb, 17 hrs
+# Resources used: 
 
 module load relernn/1.0.0
 module load cuda/12.2.2

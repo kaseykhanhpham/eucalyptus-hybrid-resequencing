@@ -6,7 +6,7 @@ Used `PLINK` to convert VCF files to `BIMBAM` format genotype files using the [`
 
 ```bash
 # Run on UFRC queue system; see make_bimbam.job for more details.
-# Resources used: 2 Gb, 2 min
+# Resources used: 1 Gb, 7 min
 
 module load plink/1.90b3.39 
 
@@ -66,65 +66,7 @@ rm *.tmp
 ```
 
 ## Run `ELAI`
-### 100 generations since admixture
-#### MAF = 0.0001
-For MAF = 0.0001 and estimated generation time since admixture = 100 (based on discussion with Brad and Rene, re: 40k year chloroplast capture and 400 years per generation). Only one run was performed for this combination of parameters.
-
-```bash
-# Run on UFRC queue system; see elai_maf00_g100_r1.job for more details.
-# Resources used: 2 Gb, 6 hrs
-
-module load gsl/2.6
-
-BIN_DIR="/blue/soltis/kasey.pham/bin/ELAI"
-WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/elai"
-declare -a CHRLIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
-
-for CHR in "${CHRLIST[@]}"
-do
-    "$BIN_DIR"/elai -g "$WDIR"/geno_by_chr/glob_ref_"$CHR"_geno.txt -p 10 -g "$WDIR"/geno_by_chr/cord_"$CHR"_geno.txt -p 11 -g "$WDIR"/geno_by_chr/glob_mr_"$CHR"_geno.txt -p 1 -pos "$WDIR"/geno_by_chr/pos_"$CHR".txt -s 30 -o "$CHR"_r1 -C 2 -c 10 -mg 100 -exclude-maf 0.0001
-done
-```
-
-Visualized results with a custom `R` script, plotting dosage of each ancestry type versus location on the chromosome.
-```bash
-# Performed on UFRC queue system; see plot_elai_maf00_g100.job for more details.
-# Resources used: 400 Mb, 7 min
-
-module load R/4.2
-
-SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
-WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/elai"
-
-while read IND
-do
-    Rscript "$SCRIPT_DIR"/plot_elai.r "$WDIR"/g100/maf00/output {CHR}_r1 "$WDIR"/chr_list.txt "$WDIR"/Eglobulus_MR_inds.txt "$IND" "$IND"_elai_plots.pdf
-done < "$WDIR"/Eglobulus_MR_inds.txt
-```
-
-#### MAF = 0.05
-For MAF = 0.05 and estimated generation time since admixture = 100. Only one run was performed with this combination of parameters.
-
-```bash
-# Run on UFRC queue system; see elai_maf05_g100_r1.job for more details.
-# Resources used: 2 Gb, 6 hrs
-
-module load gsl/2.6
-
-BIN_DIR="/blue/soltis/kasey.pham/bin/ELAI"
-WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/elai"
-declare -a CHRLIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
-
-for CHR in "${CHRLIST[@]}"
-do
-    "$BIN_DIR"/elai -g "$WDIR"/geno_by_chr/glob_ref_"$CHR"_geno.txt -p 10 -g "$WDIR"/geno_by_chr/cord_"$CHR"_geno.txt -p 11 -g "$WDIR"/geno_by_chr/glob_mr_"$CHR"_geno.txt -p 1 -pos "$WDIR"/geno_by_chr/pos_"$CHR".txt -s 30 -o "$CHR"_r1 -C 2 -c 10 -mg 100 -exclude-maf 0.05
-done
-```
-
-Visualized results by plotting dosage of each ancestry type against location on each chromosome as in MAF = 0.0001.
-
-### 800 generations since admixture
-#### MAF = 0.0001
+### MAF = 0.00
 Ran ELAI for MAF = 0.0001 and estimated generation time since admixture = 800 (based on initial estimate given by `AncestryHMM`). 10 separate runs were performed and results were averaged across runs as per recommendations of the developer; example given below.
 
 ```bash
@@ -146,12 +88,12 @@ done
 Averaged dosages over the 10 runs for MAF = 0.00 and generation time = 800.
 ```bash 
 # performed on UFRC queue system; see avg_elai_maf00_g800.job for more details.
-# Resources used: 3 Gb, 36 hrs
+# Resources used:
 
 module load R/4.2
 declare -a CHRLIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
 SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
-OUTPUT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/elai/maf00/g800/output"
+OUTPUT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/elai/maf00/output"
 
 for CHR in "${CHRLIST[@]}"
 do
@@ -220,12 +162,12 @@ cutoff_coarse <- ggplot(coarse_cutoff_mat_df, aes(window, acc, fill = dosage)) +
 cutoff_coarse
 ```
 
-#### MAF = 0.05
-Ran ELAI for MAF = 0.05 and estimated generation time since admixture = 800. Only one run was performed for this combination of parameters.
+### MAF = 0.05
+Ran ELAI for MAF = 0.05 and estimated generation time since admixture = 800.
 
 ```bash
 # Run on UFRC queue system; see elai_maf05_g800_r1.job for more details.
-# Resources used: 2 Gb, 6 hrs
+# Resources used: 3 Gb, 4 days
 
 module load gsl/2.6
 
@@ -233,171 +175,31 @@ BIN_DIR="/blue/soltis/kasey.pham/bin/ELAI"
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/elai"
 declare -a CHRLIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
 
-for CHR in "${CHRLIST[@]}"
-do
-    "$BIN_DIR"/elai -g "$WDIR"/geno_by_chr/glob_ref_"$CHR"_geno.txt -p 10 -g "$WDIR"/geno_by_chr/cord_"$CHR"_geno.txt -p 11 -g "$WDIR"/geno_by_chr/glob_mr_"$CHR"_geno.txt -p 1 -pos "$WDIR"/geno_by_chr/pos_"$CHR".txt -s 30 -o "$CHR"_r1 -C 2 -c 10 -mg 800 -exclude-maf 0.05
-done
-```
-
-Plotted dosage of each ancestry type versus location in the chromosome for each individual using the same `R` scripts as in analysis for generations since admixture = 100 and MAF = 0.0001.
-
-### 4000 generations since admixture
-#### MAF = 0.0001
-Ran ELAI for MAF = 0.00001 and estimated generation time since admixture = 4000. The generation time was derived from the estimate of chloroplast capture 40,000 years ago and an assumed generation time of 10 years (Silva-Junior and Grattapaglia 2015). Ten separate runs were performed and results were averaged across runs as per recommendations of the developer.
-
-```bash
-# Run on UFRC queue system; see elai_maf00_g4000.job for more details.
-# Resources used: 
-
 for RUN in {1..10}
 do
     for CHR in "${CHRLIST[@]}"
     do
-        # 30 steps, 2 source populations, 10 subpopulations per source, 4000 generations since admixture, exclude maf < 0.0001
-        "$BIN_DIR"/elai -g "$WDIR"/geno_by_chr/glob_ref_"$CHR"_geno.txt -p 10 -g "$WDIR"/geno_by_chr/cord_"$CHR"_geno.txt -p 11 -g "$WDIR"/geno_by_chr/glob_mr_"$CHR"_geno.txt -p 1 -pos "$WDIR"/geno_by_chr/pos_"$CHR".txt -s 30 -o "$CHR"_r"$RUN" -C 2 -c 10 -mg 4000 -exclude-maf 0.0001
+        "$BIN_DIR"/elai -g "$WDIR"/geno_by_chr/glob_ref_"$CHR"_geno.txt -p 10 -g "$WDIR"/geno_by_chr/cord_"$CHR"_geno.txt -p 11 -g "$WDIR"/geno_by_chr/glob_mr_"$CHR"_geno.txt -p 1 -pos "$WDIR"/geno_by_chr/pos_"$CHR".txt -s 30 -o "$CHR"_r"$RUN" -C 2 -c 10 -mg 800 -exclude-maf 0.05
     done
 done
 ```
 
-Averaged estimated dosages over the ten runs using an `R` script.
-```bash
-# Run on UFRC queue system; see avg_elai_maf00_g4000.job for more details.
-# Resources used: 
+Averaged dosages over the 10 runs for MAF = 0.00 and generation time = 800.
+```bash 
+# performed on UFRC queue system; see avg_elai_maf05_g800.job for more details.
+# Resources used:
+
 module load R/4.2
 declare -a CHRLIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
 SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
-OUTPUT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/elai/g4000/maf00/output"
+OUTPUT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/elai/maf05/output"
 
 for CHR in "${CHRLIST[@]}"
 do
-    ls "$OUTPUT_DIR"/"$CHR"_*.ps21.txt > "$CHR"_infile_list.txt
-    Rscript "$SCRIPT_DIR"/avg_elai_doses.r "$CHR"_infile_list.txt "$OUTPUT_DIR"/avg/"$CHR"_avg.ps21.txt
+    ls "$OUTPUT_DIR"/"$CHR"_*.ps21.txt > file_lists/"$CHR"_infile_list.txt
+    Rscript "$SCRIPT_DIR"/avg_elai_doses.r file_lists/"$CHR"_infile_list.txt "$OUTPUT_DIR"/avg/"$CHR"_avg.ps21.txt
 done
 ```
 
-Plotted heatmaps for across-run averages.
-```R
-library(ggplot2)
-library(RColorBrewer)
+Plot heatmaps here!
 
-source("C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/elai/heatmaps_elai_fun.r")
-
-infile_loc <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/elai/g4000/maf00/results"
-wdir <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/elai/g4000/maf00/heatmaps"
-filedir <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/elai/g800/maf00/heatmaps"
-
-sample_order <- read.table(paste(filedir, "..", "..", "..", "Eglobulus_MR_inds.txt", sep = "/"))$V1
-chromosomes <- c("Chr01", "Chr02", "Chr03", "Chr04", "Chr05", "Chr06", "Chr07", "Chr08", "Chr09", "Chr10", "Chr11")
-
-setwd(wdir)
-coarsewin_filename <- paste(filedir, "coarse_windows.csv", sep = "/")
-coarsewin_tab <- read.csv(coarsewin_filename, header = FALSE, col.names = c("chrom", "start", "end"), colClasses = c("character", "integer", "integer"))
-
-# populate matrix
-coarse_mat_df <- populate_mat(infile_loc, sample_order, coarsewin_tab)
-coarse_cutoff_mat_df <- populate_mat_cutoff(infile_loc, sample_order, coarsewin_tab, 1.75)
-
-# plot heatmaps
-x_axis_breaks <- c("Chr01_16887823_25331733", "Chr02_20331353_30497028", "Chr03_26218899_39328347", "Chr04_15439735_23159601", "Chr05_25167991_37751985", "Chr06_20856265_31284396", "Chr07_21701053_32551578", "Chr08_28085845_42128766", "Chr09_15320131_22980195", "Chr10_15489065_23233596", "Chr11_16822585_25233876")
-
-name_table_name <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/00.metadata/03.seq_analysis/sample_spp_table.csv"
-name_table <- read.csv(name_table_name, header = TRUE, as.is = TRUE)
-label_order <- match(coarse_mat_df$sample, name_table$RAPiD_ID)
-coarse_mat_df$acc <- name_table$Accession[label_order]
-
-dose_coarse <- ggplot(coarse_mat_df, aes(window, acc, fill = dosage)) + 
-               geom_tile(color = "#000000") + 
-               scale_fill_steps(high = "#000000", low = "#ffffff") + 
-               guides(fill = guide_coloursteps(title = NULL, show.limits = TRUE)) +
-               ggtitle("Maximum dosage of E. cordata ancestry per window") + 
-               xlab("Chromosome Window") + ylab("E. globulus Sample") + 
-               scale_x_discrete(breaks = x_axis_breaks, labels = chromosomes) +
-               theme(plot.title=element_text(size=16),
-                     axis.title = element_text(size = 14),
-                     axis.text.x = element_text(size = 9),
-                     axis.text.y = element_text(size = 14))
-dose_coarse
-
-label_order <- match(coarse_cutoff_mat_df$sample, name_table$RAPiD_ID)
-coarse_cutoff_mat_df$acc <- name_table$Accession[label_order]
-cutoff_coarse <- ggplot(coarse_cutoff_mat_df, aes(window, acc, fill = dosage)) + 
-               geom_tile(color = "#000000") + 
-               scale_fill_steps(high = "#000000", low = "#ffffff") + 
-               guides(fill = guide_coloursteps(title = NULL, show.limits = TRUE)) +
-               ggtitle("At least one window with E. cordata dosage > 1.75") + 
-               xlab("Chromosome Window") + ylab("E. globulus Sample") + 
-               scale_x_discrete(breaks = x_axis_breaks, labels = chromosomes) +
-               theme(plot.title=element_text(size=16),
-                     axis.title = element_text(size = 14),
-                     axis.text.x = element_text(size = 9),
-                     axis.text.y = element_text(size = 14))
-cutoff_coarse
-```
-
-#### MAF = 0.05
-Ran ELAI for MAF = 0.05 and estimated generation time since admixture = 4000. Ten separate runs were performed and results were averaged across runs as per recommendations of the developer.
-
-```bash
-# Run on UFRC queue system; see elai_maf05_g4000.job for more details.
-# Resources used: 
-
-for RUN in {1..10}
-do
-    for CHR in "${CHRLIST[@]}"
-    do
-        # 30 steps, 2 source populations, 10 subpopulations per source, 4000 generations since admixture, exclude maf < 0.05
-        "$BIN_DIR"/elai -g "$WDIR"/geno_by_chr/glob_ref_"$CHR"_geno.txt -p 10 -g "$WDIR"/geno_by_chr/cord_"$CHR"_geno.txt -p 11 -g "$WDIR"/geno_by_chr/glob_mr_"$CHR"_geno.txt -p 1 -pos "$WDIR"/geno_by_chr/pos_"$CHR".txt -s 30 -o "$CHR"_r"$RUN" -C 2 -c 10 -mg 4000 -exclude-maf 0.05
-    done
-done
-```
-
-### 13000 generations since admixture
-#### MAF = 0.0001
-Ran ELAI for MAF = 0.00001 and estimated generation time since admixture = 13000. The generation time was derived from the estimate of time since admixture by `dadi` demographic modeling. Ten separate runs were performed and results were averaged across runs as per recommendations of the developer.
-
-```bash
-# Run on UFRC queue system; see elai_maf00_g13000.job for more details.
-# Resources used: 
-
-for RUN in {1..10}
-do
-    for CHR in "${CHRLIST[@]}"
-    do
-        # 30 steps, 2 source populations, 10 subpopulations per source, 4000 generations since admixture, exclude maf < 0.0001
-        "$BIN_DIR"/elai -g "$WDIR"/geno_by_chr/glob_ref_"$CHR"_geno.txt -p 10 -g "$WDIR"/geno_by_chr/cord_"$CHR"_geno.txt -p 11 -g "$WDIR"/geno_by_chr/glob_mr_"$CHR"_geno.txt -p 1 -pos "$WDIR"/geno_by_chr/pos_"$CHR".txt -s 30 -o "$CHR"_r"$RUN" -C 2 -c 10 -mg 13000 -exclude-maf 0.0001
-    done
-done
-```
-
-Averaged estimated dosages over the ten runs using an `R` script.
-```bash
-# Run on UFRC queue system; see avg_elai_maf00_g13000.job for more details.
-# Resources used: 
-module load R/4.2
-declare -a CHRLIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
-SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
-OUTPUT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/elai/g13000/maf00/output"
-
-for CHR in "${CHRLIST[@]}"
-do
-    ls "$OUTPUT_DIR"/"$CHR"_*.ps21.txt > "$CHR"_infile_list.txt
-    Rscript "$SCRIPT_DIR"/avg_elai_doses.r "$CHR"_infile_list.txt "$OUTPUT_DIR"/avg/"$CHR"_avg.ps21.txt
-done
-```
-
-#### MAF = 0.05
-Ran ELAI for MAF = 0.05 and estimated generation time since admixture = 13000. Ten separate runs were performed and results were averaged across runs as per recommendations of the developer.
-
-```bash
-# Run on UFRC queue system; see elai_maf05_g13000.job for more details.
-# Resources used: 
-
-for RUN in {1..10}
-do
-    for CHR in "${CHRLIST[@]}"
-    do
-        # 30 steps, 2 source populations, 10 subpopulations per source, 4000 generations since admixture, exclude maf < 0.05
-        "$BIN_DIR"/elai -g "$WDIR"/geno_by_chr/glob_ref_"$CHR"_geno.txt -p 10 -g "$WDIR"/geno_by_chr/cord_"$CHR"_geno.txt -p 11 -g "$WDIR"/geno_by_chr/glob_mr_"$CHR"_geno.txt -p 1 -pos "$WDIR"/geno_by_chr/pos_"$CHR".txt -s 30 -o "$CHR"_r"$RUN" -C 2 -c 10 -mg 13000 -exclude-maf 0.05
-    done
-done
-```

@@ -16,26 +16,27 @@ module load htslib/1.15
 module load emerald/0.1
 
 VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/phase"
-LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob"
+LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
+WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/emerald/genome_wide/mac02"
 
-emeraLD --in "$VCF_DIR"/chr01_phased.vcf.gz --phase --mac 2 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/mac02/glob_Chr01_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr01_phased.vcf.gz --phase --mac 2 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$WDIR"/glob_Chr01_ld.txt.gz
 
-emeraLD --in "$VCF_DIR"/chr02_phased.vcf.gz --phase --mac 2 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/mac02/glob_Chr02_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr02_phased.vcf.gz --phase --mac 2 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$WDIR"/glob_Chr02_ld.txt.gz
 
-emeraLD --in "$VCF_DIR"/chr03_phased.vcf.gz --phase --mac 2 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/mac02/glob_Chr03_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr03_phased.vcf.gz --phase --mac 2 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$WDIR"/glob_Chr03_ld.txt.gz
 
-emeraLD --in "$VCF_DIR"/chr04_phased.vcf.gz --phase --mac 2 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/mac02/glob_Chr04_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr04_phased.vcf.gz --phase --mac 2 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$WDIR"/glob_Chr04_ld.txt.gz
 
-emeraLD --in "$VCF_DIR"/chr05_phased.vcf.gz --phase --mac 2 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/mac02/glob_Chr05_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr05_phased.vcf.gz --phase --mac 2 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$WDIR"/glob_Chr05_ld.txt.gz
 
-emeraLD --in "$VCF_DIR"/chr06_phased.vcf.gz --phase --mac 2 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/mac02/glob_Chr06_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr06_phased.vcf.gz --phase --mac 2 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$WDIR"/glob_Chr06_ld.txt.gz
 
-emeraLD --in "$VCF_DIR"/chr07_phased.vcf.gz --phase --mac 2 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/mac02/glob_Chr07_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr07_phased.vcf.gz --phase --mac 2 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$WDIR"/glob_Chr07_ld.txt.gz
 
-emeraLD --in "$VCF_DIR"/chr08_phased.vcf.gz --phase --mac 2 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/mac02/glob_Chr08_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr08_phased.vcf.gz --phase --mac 2 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$WDIR"/glob_Chr08_ld.txt.gz
 
-emeraLD --in "$VCF_DIR"/chr09_phased.vcf.gz --phase --mac 2 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/mac02/glob_Chr09_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr09_phased.vcf.gz --phase --mac 2 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$WDIR"/glob_Chr09_ld.txt.gz
 
-emeraLD --in "$VCF_DIR"/chr10_phased.vcf.gz --phase --mac 2 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/mac02/glob_Chr10_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr10_phased.vcf.gz --phase --mac 2 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$WDIR"/glob_Chr10_ld.txt.gz
 
-emeraLD --in "$VCF_DIR"/chr11_phased.vcf.gz --phase --mac 2 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$LIST_DIR"/emerald/genome_wide/mac02/glob_Chr11_ld.txt.gz
+emeraLD --in "$VCF_DIR"/chr11_phased.vcf.gz --phase --mac 2 --include "$LIST_DIR"/Eglobulus_MR.txt --stdout | bgzip -c > "$WDIR"/glob_Chr11_ld.txt.gz

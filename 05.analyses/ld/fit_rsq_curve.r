@@ -47,12 +47,12 @@ out_tab <- data.frame(file_name = character(), ld = numeric(), C = numeric())
 for(filename in tab_list){
     stripped_filename <- unlist(strsplit(filename, "/"))[length(unlist(strsplit(filename, "/")))]
     # Import file
-    write(paste("doing", filename, "\n"), stdout())
+    write(paste("doing", stripped_filename, "\n"), stdout())
     rsq_tab <- read.csv(filename, header = TRUE)
     rsq_tab <- rsq_tab[which(rsq_tab$r2 != -1),]
     # Check that it has enough observations to estimate LD
     if(nrow(rsq_tab) < args_list[["m"]]){
-        write(paste(filename, "did not have enough observations", "\n"), stdout())
+        write(paste(stripped_filename, "did not have enough observations", "\n"), stdout())
         next
     }
 

@@ -14,7 +14,7 @@
 module load conda 
 
 ENV_DIR="/blue/soltis/kasey.pham/conda/envs"
-VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps/no_outgr"
+VCF_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
 LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/pixy"
 declare -a VCFLIST=(chr01 chr02 chr03 chr04 chr05 chr06 chr07 chr08 chr09 chr10 chr11 chrUn)
 
@@ -22,5 +22,5 @@ conda activate "$ENV_DIR"/pixy
 
 for NAME in "${VCFLIST[@]}"
 do
-    pixy --stats pi fst dxy --vcf "$VCF_DIR"/"$NAME"_fil_no_outgr.vcf.gz --populations "$LIST_DIR"/populations.txt --window_size 5000 --n_cores 12 --output_prefix "$NAME" --fst_type wc
+    pixy --stats pi fst dxy --vcf "$VCF_DIR"/"$NAME"_fil.vcf.gz --populations "$LIST_DIR"/populations.txt --window_size 5000 --n_cores 12 --output_prefix "$NAME" --fst_type wc
 done

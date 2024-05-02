@@ -1,7 +1,22 @@
 # Set of functions to use for quickly generating heatmaps to visualize
 # the output of AncestryHMM
 
-populate_mat <- function(sample_vec, window_tab, post_cutoff, post_file_loc){
+get_windows <- function(chr_name, start, end, num_splits){
+    total_size <- end - start + 1
+    split_size <- round(total_size/num_splits)
+    starts <- c(start)
+    ends <- c()
+    for(i in c(1:(num_splits - 1))){
+        starts <- c(starts, (start + ((i) * split_size)))
+        ends <- c(ends, (start + ((i) * split_size) - 1))
+    }
+    ends <- c(ends, end)
+    chr <- rep(chr_name, num_splits)
+    out_tab <- data.frame(chrom = chr, start = starts, end = ends)
+    return(out_tab)
+}
+
+populate_mat_val <- function(sample_vec, window_tab, post_file_loc){
     mat_list <- list()
     index = 1
     window_order <- c()
@@ -17,16 +32,9 @@ populate_mat <- function(sample_vec, window_tab, post_cutoff, post_file_loc){
             wend <- window_tab[i, "end"]
             infile_mask <- which(infile$chrom == wchr & infile$pos >= wsta & infile$pos <= wend)
             infile_subset <- infile[infile_mask,]
-            if(any(infile_subset$hom_cord >= post_cutoff)){
-                hom_cell <- 1
-                het_cell <- 1
-            } else if(any(infile_subset$het >= post_cutoff)){
-                hom_cell <- 0
-                het_cell <- 0.5
-            } else {
-                hom_cell <- 0
-                het_cell <- 0
-            }
+            hom_cell <- max(infile_subset$hom_cord)
+            het_cell <- max(infile_subset$het)
+            
             windex <- paste(wchr, wsta, wend, sep = "_")
             window_order <- c(window_order, windex)
             mat_ind <- paste("row", index, sep = "_")
@@ -40,7 +48,7 @@ populate_mat <- function(sample_vec, window_tab, post_cutoff, post_file_loc){
         }
     }
     mat_df <- as.data.frame(t(as.data.frame(mat_list)))
-    mat_df$hom_mat <- as.integer(mat_df$hom_mat)
+    mat_df$hom_mat <- as.numeric(mat_df$hom_mat)
     mat_df$het_mat <- as.numeric(mat_df$het_mat)
     # convert window indexes to factor so they will appear in the same order as the input table
     window_order <- unique(window_order)
@@ -48,7 +56,7 @@ populate_mat <- function(sample_vec, window_tab, post_cutoff, post_file_loc){
     return(mat_df)
 }
 
-plot_heatmap <- function(heat_mat, names_from, names_to, chr_name, post_cutoff, title_epithet){
+plot_heatmap <- function(heat_mat, names_from, names_to, chr_name, title_epithet){
     # heat_mat: the output of populate_mat()
     # names_from: a vector of sample names to translate from in the heatmap matrix
     # names_to: a vector of sample names to translate to in final plots
@@ -63,7 +71,7 @@ plot_heatmap <- function(heat_mat, names_from, names_to, chr_name, post_cutoff, 
                 geom_tile(color = "#004c5f") + 
                 scale_fill_steps(high = "#ffd966", low = "#0087a8") + 
                 guides(fill = guide_coloursteps(title = NULL, show.limits = TRUE)) +
-                ggtitle(paste("At least one locus with >", post_cutoff, "homozygous E. cordata ancestry", title_epithet)) + 
+                ggtitle(paste("Largest posterior of homozygous E. cordata ancestry", title_epithet)) + 
                 xlab(paste(chr_name, "Window")) + 
                 ylab("E. globulus Sample") + 
                 scale_x_discrete(labels = plot_xlabs) +
@@ -76,7 +84,7 @@ plot_heatmap <- function(heat_mat, names_from, names_to, chr_name, post_cutoff, 
                 geom_tile(color = "#004c5f") + 
                 scale_fill_steps(high = "#ffd966", low = "#0087a8") + 
                 guides(fill = guide_coloursteps(title = NULL, show.limits = TRUE)) +
-                ggtitle(paste("At least one locus with >", post_cutoff, "E. cordata ancestry", title_epithet)) + 
+                ggtitle(paste("Largest posterior of heterozygous E. cordata ancestry", title_epithet)) + 
                 xlab(paste(chr_name, "Window")) + 
                 ylab("E. globulus Sample") + 
                 scale_x_discrete(labels = plot_xlabs) +
