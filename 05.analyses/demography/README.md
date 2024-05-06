@@ -208,13 +208,13 @@ cmodel = cmodel_func_ex(cmodel_bfps, ns, pts)
 fig = plt.figure(1, figsize=(10,6))
 fig.clear()
 dadi.Plotting.plot_2d_comp_multinom(smodel, fs, vmin=1, resid_range=3, pop_ids =('glob_MR','cord'), show=False)
-pylab.savefig('schange_fit.png', dpi=250)
+pylab.savefig("01.schange/schange_fit.png", dpi=250)
 
 # complex model
 fig = plt.figure(2, figsize=(10,6))
 fig.clear()
 dadi.Plotting.plot_2d_comp_multinom(cmodel, fs, vmin=1, resid_range=3, pop_ids =('glob_MR','cord'), show=False)
-pylab.savefig('sec_contact_schange_fit.png', dpi=250)
+pylab.savefig("04.sec_contact_schange/sec_contact_schange_fit.png", dpi=250)
 
 ## LIKELIHOOD RATIO TEST
 adj = dadi.Godambe.LRT_adjust(func_ex=cmodel_func_ex, grid_pts=pts, all_boot=boots, p0=cmodel_bfps, data=fs, nested_indices=nested_ind, multinom=True)
@@ -229,18 +229,18 @@ uncert = dadi.Godambe.GIM_uncert(func_ex=cmodel_func_ex, grid_pts=pts, all_boot=
 
 Using the Godambe Likelihood Adjustment, the P-value for Model 4 over Model 1 was 0.0001200, so Model 4 was significantly better of a fit.
 
-Parameter uncertainty estimates for Model 4: Secondary Contact with gradual size change:
-| Parameter | Point Estimate | Uncertainty |
-| --------- | -------------- | ----------- |
-| nu1i      | 4.3525         | 1.33653495  |
-| nu2i      | 26.3731        | 1.57506129  |
-| nu1f      | 0.0356         | 3.65428061  |
-| nu2f      | 0.0248         | 3.22294423  |
-| m12       | 10.7472        | 3.22662747  |
-| m21       | 1.0565         | 4.17443425  |
-| T1        | 0.3154         | 0.69228957  |
-| T2        | 0.0899         | 3.03299481  |
-| theta     | 404517.5       | 0.11088168  |
+Parameter uncertainty estimates for Model 4: Secondary Contact with gradual size change. Problematic uncertainty estimates marked with an asterisk (*).
+| Parameter | Point Estimate | Uncertainty  |
+| --------- | -------------- | ------------ |
+| nu1i      | 4.3525         | 1.33653495*  |
+| nu2i      | 26.3731        | 1.57506129   |
+| nu1f      | 0.0356         | 3.65428061*  |
+| nu2f      | 0.0248         | 3.22294423*  |
+| m12       | 10.7472        | 3.22662747   |
+| m21       | 1.0565         | 4.17443425*  |
+| T1        | 0.3154         | 0.69228957   |
+| T2        | 0.0899         | 3.03299481*  |
+| theta     | 404517.5       | 0.11088168   |
 
 ### 1D Models
 Repeated SFS generation step for 1D SFS.
@@ -413,70 +413,48 @@ pts = [max(ns)+20, max(ns)+30, max(ns)+40]
 # import bootstraps
 boots = []
 for i in range(100):
-    boots.append(dadi.Spectrum.from_file("{WDIR}/data/fs/{NAME}.fs".format(WDIR = wdir, NAME = name_stem)))
+    boots.append(dadi.Spectrum.from_file("{WDIR}/data/fs/bootstraps/{NAME}.boot_{IND}.fs".format(WDIR = wdir, NAME = name_stem, IND = i)))
 
 # record results from each model's parameterization
-# growth (AIC = 8467.06)
-g_bfps = [0.0224, 0.01]
-# bottlegrowth (AIC = 8440.84)
-bg_bfps = [0.8337, 0.023, 0.01]
-# three epoch (AIC = 2052.18)
-te_bfps = [23.747, 0.0659, 5.2131, 0.0201]
-
-g_bg_nested = [1] # nuF = nuB, interior
-bg_te_nested = [3] # TF = 0, boundary
+# bottlegrowth (AIC = 14256.76)
+bg_bfps = [0.8541, 0.0235, 0.01]
+# three epoch (AIC = 3061.54)
+te_bfps = [23.9132, 0.0462, 5.1996, 0.014]
 
 # extrapolate function and make best fit model
-g_func_ex = dadi.Numerics.make_extrap_log_func(dadi.Demographics1D.growth)
 bg_func_ex = dadi.Numerics.make_extrap_log_func(dadi.Demographics1D.bottlegrowth)
 te_func_ex = dadi.Numerics.make_extrap_log_func(dadi.Demographics1D.three_epoch)
 
-g_model = g_func_ex(g_bfps, ns, pts)
 bg_model = bg_func_ex(bg_bfps, ns, pts)
 te_model = te_func_ex(te_bfps, ns, pts)
 
 ## PLOT FIT
-# growth
-fig = plt.figure(1, figsize=(10,6))
-fig.clear()
-dadi.Plotting.plot_1d_comp_multinom(g_model, fs)
-pylab.savefig('./02.growth/glob_growth_fit.png', dpi=250)
-
 # bottlegrowth
 fig = plt.figure(2, figsize=(10,6))
 fig.clear()
 dadi.Plotting.plot_1d_comp_multinom(bg_model, fs,)
-pylab.savefig('./04.bottlegrowth/glob_bottlegrowth_fit.png', dpi=250)
+pylab.savefig("04.bottlegrowth/glob_bottlegrowth_fit.png", dpi=250)
 
 # three epoch
 fig = plt.figure(3, figsize=(10,6))
 fig.clear()
 dadi.Plotting.plot_1d_comp_multinom(te_model, fs)
-pylab.savefig('./05.three_epoch/glob_three_epoch_fit.png', dpi=250)
+pylab.savefig("05.three_epoch/glob_three_epoch_fit.png", dpi=250)
 
 ## LIKELIHOOD RATIO TEST
-# growth vs. bottlegrowth
-adj = dadi.Godambe.LRT_adjust(func_ex=bg_func_ex, grid_pts=pts, all_boot=boots, p0=bg_bfps, data=fs, nested_indices=g_bg_nested, multinom=True)
-D = adj*2*(4231.53 - 4217.42)
-p_val = dadi.Godambe.sum_chi2_ppf(D, weights=(0,1)) # Pval = 0.0; significantly different
-
-# bottlegrowth vs. three epoch
-# This isn't right, they're not actually nested models.
-# adj = dadi.Godambe.LRT_adjust(func_ex=te_func_ex, grid_pts=pts, all_boot=boots, p0=te_bfps, data=fs, nested_indices=bg_te_nested, multinom=True)
-# D = adj*2*(4231.53 - 1022.09)
-# p_val = dadi.Godambe.sum_chi2_ppf(D, weights=(0.5,0.5)) # Pval = 0.0; significantly different
+# Unable to do ratio test between two best models because they are not nested; relying instead on visual fit to true SFS.
 
 ## PARAMETER UNCERTAINTY
 uncert = dadi.Godambe.GIM_uncert(func_ex=te_func_ex, grid_pts=pts, all_boot=boots, p0=te_bfps, data=fs, log = True, multinom = True)
 ```
-Conclusion: the three_epoch model is the best for _E. globulus_. Uncertainty estimates from Godambe Information Matrix:
+Conclusion: The visual fit of the three epoch model is better than that of the bottlegrowth model. Therefore, the three epoch model is the best for _E. globulus_. Uncertainty estimates from Godambe Information Matrix below. Problematic uncertainty estimates marked with an asterisk (*).
 | Parameter | Point Estimate | Uncertainty |
 | --------- | -------------- | ----------- |
-| nuB       | 23.747         | 0.00385118  |
-| nuF       | 0.0659         | 0.00534308  |
-| TB        | 5.2131         | 0.00213894  |
-| TF        | 0.0201         | 0.00506429  |
-| theta     | 58556.6        | 0.00198105  |
+| nuB       | 23.9132        | 0.25692368  |
+| nuF       | 0.0462         | 0.54711865* |
+| TB        | 5.1996         | 0.24968859  |
+| TF        | 0.014          | 0.60469157* |
+| theta     | 94640.24       | 0.25916606  |
 
 Did the same for _E. cordata_:
 ```python
@@ -504,13 +482,13 @@ pts = [max(ns)+20, max(ns)+30, max(ns)+40]
 # import bootstraps
 boots = []
 for i in range(100):
-    boots.append(dadi.Spectrum.from_file("{WDIR}/data/fs/{NAME}.fs".format(WDIR = wdir, NAME = name_stem)))
+    boots.append(dadi.Spectrum.from_file("{WDIR}/data/fs/bootstraps/{NAME}.boot_{IND}.fs".format(WDIR = wdir, NAME = name_stem, IND = i)))
 
 # record results from each model's parameterization
 # two epoch (AIC = 8343.58)
 twe_bfps = [0.01, 0.01]
 # three epoch (AIC = 6177.92)
-the_bfps = [27.6535, 0.014, 24.8504, 0.0213]
+the_bfps = [26.5665, 0.0101, 23.9653, 0.0141]
 
 twe_the_nested = [1,3] #nuF = nuB, TF = 0, 1 interior and 1 boundary 
 
@@ -522,27 +500,35 @@ twe_model = twe_func_ex(twe_bfps, ns, pts)
 the_model = the_func_ex(the_bfps, ns, pts)
 
 ## PLOT FIT
-# growth
+# two epoch
 fig = plt.figure(1, figsize=(10,6))
 fig.clear()
 dadi.Plotting.plot_1d_comp_multinom(twe_model, fs)
-pylab.savefig('./03.two_epoch/cord_two_epoch_fit.png', dpi=250)
+pylab.savefig("03.two_epoch/cord_two_epoch_fit.png", dpi=250)
 
 # three epoch
 fig = plt.figure(2, figsize=(10,6))
 fig.clear()
 dadi.Plotting.plot_1d_comp_multinom(the_model, fs)
-pylab.savefig('./05.three_epoch/cord_three_epoch_fit.png', dpi=250)
+pylab.savefig("05.three_epoch/cord_three_epoch_fit.png", dpi=250)
 
 ## LIKELIHOOD RATIO TEST
 # two epoch vs. three epoch
-adj = dadi.Godambe.LRT_adjust(func_ex=the_func_ex, grid_pts=pts, all_boot=boots, p0=the_bfps, data=fs, nested_indices=twe_the_nested, multinom=True) # why is this negative?? D can't be negative
-D = adj*2*(4169.79 - 3084.96)
-p_val = dadi.Godambe.sum_chi2_ppf(D, weights=(0, 0.5, 0.5)) # Pval = 1.0; not significantly different
+adj = dadi.Godambe.LRT_adjust(func_ex=the_func_ex, grid_pts=pts, all_boot=boots, p0=the_bfps, data=fs, nested_indices=twe_the_nested, multinom=True)
+# adj = 0.0005069
+D = adj*2*(-5272.02 - (-7092.77))
+# D = 1.8460
+p_val = dadi.Godambe.sum_chi2_ppf(D, weights=(0, 0.5, 0.5))
+# p_val = 0.2857; the three-epoch model is not significantly better than the two-epoch model.
 
 # PARAMETER UNCERTAINTY
 uncert = dadi.Godambe.GIM_uncert(func_ex=twe_func_ex, grid_pts=pts, all_boot=boots, p0=twe_bfps, data=fs, log = True, multinom = True)
-# uncert was all NAs
 ```
 
-The Godambe adjustment factor was negative, which yields a not-possible D value. I think the fit is just very poor on all of these models and maybe there isn't enough information in the bootstraps as well.
+The P-value for the three epoch model versus the two epoch model was 0.2857, indicating that the more complicated model was not significantly better than the simpler model. Therefore, I selected the two-epoch model as the best one for _E. cordata_ and calculated uncertainties from that. Problematic uncertainty estimates are marked with an asterisk (*).
+
+| Parameter | Point Estimate | Uncertainty |
+| --------- | -------------- | ----------- |
+| nuB       | 0.01           | 2.0850267*  |
+| TB        | 0.01           | 2.47886794* |
+| theta     | 969599.1       | 0.28139506  |
