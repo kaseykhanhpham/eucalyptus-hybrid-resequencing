@@ -94,12 +94,12 @@ done
 
 Consolidated window files into one.
 ```bash
-declare -a CHRLIST=(Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
-cat Chr01/Chr01_all_fil_biallelic_globMR.PREDICT.BSCORRECTED.txt > all_fil_biallelic_globMR_all.PREDICT.BSCORRECTED.txt
+declare -a CHRLIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
+head -n 1 Chr01/Chr01_all_fil_biallelic_globMR.PREDICT.BSCORRECTED.txt > all_fil_biallelic_globMR.PREDICT.BSCORRECTED.txt
 
 for NAME in "${CHRLIST[@]}"
 do
-    tail -n +2 "$NAME"/"$NAME"_all_fil_biallelic_globMR.PREDICT.BSCORRECTED.txt >> all_fil_biallelic_globMR_all.PREDICT.BSCORRECTED.txt
+    tail -n +2 "$NAME"/"$NAME"_all_fil_biallelic_globMR.PREDICT.BSCORRECTED.txt >> all_fil_biallelic_globMR.PREDICT.BSCORRECTED.txt
 done
 ```
 
