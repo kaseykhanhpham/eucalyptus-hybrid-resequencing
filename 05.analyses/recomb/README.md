@@ -35,7 +35,7 @@ done
 Trained recurrent network using simulated datasets. Used defaults for training periods.
 ```bash
 # Run in UFRC's job queue system; see relernn_train_glob.job for more details.
-# Resources used: 
+# Resources used: 100 Gb, 1 day
 
 module load relernn/1.0.0
 module load cuda/12.2.2
@@ -68,7 +68,7 @@ done
 Estimated confidence intervals using simulated replicates of each recombination window.
 ```bash
 # Run in UFRC's job queue system; see relernn_bscorrect_glob.job for more details.
-# Resources used: 54 Gb, 2 hrs
+# Resources used: 53 Gb, 3 hrs
 
 module load relernn/1.0.0
 module load cuda/12.2.2
@@ -82,10 +82,32 @@ do
 done
 ```
 
+Renamed ReLERNN outputs by chromosome.
+```bash
+declare -a CHRLIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
+
+for NAME in "${CHRLIST[@]}"
+do
+    rename all_fil_biallelic_globMR "$NAME"_all_fil_biallelic_globMR "$NAME"/*
+done
+```
+
+Consolidated window files into one.
+```bash
+declare -a CHRLIST=(Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
+cat Chr01/Chr01_all_fil_biallelic_globMR.PREDICT.BSCORRECTED.txt > all_fil_biallelic_globMR_all.PREDICT.BSCORRECTED.txt
+
+for NAME in "${CHRLIST[@]}"
+do
+    tail -n +2 "$NAME"/"$NAME"_all_fil_biallelic_globMR.PREDICT.BSCORRECTED.txt >> all_fil_biallelic_globMR_all.PREDICT.BSCORRECTED.txt
+done
+```
+
 Visualized recombination over windows and calculated genome-wide average.
 
 ```R
-source("../recomb_graph_funs.r")
+library(ggplot2)
+source("../../recomb_graph_funs.r")
 chr_list <- c("Chr01", "Chr02", "Chr03", "Chr04", "Chr05", "Chr06", "Chr07", "Chr08", "Chr09", "Chr10", "Chr11")
 
 # create storage vectors
@@ -95,7 +117,7 @@ recomb <- c()
 
 # loop through each chromosome-specific table and average the window size, number of sites per window, and recombination rate.
 for(chr in chr_list){
-    chr_tab <- read.table(paste("all_fil_biallelic_globMR_", chr, ".PREDICT.BSCORRECTED.txt", sep = ""), header = TRUE)
+    chr_tab <- read.table(paste(chr, "all_fil_biallelic_globMR.PREDICT.BSCORRECTED.txt", sep = "_"), header = TRUE)
     avgs <- get_avgs(chr_tab)
     winsize <- c(winsize, avgs[["winsize"]])
     nsites <- c(nsites, avgs[["nsites"]])
@@ -113,47 +135,38 @@ avg_recomb <- mean(recomb)
 recomb <- c(recomb, avg_recomb)
 
 out_tab <- data.frame(chr_list, winsize, nsites, recomb)
-write.table(out_tab, "recomb_avgs_glob.tab", sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
+write.table(out_tab, "../recomb_avgs_glob.tab", sep = "\t", col.names = TRUE, row.names = FALSE, quote = FALSE)
 ```
 
 | Chromosome  | Window Size | Num Sites | Recombination (/bp*gen) |
 | ----------- | ----------- | --------- | ----------------------- |
-| Chr01       | 301492.88   | 729.29    | 1.717e-08               |
-| Chr02       | 276153.82   | 582.07    | 1.965e-08               |
-| Chr03       | 212000      | 472.61    | 1.641e-08               |
-| Chr04       | 364093.33   | 764.36    | 1.513e-08               |
-| Chr05       | 329000      | 610.26    | 2.222e-08               |
-| Chr06       | 152892.56   | 384.37    | 1.657e-08               |
-| Chr07       | 268452.74   | 548.43    | 2.271e-08               |
-| Chr08       | 378000      | 844.02    | 1.668e-08               |
-| Chr09       | 273530.11   | 670.81    | 1.597e-08               |
-| Chr10       | 304000      | 762.04    | 2.198e-08               |
-| Chr11       | 288000      | 645.63    | 2.014e-08               |
-| genome-wide | 286146.86   | 637.62    | 1.860e-08               |
+| Chr01       | 154624      | 614       | 1.138e-08               |
+| Chr02       | 179544      | 645       | 1.731e-08               |
+| Chr03       | 120000      | 482       | 1.440e-08               |
+| Chr04       | 177863      | 637       | 1.832e-08               |
+| Chr05       | 169000      | 581       | 2.180e-08               |
+| Chr06       | 76000       | 323       | 1.642e-08               |
+| Chr07       | 113000      | 428       | 1.330e-08               |
+| Chr08       | 168000      | 659       | 1.646e-08               |
+| Chr09       | 127614      | 529       | 1.886e-08               |
+| Chr10       | 153000      | 641       | 1.679e-08               |
+| Chr11       | 164000      | 623       | 2.105e-08               |
+| genome-wide | 145695      | 560       | 1.692e-08               |
 
-Consolidated window files into one.
-```bash
-declare -a CHRLIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
-head -n 1 Chr01/all_fil_biallelic_globMR_Chr01.PREDICT.BSCORRECTED.txt > all_fil_biallelic_globMR_all.PREDICT.BSCORRECTED.txt
-
-for NAME in "${CHRLIST[@]}"
-do
-    tail -n +2 "$NAME"/all_fil_biallelic_globMR_"$NAME".PREDICT.BSCORRECTED.txt >> all_fil_biallelic_globMR_all.PREDICT.BSCORRECTED.txt
-done
-```
-
+(Window size and number of sites rounded to the nearest whole number.)
 
 ## Estimate _E. cordata_ recombination
 Repeated the above steps for _E. cordata_-only VCF file. Then renamed and re-organized output tabs for processing.
 
 ```bash
 declare -a VCFLIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
-for NAME in "${VCFLIST[@]}"; do rename all_fil_biallelic_cord all_fil_biallelic_cord_"$NAME" "$NAME"/*; done
+for NAME in "${VCFLIST[@]}"; do rename all_fil_biallelic_cord "$NAME"_all_fil_biallelic_cord "$NAME"/*; done
 ```
 
 Calculated chromosome-wide and genome-wide average recombination and plotted recombination windows.
-```bash
-source("../recomb_graph_funs.r")
+```R
+library(ggplot2)
+source("../../recomb_graph_funs.r")
 chr_list <- c("Chr01", "Chr02", "Chr03", "Chr04", "Chr05", "Chr06", "Chr07", "Chr08", "Chr09", "Chr10", "Chr11")
 
 # create storage vectors
@@ -163,7 +176,7 @@ recomb <- c()
 
 # loop through each chromosome-specific table and average the window size, number of sites per window, and recombination rate.
 for(chr in chr_list){
-    chr_tab <- read.table(paste("all_fil_biallelic_cord_", chr, ".PREDICT.BSCORRECTED.txt", sep = ""), header = TRUE)
+    chr_tab <- read.table(paste(chr, "all_fil_biallelic_cord.PREDICT.BSCORRECTED.txt", sep = "_"), header = TRUE)
     avgs <- get_avgs(chr_tab)
     winsize <- c(winsize, avgs[["winsize"]])
     nsites <- c(nsites, avgs[["nsites"]])
@@ -186,27 +199,27 @@ write.table(out_tab, "recomb_avgs_cord.tab", sep = "\t", col.names = TRUE, row.n
 
 | Chromosome  | Window Size | Num Sites | Recombination (/bp*gen) |
 | ----------- | ----------- | --------- | ----------------------- |
-| Chr01       | 301492.88   | 729.29    | 2.903e-08               |
-| Chr02       | 276153.82   | 582.07    | 2.855e-08               |
-| Chr03       | 212000      | 472.61    | 1.756e-08               |
-| Chr04       | 364093.33   | 764.36    | 3.412e-08               |
-| Chr05       | 329000      | 610.26    | 8.905e-09               |
-| Chr06       | 152892.56   | 384.37    | 2.293e-08               |
-| Chr07       | 268452.74   | 548.43    | 1.894e-08               |
-| Chr08       | 378000      | 844.02    | 2.802e-08               |
-| Chr09       | 273530.11   | 670.81    | 2.229e-08               |
-| Chr10       | 304000      | 762.04    | 2.380e-08               |
-| Chr11       | 288000      | 645.63    | 1.967e-08               |
-| genome-wide | 286146.86   | 637.62    | 2.307e-08               |
+| Chr01       | 154624      | 614       | 2.002e-08               |
+| Chr02       | 179544      | 645       | 2.182e-08               |
+| Chr03       | 120000      | 482       | 1.671e-08               |
+| Chr04       | 177863      | 637       | 1.833e-08               |
+| Chr05       | 169000      | 581       | 9.520e-09               |
+| Chr06       | 76000       | 323       | 1.137e-08               |
+| Chr07       | 113000      | 428       | 1.165e-08               |
+| Chr08       | 168000      | 659       | 2.441e-08               |
+| Chr09       | 127614      | 529       | 1.553e-08               |
+| Chr10       | 153000      | 641       | 2.357e-08               |
+| Chr11       | 164000      | 623       | 2.613e-08               |
+| genome-wide | 145695      | 560       | 1.810e-08               |
 
 Consolidated window files into one.
 ```bash
 declare -a CHRLIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
-head -n 1 Chr01/all_fil_biallelic_cord_Chr01.PREDICT.BSCORRECTED.txt > all_fil_biallelic_cord_all.PREDICT.BSCORRECTED.txt
+head -n 1 Chr01/Chr01_all_fil_biallelic_cord.PREDICT.BSCORRECTED.txt > all_fil_biallelic_cord_all.PREDICT.BSCORRECTED.txt
 
 for NAME in "${CHRLIST[@]}"
 do
-    tail -n +2 "$NAME"/all_fil_biallelic_cord_"$NAME".PREDICT.BSCORRECTED.txt >> all_fil_biallelic_cord_all.PREDICT.BSCORRECTED.txt
+    tail -n +2 "$NAME"/"$NAME"_all_fil_biallelic_cord.PREDICT.BSCORRECTED.txt >> all_fil_biallelic_cord_all.PREDICT.BSCORRECTED.txt
 done
 ```
 
