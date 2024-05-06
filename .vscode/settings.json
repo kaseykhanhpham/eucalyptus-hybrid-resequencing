@@ -1,0 +1,5 @@
+{
+    "python.defaultInterpreterPath": "\"C:\\Program Files\\Python\\Python 3.12\\python.exe\"",
+    "r.alwaysUseActiveTerminal": true,
+    "r.rpath.windows": "\"C:\\Program Files\\R\\R-4.4.0\\bin\\R.exe\""
+}

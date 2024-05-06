@@ -255,7 +255,7 @@ Calculated relatedness between individuals using relatedness statistic from [Man
 module load vcftools/0.1.16 
 
 IN_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/04.filter_snps"
-POPLIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm"
+POPLIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/"
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/trees/nucl_upgma"
 
 # maf = 0.00
