@@ -4,13 +4,17 @@
 # using the output of samtools depth
 # usage: python coverage_window_avgs.py -i [infile] -o [outfile] -a [summaryfile] -s [windowsize] -n [sampleid] -c [offset] 
 #        infile: name of depth file from samtools to average
-#        outfile: name of output file to write with sliding window averages for this sample
-#        summaryfile: name of file in which to append overall average coverage for this specific sample
-#                     (under assumption this script will be run multiple times). Will create if it doesn't
+#        outfile: name of output file to write with sliding window averages 
+#                 for this sample
+#        summaryfile: name of file in which to append overall average coverage 
+#                     for this specific sample (under assumption this script 
+#                     will be run multiple times). Will create if it doesn't
 #                     already exist.
-#        windowsize: sliding window size (in observed sites) across which to average coverage
+#        windowsize: sliding window size (in observed sites) across which to 
+#                    average coverage
 #        sampleid: ID of sample coverage is calculated for
-#        offset: size of offset for chromosomes (a bit larger than the size of the largest chr of the organism)
+#        offset: size of offset for chromosomes (a bit larger than the size of 
+#                the largest chr of the organism)
 
 import argparse
 import subprocess

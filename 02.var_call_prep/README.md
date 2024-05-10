@@ -271,34 +271,32 @@ OUTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/process_reads/05.depth"
 samtools depth -o "$OUTDIR"/WA01_cover.txt "$INDIR"/S320_marked.bam "$INDIR"/S1_marked.bam
 ```
 
-**Plot coverage and calculate average:**
+**Calculate sample and population averages and plot coverage:**
 
-Used custom python script to calculate the average coverage along a sliding window and genome-wide average coverage per sample.
+Used custom `python` script to calculate the average coverage along a sliding window and genome-wide average coverage per sample.
 ```bash
 # Run via job on UFRC, see coverage.job for details
 # Resources used: 10 hrs, 70 Mb
 
 module load python/3.8
-SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
-LIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
+SCRIPTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+LISTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
 
-# create blank file in which to dump average coverage calculations
-touch average_coverage.txt
-
-# calculate average from samtools output and calculate average coverage across all chromosomes in sliding window
 while read NAME
 do 
-    python "$SCRIPT_DIR"/plot_coverage.py "$NAME"_cover.txt "$NAME" average_coverage.txt
-done < "$LIST_DIR"/sample_ids.txt
+    python "$SCRIPTDIR"/coverage_window_avgs.py -i "$NAME"_cover.txt -o "$NAME"_cvg_windows.txt -a average_coverage.txt -s 100000 -n "$NAME" -c 100000000
+done < "$LISTDIR"/accession_nums.txt
 ```
 
-Plotted coverage in windows using custom `R` script.
+Plotted coverage averaged for populations across windows using custom `R` script.
 ```bash
+# Run via UFRC; see plot_coverage.job for more details.
+# Resources Used: 
+
 
 ```
 
 ## Housekeeping
-
 **Delete intermediate files:**
 ```bash
 MAP_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/map_reads"

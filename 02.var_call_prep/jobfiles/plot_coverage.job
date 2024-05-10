@@ -4,7 +4,7 @@
 #SBATCH --job-name=plt_cvg
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=kasey.pham@ufl.edu
-#SBATCH --mem=50mb
+#SBATCH --mem=10gb
 #SBATCH --time=1:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --nodes=1
@@ -19,9 +19,7 @@ module purge
 module load R/4.2
 SCRIPTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
 LISTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
+REFDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/Eglobulus_genome_X46"
 INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/02.process_reads/05.depth"
 
-while read NAME
-do 
-    Rscript "$SCRIPTDIR"/plot_coverage.r -i "$INDIR"/"$NAME"_cvg_windows.txt -o "$NAME"_cvg_windows.png -n "$NAME" -c chr_list.txt -p chr_pos_list.txt
-done < "$LISTDIR"/accession_nums.txt
+Rscript "$SCRIPTDIR"/plot_coverage.r -i sample_cov_list.txt -n "$LISTDIR"/accessions_by_pop.tab -o pop_cov.png -m "$REFDIR"/chr_names_list.txt -p "$REFDIR"/X46_chr_size_list.txt -s 100000 -c 100000000
