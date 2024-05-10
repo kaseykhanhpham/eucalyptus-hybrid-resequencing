@@ -587,8 +587,8 @@ plot_recomb <- function(recomb_tabname, ld_tabname, chr, chr_size,
        border = "black", lwd = 4)
 }
 
-plot_ahmm <- function(ahmm_tabnames, ahmm_outname, dxy_tabname, dsuite_tabname,
-                      scan_outname, chr, chr_size) {
+plot_ahmm <- function(ahmm_tabnames, ahmm_outname, dxy_tabname, scan_outname,
+                      chr, chr_size) {
   # Plot introgression windows for genome scan statistics and Ancestry_HMM
   max_chr_size <- 70214608
   # Get windows of interest
@@ -708,8 +708,7 @@ plot_ahmm <- function(ahmm_tabnames, ahmm_outname, dxy_tabname, dsuite_tabname,
 }
 
 plot_elai <- function(elai_dose_file, elai_site_file, elai_samples,
-                      elai_outname, dxy_tabname, dsuite_tabname, chr,
-                      chr_size) {
+                      elai_outname, dxy_tabname, chr, chr_size) {
   # Plot introgression windows
   max_chr_size <- 70214608
   # Get windows of interest

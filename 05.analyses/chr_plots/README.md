@@ -1,6 +1,6 @@
 # Synthesis analysis and plotting
 ## Identifying Regions of Interest
-Retrieved regions of interest and plotted chromosome painting-style by synthesizing the genome scan stats, sliding window LD, sliding window recombination, and local ancestry inference results. Refer to `win_processing_funs.r`, `plot_chr_wins.r`, `intr_lais_funs.r`, `plot_intr_lais.r` for details on process.
+Retrieved regions of interest and plotted chromosome painting-style by synthesizing the genome scan stats, sliding window LD, sliding window recombination, and local ancestry inference results. Refer to `win_processing_funs.r` and `plot_chr_wins.r` for details on process.
 
 Regions of interest for species differences, recombination, introgression, and selection were defined as follows:
 
@@ -30,11 +30,11 @@ Regions of interest for species differences, recombination, introgression, and s
 **Minimum sites to consider a window:** 40
 **Minimum individuals sharing LAI score to consider a window:** 5
 
-| Category        | dxy cutoff           | fdM cutoff      | LAI cutoff        |
-| --------------- | -------------------- | --------------- | ----------------- |
-| Genome scan     | Lowest 40% of values | 90th percentile | None              |
-| AHMM regions    | None                 | None            | Posterior > 0.95  |
-| ELAI regions    | None                 | None            | Avg Dosage > 1.75 |
+| Category        | dxy glob-cord cutoff | dxy glob-glob cutoff  | LAI cutoff            |
+| --------------- | -------------------- | --------------------- | --------------------- |
+| Genome scan     | Lowest 10% of values | Highest 10% of values | None                  |
+| AHMM regions    | None                 | None                  | Posterior > 0.95/0.85 |
+| ELAI regions    | None                 | None                  | Avg Dosage > 1.75     |
 
 ### Selection
 
