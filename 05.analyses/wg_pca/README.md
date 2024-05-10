@@ -98,7 +98,8 @@ pca_scaled$taxon <- pca$taxon
 b <- ggplot(pca_scaled, aes(PC1, PC2, col = taxon)) + geom_point(size = 2)
 b <- b + scale_colour_manual(values = c("goldenrod1", "black", "deepskyblue4"))
 b <- b + theme_light() + coord_equal()
-b <- b + xlab(paste("PC1 (", signif(pve$pve[1], 3), ")", sep = "")) + ylab(paste("PC2 (", signif(pve$pve[2], 3), ")", sep = "")) + ggtitle("maf=0.00, PC1 vs. PC2")
+b <- b + xlab(paste("PC1 (", signif(pve$pve[1], 3), ")", sep = "")) + 
+b <- b + ylab(paste("PC2 (", signif(pve$pve[2], 3), ")", sep = "")) + ggtitle("maf=0.00, PC1 vs. PC2")
 b <- b + ylim(-0.075, 0.075)
 b
 
@@ -106,7 +107,8 @@ b
 c <- ggplot(pca_scaled, aes(PC1, PC3, col = taxon)) + geom_point(size = 2)
 c <- c + scale_colour_manual(values = c("goldenrod1", "black", "deepskyblue4"))
 c <- c + coord_equal() + theme_light()
-c <- c + xlab(paste("PC1 (", signif(pve$pve[1], 3), ")", sep = "")) + ylab(paste("PC3 (", signif(pve$pve[3], 3), ")", sep = "")) + ggtitle("maf=0.00, PC1 vs. PC3")
+c <- c + xlab(paste("PC1 (", signif(pve$pve[1], 3), ")", sep = ""))
+c <- c + ylab(paste("PC3 (", signif(pve$pve[3], 3), ")", sep = "")) + ggtitle("maf=0.00, PC1 vs. PC3")
 c <- c + ylim(-0.075, 0.075) 
 c
 
@@ -114,7 +116,8 @@ c
 d <- ggplot(pca_scaled, aes(PC2, PC3, col = taxon)) + geom_point(size = 2)
 d <- d + scale_colour_manual(values = c("goldenrod1", "black", "deepskyblue4"))
 d <- d + coord_equal() + theme_light()
-d <- d + xlab(paste("PC2 (", signif(pve$pve[2], 3), ")", sep = "")) + ylab(paste("PC3 (", signif(pve$pve[3], 3), ")", sep = "")) + ggtitle("maf=0.00, PC2 vs. PC3")
+d <- d + xlab(paste("PC2 (", signif(pve$pve[2], 3), ")", sep = ""))
+d <- d + ylab(paste("PC3 (", signif(pve$pve[3], 3), ")", sep = "")) + ggtitle("maf=0.00, PC2 vs. PC3")
 d <- d + ylim(-0.02, 0.02)
 d
 ```
