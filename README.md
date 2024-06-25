@@ -1,11 +1,13 @@
 # _Eucalyptus_ Hybrid Resequencing
 Pipeline for analysis of project resequencing introgressant _Eucalyptus globulus_ and _Eucalyptus cordata_ in Tasmania.
 
-Directories are labeled in the order steps were performed. Computation performed on UF's HiperGator supercomputing cluster (UFRC), so job files are included where relevant.
+Directories are labeled in the order steps were performed (see Navigation section below). Computation performed on UF's HiperGator supercomputing cluster (UFRC), so job files are included where relevant.
 
 **Collaborators**: Rebecca Jones, Ariane Gélinas Marion, Brad Potts, René Vaillancourt, Pam Soltis, Doug Soltis
 
 **With helpful input from**: Zhe Cai, Matias Kirst, Brad Barbazuk, Shelley Sianta
+
+**Reference genome provided by**: Josquin Tibbits, Agriculture Victoria
 
 
 ## Project Design
@@ -77,6 +79,6 @@ Each step of the analysis is listed in order in the subdirectories of this repos
 | 04   | chloroplast_assembly | Assembly of whole plastomes from trimmed reads         |
 | 05   | analyses           | Population structure, demographics, introgression analyses |
 
-Each directory has its own README with documentation on steps taken and a subdirectory called `jobfiles` with the original job files used to run analyses in the [University of Florida Research Computing system](https://www.rc.ufl.edu/) using `SLURM` scheduling.
+Each directory has its own README with documentation on steps taken and a subdirectory called `jobfiles` with the original job files used to run analyses in the [UFRC system](https://www.rc.ufl.edu/) using `SLURM` scheduling.
 
 Summary files of results have been included if not too large in filesize.
