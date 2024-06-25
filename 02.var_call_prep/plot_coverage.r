@@ -133,20 +133,20 @@ for (pop in pop_list) {
 pop_avg_tab <- data.frame(pos = all_pos, cov = all_cov, pop = all_pop)
 
 ## PLOT COVERAGE PER POPULATION PER WINDOW
-plot_title <- "Average Coverage per Window per Population"
+plot_title <- "Average Coverage per Window per Sample Group"
 
-png(args_list[["o"]], height = 1600, width = 1800, units = "px")
+png(args_list[["o"]], height = 4, width = 6.5, units = "in", res = 350)
 # scatterplot of true coverage values
 # NOTE: scatterplot is restricted to 200x coverage on the y-axis.
 # this will exclude sites with higher coverage from visualization!
 
 # define colors to use for each population
-colscale <- c("goldenrod1", "#606060", "deepskyblue4")
+colscale <- c("#ffcb3d", "#13BDD7", "#044075")
 # plot chromosome names and positions if provided
 plt <- ggplot(pop_avg_tab, aes(x = pos, y = cov, col = pop))
-plt <- plt + theme_bw(base_size = 40)
-plt <- plt + geom_point(alpha = 0.8, size = 2) # transparency 80%
-plt <- plt + scale_colour_manual(values = colscale, name = "Population",
+plt <- plt + theme_bw(base_size = 10)
+plt <- plt + geom_point(alpha = 0.75, size = 0.5) # transparency 25%
+plt <- plt + scale_colour_manual(values = colscale, name = "Sample Group",
                                  labels = c("E. cordata", "MR E. globulus",
                                             "Pure E. globulus"))
 plt <- plt + ggtitle(plot_title)
@@ -157,6 +157,15 @@ plt <- plt + scale_x_continuous(breaks = chr_centers, labels = chr_list)
 # add line for 30x coverage
 plt <- plt + geom_hline(yintercept = 30, linetype = "dashed",
                         color = "#000000")
+plt <- plt + theme(legend.text = element_text(size = 7),
+                   # remove vertical tick marks
+                   panel.grid.major.x = element_blank(),
+                   panel.grid.minor.x = element_blank(),
+                   panel.grid.major.y = element_line(linewidth = 0.25, 
+                                                     color = "#d1d1d1"),
+                   panel.grid.minor.y = element_line(linewidth = 0.1, 
+                                                     color = "#d1d1d1"),
+                   axis.text.x = element_text(size = 6.5))
 
 print(plt)
 dev.off()

@@ -290,10 +290,13 @@ done < "$LISTDIR"/accession_nums.txt
 
 Plotted coverage averaged for populations across windows using custom `R` script.
 ```bash
-# Run via UFRC; see plot_coverage.job for more details.
-# Resources Used: 
+module load R/4.2
+SCRIPTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+LISTDIR="/blue/soltis/kasey.pham/euc_hyb_reseq"
+REFDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/refs/Eglobulus_genome_X46"
+INDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/call_snps/02.process_reads/05.depth"
 
-
+Rscript "$SCRIPTDIR"/plot_coverage.r -i sample_cov_list.txt -n "$LISTDIR"/accessions_by_pop.tab -o pop_cov.png -m "$REFDIR"/chr_names_list.txt -p "$REFDIR"/X46_chr_size_list.txt -s 100000 -c 100000000
 ```
 
 ## Housekeeping

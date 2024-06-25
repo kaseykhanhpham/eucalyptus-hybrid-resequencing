@@ -123,7 +123,14 @@ do
     jellyfish count -o "$NAME"_24mer -m 24 -s 5G -t 10 -C "$READS_DIR"/"$NAME"*trimmed.fq
     jellyfish histo -o "$NAME"_24mer.histo "$NAME"_24mer
     # plot k-mer distribution starting at index = 3
-    Rscript "$SCRIPT_DIR"/plot_kmer_fast.r "$NAME"_24mer.histo "$NAME"_24mer.png 3
+    # Rscript "$SCRIPT_DIR"/plot_kmer_fast.r "$NAME"_24mer.histo "$NAME"_24mer.png 3
     rm "$NAME"_24mer
 done < "$LIST_DIR"/seq_ids.txt
+```
+
+Plotted all sample k-mer histograms on the same graph using an `R` script, starting x-axis at k-mer size = 2.
+```bash
+module load R/4.2
+SCRIPT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
+Rscript "$SCRIPT_DIR"/plot_kmer_histo.r -i seq_filenames_to_samples_pops.txt -o jelly_histos.tiff -s 2
 ```
