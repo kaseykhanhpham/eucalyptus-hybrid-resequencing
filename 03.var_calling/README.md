@@ -31,7 +31,7 @@ ls "$VCF_DIR"/*.vcf.gz > "$VCF_DIR"/vcfs_list.txt
 bcftools concat -f "$VCF_DIR"/vcfs_list.txt -O z -o "$OUT_DIR"/chr01.vcf.gz --threads 12
 ```
 
-Get stats for raw variant sets using `bcftools`:
+Get stats for raw genotype call sets using `bcftools`:
 
 ```bash
 # Done in UFRC queue system. See raw_stats.job for more details.
@@ -49,7 +49,7 @@ do
 done
 ```
 
-Visualize raw variant set stats summary using script from `bcftools`:
+Visualize raw genotype call set stats summary using script from `bcftools`:
 ```bash
 # Done in UFRC queue system. See vis_stats.job for more details.
 # Resources used: 51 Mb, 1 min
@@ -68,11 +68,10 @@ do
 done
 ```
 
-## Filter variants
-
+## Filter calls
 ### Evaluate distributions of annotations for raw SNPs before setting filtering cutoffs
 
-Split raw variant calls into invariant SNPs, variant SNPs, and indels using `vcftools`. Assessed which filtering parameters to use. Ignoring indels in analysis for now to focus on SNPs. **LEFT OFF HERE 4/18/2024**
+Split raw genotype calls into invariant SNPs, variant SNPs, and indels using `vcftools`. Assessed which filtering parameters to use. Ignoring indels in analysis for now to focus on SNPs.
 
 ```bash
 # Done in UFRC queue system. See split_vcfs.job for more detail.
