@@ -67,11 +67,11 @@ rm *.tmp
 
 ## Run `ELAI`
 ### MAF = 0.00
-Ran ELAI for MAF = 0.0001 and estimated generation time since admixture = 800 (based on initial estimate given by `AncestryHMM`). 10 separate runs were performed and results were averaged across runs as per recommendations of the developer; example given below.
+Ran ELAI for all SNPs and estimated generation time since admixture = 800 (40,000 years ago / 50 years per gen). 10 separate runs were performed and results were averaged across runs as per recommendations of the developer; example given below.
 
 ```bash
 # Run on UFRC queue system; see elai_maf00_g800_r1.job for more details.
-# Resources used: 2 Gb, 6 hrs
+# Resources used: 
 
 module load gsl/2.6
 
@@ -79,9 +79,12 @@ BIN_DIR="/blue/soltis/kasey.pham/bin/ELAI"
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/elai"
 declare -a CHRLIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
 
-for CHR in "${CHRLIST[@]}"
+for RUN in {1..10}
 do
-    "$BIN_DIR"/elai -g "$WDIR"/geno_by_chr/glob_ref_"$CHR"_geno.txt -p 10 -g "$WDIR"/geno_by_chr/cord_"$CHR"_geno.txt -p 11 -g "$WDIR"/geno_by_chr/glob_mr_"$CHR"_geno.txt -p 1 -pos "$WDIR"/geno_by_chr/pos_"$CHR".txt -s 30 -o "$CHR"_r1 -C 2 -c 10 -mg 800 -exclude-maf 0.0001
+    for CHR in "${CHRLIST[@]}"
+    do
+        "$BIN_DIR"/elai -g "$WDIR"/geno_by_chr/glob_ref_"$CHR"_geno.txt -p 10 -g "$WDIR"/geno_by_chr/cord_"$CHR"_geno.txt -p 11 -g "$WDIR"/geno_by_chr/glob_mr_"$CHR"_geno.txt -p 1 -pos "$WDIR"/geno_by_chr/pos_"$CHR".txt -s 30 -o "$CHR"_r"$RUN" -C 2 -c 10 -mg 800 --exclude-miss1
+    done
 done
 ```
 
@@ -102,71 +105,11 @@ do
 done
 ```
 
-Plotted heatmaps of average _E. cordata_ dosage in each putative introgressed _E. globulus_ individual using custom `R` functions (see `heatmaps_elai_fun.r`).
-
-```R
-library(ggplot2)
-library(RColorBrewer)
-
-source("C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/elai/heatmaps_elai_fun.r")
-
-infile_loc <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/elai/g800/maf00/results"
-wdir <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/elai/g800/maf00/heatmaps"
-
-sample_order <- read.table(paste(wdir, "..", "..", "..", "Eglobulus_MR_inds.txt", sep = "/"))$V1
-chromosomes <- c("Chr01", "Chr02", "Chr03", "Chr04", "Chr05", "Chr06", "Chr07", "Chr08", "Chr09", "Chr10", "Chr11")
-
-setwd(wdir)
-coarsewin_filename <- paste(wdir, "coarse_windows.csv", sep = "/")
-coarsewin_tab <- read.csv(coarsewin_filename, header = FALSE, col.names = c("chrom", "start", "end"), colClasses = c("character", "integer", "integer"))
-
-# populate matrix
-coarse_mat_df <- populate_mat(infile_loc, sample_order, coarsewin_tab)
-coarse_cutoff_mat_df <- populate_mat_cutoff(infile_loc, sample_order, coarsewin_tab, 1.8)
-
-# plot heatmaps
-x_axis_breaks <- c("Chr01_16887823_25331733", "Chr02_20331353_30497028", "Chr03_26218899_39328347", "Chr04_15439735_23159601"
-, "Chr05_25167991_37751985", "Chr06_20856265_31284396", "Chr07_21701053_32551578", "Chr08_28085845_42128766", "Chr09_15320131_22980195", "Chr10_15489065_23233596", "Chr11_16822585_25233876")
-
-name_table_name <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/00.metadata/03.seq_analysis/sample_spp_table.csv"
-name_table <- read.csv(name_table_name, header = TRUE, as.is = TRUE)
-label_order <- match(coarse_mat_df$sample, name_table$RAPiD_ID)
-coarse_mat_df$acc <- name_table$Accession[label_order]
-
-dose_coarse <- ggplot(coarse_mat_df, aes(window, acc, fill = dosage)) + 
-               geom_tile(color = "#000000") + 
-               scale_fill_steps(high = "#000000", low = "#ffffff") + 
-               guides(fill = guide_coloursteps(title = NULL, show.limits = TRUE)) +
-               ggtitle("Maximum dosage of E. cordata ancestry per window") + 
-               xlab("Chromosome Window") + ylab("E. globulus Sample") + 
-               scale_x_discrete(breaks = x_axis_breaks, labels = chromosomes) +
-               theme(plot.title=element_text(size=16),
-                     axis.title = element_text(size = 14),
-                     axis.text.x = element_text(size = 9),
-                     axis.text.y = element_text(size = 14))
-dose_coarse
-
-label_order <- match(coarse_cutoff_mat_df$sample, name_table$RAPiD_ID)
-coarse_cutoff_mat_df$acc <- name_table$Accession[label_order]
-cutoff_coarse <- ggplot(coarse_cutoff_mat_df, aes(window, acc, fill = dosage)) + 
-               geom_tile(color = "#000000") + 
-               scale_fill_steps(high = "#000000", low = "#ffffff") + 
-               guides(fill = guide_coloursteps(title = NULL, show.limits = TRUE)) +
-               ggtitle("At least one window with E. cordata dosage > 1.8") + 
-               xlab("Chromosome Window") + ylab("E. globulus Sample") + 
-               scale_x_discrete(breaks = x_axis_breaks, labels = chromosomes) +
-               theme(plot.title=element_text(size=16),
-                     axis.title = element_text(size = 14),
-                     axis.text.x = element_text(size = 9),
-                     axis.text.y = element_text(size = 14))
-cutoff_coarse
-```
-
 ### MAF = 0.05
 Ran ELAI for MAF = 0.05 and estimated generation time since admixture = 800.
 
 ```bash
-# Run on UFRC queue system; see elai_maf05_g800_r1.job for more details.
+# Run on UFRC queue system; see elai_maf05_g800.job for more details.
 # Resources used: 3 Gb, 4 days
 
 module load gsl/2.6
@@ -187,7 +130,7 @@ done
 Averaged dosages over the 10 runs for MAF = 0.00 and generation time = 800.
 ```bash 
 # performed on UFRC queue system; see avg_elai_maf05_g800.job for more details.
-# Resources used:
+# Resources used: 5 Gb, 6 days
 
 module load R/4.2
 declare -a CHRLIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
@@ -201,5 +144,51 @@ do
 done
 ```
 
-Plot heatmaps here!
+Plotted heatmaps of average _E. cordata_ dosage in each putative introgressed _E. globulus_ individual using custom `R` functions (see `heatmaps_elai_fun.r`).
 
+```R
+library(ggplot2)
+library(RColorBrewer)
+
+source("C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/elai/heatmaps_elai_fun.r")
+
+infile_loc <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/elai/maf05/results"
+wdir <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/elai/maf05/heatmaps"
+
+sample_order <- read.table(paste(wdir, "..", "..", "Eglobulus_MR_inds.txt", sep = "/"))$V1
+chromosomes <- c("Chr01", "Chr02", "Chr03", "Chr04", "Chr05", "Chr06", "Chr07", "Chr08", "Chr09", "Chr10", "Chr11")
+
+setwd(wdir)
+coarsewin_filename <- paste(wdir, "..", "..", "coarse_windows.csv", sep = "/")
+coarsewin_tab <- read.csv(coarsewin_filename, header = FALSE, col.names = c("chrom", "start", "end"), colClasses = c("character", "integer", "integer"))
+
+# populate matrix
+coarse_mat_df <- populate_elai_mat_val(infile_loc, sample_order, coarsewin_tab)
+
+# plot heatmaps
+x_axis_breaks <- c("Chr01_16887823_25331733", "Chr02_20331353_30497028", "Chr03_26218899_39328347", "Chr04_15439735_23159601"
+, "Chr05_25167991_37751985", "Chr06_20856265_31284396", "Chr07_21701053_32551578", "Chr08_28085845_42128766", "Chr09_15320131_22980195", "Chr10_15489065_23233596", "Chr11_16822585_25233876")
+
+name_table_name <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/00.metadata/03.seq_analysis/sample_spp_table.csv"
+name_table <- read.csv(name_table_name, header = TRUE, as.is = TRUE)
+label_order <- match(coarse_mat_df$sample, name_table$RAPiD_ID)
+coarse_mat_df$acc <- name_table$Accession[label_order]
+
+dose_coarse <- ggplot(coarse_mat_df, aes(window, acc, fill = dosage)) + 
+               geom_tile(color = "#000000") + 
+               scale_fill_steps(high = "#000000", low = "#ffffff") + 
+               guides(fill = guide_coloursteps(title = NULL, show.limits = TRUE)) +
+               ggtitle("Maximum dosage of E. cordata ancestry per window") + 
+               xlab("Chromosome Window") + ylab("E. globulus Sample") + 
+               scale_x_discrete(breaks = x_axis_breaks, labels = chromosomes)
+png("genwide_maf05_display.png", width = 5000, height = 1750)
+print(dose_coarse +
+      theme(axis.text = element_text(size = 70),
+            axis.title = element_text(size = 78),
+            plot.title = element_text(size = 95),
+            legend.text = element_text(size = 45),
+            legend.title = element_text(size = 50),
+            legend.key.size = unit(3, "cm"))
+      )
+dev.off()
+```

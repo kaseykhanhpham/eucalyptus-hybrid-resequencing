@@ -73,7 +73,7 @@ elai_samples_name <- args_list[["g"]]
 
 # import AHMM file list
 ahmm_list <- read.table(ahmm_list_name, header = FALSE)$V1
-# import ELAI samples
+# import ELAI samples [WAITING FOR ANALYSIS TO FINISH]
 elai_samples <- read.table(elai_samples_name, header = FALSE)$V1
 
 # Make chromosome plots
@@ -115,7 +115,7 @@ png(paste("ahmm_files/", out_pref, "_", chr, "_ahmm.png", sep = ""),
             chr = chr, chr_size = chr_size)
 dev.off()
 
-# ELAI introgression
+# ELAI introgression [WAITING FOR THIS TO FINISH]
 message("Plotting ELAI results...", stderr())
 png(paste("elai_files/", out_pref, "_", chr, "_elai.png", sep = ""),
     width = 500, height = 3500)
@@ -128,11 +128,14 @@ dev.off()
 
 # Selection landscape
 message("Plotting selection...", stderr())
-png(paste(out_pref, chr, "sel.png", sep = "_"), width = 500, height = 3500)
+png(paste("sel_files/", out_pref, "_", chr, "_sel.png", sep = ""),
+    width = 500, height = 3500)
   plot_sel(tajima_tabname = tajd_name, ld_infile = ld_name,
            recomb_infile = recomb_name, chr = chr, chr_size = chr_size,
            bal_outname = paste("sel_files/balancing/", out_pref, "_", chr,
                                "_balance_sel.bed", sep = ""),
            dir_outname = paste("sel_files/direction/", out_pref, "_", chr,
-                               "_direction_sel.bed", sep = ""))
+                               "_direction_sel.bed", sep = ""),
+           rec_ld_outname = paste("sel_files/direction/", out_pref, "_", chr,
+                                  "_ld_rec_sel.bed", sep = ""))
 dev.off()

@@ -100,7 +100,7 @@ rm temp.fsa
 
 First, created a directory of symlinks to all FASTA sequences to include in the tree.
 
-**Create FASTA files with all chloroplast region assemblies and reformat:**
+### Reformat FASTA files
 Wrote python scripts to concatenate chloroplast assemblies from each sample into separate FASTA files for each region and reformat FASTA files to split sequences into multiple lines.
 
 ```bash
@@ -116,7 +116,7 @@ python "$SCRIPTS_DIR"/reformat_fasta.py 80 ssc_temp.fas ssc_assemblies.fas
 rm *_temp.fas
 ```
 
-**Align chloroplast regions:**
+### Align chloroplast regions separately
 ```bash
 # Run via job queue on UFRC, see mafft.job for more details.
 # Resources used: 600 Mb, 8 min
@@ -130,7 +130,7 @@ mafft --auto --thread 16 lsc_assemblies.fas > lsc_assemblies_aligned.fas
 
 Manually replaced ambiguity codes with "N" as `TrimAl` cannot handle them. 
 
-**Trim alignments:**
+### Trim alignments
 
 Used `TrimAl` to remove low-coverage sites of the alignment.
 ```bash
@@ -145,7 +145,7 @@ trimal -in lsc_assemblies_aligned.fas -out lsc_assemblies_trimmed.fas -gt 0.6
 
 Made very minor manual adjustments to LSC before concatenating in `BioEdit`.
 
-**Concatenate regions:**
+### Concatenate aligned and trimmed regions
 ```bash
 module load python/3.8
 SCRIPTS_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/scripts"
@@ -154,8 +154,9 @@ python "$SCRIPTS_DIR"/concatenate_fasta.py irb_assemblies_trimmed.fas,lsc_assemb
 ```
 
 ## Chloroplast tree
+### Phylogenetic inference
+Performed phylogenetic analysis in [`IQTree`](http://www.iqtree.org/) using model selection.
 
-**Phylogenetic analysis in [`IQTree`](http://www.iqtree.org/):**
 ```bash
 # Run via job queueing in UFRC; see iqtree.job for more details
 # Resources: 2 Mb, 1 min
@@ -166,11 +167,13 @@ WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/cp_tree"
 iqtree -s "$WDIR"/concatenated_cp_aligned.fas -st DNA -B 1000 -m MFP -nt 12 -pre concatenated_cp_aligned
 ```
 
-**Plot phylogeny in `R`:**
+### Preliminary plotting
 
 ```R
 # Done on local computer
 library(ape)
+library(ggtree)
+
 # init file names
 meta_name <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/00.metadata/03.seq_analysis/sample_spp_table.csv"
 cp_hap_meta_name <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/00.metadata/01.field_sampling/40samples_KaseyUF_updateDec2020.csv"
@@ -182,8 +185,11 @@ cp_table <- read.csv(cp_hap_meta_name, header = TRUE, as.is = TRUE)
 intree <- read.tree(intree_name)
 
 # add NCBI plastome labels
-assemb_acc <- c("AY780259.1", "KC180787.1", "CM024728.1", "NC_008115.1", "NC_022395.1", "KC180788.1", "CM024559.1", "MN736961.1", "HM347959.1", "MZ670598.1", "KC180790.1", "NC_022397.1")
-assemb_tax <- c("globulus", "globulus",  "globulus","globulus", "nitens", "nitens", "viminalis", "smithii", "grandis", "robusta", "saligna", "saligna")
+assemb_acc <- c("AY780259.1", "KC180787.1", "CM024728.1", "NC_008115.1", "NC_022395.1",
+                "KC180788.1", "CM024559.1", "MN736961.1", "HM347959.1", "MZ670598.1",
+                "KC180790.1", "NC_022397.1")
+assemb_tax <- c("globulus", "globulus", "globulus", "globulus", "nitens", "nitens",
+                "viminalis", "smithii", "grandis", "robusta", "saligna", "saligna")
 
 to_add_to_samples <- cbind(assemb_acc, assemb_tax, assemb_acc)
 colnames(to_add_to_samples) <- c("RAPiD_ID", "Taxon", "Accession")
@@ -192,30 +198,51 @@ meta_table <- rbind(meta_table, to_add_to_samples)
 # replace tip names
 label_order <- match(intree$tip.label, meta_table$RAPiD_ID)
 cp_order <- match(meta_table[label_order, "Accession"], cp_table$RJgeno)
-replacemt_labels <- paste(meta_table[label_order, "Accession"], meta_table[label_order, "Taxon"], cp_table[cp_order, "JLA."], sep = "_")
+replacemt_labels <- paste(meta_table[label_order, "Accession"],
+                          meta_table[label_order, "Taxon"],
+                          cp_table[cp_order, "JLA."],
+                          sep = "_")
 intree$tip.label <- replacemt_labels
 
 # root tree
-intree_rooted <- root(intree, c("MZ670598.1_robusta_NA", "HM347959.1_grandis_NA"), resolve.root = TRUE)
+intree_rooted <- root(intree, c("MZ670598.1_robusta_NA", "HM347959.1_grandis_NA"),
+                      resolve.root = TRUE)
 
 write.tree(intree_rooted, "rooted_euc_mr_cp.tre")
 
-# plot tree
-tip_colors <- sapply(meta_table[label_order, "Taxon"], function(x) ifelse(x == "cord_MR", "goldenrod1", ifelse(x == "glob_MR", "black", (ifelse(x == "glob_pure", "deepskyblue4", "darkgray")))))
-
+# basic plot tree
+tip_colors <- sapply(meta_table[label_order, "Taxon"],
+                     function(x) 
+                     ifelse(x == "cord_MR", "goldenrod1", 
+                            ifelse(x == "glob_MR", "black", 
+                                   (ifelse(x == "glob_pure", "deepskyblue4", "darkgray"))
+                                  )
+                           )
+                    )
 png("cp_tree_no_nodes.png", height = 1600, width = 2400)
-plot(intree_rooted, tip.color = tip_colors, cex = 1.5 , edge.width = 2, root.edge = TRUE, label.offset = 0.000005)
+plot(intree_rooted, tip.color = tip_colors, cex = 1.5 , edge.width = 2,
+     root.edge = TRUE, label.offset = 0.000005)
 add.scale.bar()
 nodelabels(intree_rooted$node.label, adj = c(1.25), cex = 0.50, bg = "white")
 dev.off()
 
-# for talk
-library(ggtree)
-intree_collapsed <- as.polytomy(intree, feature = 'node.label', fun = function(x) as.numeric(x) < 85)
-intree_collapsed_rooted <- root(intree_collapsed, c("MZ670598.1_robusta_NA", "HM347959.1_grandis_NA"), resolve.root = TRUE)
-plot(intree_collapsed_rooted, show.tip.label = FALSE, cex = 1.25 , edge.width = 1.5, root.edge = TRUE, label.offset = 0.000005)
+# for talks (geometric tip ends)
+intree_collapsed <- as.polytomy(intree, feature = 'node.label',
+                                fun = function(x) as.numeric(x) < 85)
+intree_collapsed_rooted <- root(intree_collapsed, c("MZ670598.1_robusta_NA",
+                                                    "HM347959.1_grandis_NA"),
+                                resolve.root = TRUE)
+plot(intree_collapsed_rooted, show.tip.label = FALSE, cex = 1.25 , edge.width = 1.5,
+     root.edge = TRUE, label.offset = 0.000005)
 add.scale.bar()
-tip_pch <- sapply(meta_table[label_order, "Taxon"], function(x) ifelse(x == "cord_MR", 15, ifelse(x == "glob_MR", 19, (ifelse(x == "glob_pure", 17, 18)))))
+tip_pch <- sapply(meta_table[label_order, "Taxon"],
+                  function(x) 
+                  ifelse(x == "cord_MR", 15,
+                         ifelse(x == "glob_MR", 19,
+                                (ifelse(x == "glob_pure", 17, 18))
+                               )
+                        )
+                 )
 tip_cex <- ifelse(tip_pch == 15, 1, 1.25)
 tiplabels(pch = tip_pch, cex = tip_cex)
 ```
@@ -228,7 +255,70 @@ Branch length from _E. globulus_ S83 to the last common ancestor with _E. cordat
 
 Years to capture: 37,282 years
 
-## UPGMA tree of nuclear data
+Using Drouin et al. 2008 Am J Bot for Ks (0.129 subst/site) and Barba-Montoya et al. 2018 for angiosperm diversification date (149 to 256 Ma), substitution rate would range from 5.03e-10 subst/site/year to 8.65e-10 subst/site/year.
+
+Years to capture range: 74,860 years to 43,531 years.
+
+### Final plotting
+Plotted tree for publication in `R`.
+
+```R
+library(ape)
+library(ggtree)
+
+# init file names
+meta_name <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/00.metadata/03.seq_analysis/sample_spp_table.csv"
+intree_name <- "concatenated_cp_aligned.treefile"
+
+# read in files
+meta_table <- read.csv(meta_name, header = TRUE, as.is = TRUE)
+intree <- read.tree(intree_name)
+
+# reformat metadata taxon labels
+new_tax <- sapply(meta_table[, "Taxon"],
+                  function(x)
+                  ifelse(x == "cord_MR", "cordata", 
+                         ifelse(x == "glob_MR", "globulus MR", "globulus pure")
+                        )
+                 )
+meta_table$Taxon <- new_tax
+
+# add NCBI plastome labels
+assemb_acc <- c("AY780259.1", "KC180787.1", "CM024728.1", "NC_008115.1", "NC_022395.1",
+                "KC180788.1", "CM024559.1", "MN736961.1", "HM347959.1", "MZ670598.1",
+                "KC180790.1", "NC_022397.1")
+assemb_tax <- c("globulus", "globulus", "globulus", "globulus", "nitens", "nitens",
+                "viminalis", "smithii", "grandis", "robusta", "saligna", "saligna")
+
+to_add_to_samples <- cbind(assemb_acc, assemb_tax, assemb_acc)
+colnames(to_add_to_samples) <- c("RAPiD_ID", "Taxon", "Accession")
+meta_table <- rbind(meta_table, to_add_to_samples)
+
+# replace tip names
+label_order <- match(intree$tip.label, meta_table$RAPiD_ID)
+replacemt_labels <- paste(meta_table[label_order, "Taxon"], " (",
+                          meta_table[label_order, "Accession"], ")",
+                          sep = "")
+intree$tip.label <- replacemt_labels
+
+# collapse low-support nodes and root
+intree_coll <- as.polytomy(intree, feature = 'node.label',
+                           fun = function(x) as.numeric(x) < 65)
+intree_coll_root <- root(intree_coll, c("robusta (MZ670598.1)",
+                                        "grandis (HM347959.1)"),
+                         resolve.root = TRUE)
+
+# plot for publication (accession tip labels)
+tiff("chloroplast phylogeny - fig 7.tiff", width = 8, height = 6.5, units = "in", res = 350)
+plot(intree_coll_root, show.tip.label = TRUE, cex = 0.40, edge.width = 1.35,
+     root.edge = TRUE, label.offset = 0.000005, show.node.label = FALSE)
+nodelabels(intree_coll_root$node.label[which(!intree_coll_root$node.label %in% c("", "Root"))],
+           adj = c(1.3), cex = 0.35, bg = "white")
+add.scale.bar()
+dev.off()
+```
+
+## Distance tree of nuclear data
 Created a pairwise distance matrix for number of allele differences between samples for linkage-pruned SNPs in `PLINK`.
 
 ```bash
@@ -259,21 +349,22 @@ POPLIST_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/"
 WDIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/trees/nucl_upgma"
 
 # maf = 0.00
-vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out "$WDIR"/maf00/globMR_maf00 --keep "$POPLIST_DIR"/Eglobulus_MR.txt --min-alleles 1 --max-alleles 2 --relatedness2
-vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out "$WDIR"/maf00/cord_maf00 --keep "$POPLIST_DIR"/Ecordata.txt --min-alleles 1 --max-alleles 2 --relatedness2
+vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out "$WDIR"/maf00/globMR_maf00 --keep "$POPLIST_DIR"/Eglobulus_MR.txt --indv WA05 --min-alleles 1 --max-alleles 2 --relatedness2
+vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out "$WDIR"/maf00/cord_maf00 --keep "$POPLIST_DIR"/Ecordata.txt --indv WG05 --min-alleles 1 --max-alleles 2 --relatedness2
 
 # maf = 0.05
-vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out "$WDIR"/maf05/globMR_maf05 --keep "$POPLIST_DIR"/Eglobulus_MR.txt --min-alleles 1 --max-alleles 2 --relatedness2
-vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out "$WDIR"/maf05/cord_maf05 --keep "$POPLIST_DIR"/Ecordata.txt --min-alleles 1 --max-alleles 2 --relatedness2
+vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out "$WDIR"/maf05/globMR_maf05 --keep "$POPLIST_DIR"/Eglobulus_MR.txt --indv WA05 --min-alleles 1 --max-alleles 2 --relatedness2
+vcftools --gzvcf "$IN_DIR"/all_fil.vcf.gz --out "$WDIR"/maf05/cord_maf05 --keep "$POPLIST_DIR"/Ecordata.txt --indv WG05 --min-alleles 1 --max-alleles 2 --relatedness2
 ```
 
+### UPGMA Tree
 Generated UPGMA tree from distance matrix in the `R` package `phangorn`.
 
 ```R
-library(phangorn)
 library(ape)
+library(phangorn)
 
-wdir <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/trees/nucl_upgma"
+wdir <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/trees/nucl"
 setwd(wdir)
 
 # import conversion table
@@ -281,22 +372,22 @@ meta_name <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Docume
 meta_table <- read.csv(meta_name, header = TRUE, as.is = TRUE)
 
 plot_upgma_tree <- function(infile_name, title_text){
-    # create distance matrix
-    dist_df <- read.table(infile_name, header = TRUE, sep = "\t")
-    non_diag_rows <- which(dist_df[,1] != dist_df[,2])
-    dist_df_pruned <- dist_df[non_diag_rows,]
-    # https://stackoverflow.com/questions/22492767/converting-pairwise-distances-into-a-distance-matrix-in-r 
-    dist_mat <- as.dist(xtabs(dist_df_pruned[, 7] ~ dist_df_pruned[, 2] + dist_df_pruned[, 1])) 
+  # create distance matrix
+  dist_df <- read.table(infile_name, header = TRUE, sep = "\t")
+  non_diag_rows <- which(dist_df[,1] != dist_df[,2])
+  dist_df_pruned <- dist_df[non_diag_rows,]
+  # https://stackoverflow.com/questions/22492767/converting-pairwise-distances-into-a-distance-matrix-in-r 
+  dist_mat <- as.dist(xtabs(dist_df_pruned[, 7] ~ dist_df_pruned[, 2] + dist_df_pruned[, 1])) 
 
-    # create upgma object
-    nucl_upgma <- upgma(dist_mat, method = "average")
-    # rename tips
-    label_order <- match(nucl_upgma$tip.label, meta_table$RAPiD_ID)
-    nucl_upgma_renamed <- nucl_upgma
-    nucl_upgma_renamed$tip.label <- meta_table$Accession[label_order]
+  # create upgma object
+  nucl_upgma <- upgma(dist_mat, method = "average")
+  # rename tips
+  label_order <- match(nucl_upgma$tip.label, meta_table$RAPiD_ID)
+  nucl_upgma_renamed <- nucl_upgma
+  nucl_upgma_renamed$tip.label <- meta_table$Accession[label_order]
 
-    # plot in ape
-    plot(nucl_upgma_renamed, cex = 1.75, use.edge.length = TRUE, main = title_text)
+  # plot in ape
+  plot(nucl_upgma_renamed, cex = 1.75, use.edge.length = TRUE, main = title_text)
 }
 
 # GLOBULUS
@@ -316,3 +407,82 @@ MAF = 0.05 trees were identical to MAF = 0.00 trees so they are not shown.
 ![nuclear UPGMA tree of Meehan Range _E. globulus_ by relatedness score, tips labeled by accession](nucl_upgma/upgma_glob_maf00.png "E. glob Nuclear UPGMA Tree")
 
 ![nuclear UPGMA tree of Meehan Range _E. cordata_ by relatedness score, tips labeled by accession](nucl_upgma/upgma_cord_maf00.png "E. cord Nuclear UPGMA Tree")
+
+### Neighbor-Joining Tree
+Generated Neighbor Joining trees for _E. globulus_ and _E. cordata_ using `R` package `ape` and plotted against map coordinates of samples using `R` package `phytools`.
+
+```R
+library(ape)
+library(phytools)
+
+wdir <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/05.analyses/trees/nucl"
+setwd(wdir)
+
+# import conversion table
+meta_name <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/00.metadata/03.seq_analysis/sample_spp_table.csv"
+meta_table <- read.csv(meta_name, header = TRUE, as.is = TRUE)
+# import geographic locations
+points_name <- "C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/00.metadata/01.field_sampling/40samples_KaseyUF_updateDec2020.csv"
+points_table <- read.csv(points_name, header = TRUE, na.strings = c("."))
+rownames(points_table) <- points_table$RJgeno
+rownames(points_table)[c(9, 10)] <- c("cord3", "cord5") # rename to match metadata table
+points_table <- points_table[, c("lat", "long")]
+
+get_nj_tree <- function(infile_name){
+  # function to format distance matrix and generate neighbor joining tree from it
+  # create distance matrix
+  dist_df <- read.table(infile_name, header = TRUE, sep = "\t")
+  non_diag_rows <- which(dist_df[,1] != dist_df[,2])
+  dist_df_pruned <- dist_df[non_diag_rows,]
+  # https://stackoverflow.com/questions/22492767/converting-pairwise-distances-into-a-distance-matrix-in-r 
+  dist_mat <- as.dist(xtabs(dist_df_pruned[, 7] ~ dist_df_pruned[, 2] + dist_df_pruned[, 1])) 
+
+  # create nj tree object
+  nucl_nj <- nj(dist_mat)
+  # rename tips
+  label_order <- match(nucl_nj$tip.label, meta_table$RAPiD_ID)
+  nucl_nj_renamed <- nucl_nj
+  nucl_nj_renamed$tip.label <- meta_table$Accession[label_order]
+
+  # plot in ape
+  # plot(nucl_nj_renamed, cex = 1.75, use.edge.length = TRUE, main = title_text)
+  return(nucl_nj_renamed)
+}
+
+# MR GLOBULUS MAF=0.00
+# make tree
+glob_nj <- get_nj_tree("globMR_maf00.relatedness2")
+# set negative branch lengths to 0
+glob_nj$edge.length[which(glob_nj$edge.length < 0)] <- rep(0, length(which(glob_nj$edge.length < 0)))
+# root tree by E. cordata sample
+glob_nj <- root(glob_nj, "4376a", resolve.root = TRUE)
+# make phymap object in phytools
+glob_points <- as.matrix(points_table[which(rownames(points_table) %in% glob_nj$tip.label), ])
+glob_phymap <- phylo.to.map(glob_nj, glob_points, direction = "rightwards", plot = FALSE)
+# plot phymap object
+glob_pops <- meta_table[match(glob_nj$tip.label, meta_table$Accession), "Taxon"]
+glob_cols <- ifelse(glob_pops == "glob_MR", "#13bdd7", NA)
+names(glob_cols) <- glob_nj$tip.label
+plot(glob_phymap, direction = "rightwards", colors = glob_cols, ftype = "i", cex.points = c(0, 2), lwd = c(3, 3))
+
+# CORDATA MAF=0.00
+# make tree
+cord_nj <- get_nj_tree("cord_maf00.relatedness2")
+# set negative branch lengths to 0
+cord_nj$edge.length[which(cord_nj$edge.length < 0)] <- rep(0, length(which(cord_nj$edge.length < 0)))
+# root tree by E. globulus sample
+cord_nj <- root(cord_nj, "4241", resolve.root = TRUE)
+# make phymap object in phytools
+no_points <- c("5506", "5509", "cord3", "cord5")
+cord_points <- as.matrix(points_table[which(rownames(points_table) %in% cord_nj$tip.label), ])
+# replace empty lat/long points with dummy values
+cord_points[no_points, ] <- cbind(rep(-42.84368, 4), rep(147.40045, 4))
+# make phymap object
+cord_phymap <- phylo.to.map(cord_nj, cord_points, direction = "rightwards", plot = FALSE)
+# plot phymap object
+cord_pops <- meta_table[match(cord_nj$tip.label, meta_table$Accession), "Taxon"]
+cord_cols <- ifelse(cord_pops == "cord_MR", "#FFC125", NA)
+names(cord_cols) <- cord_nj$tip.label
+cord_cols[no_points] <- rep(NA, length(no_points))
+plot(cord_phymap, direction = "rightwards", colors = cord_cols, ftype = "i", cex.points = c(0, 2), lwd = c(2, 2))
+```

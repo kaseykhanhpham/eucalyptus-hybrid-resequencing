@@ -10,7 +10,7 @@ populate_elai_mat_val <- function(infile_loc, sample_vec, window_tab){
         wend <- window_tab[i, "end"]
         # import the corresponding chromosome files
         dosage_name <- paste(infile_loc, "/", wchr, "_avg.ps21.txt", sep = "")
-        pos_name <- paste(infile_loc, "/", wchr, "_r1.snpinfo.txt", sep = "")
+        pos_name <- paste(infile_loc, "/", wchr, "_avg.snpinfo.txt", sep = "")
         dosage_in <- scan(dosage_name)
         pos_in <- read.table(pos_name, header = TRUE, sep = "\t")
         dim(dosage_in) <- c(2,nrow(pos_in),20) # 2 ancestral populations, num snps, 20 inds

@@ -22,7 +22,7 @@ LD_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ld/glob/curve_fit/windows
 RECOMB_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/recomb/glob"
 VCFT_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/genome_scan/vcftools"
 AHMM_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/ancestry_hmm/maf00/posteriors"
-ELAI_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/elai/maf00/output/avg"
+ELAI_DIR="/blue/soltis/kasey.pham/euc_hyb_reseq/analyses/elai/maf05/output/avg"
 
 declare -a CHR_LIST=(Chr01 Chr02 Chr03 Chr04 Chr05 Chr06 Chr07 Chr08 Chr09 Chr10 Chr11)
 declare -a CHR_SIZE=(42219553 50828380 65547241 38599333 62919971 52140660 54252628 70214608 38300324 38722660 42056460)

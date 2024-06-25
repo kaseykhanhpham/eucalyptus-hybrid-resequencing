@@ -300,61 +300,38 @@ loess_graph <- function(chr_ld_tab, smoothing, plot_title){
 
 # Chr01
 chr01_ld_tab <- read.table("glob_chr01_windows_ld.txt", header = TRUE, sep = "\t")
-chr01_outliers <- loess_graph(chr01_ld_tab, 0.1, "E.glob Chr01 LD MAC = 0.1")
+chr01_outliers <- loess_graph(chr01_ld_tab, 0.1, "E.glob Chr01 LD MAC = 1")
 # Chr02
 chr02_ld_tab <- read.table("glob_chr02_windows_ld.txt", header = TRUE, sep = "\t")
-chr02_outliers <- loess_graph(chr02_ld_tab, 0.1, "E.glob Chr02 LD MAC = 0.1")
+chr02_outliers <- loess_graph(chr02_ld_tab, 0.1, "E.glob Chr02 LD MAC = 1")
 # Chr03
 chr03_ld_tab <- read.table("glob_chr03_windows_ld.txt", header = TRUE, sep = "\t")
-chr03_outliers <- loess_graph(chr03_ld_tab, 0.1, "E.glob Chr03 LD MAC = 0.1")
+chr03_outliers <- loess_graph(chr03_ld_tab, 0.1, "E.glob Chr03 LD MAC = 1")
 # Chr04
 chr04_ld_tab <- read.table("glob_chr04_windows_ld.txt", header = TRUE, sep = "\t")
-chr04_outliers <- loess_graph(chr04_ld_tab, 0.1, "E.glob Chr04 LD MAC = 0.1")
+chr04_outliers <- loess_graph(chr04_ld_tab, 0.1, "E.glob Chr04 LD MAC = 1")
 # Chr05
 chr05_ld_tab <- read.table("glob_chr05_windows_ld.txt", header = TRUE, sep = "\t")
-chr05_outliers <- loess_graph(chr05_ld_tab, 0.1, "E.glob Chr05 LD MAC = 0.1")
+chr05_outliers <- loess_graph(chr05_ld_tab, 0.1, "E.glob Chr05 LD MAC = 1")
 # Chr06
 chr06_ld_tab <- read.table("glob_chr06_windows_ld.txt", header = TRUE, sep = "\t")
-chr06_outliers <- loess_graph(chr06_ld_tab, 0.1, "E.glob Chr06 LD MAC = 0.1")
+chr06_outliers <- loess_graph(chr06_ld_tab, 0.1, "E.glob Chr06 LD MAC = 1")
 # Chr07
 chr07_ld_tab <- read.table("glob_chr07_windows_ld.txt", header = TRUE, sep = "\t")
-chr07_outliers <- loess_graph(chr07_ld_tab, 0.1, "E.glob Chr07 LD MAC = 0.1")
+chr07_outliers <- loess_graph(chr07_ld_tab, 0.1, "E.glob Chr07 LD MAC = 1")
 # Chr08
 chr08_ld_tab <- read.table("glob_chr08_windows_ld.txt", header = TRUE, sep = "\t")
-chr08_outliers <- loess_graph(chr08_ld_tab, 0.1, "E.glob Chr08 LD MAC = 0.1")
+chr08_outliers <- loess_graph(chr08_ld_tab, 0.1, "E.glob Chr08 LD MAC = 1")
 # Chr09
 chr09_ld_tab <- read.table("glob_chr09_windows_ld.txt", header = TRUE, sep = "\t")
-chr09_outliers <- loess_graph(chr09_ld_tab, 0.1, "E.glob Chr09 LD MAC = 0.1")
+chr09_outliers <- loess_graph(chr09_ld_tab, 0.1, "E.glob Chr09 LD MAC = 1")
 # Chr10
 chr10_ld_tab <- read.table("glob_chr10_windows_ld.txt", header = TRUE, sep = "\t")
-chr10_outliers <- loess_graph(chr10_ld_tab, 0.1, "E.glob Chr10 LD MAC = 0.1")
+chr10_outliers <- loess_graph(chr10_ld_tab, 0.1, "E.glob Chr10 LD MAC = 1")
 # Chr11
 chr11_ld_tab <- read.table("glob_chr11_windows_ld.txt", header = TRUE, sep = "\t")
-chr11_outliers <- loess_graph(chr11_ld_tab, 0.1, "E.glob Chr11 LD MAC = 0.1")
+chr11_outliers <- loess_graph(chr11_ld_tab, 0.1, "E.glob Chr11 LD MAC = 1")
 ```
-
-Intervals of interest (LD outliers):
-| Chr   | Interval            | LD         |
-| ----- | ------------------- | ---------- |
-| Chr01 | 29500000 - 29699999 | 11430      |
-| Chr02 | 39600000 - 40099999 | 7841       |
-| Chr02 | 46700000 - 46999999 | 12732      |
-| Chr03 | 29800000 - 29999999 | 15773      |
-| Chr04 |  9700000 -  9899999 | 10338      |
-| Chr04 | 15100000 - 15899999 | 11680      |
-| Chr05 | 30100000 - 30399999 | 7708       |
-| Chr05 | 61800000 - 61999999 | 18512      |
-| Chr06 | 43500000 - 43699999 | 8773       |
-| Chr07 | 22500000 - 22799999 | 8116       |
-| Chr07 | 50400000 - 50699999 | 18108      |
-| Chr08 | 11200000 - 11399999 | 12763      |
-| Chr08 | 36000000 - 36699999 | 20992      |
-| Chr09 | 22600000 - 22799999 | 42340      |
-| Chr09 | 24300000 - 24999999 | 19976      |
-| Chr09 | 27700000 - 27999999 | 24911      |
-| Chr10 |  4000000 -  4299999 | 43987      |
-| Chr10 | 23800000 - 23999999 | 19112      |
-| Chr11 | 24900000 - 25499999 | 11549      |
 
 Consolidated window output files per chromosome into one genome-wide.
 ```bash
@@ -444,7 +421,7 @@ done
 | Chr09      | 17393            | 0.0002007 |
 | Chr10      | 15322            | 0.0002278 |
 | Chr11      | 16905            | 0.0002065 |
-| AVERAGE    | 17,250.63        | 0.0002203 |
+| AVERAGE    | 17250.63         | 0.0002203 |
 
 ### Sliding window estimates
 Generated jobs to run emeraLD across sliding windows, using MAC = 1 filtering and sliding window size = 100kb (defaults for script).
@@ -577,4 +554,84 @@ for NAME in "${CHRLIST[@]}"
 do
     tail -n +2 cord_"$NAME"_windows_ld.txt >> cord_all_windows_ld.txt
 done
+```
+
+Plotted overall distribution of LD for _E. globulus_ and _E. cordata_ together.
+```R
+library(ggplot2)
+
+glob_all <- read.table("glob_all_windows_ld.txt", header = TRUE)
+cord_all <- read.table("../../../cord/curve_fit/windows/cord_all_windows_ld.txt", header = TRUE)
+
+all_tab <- data.frame(ld = c(glob_all$ld, cord_all$ld), 
+                      pop = c(rep("glob_MR", length(glob_all$ld)), rep("cord_MR", length(cord_all$ld))))
+
+# plot overlapping LD histograms
+ldh <- ggplot(all_tab, aes(x = ld, fill = pop, color = pop)) +
+       geom_histogram(alpha = 0.5, position = "identity", bins = 40) +
+       scale_color_manual(values = c("#FFCB3D", "#13BDD7"), labels = c("E. cordata", "E. globulus")) +
+       scale_fill_manual(values = c("#FFCB3D", "#13BDD7"), labels = c("E. cordata", "E. globulus"))
+ldh <- ldh + geom_vline(xintercept = 1754.45, color = "#00859c", linewidth = 1)
+ldh <- ldh + geom_vline(xintercept = 17250.63, color = "#d88209", linewidth = 1)
+# adjust labels
+ldh <- ldh + theme_bw(base_size = 16)
+ldh <- ldh + ggtitle("Sliding Window LD (r2 = 0.2) Frequency")
+ldh <- ldh + xlab("Window LD Value (bp)") + ylab("Frequency")
+# adjust legend
+ldh <- ldh + guides(fill = guide_legend(title = "Population"),
+                    color = guide_legend(title = "Population"))
+ldh
+```
+
+Plotted _E. globulus_ MAC = 2 LD against Butler et al. LD per chromosome. Second axis plotting code from [Statistics Globe](https://statisticsglobe.com/r-draw-plot-with-two-y-axes).
+
+```R
+library(ggplot2)
+options(scipen = 999)
+
+# Store LD data
+my_ld <- c(2261, 2450, 1964, 1964, 1449, 2220, 1125, 2224, 3120, 3331, 1674, 2162)
+jaks_ld <- c(10510, 7021, 6125, 6472, 3815, 6953, 4616, 5521, 5833, 11183, 6663)
+my_ld <- c(2261, 2450, 1964, 1964, 1449, 2220, 1125, 2224, 3120, 3331, 1674)
+chr_size <- read.table("C:/Users/Kasey/OneDrive - University of Florida/Grad School Documents/Projects/eucalyptus-hybrid-resequencing/references/Eglobulus_genome_X46/X46_chr_size_list.txt", header = FALSE)[c(1:11), "V1"]
+
+# Make plot space
+par(mar = c(8, 4, 4, 4) + 0.3)
+plot(x = 6000, y = 6000, col = "white", main = "LD and chromosome size comparisons",
+     xlab = "Chromosome", ylab = "LD, r^2 = 0.2 (bp)", xlim = c(1, 11), ylim = c(0, 12000), cex.axis = .75,
+     xaxp = c(1, 11, 10))
+
+# make second plot axis
+par(new = TRUE)                                                 # Add new plot
+plot(c(1:11), chr_size, type = "l", lwd = 5, col = "gray",      # Create second plot without axes
+     axes = FALSE, xlab = "", ylab = "", ylim = c(0, max(chr_size)))
+axis(, side = 4, at = pretty(range(0,chr_size)), cex.axis = 0.75)    # Add second axis
+mtext("Chromosome Size (bp)", side = 4, line = 3)
+
+# plot LD values
+par(new = TRUE)
+# Butler et al. 2022
+plot(c(1:11), jaks_ld, type = "l", col = "#FF5733", lwd = 2,
+     axes = FALSE, xlab = "", ylab = "", ylim = c(0, 12000))
+points(c(1:11), jaks_ld, pch = 22, col = "#7c1803", bg = "#FF5733")
+# Our data
+lines(c(1:11), my_ld, col = "#900C3F", lwd = 2)
+points(c(1:11), my_ld, col = "#4b0115", bg = "#900C3F", pch = 24)
+
+# add legend
+legend(x = "bottom", inset = c(0, -0.38), xpd = TRUE,
+       legend = c("Butler et al. 2022", "This study", "Chr Size"),
+       pch = c(22, 24, NA), col = c("#7c1803", "#4b0115", "gray"), pt.cex = 1.2,
+       pt.bg = c("#FF5733", "#900C3F", NA), lty = c(1, 1, 1), lwd = c(2, 2, 5), horiz = TRUE)
+
+# LD vs. chr size
+ld_v_size <- lm(my_ld ~ chr_size)
+plot(chr_size, my_ld, pch = NA,
+     main = "LD vs. Chr Size", xlab = "Chromosome Size (bp)", ylab = "LD, r^2 = 0.2 (bp)")
+abline(ld_v_size, col = "#900C3F", lwd = 2)
+points(chr_size, my_ld, col = "#4b0115", bg = "#900C3F", pch = 24)
+text(x = 65000000, y = 3350,
+     labels = paste("r^2 =", round(summary(ld_v_size)$adj.r.squared, digits = 3)), cex = 1.2)
+text(x = 65000000, y = 3200,
+     labels = paste("P =", round(summary(ld_v_size)$coefficients["chr_size", 4], digits = 3)), cex = 1.2)
 ```

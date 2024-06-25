@@ -39,6 +39,17 @@ hom_coarse <- ggplot(coarse_mat_df, aes(window, acc, fill = hom_mat)) +
               theme(text=element_text(size=16))
 # plot with big labels
 hom_coarse + theme(axis.text=element_text(size=20), axis.title=element_text(size=22), plot.title=element_text(size=28), legend.text=element_text(size=14), legend.title=element_text(size=18))
+# for display
+png("genwide_maf00_hom_display.png", width = 5000, height = 1750)
+print(hom_coarse +
+      theme(axis.text = element_text(size = 70),
+            axis.title = element_text(size = 78),
+            plot.title = element_text(size = 95),
+            legend.text = element_text(size = 45),
+            legend.title = element_text(size = 50),
+            legend.key.size = unit(3, "cm"))
+      )
+dev.off()
 
 het_coarse <- ggplot(coarse_mat_df, aes(window, acc, fill = het_mat)) + 
               geom_tile(color = "#005267") + 
@@ -110,6 +121,24 @@ chr08b2_tab <- get_windows("Chr08", 14042923, 28085844, 10)
 chr08b2_df <- populate_mat_val(glob_mr_samples, chr08b2_tab, post_file_loc)
 chr08b2_plots <- plot_heatmap(chr08b2_df, name_table$RAPiD_ID, name_table$Accession, "Chr08", "- Chr08 - All variants")
 chr08b2_plots$hom_plot
+# for display
+chr08_axis_labs <- c("14042923", "15447215", "16851507", "18255799", "19660091", "21064383", "22468675", "23872967", "25277259", "26681551")
+png("chr8b2_maf00_hom_display.png", width = 1100, height = 1000)
+print(chr08b2_plots$hom_plot +
+      ggtitle("Chr8 Block 2") +
+      scale_x_discrete(breaks = c("Chr08_14042923_15447214", "Chr08_26681551_28085844"),
+                       labels = c("14042923", "28085844")) +
+      theme(axis.text.x = element_text(size = 40),
+            axis.text.y = element_text(size = 30),
+            axis.title = element_text(size = 40),
+            plot.title = element_text(size = 60),
+            # legend.text = element_text(size = 30),
+            # legend.title = element_text(size = 36),
+            legend.position = "none",
+            legend.key.size = unit(2, "cm"),
+            plot.margin = margin(1,1,1,1, "cm")))
+dev.off()
+
 
 # Chromosome 10, Block 1
 chr10b1_tab <- get_windows("Chr10", 1, 7744532, 10)
@@ -185,7 +214,22 @@ chr04b1_4_9_plots <- plot_heatmap(chr04b1_4_9_df, name_table$RAPiD_ID, name_tabl
 # all labels
 chr04b1_4_9_plots$hom_plot + theme(axis.text.x = element_text(angle = 60, vjust = 0.95, hjust=1))
 # for display
-chr04b1_4_9_plots$hom_plot + scale_x_discrete(breaks = c("Chr04_2933554_2941273", "Chr04_3003034_3010752"), labels = c("2933554", "3010752")) + theme(axis.text=element_text(size=20), axis.title=element_text(size=22), plot.title=element_text(size=28), legend.text=element_text(size=14), legend.title=element_text(size=18))
+chr04_axis_labs <- c("2933554", "2941274", "2948994", "2956714", "2964434", "2972154", "2979874", "2987594", "2995314", "3003034")
+png("chr04b1.4.9_maf00_hom_display.png", width = 1100, height = 1000)
+print(chr04b1_4_9_plots$hom_plot +
+      ggtitle("Chr04 Block 1.4.9") +
+      scale_x_discrete(breaks = c("Chr04_2933554_2941273", "Chr04_3003034_3010752"),
+                       labels = c("2933554", "3010752")) +
+      theme(axis.text.x = element_text(size = 40),
+            axis.text.y = element_text(size = 30),
+            axis.title = element_text(size = 40),
+            plot.title = element_text(size = 60),
+            # legend.text = element_text(size = 30),
+            # legend.title = element_text(size = 36),
+            legend.position = "none",
+            legend.key.size = unit(2, "cm"),
+            plot.margin = margin(1,1,1,1, "cm")))
+dev.off()
 
 # Chromosome 6 Block 2-3-7
 chr06b2_3_7_tab <- get_windows("Chr06", 13139453, 13190593, 10)
@@ -194,7 +238,22 @@ chr06b2_3_7_plots <- plot_heatmap(chr06b2_3_7_df, name_table$RAPiD_ID, name_tabl
 # all labels
 chr06b2_3_7_plots$hom_plot + theme(axis.text.x = element_text(angle = 60, vjust = 0.95, hjust=1))
 # for display
-chr06b2_3_7_plots$hom_plot + scale_x_discrete(breaks = c("Chr06_13139453_13144566", "Chr06_13185479_13190593"), labels = c("13139453", "13190593")) + theme(axis.text=element_text(size=20), axis.title=element_text(size=22), plot.title=element_text(size=28), legend.text=element_text(size=14), legend.title=element_text(size=18))
+chr06_axis_labs <- c("13139453", "13144567", "13149681", "13154795", "13159909", "13165023", "13170137", "13175251", "13180365", "13185479")
+png("chr06b2.3.7_maf00_hom_display.png", width = 1100, height = 1000)
+print(chr06b2_3_7_plots$hom_plot +
+      ggtitle("Chr06 Block 2.3.7") +
+      scale_x_discrete(breaks = c("Chr06_13139453_13144566", "Chr06_13185479_13190593"),
+                       labels = c("13139453", "28085844")) +
+      theme(axis.text.x = element_text(size = 40),
+            axis.text.y = element_text(size = 30),
+            axis.title = element_text(size = 40),
+            plot.title = element_text(size = 60),
+            # legend.text = element_text(size = 30),
+            # legend.title = element_text(size = 36),
+            legend.position = "none",
+            legend.key.size = unit(2, "cm"),
+            plot.margin = margin(1,1,1,1, "cm")))
+dev.off()
 
 # Chromosome 7 Block 1.1.35
 chr07b1_1_35_tab <- get_windows("Chr07", 217013, 542525, 10)
@@ -203,7 +262,22 @@ chr07b1_1_35_plots <- plot_heatmap(chr07b1_1_35_df, name_table$RAPiD_ID, name_ta
 # all labels
 chr07b1_1_35_plots$hom_plot + theme(axis.text.x = element_text(angle = 60, vjust = 0.95, hjust=1))
 # for display
-chr07b1_1_35_plots$hom_plot + scale_x_discrete(breaks = c("Chr07_217013_249563", "Chr07_509972_542525"), labels = c("217013", "542525")) + theme(axis.text=element_text(size=20), axis.title=element_text(size=22), plot.title=element_text(size=28), legend.text=element_text(size=14), legend.title=element_text(size=18))
+chr07b11_axis_labs <- c("217013", "249564", "282115", "314666", "347217", "379768", "412319", "444870", "477421", "509972")
+png("chr07b1.1.35_maf00_hom_display.png", width = 1100, height = 1000)
+print(chr07b1_1_35_plots$hom_plot +
+      ggtitle("Chr07 Block 1.1.3-5") +
+      scale_x_discrete(breaks = c("Chr07_217013_249563", "Chr07_509972_542525"),
+                       labels = c("217013", "542525")) +
+      theme(axis.text.x = element_text(size = 40),
+            axis.text.y = element_text(size = 30),
+            axis.title = element_text(size = 40),
+            plot.title = element_text(size = 60),
+            # legend.text = element_text(size = 30),
+            # legend.title = element_text(size = 36),
+            legend.position = "none",
+            legend.key.size = unit(2, "cm"),
+            plot.margin = margin(1,1,1,1, "cm")))
+dev.off()
 
 # Chromosome 7 Block 1.7.6
 chr07b1_7_6_tab <- get_windows("Chr07", 7052844, 7161348, 10)
@@ -212,7 +286,22 @@ chr07b1_7_6_plots <- plot_heatmap(chr07b1_7_6_df, name_table$RAPiD_ID, name_tabl
 # all labels
 chr07b1_7_6_plots$hom_plot + theme(axis.text.x = element_text(angle = 60, vjust = 0.95, hjust=1))
 # for display
-chr07b1_7_6_plots$hom_plot + scale_x_discrete(breaks = c("Chr07_7052844_7063693", "Chr07_7150494_7161348"), labels = c("7052844", "7161348")) + theme(axis.text=element_text(size=20), axis.title=element_text(size=22), plot.title=element_text(size=28), legend.text=element_text(size=14), legend.title=element_text(size=18))
+chr07b17_axis_labs <- c("7052844", "7063694", "7074544", "7085394", "7096244", "7107094", "7117944", "7128794", "7139644", "7150494")
+png("chr07b1.7.6_maf00_hom_display.png", width = 1100, height = 1000)
+print(chr07b1_7_6_plots$hom_plot +
+      ggtitle("Chr07 Block 1.7.6") +
+      scale_x_discrete(breaks = c("Chr07_7052844_7063693", "Chr07_7150494_7161348"),
+                       labels = c("7052844", "7161348")) +
+      theme(axis.text.x = element_text(size = 40),
+            axis.text.y = element_text(size = 30),
+            axis.title = element_text(size = 40),
+            plot.title = element_text(size = 60),
+            # legend.text = element_text(size = 30),
+            # legend.title = element_text(size = 36),
+            legend.position = "none",
+            legend.key.size = unit(2, "cm"),
+            plot.margin = margin(1,1,1,1, "cm")))
+dev.off()
 
 # Chromosome 10 Block 1.1.1
 chr10b1_1_1_tab <- get_windows("Chr10", 1, 77445, 10)
@@ -221,7 +310,22 @@ chr10b1_1_1_plots <- plot_heatmap(chr10b1_1_1_df, name_table$RAPiD_ID, name_tabl
 # all labels
 chr10b1_1_1_plots$hom_plot + theme(axis.text.x = element_text(angle = 60, vjust = 0.95, hjust=1))
 # for display
-chr10b1_1_1_plots$hom_plot + scale_x_discrete(breaks = c("Chr10_1_7744", "Chr10_69697_77445"), labels = c("1", "77445")) + theme(axis.text=element_text(size=20), axis.title=element_text(size=22), plot.title=element_text(size=28), legend.text=element_text(size=14), legend.title=element_text(size=18))
+chr10_axis_labs <- c("1", "7745", "15489", "23233", "30977", "38721", "46465", "54209", "61953", "69697")
+png("chr10b1.1.1_maf00_hom_display.png", width = 1100, height = 1000)
+print(chr10b1_1_1_plots$hom_plot +
+      ggtitle("Chr10 Block 1.1.1") +
+      scale_x_discrete(breaks = c("Chr10_1_7744", "Chr10_69697_77445"),
+                       labels = c("1", "77445")) +
+      theme(axis.text.x = element_text(size = 40),
+            axis.text.y = element_text(size = 30),
+            axis.title = element_text(size = 40),
+            plot.title = element_text(size = 60),
+            # legend.text = element_text(size = 30),
+            # legend.title = element_text(size = 36),
+            legend.position = "none",
+            legend.key.size = unit(2, "cm"),
+            plot.margin = margin(1,1,1,1, "cm")))
+dev.off()
 ```
 
 ![Largest _E. cordata_ homozygous ancestry posterior value per window in Chromosome 4 2933554 bp to 3010752 bp.](chr04b1.4.9_maf00_hom.png "_E. cordata_ ancestry heatmap for Chromosome 4 Block 4.1.7")
