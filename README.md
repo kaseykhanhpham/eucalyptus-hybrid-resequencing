@@ -29,7 +29,7 @@ I also included whole genome short reads for _E. grandis_ SRA Accession [SRR1033
 Chloroplast assemblies used:
 
 | Species       | Section         | NCBI Accession                                                  |
-| ------------- | --------------- | --------------------------------------------------------------- | -------------- |
+| ------------- | --------------- | --------------------------------------------------------------- |
 | _E. globulus_ | _Maidenaria_    | [AY780259.1](https://www.ncbi.nlm.nih.gov/nuccore/AY780259.1)   |
 | _E. globulus_ | _Maidenaria_    | [KC180787.1](https://www.ncbi.nlm.nih.gov/nuccore/KC180787.1)   |
 | _E. globulus_ | _Maidenaria_    | [CM024728.1](https://www.ncbi.nlm.nih.gov/nuccore/CM024728.1)   |
