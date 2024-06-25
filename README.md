@@ -64,3 +64,19 @@ On local computer:
 conda create -n euc_hyb_reseq python pip numpy scipy pandas
 pip install pong plotnine
 ```
+
+## Navigation
+Each step of the analysis is listed in order in the subdirectories of this repository, from read cleaning to post-hoc analyses.
+
+| Step | Name               | Description                                              |
+| ---- | ------------------ | -------------------------------------------------------- |
+| 00   | metadata           | Information on sampling, sequencing, and accession IDs   |
+| 01   | read_preprocessing | Read trimming and quality check                          |
+| 02   | var_call_prep      | Read mapping, addition of read groups, and quality check |
+| 03   | var_calling        | Genotype calling and filtering                           |
+| 04   | chloroplast_assembly | Assembly of whole plastomes from trimmed reads         |
+| 05   | analyses           | Population structure, demographics, introgression analyses |
+
+Each directory has its own README with documentation on steps taken and a subdirectory called `jobfiles` with the original job files used to run analyses in the [University of Florida Research Computing system](https://www.rc.ufl.edu/) using `SLURM` scheduling.
+
+Summary files of results have been included if not too large in filesize.
